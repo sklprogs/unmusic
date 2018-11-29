@@ -137,12 +137,102 @@ class TopArea:
                                                ,'icon_36x36_go_forward.gif'
                                                )
 
+    def frames(self):
+        self.frm = sg.Frame (parent = self.parent
+                            ,side   = 'top'
+                            ,expand = 0
+                            ,fill   = 'x'
+                            )
+        self.widget = self.parent.widget
+    
+    def search_albums(self):
+        self.btn_spr = sg.Button (parent   = self.frm
+                                 ,hint     = _('Search older records')
+                                 ,inactive = self.prev_inactive
+                                 ,active   = self.prev_active
+                                 ,text     = '←'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+        self.ent_src = sg.Entry (parent    = self.frm
+                                ,Composite = 1
+                                ,side      = 'left'
+                                )
+        self.btn_snx = sg.Button (parent   = self.frm
+                                 ,hint     = _('Search newer records')
+                                 ,inactive = self.next_inactive
+                                 ,active   = self.next_active
+                                 ,text     = '→'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+        sg.ToolTip (obj        = self.ent_src
+                   ,text       = _('Search in albums')
+                   ,hint_width = 150
+                   ,hint_dir   = 'bottom'
+                   )
+    
+    def search_tracks(self):
+        self.btn_sp2 = sg.Button (parent   = self.frm
+                                 ,hint     = _('Search older records')
+                                 ,inactive = self.prev_inactive
+                                 ,active   = self.prev_active
+                                 ,text     = '←'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+        self.ent_sr2 = sg.Entry (parent    = self.frm
+                                ,Composite = 1
+                                ,side      = 'left'
+                                )
+        self.btn_sn2 = sg.Button (parent   = self.frm
+                                 ,hint     = _('Search newer records')
+                                 ,inactive = self.next_inactive
+                                 ,active   = self.next_active
+                                 ,text     = '→'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+        sg.ToolTip (obj        = self.ent_sr2
+                   ,text       = _('Search in tracks')
+                   ,hint_width = 150
+                   ,hint_dir   = 'bottom'
+                   )
+    
+    def meter(self):
+        self.btn_prv = sg.Button (parent   = self.frm
+                                 ,hint     = _('Go to the preceding record')
+                                 ,inactive = self.prev_inactive
+                                 ,active   = self.prev_active
+                                 ,text     = '←'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+        # Show the current record #/total records ratio
+        self.lbl_mtr = sg.Label (parent = self.frm
+                                ,text   = '0 / 0'
+                                ,expand = 0
+                                ,side   = 'left'
+                                )
+        sg.ToolTip (obj        = self.lbl_mtr
+                   ,text       = _('Album ID')
+                   ,hint_width = 150
+                   ,hint_dir   = 'bottom'
+                   )
+        self.btn_nxt = sg.Button (parent   = self.frm
+                                 ,hint     = _('Go to the following record')
+                                 ,inactive = self.next_inactive
+                                 ,active   = self.next_active
+                                 ,text     = '→'
+                                 ,hint_dir = 'bottom'
+                                 ,side     = 'left'
+                                 )
+    
     def gui(self):
-        self._gui_frames()
-        self._gui_search()
-        self._gui_prev()
-        self._gui_meter()
-        self._gui_next()
+        self.frames()
+        self.search_albums()
+        self.meter()
+        self.search_tracks()
         self.bindings()
 
     def bindings(self):
@@ -157,82 +247,6 @@ class TopArea:
                 ,bindings = '<ButtonRelease-1>'
                 ,action   = self.focus_search
                 )
-
-    def _gui_frames(self):
-        self.frm  = sg.Frame (parent = self.parent
-                             ,side   = 'top'
-                             ,expand = 0
-                             ,fill   = 'x'
-                             )
-        self.frm1 = sg.Frame (parent = self.frm
-                             ,expand = 1
-                             ,side   = 'left'
-                             )
-        self.frm2 = sg.Frame (parent = self.frm
-                             ,expand = 1
-                             ,side   = 'left'
-                             )
-        self.widget = self.parent.widget
-
-    def _gui_prev(self):
-        self.btn_prv = sg.Button (parent   = self.frm1
-                                 ,hint     = _('Go to the preceding record')
-                                 ,inactive = self.prev_inactive
-                                 ,active   = self.prev_active
-                                 ,text     = '←'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'right'
-                                 )
-
-    def _gui_next(self):
-        self.btn_nxt = sg.Button (parent   = self.frm2
-                                 ,hint     = _('Go to the following record')
-                                 ,inactive = self.next_inactive
-                                 ,active   = self.next_active
-                                 ,text     = '→'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'left'
-                                 )
-
-    # Show the current record #/total records ratio
-    def _gui_meter(self):
-        self.meter = sg.Label (parent = self.frm2
-                              ,text   = '0 / 0'
-                              ,expand = 0
-                              ,side   = 'left'
-                              )
-
-    def _gui_search(self):
-        frm_src = sg.Frame (parent = self.frm
-                           ,side   = 'left'
-                           ,expand = 1
-                           ,fill   = 'x'
-                           )
-        self.btn_spr = sg.Button (parent   = frm_src
-                                 ,hint     = _('Search older records')
-                                 ,inactive = self.prev_inactive
-                                 ,active   = self.prev_active
-                                 ,text     = '←'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'left'
-                                 )
-        self.ent_src = sg.Entry (parent    = frm_src
-                                ,Composite = 1
-                                ,side      = 'left'
-                                )
-        self.btn_snx = sg.Button (parent   = frm_src
-                                 ,hint     = _('Search newer records')
-                                 ,inactive = self.next_inactive
-                                 ,active   = self.next_active
-                                 ,text     = '→'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'left'
-                                 )
-        sg.ToolTip (obj        = self.ent_src
-                   ,text       = _('Search in albums')
-                   ,hint_width = 150
-                   ,hint_dir   = 'bottom'
-                   )
 
     def focus_search(self,event=None):
         self.ent_src.focus()
