@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-29 12:00+0300\n"
-"PO-Revision-Date: 2018-11-29 12:04+0300\n"
+"POT-Creation-Date: 2018-11-29 13:41+0300\n"
+"PO-Revision-Date: 2018-11-29 13:44+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -17,6 +17,94 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../src\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: gui.py:67
+msgid "Tracks"
+msgstr "Дорожки"
+
+#: gui.py:68
+msgid "Edit tracks"
+msgstr "Править дорожки"
+
+#: gui.py:74
+msgid "Create"
+msgstr "Создать"
+
+#: gui.py:75
+msgid "Create a new record"
+msgstr "Создать новую запись"
+
+#: gui.py:81
+msgid "Save"
+msgstr "Сохранить"
+
+#: gui.py:82
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: gui.py:88
+msgid "Reload"
+msgstr "Перезагрузить"
+
+#: gui.py:89
+msgid "Reload the present record"
+msgstr "Перезагрузить текущую запись"
+
+#: gui.py:95
+msgid "Delete"
+msgstr "Удалить"
+
+#: gui.py:96
+msgid "Delete the present record"
+msgstr "Удалить текущую запись"
+
+#: gui.py:179
+msgid "Go to the preceding record"
+msgstr "Перейти к предыдущей записи"
+
+#: gui.py:189
+msgid "Go to the following record"
+msgstr "Перейти к следующей записи"
+
+#: gui.py:212
+msgid "Search in albums:"
+msgstr "Поиск по альбомам:"
+
+#: gui.py:216
+msgid "Search older records"
+msgstr "Поиск более старых записей"
+
+#: gui.py:228
+msgid "Search newer records"
+msgstr "Поиск более новых записей"
+
+#: gui.py:280
+msgid "Album Editor"
+msgstr "Редактор альбомов"
+
+#: gui.py:394
+msgid "Album ID:"
+msgstr "ИД альбома:"
+
+#: gui.py:398 logic.py:480
+msgid "Artist:"
+msgstr "Исполнитель:"
+
+#: gui.py:402 logic.py:481
+msgid "Album:"
+msgstr "Альбом:"
+
+#: gui.py:406 logic.py:483
+msgid "Year:"
+msgstr "Год:"
+
+#: gui.py:410
+msgid "Country:"
+msgstr "Страна:"
+
+#: gui.py:414
+msgid "Comment:"
+msgstr "Комментарий:"
 
 #: logic.py:104 logic.py:114 logic.py:160 logic.py:386 logic.py:494
 #: shared.py:312 shared.py:389 shared.py:443 shared.py:491 shared.py:785
@@ -125,37 +213,26 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:480
-msgid "Artist"
-msgstr "Исполнитель"
-
-#: logic.py:481
-msgid "Album"
-msgstr "Альбом"
-
 #: logic.py:482
-msgid "Genre"
-msgstr "Жанр"
-
-#: logic.py:483
-msgid "Year"
-msgstr "Год"
+msgid "Genre:"
+msgstr "Жанр:"
 
 #: logic.py:484
-msgid "Track #"
-msgstr "Дорожка №"
+msgid "Track #:"
+msgstr "Номер дорожки:"
 
-#: logic.py:485
-msgid "Title"
-msgstr "Название"
+#: logic.py:485 sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2884
+#: sharedGUI.py:2895 sharedGUI.py:3344
+msgid "Title:"
+msgstr "Заголовок:"
 
 #: logic.py:486
-msgid "Lyrics"
-msgstr "Слова"
+msgid "Lyrics:"
+msgstr "Слова:"
 
 #: logic.py:492
-msgid "Length"
-msgstr "Продолжительность"
+msgid "Length:"
+msgstr "Продолжительность:"
 
 #: logic.py:492
 msgid "min"
@@ -761,11 +838,6 @@ msgstr "Выйти"
 msgid "Save and close"
 msgstr "Запомнить и выйти"
 
-#: sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2884 sharedGUI.py:2895
-#: sharedGUI.py:3344
-msgid "Title:"
-msgstr "Заголовок:"
-
 #: sharedGUI.py:322
 msgid "Find:"
 msgstr "Найти:"
@@ -1019,6 +1091,30 @@ msgstr "Закрыть"
 #: sharedGUI.py:4042
 msgid "Close this window"
 msgstr "Закрыть это окно"
+
+#~ msgid "Artist"
+#~ msgstr "Исполнитель"
+
+#~ msgid "Album"
+#~ msgstr "Альбом"
+
+#~ msgid "Genre"
+#~ msgstr "Жанр"
+
+#~ msgid "Year"
+#~ msgstr "Год"
+
+#~ msgid "Track #"
+#~ msgstr "Дорожка №"
+
+#~ msgid "Title"
+#~ msgstr "Название"
+
+#~ msgid "Lyrics"
+#~ msgstr "Слова"
+
+#~ msgid "Length"
+#~ msgstr "Продолжительность"
 
 #~ msgid "A syntax error in the regular expression (id: %s)!"
 #~ msgstr "Синтаксическая ошибка в регулярном выражении (запись: %s)!"
