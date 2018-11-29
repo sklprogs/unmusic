@@ -477,19 +477,19 @@ class Track:
     def summary(self):
         f = 'logic.Track.summary'
         if self.Success:
-            mes =  _('Artist')  + ': %s\n' % self._artist
-            mes += _('Album')   + ': %s\n' % self._album
-            mes += _('Genre')   + ': %s\n' % self._genre
-            mes += _('Year')    + ': %d\n' % self._year
-            mes += _('Track #') + ': %d\n' % self._no
-            mes += _('Title')   + ': %s\n' % self._title
-            mes += _('Lyrics')  + ': %s\n' % self._lyrics
+            mes =  _('Artist:')  + ' %s\n' % self._artist
+            mes += _('Album:')   + ' %s\n' % self._album
+            mes += _('Genre:')   + ' %s\n' % self._genre
+            mes += _('Year:')    + ' %d\n' % self._year
+            mes += _('Track #:') + ' %d\n' % self._no
+            mes += _('Title:')   + ' %s\n' % self._title
+            mes += _('Lyrics:')  + ' %s\n' % self._lyrics
             if self._length:
                 minutes = self._length // 60
                 seconds = self._length - minutes * 60
             else:
                 minutes = seconds = 0
-            mes += _('Length') + ': %d ' % minutes + _('min') + ' %d ' \
+            mes += _('Length:') + ' %d ' % minutes + _('min') + ' %d ' \
                    % seconds + _('sec') + '\n'
             sh.objs.mes (f,_('INFO')
                         ,mes
