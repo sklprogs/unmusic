@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-29 13:41+0300\n"
-"PO-Revision-Date: 2018-11-29 13:44+0300\n"
+"POT-Creation-Date: 2018-11-29 15:56+0300\n"
+"PO-Revision-Date: 2018-11-29 15:56+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -58,51 +58,55 @@ msgstr "Удалить"
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: gui.py:179
-msgid "Go to the preceding record"
-msgstr "Перейти к предыдущей записи"
-
-#: gui.py:189
-msgid "Go to the following record"
-msgstr "Перейти к следующей записи"
-
-#: gui.py:212
-msgid "Search in albums:"
-msgstr "Поиск по альбомам:"
-
-#: gui.py:216
+#: gui.py:150 gui.py:177
 msgid "Search older records"
 msgstr "Поиск более старых записей"
 
-#: gui.py:228
+#: gui.py:162 gui.py:189
 msgid "Search newer records"
 msgstr "Поиск более новых записей"
 
-#: gui.py:280
+#: gui.py:170
+msgid "Search in albums"
+msgstr "Поиск по альбомам"
+
+#: gui.py:197
+msgid "Search in tracks"
+msgstr "Поиск по дорожкам"
+
+#: gui.py:204
+msgid "Go to the preceding record"
+msgstr "Перейти к предыдущей записи"
+
+#: gui.py:218
+msgid "Album ID"
+msgstr "ИД альбома"
+
+#: gui.py:223
+msgid "Go to the following record"
+msgstr "Перейти к следующей записи"
+
+#: gui.py:295
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: gui.py:394
-msgid "Album ID:"
-msgstr "ИД альбома:"
-
-#: gui.py:398 logic.py:480
+#: gui.py:409 logic.py:480
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:402 logic.py:481
+#: gui.py:413 logic.py:481
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:406 logic.py:483
+#: gui.py:417 logic.py:483
 msgid "Year:"
 msgstr "Год:"
 
-#: gui.py:410
+#: gui.py:421
 msgid "Country:"
 msgstr "Страна:"
 
-#: gui.py:414
+#: gui.py:425
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -1091,6 +1095,12 @@ msgstr "Закрыть"
 #: sharedGUI.py:4042
 msgid "Close this window"
 msgstr "Закрыть это окно"
+
+#~ msgid "Search in albums:"
+#~ msgstr "Поиск по альбомам:"
+
+#~ msgid "Album ID:"
+#~ msgstr "ИД альбома:"
 
 #~ msgid "Artist"
 #~ msgstr "Исполнитель"
