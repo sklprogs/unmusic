@@ -20,4 +20,4 @@ class Commands:
 com = Commands()
 
 if __name__ == '__main__':
-    print(lg.objs.db().get_album(7))
+    print(lg.objs.db().max_id())

@@ -229,6 +229,39 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def prev_id(self,albumid):
+        f = 'logic.DB.prev_id'
+        if self.Success:
+            try:
+                self.dbc.execute ('select   ALBUMID from ALBUMS \
+                                   where    ALBUMID < ? \
+                                   order by ALBUMID desc'
+                                  ,(albumid,)
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def next_id(self,albumid):
+        f = 'logic.DB.next_id'
+        if self.Success:
+            try:
+                self.dbc.execute ('select ALBUMID from ALBUMS \
+                                   where  ALBUMID > ? order by ALBUMID'
+                                  ,(albumid,)
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
     def get_album(self,albumid):
         f = 'logic.DB.get_album'
         if self.Success:
@@ -238,6 +271,24 @@ class DB:
                                    where  ALBUMID = ?',(albumid,)
                                  )
                 return self.dbc.fetchone()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def min_id(self):
+        f = 'logic.DB.min_id'
+        if self.Success:
+            try:
+                ''' 'self.dbc.lastrowid' returns 'None' if an album is
+                    already in DB.
+                '''
+                self.dbc.execute ('select ALBUMID from ALBUMS \
+                                   order by ALBUMID'
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
             except Exception as e:
                 self.fail(f,e)
         else:

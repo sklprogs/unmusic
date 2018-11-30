@@ -19,6 +19,98 @@ class AlbumEditor:
         self.bindings()
         self.reset()
         
+    def search_track(self,event=None):
+        f = 'controller.AlbumEditor.search_track'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def search_album(self,event=None):
+        f = 'controller.AlbumEditor.search_album'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def search_next_track(self,event=None):
+        f = 'controller.AlbumEditor.search_next_track'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def search_prev_track(self,event=None):
+        f = 'controller.AlbumEditor.search_prev_track'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def search_next_album(self,event=None):
+        f = 'controller.AlbumEditor.search_next_album'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def search_prev_album(self,event=None):
+        f = 'controller.AlbumEditor.search_prev_album'
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
+    
+    def inc(self):
+        f = 'controller.AlbumEditor.inc'
+        if self.Success:
+            if self.get_no() == self.get_max():
+                self._no = self.get_min()
+            else:
+                self._no = lg.objs.db().next_id(self._no)
+                self.get_no()
+        else:
+            sh.com.cancel(f)
+    
+    def dec(self):
+        f = 'controller.AlbumEditor.dec'
+        if self.Success:
+            if self.get_no() == self.get_min():
+                self._no = self.get_max()
+            else:
+                self._no = lg.objs.db().prev_id(self._no)
+                self.get_no()
+        else:
+            sh.com.cancel(f)
+    
+    def prev(self,event=None):
+        f = 'controller.AlbumEditor.prev'
+        if self.Success:
+            self.dec()
+            self.fill()
+        else:
+            sh.com.cancel(f)
+    
+    def next(self,event=None):
+        f = 'controller.AlbumEditor.next'
+        if self.Success:
+            self.inc()
+            self.fill()
+        else:
+            sh.com.cancel(f)
+    
     def tracks(self,event=None):
         f = 'controller.AlbumEditor.tracks'
         sh.objs.mes (f,_('INFO')
@@ -44,6 +136,13 @@ class AlbumEditor:
                     )
     
     def bindings(self):
+        self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.top_area.btn_nxt.action    = self.next
+        self.gui.top_area.btn_prv.action    = self.prev
+        self.gui.top_area.btn_spr.action    = self.search_prev_album
+        self.gui.top_area.btn_sp2.action    = self.search_prev_track
+        self.gui.top_area.btn_snx.action    = self.search_next_album
+        self.gui.top_area.btn_sn2.action    = self.search_next_track
         self.gui.bottom_area.btn_trk.action = self.tracks
         self.gui.bottom_area.btn_rec.action = self.create
         self.gui.bottom_area.btn_sav.action = self.save
@@ -53,39 +152,69 @@ class AlbumEditor:
                 ,bindings = ['<F5>','<Control-r>']
                 ,action   = self.fill
                 )
+        sg.bind (obj      = self.gui.top_area.ent_src
+                ,bindings = ['<Return>','<KP_Enter>']
+                ,action   = self.search_album
+                )
+        sg.bind (obj      = self.gui.top_area.ent_sr2
+                ,bindings = ['<Return>','<KP_Enter>']
+                ,action   = self.search_track
+                )
+    
+    def get_no(self):
+        f = 'controller.AlbumEditor.get_no'
+        if self.Success:
+            self._no = sh.Input (title = f
+                                ,value = self._no
+                                ).integer()
+        else:
+            sh.com.cancel(f)
+        return self._no
+    
+    def get_min(self):
+        f = 'controller.AlbumEditor.get_min'
+        if self.Success:
+            return sh.Input (title = f
+                            ,value = lg.objs.db().min_id()
+                            ).integer()
+        else:
+            sh.com.cancel(f)
+            return 0
+    
+    def get_max(self):
+        f = 'controller.AlbumEditor.get_max'
+        if self.Success:
+            return sh.Input (title = f
+                            ,value = lg.objs.db().max_id()
+                            ).integer()
+        else:
+            sh.com.cancel(f)
+            return 0
+    
+    def values(self):
+        self.Success = True
+        self._no     = 1
     
     def reset(self):
         f = 'controller.AlbumEditor.reset'
+        self.values()
         self.Success = lg.objs.db().Success
-        self._no     = lg.objs._db.max_id()
-        if str(self._no).isdigit() and self._no > 0:
-            pass
-        else:
-            self._no = 1
-            sh.objs.mes (f,_('WARNING')
-                        ,_('Wrong input data: "%s"!') % str(self._no)
-                        )
+        self._no     = self.get_max()
         self.fill()
     
     def update(self):
         f = 'controller.AlbumEditor.update'
         if self.Success:
-            self._no = sh.Input (title = f
-                                ,value = self._no
-                                ).integer()
-            max_id = lg.objs.db().max_id()
-            max_id = sh.Input (title = f
-                              ,value = max_id
-                              ).integer()
-            self.gui.top_area.lbl_mtr.text ('%d / %d' % (self._no
-                                                        ,max_id
+            _max = self.get_max()
+            self.gui.top_area.lbl_mtr.text ('%d / %d' % (self.get_no()
+                                                        ,_max
                                                         )
                                            )
-            if self._no < max_id:
+            if self._no < _max:
                 self.gui.top_area.btn_nxt.active()
             else:
                 self.gui.top_area.btn_nxt.inactive()
-            if self._no == 1:
+            if self._no == self.get_min():
                 self.gui.top_area.btn_prv.inactive()
             else:
                 self.gui.top_area.btn_prv.active()
@@ -95,10 +224,7 @@ class AlbumEditor:
     def fill(self,event=None):
         f = 'controller.AlbumEditor.fill'
         if self.Success:
-            self._no = sh.Input (title = f
-                                ,value = self._no
-                                ).integer()
-            data = lg.objs.db().get_album(self._no)
+            data = lg.objs.db().get_album(self.get_no())
             if data:
                 if len(data) == 6:
                     self.gui.bottom_area.update (_('Load #%d.') \
