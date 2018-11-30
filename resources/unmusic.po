@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-30 15:49+0300\n"
-"PO-Revision-Date: 2018-11-30 15:50+0300\n"
+"POT-Creation-Date: 2018-11-30 18:40+0300\n"
+"PO-Revision-Date: 2018-11-30 18:40+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,51 +18,10 @@ msgstr ""
 "X-Poedit-Basepath: ../src\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controller.py:38
-msgid "Album ID:"
-msgstr "ИД альбома:"
-
-#: controller.py:40 controller.py:181 logic.py:631 sharedGUI.py:279
-#: sharedGUI.py:988 sharedGUI.py:2884 sharedGUI.py:2895 sharedGUI.py:3345
-msgid "Title:"
-msgstr "Заголовок:"
-
-#: controller.py:41 controller.py:179 logic.py:630
-msgid "Track #:"
-msgstr "Номер дорожки:"
-
-#: controller.py:43 logic.py:632
-msgid "Lyrics:"
-msgstr "Слова:"
-
-#: controller.py:45 gui.py:406
-msgid "Comment:"
-msgstr "Комментарий:"
-
-#: controller.py:47 controller.py:183
-msgid "Bitrate:"
-msgstr "Битрейт:"
-
-#: controller.py:53 controller.py:188 logic.py:638
-msgid "Length:"
-msgstr "Продолжительность:"
-
-#: controller.py:54 controller.py:189 logic.py:638
-msgid "min"
-msgstr "мин"
-
-#: controller.py:55 controller.py:190 logic.py:639
-msgid "sec"
-msgstr "сек"
-
-#: controller.py:58 controller.py:193
-msgid "Rating:"
-msgstr "Оценка:"
-
-#: controller.py:65 controller.py:69 controller.py:99 controller.py:105
-#: controller.py:123 controller.py:129 controller.py:204 controller.py:210
-#: controller.py:216 logic.py:104 logic.py:114 logic.py:160 logic.py:532
-#: logic.py:640 shared.py:312 shared.py:389 shared.py:443 shared.py:491
+#: controller.py:85 controller.py:144 controller.py:148 controller.py:178
+#: controller.py:184 controller.py:202 controller.py:208 controller.py:287
+#: controller.py:305 logic.py:104 logic.py:114 logic.py:160 logic.py:548
+#: logic.py:656 shared.py:312 shared.py:389 shared.py:443 shared.py:491
 #: shared.py:785 shared.py:837 shared.py:1448 shared.py:1584 shared.py:1600
 #: shared.py:1642 shared.py:1655 shared.py:1711 shared.py:1724 shared.py:1767
 #: shared.py:1777 shared.py:1879 shared.py:1921 shared.py:1951 shared.py:2188
@@ -79,146 +38,205 @@ msgstr "Оценка:"
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
-#: controller.py:66 controller.py:100 controller.py:124 sharedGUI.py:358
+#: controller.py:86
+msgid "No changes!"
+msgstr "Изменений не было!"
+
+#: controller.py:92 controller.py:453 logic.py:240 shared.py:207 shared.py:212
+#: shared.py:221 shared.py:230 shared.py:239 shared.py:301 shared.py:321
+#: shared.py:329 shared.py:348 shared.py:368 shared.py:421 shared.py:431
+#: shared.py:585 shared.py:608 shared.py:715 shared.py:725 shared.py:803
+#: shared.py:842 shared.py:1567 shared.py:1591 shared.py:1607 shared.py:1635
+#: shared.py:1785 shared.py:1791 shared.py:1891 shared.py:1895 shared.py:1907
+#: shared.py:2055 shared.py:2079 shared.py:2384 shared.py:2552 shared.py:2716
+#: shared.py:2749 shared.py:4313 shared.py:4333 shared.py:4384 sharedGUI.py:27
+#: sharedGUI.py:32 sharedGUI.py:37 sharedGUI.py:57 sharedGUI.py:144
+#: sharedGUI.py:148 sharedGUI.py:166 sharedGUI.py:181 sharedGUI.py:192
+#: sharedGUI.py:207 sharedGUI.py:224 sharedGUI.py:229 sharedGUI.py:418
+#: sharedGUI.py:824 sharedGUI.py:837 sharedGUI.py:845 sharedGUI.py:853
+#: sharedGUI.py:870 sharedGUI.py:886 sharedGUI.py:892 sharedGUI.py:955
+#: sharedGUI.py:1467 sharedGUI.py:1735 sharedGUI.py:1752 sharedGUI.py:1951
+#: sharedGUI.py:1965 sharedGUI.py:2019 sharedGUI.py:2141 sharedGUI.py:2264
+#: sharedGUI.py:2281 sharedGUI.py:2298 sharedGUI.py:2302 sharedGUI.py:2308
+#: sharedGUI.py:2322 sharedGUI.py:2334 sharedGUI.py:2345 sharedGUI.py:2354
+#: sharedGUI.py:2365 sharedGUI.py:2398 sharedGUI.py:2402 sharedGUI.py:2460
+#: sharedGUI.py:2559 sharedGUI.py:2660 sharedGUI.py:2667 sharedGUI.py:2672
+#: sharedGUI.py:2676 sharedGUI.py:2688 sharedGUI.py:2692 sharedGUI.py:2801
+#: sharedGUI.py:2807 sharedGUI.py:2810 sharedGUI.py:2931 sharedGUI.py:2957
+#: sharedGUI.py:2963 sharedGUI.py:2967 sharedGUI.py:2987 sharedGUI.py:2997
+#: sharedGUI.py:3151 sharedGUI.py:3234 sharedGUI.py:3264 sharedGUI.py:3417
+#: sharedGUI.py:3858 sharedGUI.py:3941
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: controller.py:93 shared.py:586 shared.py:609 shared.py:2056 shared.py:2080
+#: shared.py:4314 shared.py:4334 shared.py:4385 sharedGUI.py:81
+#, python-format
+msgid "The condition \"%s\" is not observed!"
+msgstr "Условие \"%s\" не выполнено!"
+
+#: controller.py:117
+msgid "Album ID:"
+msgstr "ИД альбома:"
+
+#: controller.py:119 controller.py:261 logic.py:647 sharedGUI.py:279
+#: sharedGUI.py:988 sharedGUI.py:2884 sharedGUI.py:2895 sharedGUI.py:3345
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: controller.py:120 controller.py:259 logic.py:646
+msgid "Track #:"
+msgstr "Номер дорожки:"
+
+#: controller.py:122 logic.py:648
+msgid "Lyrics:"
+msgstr "Слова:"
+
+#: controller.py:124 gui.py:433
+msgid "Comment:"
+msgstr "Комментарий:"
+
+#: controller.py:126 controller.py:263
+msgid "Bitrate:"
+msgstr "Битрейт:"
+
+#: controller.py:132 controller.py:268 logic.py:654
+msgid "Length:"
+msgstr "Продолжительность:"
+
+#: controller.py:133 controller.py:269 logic.py:654
+msgid "min"
+msgstr "мин"
+
+#: controller.py:134 controller.py:270 logic.py:655
+msgid "sec"
+msgstr "сек"
+
+#: controller.py:137 controller.py:273
+msgid "Rating:"
+msgstr "Оценка:"
+
+#: controller.py:145 controller.py:179 controller.py:203 sharedGUI.py:358
 #: sharedGUI.py:476 sharedGUI.py:504
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
-#: controller.py:70 controller.py:106 controller.py:130 logic.py:161
+#: controller.py:149 controller.py:185 controller.py:209 logic.py:161
 #: shared.py:4610 sharedGUI.py:1369 sharedGUI.py:1926 sharedGUI.py:4022
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
-#: controller.py:205 controller.py:211 controller.py:217
+#: controller.py:288 controller.py:306
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
-#: controller.py:338
+#: controller.py:296
+msgid "Save DB."
+msgstr "Сохранение БД."
+
+#: controller.py:441
 #, python-format
 msgid "Load #%d."
 msgstr "Загрузка №%d."
 
-#: controller.py:350 shared.py:207 shared.py:212 shared.py:221 shared.py:230
-#: shared.py:239 shared.py:301 shared.py:321 shared.py:329 shared.py:348
-#: shared.py:368 shared.py:421 shared.py:431 shared.py:585 shared.py:608
-#: shared.py:715 shared.py:725 shared.py:803 shared.py:842 shared.py:1567
-#: shared.py:1591 shared.py:1607 shared.py:1635 shared.py:1785 shared.py:1791
-#: shared.py:1891 shared.py:1895 shared.py:1907 shared.py:2055 shared.py:2079
-#: shared.py:2384 shared.py:2552 shared.py:2716 shared.py:2749 shared.py:4313
-#: shared.py:4333 shared.py:4384 sharedGUI.py:27 sharedGUI.py:32
-#: sharedGUI.py:37 sharedGUI.py:57 sharedGUI.py:144 sharedGUI.py:148
-#: sharedGUI.py:166 sharedGUI.py:181 sharedGUI.py:192 sharedGUI.py:207
-#: sharedGUI.py:224 sharedGUI.py:229 sharedGUI.py:418 sharedGUI.py:824
-#: sharedGUI.py:837 sharedGUI.py:845 sharedGUI.py:853 sharedGUI.py:870
-#: sharedGUI.py:886 sharedGUI.py:892 sharedGUI.py:955 sharedGUI.py:1467
-#: sharedGUI.py:1735 sharedGUI.py:1752 sharedGUI.py:1951 sharedGUI.py:1965
-#: sharedGUI.py:2019 sharedGUI.py:2141 sharedGUI.py:2264 sharedGUI.py:2281
-#: sharedGUI.py:2298 sharedGUI.py:2302 sharedGUI.py:2308 sharedGUI.py:2322
-#: sharedGUI.py:2334 sharedGUI.py:2345 sharedGUI.py:2354 sharedGUI.py:2365
-#: sharedGUI.py:2398 sharedGUI.py:2402 sharedGUI.py:2460 sharedGUI.py:2559
-#: sharedGUI.py:2660 sharedGUI.py:2667 sharedGUI.py:2672 sharedGUI.py:2676
-#: sharedGUI.py:2688 sharedGUI.py:2692 sharedGUI.py:2801 sharedGUI.py:2807
-#: sharedGUI.py:2810 sharedGUI.py:2931 sharedGUI.py:2957 sharedGUI.py:2963
-#: sharedGUI.py:2967 sharedGUI.py:2987 sharedGUI.py:2997 sharedGUI.py:3151
-#: sharedGUI.py:3234 sharedGUI.py:3264 sharedGUI.py:3417 sharedGUI.py:3858
-#: sharedGUI.py:3941
-msgid "ERROR"
-msgstr "ОШИБКА"
-
-#: controller.py:351
+#: controller.py:454
 #, python-format
 msgid "Wrong input data: \"%s\"!"
 msgstr "Недопустимые входные данные: \"%s\"!"
 
-#: gui.py:67
+#: gui.py:76
 msgid "Tracks"
 msgstr "Дорожки"
 
-#: gui.py:68
+#: gui.py:77
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: gui.py:74
+#: gui.py:86
 msgid "Create"
 msgstr "Создать"
 
-#: gui.py:75
+#: gui.py:87
 msgid "Create a new record"
 msgstr "Создать новую запись"
 
-#: gui.py:81
+#: gui.py:94
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui.py:82
+#: gui.py:95
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: gui.py:88
+#: gui.py:102
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui.py:89
+#: gui.py:103
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: gui.py:95
+#: gui.py:110
 msgid "Delete"
 msgstr "Удалить"
 
-#: gui.py:96
+#: gui.py:111
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: gui.py:150
+#: gui.py:165
 msgid "Search older records"
 msgstr "Поиск более старых записей"
 
-#: gui.py:162
+#: gui.py:177
 msgid "Search newer records"
 msgstr "Поиск более новых записей"
 
-#: gui.py:170
+#: gui.py:185
 msgid "Search in albums"
 msgstr "Поиск по альбомам"
 
-#: gui.py:181
+#: gui.py:196
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: gui.py:188
+#: gui.py:203
 msgid "Go to the preceding record"
 msgstr "Перейти к предыдущей записи"
 
-#: gui.py:202
+#: gui.py:218
 msgid "Album ID"
 msgstr "ИД альбома"
 
-#: gui.py:207
+#: gui.py:223
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:284
+#: gui.py:307
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: gui.py:390 logic.py:626
+#: gui.py:417 logic.py:642
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:394 logic.py:627
+#: gui.py:421 logic.py:643
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:398 logic.py:629
+#: gui.py:425 logic.py:645
 msgid "Year:"
 msgstr "Год:"
 
-#: gui.py:402
+#: gui.py:429
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: gui.py:420
+#: gui.py:437 logic.py:644
+msgid "Genre:"
+msgstr "Жанр:"
+
+#: gui.py:451
 msgid "Tracks:"
 msgstr "Дорожки:"
 
@@ -232,7 +250,7 @@ msgstr "Альбом %s уже занесен в БД!"
 msgid "Album %d: %d new tracks."
 msgstr "Альбом %d: %d новых дорожек."
 
-#: logic.py:209 logic.py:545 logic.py:703 logic.py:719 shared.py:270
+#: logic.py:209 logic.py:561 logic.py:719 logic.py:735 shared.py:270
 #: shared.py:284 shared.py:355 shared.py:375 shared.py:420 shared.py:430
 #: shared.py:503 shared.py:508 shared.py:522 shared.py:546 shared.py:565
 #: shared.py:569 shared.py:592 shared.py:615 shared.py:662 shared.py:666
@@ -290,12 +308,25 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ"
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
-#: logic.py:533
+#: logic.py:241
+#, python-format
+msgid ""
+"Unable to execute:\n"
+"\"%s\"\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Не удается выполнить:\n"
+"\"%s\"\n"
+"\n"
+"Подробности: %s"
+
+#: logic.py:549
 #, python-format
 msgid "Save \"%s\""
 msgstr "Сохранение \"%s\""
 
-#: logic.py:546
+#: logic.py:562
 #, python-format
 msgid ""
 "Database \"%s\" has failed!\n"
@@ -306,11 +337,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:628
-msgid "Genre:"
-msgstr "Жанр:"
-
-#: logic.py:704 logic.py:720
+#: logic.py:720 logic.py:736
 #, python-format
 msgid ""
 "Third party module has failed!\n"
@@ -437,12 +464,6 @@ msgstr "Словарь \"%s\": Неправильная строка №%d: \"%s
 #: sharedGUI.py:3128 sharedGUI.py:3446 sharedGUI.py:3457 sharedGUI.py:3854
 msgid "Empty input is not allowed!"
 msgstr "Пустые входные данные не допускаются!"
-
-#: shared.py:586 shared.py:609 shared.py:2056 shared.py:2080 shared.py:4314
-#: shared.py:4334 shared.py:4385 sharedGUI.py:81
-#, python-format
-msgid "The condition \"%s\" is not observed!"
-msgstr "Условие \"%s\" не выполнено!"
 
 #: shared.py:721 shared.py:1573 sharedGUI.py:225
 #, python-format
