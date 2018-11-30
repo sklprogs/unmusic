@@ -224,10 +224,24 @@ class DB:
     
     def __init__(self,path):
         self.Success = True
-        self._path = path
+        self._path   = path
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def get_album(self,albumid):
+        f = 'logic.DB.get_album'
+        if self.Success:
+            try:
+                self.dbc.execute ('select ALBUM,ARTIST,YEAR,GENRE\
+                                         ,COUNTRY,COMMENT from ALBUMS \
+                                   where  ALBUMID = ?',(albumid,)
+                                 )
+                return self.dbc.fetchone()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def max_id(self):
         f = 'logic.DB.max_id'
@@ -620,12 +634,12 @@ class Walker:
 
 
 objs = Objects()
+objs.default()
 
 
 
 if __name__ == '__main__':
     sg.objs.start()
-    objs.default()
     f = 'logic.__main__'
     dirs = Walker('/tmp/meta').dirs()
     if dirs:

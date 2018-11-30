@@ -238,23 +238,31 @@ class TopArea:
     def bindings(self):
         sg.bind (obj      = self
                 ,bindings = '<F3>'
-                ,action   = self.focus_search
+                ,action   = self.focus_album_search
+                )
+        sg.bind (obj      = self
+                ,bindings = '<F4>'
+                ,action   = self.focus_track_search
                 )
         ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will
             not allow to select all contents
         '''
         sg.bind (obj      = self.ent_src
                 ,bindings = '<ButtonRelease-1>'
-                ,action   = self.focus_search
+                ,action   = self.focus_album_search
+                )
+        sg.bind (obj      = self.ent_sr2
+                ,bindings = '<ButtonRelease-1>'
+                ,action   = self.focus_track_search
                 )
 
-    def focus_search(self,event=None):
+    def focus_album_search(self,event=None):
         self.ent_src.focus()
         self.ent_src.select_all()
-
-    def focus_go(self,event=None):
-        self.entry_go.focus()
-        self.entry_go.select_all()
+    
+    def focus_track_search(self,event=None):
+        self.ent_sr2.focus()
+        self.ent_sr2.select_all()
 
 
 
@@ -268,14 +276,11 @@ class AlbumEditor:
         ''' For some reason, introducing an additional Frame into Top
             does not allow to expand embedded widgets
         '''
-        self.top_area = TopArea(parent=self.obj)
-        self._frames()
+        self.top_area    = TopArea(parent=self.obj)
+        self.body        = Body(parent=self.obj)
         self.bottom_area = BottomArea(parent=self.obj)
         self.bindings()
         sg.Geometry(parent=self.obj)
-
-    def _frames(self):
-        self.cur = Body(parent=self.obj)
 
     def bindings(self):
         ''' #todo: Cannot use Delete + smth bindings, e.g.
@@ -319,7 +324,6 @@ class Body:
         self.gui()
 
     def reset(self,event=None):
-        self.w_aid.clear_text()
         self.w_art.clear_text()
         self.w_alb.clear_text()
         self.w_yer.clear_text()
@@ -396,7 +400,7 @@ class Body:
                               ,fill      = 'x'
                               ,ipady     = 1
                               )
-        
+    
     def labels(self):
         sg.Label (parent = self.frm_lft
                  ,text   = _('Artist:')
@@ -418,6 +422,21 @@ class Body:
                  ,text   = _('Comment:')
                  ,ipady  = 2
                  )
+
+
+
+class Objects:
+    
+    def __init__(self):
+        self._editor = None
+    
+    def editor(self):
+        if not self._editor:
+            self._editor = AlbumEditor()
+        return self._editor
+
+
+objs = Objects()
 
 
 if __name__ == '__main__':
