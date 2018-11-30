@@ -22,54 +22,113 @@ class AlbumEditor:
     def search_track(self,event=None):
         f = 'controller.AlbumEditor.search_track'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            search = self.gui.top_area.ent_sr2.get()
+            if search:
+                data = lg.objs.db().search_track(search)
+                if data:
+                    mes = ''
+                    for track in data:
+                        #todo: get album info
+                        '''
+                        mes =  _('Artist:')  + ' %s\n' % self._artist
+                        mes += _('Album:')   + ' %s\n' % self._album
+                        mes += _('Year:')    + ' %d\n' % self._year
+                        '''
+                        if track[0]:
+                            mes +=  _('Album ID:') + ' %d\n' % track[0]
+                        if track[1]:
+                            mes += _('Title:') + ' %s\n' % track[1]
+                        mes += _('Track #:') + ' %d\n' % track[2]
+                        if track[3]:
+                            mes += _('Lyrics:')   + ' %s\n' % track[3]
+                        if track[4]:
+                            mes += _('Comment:')  + ' %s\n' % track[4]
+                        if track[5]:
+                            mes += _('Bitrate:')  + ' %dk\n' \
+                                   % (track[5] // 1000)
+                        # Length
+                        if track[6]:
+                            minutes = track[6] // 60
+                            seconds = track[6] - minutes * 60
+                            mes += _('Length:') + ' %d ' % minutes \
+                                   + _('min')   + ' %d ' % seconds \
+                                   + _('sec')   + '\n'
+                        # Rating
+                        if track[7]:
+                            mes += _('Rating:')  + ' %d\n' % track[7]
+                        mes += '\n\n'
+                    
+                    gi.objs.tracks().reset()
+                    gi.objs._tracks.insert(text=mes)
+                    gi.objs._tracks.show()
+                else:
+                    sh.objs.mes (f,_('INFO')
+                                ,_('No matches!')
+                                )
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
         else:
             sh.com.cancel(f)
     
     def search_album(self,event=None):
         f = 'controller.AlbumEditor.search_album'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
-        else:
-            sh.com.cancel(f)
-    
-    def search_next_track(self,event=None):
-        f = 'controller.AlbumEditor.search_next_track'
-        if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
-        else:
-            sh.com.cancel(f)
-    
-    def search_prev_track(self,event=None):
-        f = 'controller.AlbumEditor.search_prev_track'
-        if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            old = lg.objs.db().albumid
+            # Not 1, because we use '<' and '>' in search
+            lg.objs._db.albumid = 0
+            self.search_next_album()
+            if lg.objs._db.albumid == 0:
+                lg.objs._db.albumid = old
         else:
             sh.com.cancel(f)
     
     def search_next_album(self,event=None):
         f = 'controller.AlbumEditor.search_next_album'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            search = self.gui.top_area.ent_src.get()
+            if search:
+                old     = lg.objs.db().albumid
+                albumid = lg.objs._db.next_album(search)
+                if albumid:
+                    lg.objs._db.albumid = albumid
+                    self.fill()
+                else:
+                    lg.objs._db.albumid = old
+                    sh.objs.mes (f,_('INFO')
+                                ,_('No matches!')
+                                )
+            else:
+                self.gui.top_area.btn_spr.inactive()
+                self.gui.top_area.btn_snx.inactive()
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
         else:
             sh.com.cancel(f)
     
     def search_prev_album(self,event=None):
         f = 'controller.AlbumEditor.search_prev_album'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            search = self.gui.top_area.ent_src.get()
+            if search:
+                old     = lg.objs.db().albumid
+                albumid = lg.objs._db.prev_album(search)
+                if albumid:
+                    lg.objs._db.albumid = albumid
+                    self.fill()
+                else:
+                    lg.objs._db.albumid = old
+                    sh.objs.mes (f,_('INFO')
+                                ,_('No matches!')
+                                )
+            else:
+                self.gui.top_area.btn_spr.inactive()
+                self.gui.top_area.btn_snx.inactive()
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
         else:
             sh.com.cancel(f)
     
@@ -77,9 +136,9 @@ class AlbumEditor:
         f = 'controller.AlbumEditor.inc'
         if self.Success:
             if self.get_no() == self.get_max():
-                self._no = self.get_min()
+                lg.objs.db().albumid = self.get_min()
             else:
-                self._no = lg.objs.db().next_id(self._no)
+                lg.objs.db().albumid = lg.objs.db().next_id()
                 self.get_no()
         else:
             sh.com.cancel(f)
@@ -88,9 +147,9 @@ class AlbumEditor:
         f = 'controller.AlbumEditor.dec'
         if self.Success:
             if self.get_no() == self.get_min():
-                self._no = self.get_max()
+                lg.objs.db().albumid = self.get_max()
             else:
-                self._no = lg.objs.db().prev_id(self._no)
+                lg.objs.db().albumid = lg.objs.db().prev_id()
                 self.get_no()
         else:
             sh.com.cancel(f)
@@ -113,9 +172,32 @@ class AlbumEditor:
     
     def tracks(self,event=None):
         f = 'controller.AlbumEditor.tracks'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        data = lg.objs.db().tracks()
+        if data:
+            mes = ''
+            for track in data:
+                mes += _('Track #:') + ' %d\n' % track[1]
+                if track[0]:
+                    mes += _('Title:')   + ' %s\n' % track[0]
+                if track[4]:
+                    mes += _('Bitrate:') + ' %dk\n' % (track[4] // 1000)
+                # Length
+                if track[5]:
+                    minutes = track[5] // 60
+                    seconds = track[5] - minutes * 60
+                    mes += _('Length:') + ' %d ' % minutes \
+                           + _('min')   + ' %d ' % seconds \
+                           + _('sec')   + '\n'
+                # Rating
+                if track[6]:
+                    mes += _('Rating:')  + ' %d\n' % track[6]
+                    mes += '\n\n'
+                    
+            gi.objs.tracks().reset()
+            gi.objs._tracks.insert(text=mes)
+            gi.objs._tracks.show()
+        else:
+            sh.com.cancel(f)
     
     def delete(self,event=None):
         f = 'controller.AlbumEditor.delete'
@@ -140,9 +222,7 @@ class AlbumEditor:
         self.gui.top_area.btn_nxt.action    = self.next
         self.gui.top_area.btn_prv.action    = self.prev
         self.gui.top_area.btn_spr.action    = self.search_prev_album
-        self.gui.top_area.btn_sp2.action    = self.search_prev_track
         self.gui.top_area.btn_snx.action    = self.search_next_album
-        self.gui.top_area.btn_sn2.action    = self.search_next_track
         self.gui.bottom_area.btn_trk.action = self.tracks
         self.gui.bottom_area.btn_rec.action = self.create
         self.gui.bottom_area.btn_sav.action = self.save
@@ -160,16 +240,24 @@ class AlbumEditor:
                 ,bindings = ['<Return>','<KP_Enter>']
                 ,action   = self.search_track
                 )
+        sg.bind (obj      = self.gui
+                ,bindings = ['<F2>','<Control-s>']
+                ,action   = self.save
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<F4>'
+                ,action   = self.tracks
+                )
     
     def get_no(self):
         f = 'controller.AlbumEditor.get_no'
         if self.Success:
-            self._no = sh.Input (title = f
-                                ,value = self._no
-                                ).integer()
+            lg.objs.db().albumid = sh.Input (title = f
+                                            ,value = lg.objs.db().albumid
+                                            ).integer()
         else:
             sh.com.cancel(f)
-        return self._no
+        return lg.objs.db().albumid
     
     def get_min(self):
         f = 'controller.AlbumEditor.get_min'
@@ -191,44 +279,64 @@ class AlbumEditor:
             sh.com.cancel(f)
             return 0
     
-    def values(self):
-        self.Success = True
-        self._no     = 1
-    
     def reset(self):
         f = 'controller.AlbumEditor.reset'
-        self.values()
         self.Success = lg.objs.db().Success
-        self._no     = self.get_max()
+        lg.objs._db.albumid = self.get_max()
         self.fill()
     
-    def update(self):
-        f = 'controller.AlbumEditor.update'
+    def update_album_search(self):
+        f = 'controller.AlbumEditor.update_album_search'
+        if self.Success:
+            search = self.gui.top_area.ent_src.get()
+            self.gui.top_area.btn_spr.inactive()
+            self.gui.top_area.btn_snx.inactive()
+            if search:
+                albumid = lg.objs._db.next_album(search)
+                if albumid:
+                    self.gui.top_area.btn_snx.active()
+                albumid = lg.objs._db.prev_album(search)
+                if albumid:
+                    self.gui.top_area.btn_spr.active()
+        else:
+            sh.com.cancel(f)
+    
+    def update_meter(self):
+        f = 'controller.AlbumEditor.update_meter'
         if self.Success:
             _max = self.get_max()
             self.gui.top_area.lbl_mtr.text ('%d / %d' % (self.get_no()
                                                         ,_max
                                                         )
                                            )
-            if self._no < _max:
+            if lg.objs.db().albumid < _max:
                 self.gui.top_area.btn_nxt.active()
             else:
                 self.gui.top_area.btn_nxt.inactive()
-            if self._no == self.get_min():
+            if lg.objs._db.albumid == self.get_min():
                 self.gui.top_area.btn_prv.inactive()
             else:
                 self.gui.top_area.btn_prv.active()
         else:
             sh.com.cancel(f)
     
+    def update(self):
+        f = 'controller.AlbumEditor.update'
+        if self.Success:
+            self.update_meter()
+            self.update_album_search()
+        else:
+            sh.com.cancel(f)
+    
     def fill(self,event=None):
         f = 'controller.AlbumEditor.fill'
         if self.Success:
-            data = lg.objs.db().get_album(self.get_no())
+            self.get_no()
+            data = lg.objs.db().get_album()
             if data:
                 if len(data) == 6:
                     self.gui.bottom_area.update (_('Load #%d.') \
-                                                 % self._no
+                                                % lg.objs._db.albumid
                                                 )
                     self.gui.body.reset()
                     self.gui.body.w_alb.insert(data[0])
@@ -251,6 +359,7 @@ class AlbumEditor:
         self.gui.show()
     
     def close(self,event=None):
+        lg.objs.db().save()
         self.gui.close()
 
 

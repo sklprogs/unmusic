@@ -20,4 +20,5 @@ class Commands:
 com = Commands()
 
 if __name__ == '__main__':
-    print(lg.objs.db().max_id())
+    lg.objs.db().albumid = 6
+    print(lg.objs._db.prev_album('razbar'))

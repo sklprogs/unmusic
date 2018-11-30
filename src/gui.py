@@ -102,9 +102,9 @@ class BottomArea:
     def _info(self):
         # Bind to 'self.frmt' to avoid bulking and free space
         self.lbl = sg.Label (parent = self.frmb
-                              ,text   = ''
-                              ,font   = 'Sans 9'
-                              )
+                            ,text   = ''
+                            ,font   = 'Sans 9'
+                            )
 
     def update(self,text):
         self.pool.add(message=text)
@@ -173,26 +173,10 @@ class TopArea:
                    )
     
     def search_tracks(self):
-        self.btn_sp2 = sg.Button (parent   = self.frm
-                                 ,hint     = _('Search older records')
-                                 ,inactive = self.prev_inactive
-                                 ,active   = self.prev_active
-                                 ,text     = '←'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'left'
-                                 )
         self.ent_sr2 = sg.Entry (parent    = self.frm
                                 ,Composite = 1
                                 ,side      = 'left'
                                 )
-        self.btn_sn2 = sg.Button (parent   = self.frm
-                                 ,hint     = _('Search newer records')
-                                 ,inactive = self.next_inactive
-                                 ,active   = self.next_active
-                                 ,text     = '→'
-                                 ,hint_dir = 'bottom'
-                                 ,side     = 'left'
-                                 )
         sg.ToolTip (obj        = self.ent_sr2
                    ,text       = _('Search in tracks')
                    ,hint_width = 170
@@ -241,7 +225,7 @@ class TopArea:
                 ,action   = self.focus_album_search
                 )
         sg.bind (obj      = self
-                ,bindings = '<F4>'
+                ,bindings = '<F6>'
                 ,action   = self.focus_track_search
                 )
         ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will
@@ -428,15 +412,19 @@ class Body:
 class Objects:
     
     def __init__(self):
-        self._editor = None
+        self._tracks = None
     
-    def editor(self):
-        if not self._editor:
-            self._editor = AlbumEditor()
-        return self._editor
+    def tracks(self):
+        if self._tracks is None:
+            self._tracks = sg.TextBox(parent=sg.Top(parent=sg.objs.root()))
+            self._tracks.title(_('Tracks:'))
+            sg.Geometry(parent=self._tracks.parent).set('1024x768')
+        return self._tracks
+
 
 
 objs = Objects()
+
 
 
 if __name__ == '__main__':

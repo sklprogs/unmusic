@@ -78,8 +78,8 @@ class Directory:
                 successfully.
             '''
             if track.audio and data:
-                if not objs._db.has_track (albumid = albumid
-                                          ,no      = data[1]
+                objs.db().albumid = albumid
+                if not objs._db.has_track (no      = data[1]
                                           ,bitrate = data[4]
                                           ):
                     self._new += 1
@@ -224,19 +224,100 @@ class DB:
     
     def __init__(self,path):
         self.Success = True
+        self.albumid = 1
         self._path   = path
         self.connect()
         self.create_albums()
         self.create_tracks()
     
-    def prev_id(self,albumid):
+    def tracks(self):
+        f = 'logic.DB.tracks'
+        if self.Success:
+            try:
+                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
+                                           ,BITRATE,LENGTH,RATING \
+                                   from     TRACKS where ALBUMID = ? \
+                                   order by ALBUMID,NO',(self.albumid,)
+                                 )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def search_track(self,search):
+        f = 'logic.DB.search_track'
+        if self.Success:
+            if search:
+                search = '%' + search.lower() + '%'
+                try:
+                    self.dbc.execute ('select   ALBUMID,TITLE,NO,LYRICS\
+                                               ,COMMENT,BITRATE,LENGTH\
+                                               ,RATING from TRACKS \
+                                       where    SEARCH like ? \
+                                       order by ALBUMID,NO'
+                                      ,(search,)
+                                     )
+                    return self.dbc.fetchall()
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def next_album(self,search):
+        f = 'logic.DB.next_album'
+        if self.Success:
+            if search:
+                search = '%' + search.lower() + '%'
+                try:
+                    self.dbc.execute ('select   ALBUMID from ALBUMS \
+                                       where    ALBUMID > ? \
+                                       and      SEARCH like ? \
+                                       order by ALBUMID'
+                                      ,(self.albumid,search,)
+                                     )
+                    result = self.dbc.fetchone()
+                    if result:
+                        return result[0]
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def prev_album(self,search):
+        f = 'logic.DB.prev_album'
+        if self.Success:
+            if search:
+                search = '%' + search.lower() + '%'
+                try:
+                    self.dbc.execute ('select   ALBUMID from ALBUMS \
+                                       where    ALBUMID < ? \
+                                       and      SEARCH like ? \
+                                       order by ALBUMID desc'
+                                      ,(self.albumid,search,)
+                                     )
+                    result = self.dbc.fetchone()
+                    if result:
+                        return result[0]
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def prev_id(self):
         f = 'logic.DB.prev_id'
         if self.Success:
             try:
                 self.dbc.execute ('select   ALBUMID from ALBUMS \
                                    where    ALBUMID < ? \
                                    order by ALBUMID desc'
-                                  ,(albumid,)
+                                  ,(self.albumid,)
                                  )
                 result = self.dbc.fetchone()
                 if result:
@@ -246,13 +327,13 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def next_id(self,albumid):
+    def next_id(self):
         f = 'logic.DB.next_id'
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUMID from ALBUMS \
                                    where  ALBUMID > ? order by ALBUMID'
-                                  ,(albumid,)
+                                  ,(self.albumid,)
                                  )
                 result = self.dbc.fetchone()
                 if result:
@@ -262,13 +343,13 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def get_album(self,albumid):
+    def get_album(self):
         f = 'logic.DB.get_album'
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUM,ARTIST,YEAR,GENRE\
                                          ,COUNTRY,COMMENT from ALBUMS \
-                                   where  ALBUMID = ?',(albumid,)
+                                   where  ALBUMID = ?',(self.albumid,)
                                  )
                 return self.dbc.fetchone()
             except Exception as e:
@@ -283,7 +364,7 @@ class DB:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
                     already in DB.
                 '''
-                self.dbc.execute ('select ALBUMID from ALBUMS \
+                self.dbc.execute ('select   ALBUMID from ALBUMS \
                                    order by ALBUMID'
                                  )
                 result = self.dbc.fetchone()
@@ -301,7 +382,7 @@ class DB:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
                     already in DB.
                 '''
-                self.dbc.execute ('select ALBUMID from ALBUMS \
+                self.dbc.execute ('select   ALBUMID from ALBUMS \
                                    order by ALBUMID desc'
                                  )
                 result = self.dbc.fetchone()
@@ -312,7 +393,7 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def has_track(self,albumid,no,bitrate):
+    def has_track(self,no,bitrate):
         ''' Since tags may be missing, we use a track number to identify
             a track. Different bitrates refer to different tracks.
         '''
@@ -320,9 +401,9 @@ class DB:
         if self.Success:
             try:
                 self.dbc.execute ('select TITLE from TRACKS \
-                                   where ALBUMID = ? and NO = ? \
-                                   and BITRATE = ?'
-                                  ,(albumid,no,bitrate,)
+                                   where  ALBUMID = ? and NO = ? \
+                                   and    BITRATE = ?'
+                                  ,(self.albumid,no,bitrate,)
                                  )
                 result = self.dbc.fetchone()
                 if result:
