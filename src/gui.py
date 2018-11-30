@@ -168,7 +168,7 @@ class TopArea:
                                  )
         sg.ToolTip (obj        = self.ent_src
                    ,text       = _('Search in albums')
-                   ,hint_width = 150
+                   ,hint_width = 170
                    ,hint_dir   = 'bottom'
                    )
     
@@ -195,7 +195,7 @@ class TopArea:
                                  )
         sg.ToolTip (obj        = self.ent_sr2
                    ,text       = _('Search in tracks')
-                   ,hint_width = 150
+                   ,hint_width = 170
                    ,hint_dir   = 'bottom'
                    )
     
@@ -347,12 +347,11 @@ class Body:
         self.frm_rht = sg.Frame (parent = self.frm_man
                                 ,expand = 1
                                 ,fill   = 'x'
-                                ,side   = 'right'
+                                ,side   = 'left'
                                 ,ipadx  = 150
                                 )
         self.frm_btn = sg.Frame (parent = self.parent
                                 ,expand = 0
-                                ,fill   = 'x'
                                 ,side   = 'bottom'
                                 )
         self.frm_btl = sg.Frame (parent = self.frm_btn
@@ -367,12 +366,6 @@ class Body:
                                 )
 
     def entries(self):
-        self.w_aid = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
         self.w_art = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
@@ -388,14 +381,14 @@ class Body:
         self.w_yer = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
-                              ,fill      = 'x'
                               ,ipady     = 1
+                              ,fill      = 'both'
                               )
         self.w_cnt = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
-                              ,fill      = 'x'
                               ,ipady     = 1
+                              ,fill      = 'both'
                               )
         self.w_com = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
@@ -418,7 +411,7 @@ class Body:
                  ,ipady  = 2
                  )
         sg.Label (parent = self.frm_lft
-                 ,text   = _('Country:')
+                 ,text   = _('Country (2 letters):')
                  ,ipady  = 2
                  )
         sg.Label (parent = self.frm_lft
