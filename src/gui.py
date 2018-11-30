@@ -69,6 +69,9 @@ class BottomArea:
                                  ,side     = 'left'
                                  ,inactive = self._path_trk
                                  ,active   = self._path_trk
+                                 ,bindings = ['<F4>','<Control-t>'
+                                             ,'<Alt-t>'
+                                             ]
                                  )
         self.btn_rec = sg.Button (parent   = self.frm1
                                  ,text     = _('Create')
@@ -76,6 +79,7 @@ class BottomArea:
                                  ,side     = 'left'
                                  ,inactive = self._path_add
                                  ,active   = self._path_add
+                                 ,bindings = '<Control-n>'
                                  )
         self.btn_sav = sg.Button (parent   = self.frm1
                                  ,text     = _('Save')
@@ -83,6 +87,7 @@ class BottomArea:
                                  ,side     = 'left'
                                  ,inactive = self._path_sav
                                  ,active   = self._path_sav
+                                 ,bindings = ['<F2>','<Control-s>']
                                  )
         self.btn_rld = sg.Button (parent   = self.frm2
                                  ,text     = _('Reload')
@@ -90,6 +95,7 @@ class BottomArea:
                                  ,side     = 'left'
                                  ,inactive = self._path_rld
                                  ,active   = self._path_rld
+                                 ,bindings = ['<F5>','<Control-r>']
                                  )
         self.btn_del = sg.Button (parent   = self.frm2
                                  ,text     = _('Delete')

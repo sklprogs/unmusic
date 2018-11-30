@@ -191,7 +191,7 @@ class AlbumEditor:
                 # Rating
                 if track[6]:
                     mes += _('Rating:')  + ' %d\n' % track[6]
-                    mes += '\n\n'
+                mes += '\n\n'
                     
             gi.objs.tracks().reset()
             gi.objs._tracks.insert(text=mes)
@@ -245,8 +245,12 @@ class AlbumEditor:
                 ,action   = self.save
                 )
         sg.bind (obj      = self.gui
-                ,bindings = '<F4>'
+                ,bindings = ['<F4>','<Control-t>','<Alt-t>']
                 ,action   = self.tracks
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Control-n>'
+                ,action   = self.create
                 )
     
     def get_no(self):
