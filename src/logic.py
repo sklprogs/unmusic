@@ -230,6 +230,22 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def updateDB(self,query):
+        f = 'logic.DB.updateDB'
+        if self.Success:
+            if query:
+                try:
+                    self.dbc.executescript(query)
+                except Exception as e:
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('Unable to execute:\n"%s"\n\nDetails: %s')\
+                                % (str(query).replace(';',';\n'),str(e))
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def tracks(self):
         f = 'logic.DB.tracks'
         if self.Success:

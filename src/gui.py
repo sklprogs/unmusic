@@ -9,6 +9,15 @@ gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
+# Do not localize (being stored in DB)
+GENRES = ('Unknown','Ambient','Black Metal','Blues'
+         ,'Brutal Death/Grindcore','Brutal Death Metal','Classical'
+         ,'Death Metal','Death/Black','Death/Thrash','Electronic'
+         ,'Ethnic','Heavy Metal','Game','Grindcore','Goregrind','Metal'
+         ,'Pop','Rap','Relaxation','Soundtrack','Thrash Metal','Vocal'
+         )
+
+
 
 class BottomArea:
 
@@ -274,6 +283,12 @@ class AlbumEditor:
         self.bindings()
         sg.Geometry(parent=self.obj)
 
+    def dump_album(self,event=None):
+        return (self.body.w_alb.get(),self.body.w_art.get()
+               ,self.body.w_yer.get(),self.body.w_gnr.choice
+               ,self.body.w_cnt.get(),self.body.w_com.get()
+               )
+    
     def bindings(self):
         ''' #todo: Cannot use Delete + smth bindings, e.g.
             '<Control-Delete>' (TextBox reacts to Delete)
@@ -392,6 +407,10 @@ class Body:
                               ,fill      = 'x'
                               ,ipady     = 1
                               )
+        self.w_gnr = sg.OptionMenu (parent = self.frm_rht
+                                   ,items  = GENRES
+                                   ,side   = 'left'
+                                   )
     
     def labels(self):
         sg.Label (parent = self.frm_lft
@@ -412,6 +431,10 @@ class Body:
                  )
         sg.Label (parent = self.frm_lft
                  ,text   = _('Comment:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Genre:')
                  ,ipady  = 2
                  )
 

@@ -19,6 +19,85 @@ class AlbumEditor:
         self.bindings()
         self.reset()
         
+    def dump(self,event=None):
+        f = 'controller.AlbumEditor.dump'
+        if self.Success:
+            self.dump_album()
+            self.dump_tracks()
+        else:
+            sh.com.cancel(f)
+    
+    def dump_tracks(self,event=None):
+        f = 'controller.AlbumEditor.dump_tracks'
+        if self.Success:
+            pass
+        else:
+            sh.com.cancel(f)
+    
+    def _compare_albums(self,old,new):
+        f = 'controller.AlbumEditor.compare_albums'
+        # Quotes in the text will fail the query, so we screen them
+        new[0] = str(new[0]).replace('"','""')
+        new[1] = str(new[1]).replace('"','""')
+        new[3] = str(new[3]).replace('"','""')
+        new[4] = str(new[4]).replace('"','""')
+        new[5] = str(new[5]).replace('"','""')
+        search = [new[0],new[1],str(new[2]),new[3],new[4],new[5]]
+        search = ' '.join(search)
+        search = sh.Text(search).delete_duplicate_spaces()
+        search = search.strip().lower()
+        
+        add = []
+        for i in range(len(new)):
+            if old[i] != new[i]:
+                if i == 0:
+                    base = 'ALBUM="%s"'
+                elif i == 1:
+                    base = 'ARTIST="%s"'
+                elif i == 2:
+                    base = 'YEAR="%d"'
+                elif i == 3:
+                    base = 'GENRE="%s"'
+                elif i == 4:
+                    base = 'COUNTRY="%s"'
+                elif i == 5:
+                    base = 'COMMENT="%s"'
+                add.append(base % new[i])
+        if add:
+            add.append('SEARCH="%s"' % search)
+            add = 'begin;update ALBUMS set ' + ','.join(add)
+            add += ' where ALBUMID=%d;commit;' % lg.objs.db().albumid
+            return add
+    
+    def dump_album(self,event=None):
+        f = 'controller.AlbumEditor.dump_album'
+        if self.Success:
+            old = lg.objs.db().get_album()
+            if old:
+                new = self.gui.dump_album()
+                if len(old) == len(new):
+                    old    = list(old)
+                    new    = list(new)
+                    new[2] = sh.Input (title = f
+                                      ,value = new[2]
+                                      ).integer()
+                    if old == new:
+                        sh.log.append (f,_('INFO')
+                                      ,_('No changes!')
+                                      )
+                    else:
+                        query = self._compare_albums(old,new)
+                        lg.objs._db.updateDB(query)
+                else:
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('The condition "%s" is not observed!')\
+                                % ('%d == %d' % (len(old),len(new)))
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def search_track(self,event=None):
         f = 'controller.AlbumEditor.search_track'
         if self.Success:
@@ -172,50 +251,62 @@ class AlbumEditor:
     
     def tracks(self,event=None):
         f = 'controller.AlbumEditor.tracks'
-        data = lg.objs.db().tracks()
-        if data:
-            mes = ''
-            for track in data:
-                mes += _('Track #:') + ' %d\n' % track[1]
-                if track[0]:
-                    mes += _('Title:')   + ' %s\n' % track[0]
-                if track[4]:
-                    mes += _('Bitrate:') + ' %dk\n' % (track[4] // 1000)
-                # Length
-                if track[5]:
-                    minutes = track[5] // 60
-                    seconds = track[5] - minutes * 60
-                    mes += _('Length:') + ' %d ' % minutes \
-                           + _('min')   + ' %d ' % seconds \
-                           + _('sec')   + '\n'
-                # Rating
-                if track[6]:
-                    mes += _('Rating:')  + ' %d\n' % track[6]
-                mes += '\n\n'
-                    
-            gi.objs.tracks().reset()
-            gi.objs._tracks.insert(text=mes)
-            gi.objs._tracks.show()
+        if self.Success:
+            data = lg.objs.db().tracks()
+            if data:
+                mes = ''
+                for track in data:
+                    mes += _('Track #:') + ' %d\n' % track[1]
+                    if track[0]:
+                        mes += _('Title:')   + ' %s\n' % track[0]
+                    if track[4]:
+                        mes += _('Bitrate:') + ' %dk\n' % (track[4] // 1000)
+                    # Length
+                    if track[5]:
+                        minutes = track[5] // 60
+                        seconds = track[5] - minutes * 60
+                        mes += _('Length:') + ' %d ' % minutes \
+                               + _('min')   + ' %d ' % seconds \
+                               + _('sec')   + '\n'
+                    # Rating
+                    if track[6]:
+                        mes += _('Rating:')  + ' %d\n' % track[6]
+                    mes += '\n\n'
+                        
+                gi.objs.tracks().reset()
+                gi.objs._tracks.insert(text=mes)
+                gi.objs._tracks.show()
+            else:
+                sh.com.empty(f)
         else:
-            sh.com.cancel(f)
+            sh.com.cancel()
     
     def delete(self,event=None):
         f = 'controller.AlbumEditor.delete'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
     
     def save(self,event=None):
         f = 'controller.AlbumEditor.save'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        if self.Success:
+            self.gui.bottom_area.update(_('Save DB.'))
+            self.dump()
+            lg.objs.db().save()
+        else:
+            sh.com.cancel(f)
     
     def create(self,event=None):
         f = 'controller.AlbumEditor.create'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        if self.Success:
+            sh.objs.mes (f,_('INFO')
+                        ,_('Not implemented yet!')
+                        )
+        else:
+            sh.com.cancel(f)
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
