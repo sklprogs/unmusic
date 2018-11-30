@@ -197,6 +197,7 @@ class TopArea:
                                  ,text     = '←'
                                  ,hint_dir = 'bottom'
                                  ,side     = 'left'
+                                 ,bindings = '<Alt-Left>'
                                  )
         # Show the current record #/total records ratio
         self.lbl_mtr = sg.Label (parent = self.frm
@@ -216,6 +217,7 @@ class TopArea:
                                  ,text     = '→'
                                  ,hint_dir = 'bottom'
                                  ,side     = 'left'
+                                 ,bindings = '<Alt-Right>'
                                  )
     
     def gui(self):

@@ -252,6 +252,14 @@ class AlbumEditor:
                 ,bindings = '<Control-n>'
                 ,action   = self.create
                 )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Alt-Left>'
+                ,action   = self.prev
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Alt-Right>'
+                ,action   = self.next
+                )
     
     def get_no(self):
         f = 'controller.AlbumEditor.get_no'
