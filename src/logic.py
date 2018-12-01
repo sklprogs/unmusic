@@ -789,7 +789,7 @@ objs.default()
 if __name__ == '__main__':
     sg.objs.start()
     f = 'logic.__main__'
-    dirs = Walker('/tmp/meta').dirs()
+    dirs = Walker('/home/pete/tmp/meta').dirs()
     if dirs:
         timer = sh.Timer(f)
         timer.start()

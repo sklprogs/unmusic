@@ -22,15 +22,19 @@ class AlbumEditor:
     def dump(self,event=None):
         f = 'controller.AlbumEditor.dump'
         if self.Success:
-            self.dump_album()
-            self.dump_tracks()
+            ''' Do not use 'func1() or func2()', otherwise, only 'func1'
+                will run.
+            '''
+            cond1 = self.dump_album()
+            cond2 = self.dump_tracks()
+            return cond1 or cond2
         else:
             sh.com.cancel(f)
     
     def dump_tracks(self,event=None):
         f = 'controller.AlbumEditor.dump_tracks'
         if self.Success:
-            pass
+            return False
         else:
             sh.com.cancel(f)
     
@@ -76,18 +80,48 @@ class AlbumEditor:
             if old:
                 new = self.gui.dump_album()
                 if len(old) == len(new):
-                    old    = list(old)
-                    new    = list(new)
-                    new[2] = sh.Input (title = f
-                                      ,value = new[2]
-                                      ).integer()
-                    if old == new:
-                        sh.log.append (f,_('INFO')
-                                      ,_('No changes!')
-                                      )
+                    old = list(old)
+                    new = list(new)
+                    if [item for item in new if item]:
+                        if not new[0]:
+                            sh.objs.mes (f,_('WARNING')
+                                        ,_('An artist should be indicated.')
+                                        )
+                            if old[0]:
+                                new[0] = old[0]
+                            else:
+                                # Do not localize (being stored in DB)
+                                new[0] = 'Unknown'
+                        if not new[1]:
+                            sh.objs.mes (f,_('WARNING')
+                                        ,_('An album title should be indicated.')
+                                        )
+                            if old[1]:
+                                new[1] = old[1]
+                            else:
+                                # Do not localize (being stored in DB)
+                                new[1] = 'Unknown'
+                        # Do not warn if a year is not set
+                        if new[2]:
+                            new[2] = sh.Input (title = f
+                                              ,value = new[2]
+                                              ).integer()
+                        else:
+                            # We need to return integer anyway
+                            new[2] = old[2]
+                        if old == new:
+                            sh.log.append (f,_('INFO')
+                                          ,_('No changes!')
+                                          )
+                        else:
+                            sh.log.append (f,_('INFO')
+                                          ,_('Some fields have been updated.')
+                                          )
+                            query = self._compare_albums(old,new)
+                            lg.objs._db.updateDB(query)
+                            return query
                     else:
-                        query = self._compare_albums(old,new)
-                        lg.objs._db.updateDB(query)
+                        sh.com.empty(f)
                 else:
                     sh.objs.mes (f,_('ERROR')
                                 ,_('The condition "%s" is not observed!')\
@@ -154,18 +188,27 @@ class AlbumEditor:
     def search_album(self,event=None):
         f = 'controller.AlbumEditor.search_album'
         if self.Success:
+            self.save()
             old = lg.objs.db().albumid
             # Not 1, because we use '<' and '>' in search
             lg.objs._db.albumid = 0
-            self.search_next_album()
+            self.search_next_album(Save=False)
             if lg.objs._db.albumid == 0:
                 lg.objs._db.albumid = old
         else:
             sh.com.cancel(f)
     
-    def search_next_album(self,event=None):
+    def search_next_album(self,event=None,Save=True):
         f = 'controller.AlbumEditor.search_next_album'
         if self.Success:
+            ''' #NOTE: If we change 'albumid' BEFORE saving, then
+                a wrong DB record will be overwritten! Since
+                'self.search_album' is generally a wrapper over this
+                procedure and changes 'albumid', we should be careful
+                about this.
+            '''
+            if Save:
+                self.save()
             search = self.gui.top_area.ent_src.get()
             if search:
                 old     = lg.objs.db().albumid
@@ -190,6 +233,10 @@ class AlbumEditor:
     def search_prev_album(self,event=None):
         f = 'controller.AlbumEditor.search_prev_album'
         if self.Success:
+            ''' #NOTE: Make sure that actual 'albumid' is not changed
+                prior to 'self.search_prev_album'.
+            '''
+            self.save()
             search = self.gui.top_area.ent_src.get()
             if search:
                 old     = lg.objs.db().albumid
@@ -236,6 +283,7 @@ class AlbumEditor:
     def prev(self,event=None):
         f = 'controller.AlbumEditor.prev'
         if self.Success:
+            self.save()
             self.dec()
             self.fill()
         else:
@@ -244,6 +292,7 @@ class AlbumEditor:
     def next(self,event=None):
         f = 'controller.AlbumEditor.next'
         if self.Success:
+            self.save()
             self.inc()
             self.fill()
         else:
@@ -291,11 +340,14 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def save(self,event=None):
+        ''' #NOTE: this should be done before 'albumid' is changed,
+            otherwise, a wrong DB record will be overwritten!
+        '''
         f = 'controller.AlbumEditor.save'
         if self.Success:
-            self.gui.bottom_area.update(_('Save DB.'))
-            self.dump()
-            lg.objs.db().save()
+            if self.dump():
+                self.gui.bottom_area.update(_('Save DB.'))
+                lg.objs.db().save()
         else:
             sh.com.cancel(f)
     
@@ -445,7 +497,16 @@ class AlbumEditor:
                     self.gui.body.w_alb.insert(data[0])
                     self.gui.body.w_art.insert(data[1])
                     self.gui.body.w_yer.insert(data[2])
-                    # insert genre
+                    genre = data[3]
+                    if not genre:
+                        # Do not localize (being stored in DB)
+                        genre = 'Unknown'
+                    items = list(gi.GENRES)
+                    if not genre in items:
+                        items.append(genre)
+                    self.gui.body.w_gnr.reset (items   = items
+                                              ,default = genre
+                                              )
                     self.gui.body.w_cnt.insert(data[4])
                     self.gui.body.w_com.insert(data[5])
                     self.update()
