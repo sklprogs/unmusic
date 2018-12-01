@@ -466,11 +466,11 @@ class Menu:
                                  ,side      = 'top'
                                  ,TakeFocus = True
                                  )
-        self.btn_prp = sg.Button (parent = self.parent
-                                 ,text   = _('Prepare files')
-                                 ,hint   = _('Move sub-folders to a root folder, split large lossless files, etc.')
-                                 ,hint_width = 500
-                                 ,side   = 'top'
+        self.btn_prp = sg.Button (parent     = self.parent
+                                 ,text       = _('Prepare files')
+                                 ,hint       = _('Move sub-folders to a root folder, split large lossless files, etc.')
+                                 ,hint_width = 600
+                                 ,side       = 'top'
                                  )
         self.btn_col = sg.Button (parent = self.parent
                                  ,text   = _('Collect tags')

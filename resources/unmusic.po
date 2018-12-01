@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-01 09:13+0300\n"
-"PO-Revision-Date: 2018-12-01 09:14+0300\n"
+"PO-Revision-Date: 2018-12-01 09:17+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -304,17 +304,15 @@ msgstr "Подготовить файлы"
 
 #: gui.py:471
 msgid "Move sub-folders to a root folder, split large lossless files, etc."
-msgstr ""
-"Переместить вложенные каталоги в корень, разбить большие файлы без сжатия и "
-"т.д."
+msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
 
 #: gui.py:476
 msgid "Collect tags"
-msgstr ""
+msgstr "Извлечь тэги"
 
 #: gui.py:480
 msgid "Obfuscate"
-msgstr ""
+msgstr "Обфусцировать"
 
 #: gui.py:484 sharedGUI.py:203 sharedGUI.py:628 sharedGUI.py:629
 #: sharedGUI.py:1090 sharedGUI.py:1091 sharedGUI.py:1675 sharedGUI.py:1676
