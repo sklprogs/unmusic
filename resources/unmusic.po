@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-01 07:23+0300\n"
-"PO-Revision-Date: 2018-12-01 07:24+0300\n"
+"POT-Creation-Date: 2018-12-01 09:13+0300\n"
+"PO-Revision-Date: 2018-12-01 09:14+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -274,7 +274,7 @@ msgstr "ИД альбома"
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:307
+#: gui.py:307 gui.py:465
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
@@ -298,7 +298,30 @@ msgstr "Страна (2 символа):"
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: gui.py:451
+#: gui.py:470
+msgid "Prepare files"
+msgstr "Подготовить файлы"
+
+#: gui.py:471
+msgid "Move sub-folders to a root folder, split large lossless files, etc."
+msgstr ""
+"Переместить вложенные каталоги в корень, разбить большие файлы без сжатия и "
+"т.д."
+
+#: gui.py:476
+msgid "Collect tags"
+msgstr ""
+
+#: gui.py:480
+msgid "Obfuscate"
+msgstr ""
+
+#: gui.py:484 sharedGUI.py:203 sharedGUI.py:628 sharedGUI.py:629
+#: sharedGUI.py:1090 sharedGUI.py:1091 sharedGUI.py:1675 sharedGUI.py:1676
+msgid "Quit"
+msgstr "Выйти"
+
+#: gui.py:509
 msgid "Tracks:"
 msgstr "Дорожки:"
 
@@ -905,11 +928,6 @@ msgstr "Логическая ошибка: неизвестный тип объ�
 #: sharedGUI.py:187
 msgid "Text:"
 msgstr "Текст:"
-
-#: sharedGUI.py:203 sharedGUI.py:628 sharedGUI.py:629 sharedGUI.py:1090
-#: sharedGUI.py:1091 sharedGUI.py:1675 sharedGUI.py:1676
-msgid "Quit"
-msgstr "Выйти"
 
 #: sharedGUI.py:205
 msgid "Save and close"
