@@ -4,11 +4,7 @@
 import shared    as sh
 import sharedGUI as sg
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
-gettext.install('unmusic','../resources/locale')
-
-
+PRODUCT = 'unmusic'
 # Do not localize (being stored in DB)
 GENRES = ('Unknown','Ambient','Black Metal','Blues'
          ,'Brutal Death/Grindcore','Brutal Death Metal','Classical'
@@ -16,6 +12,10 @@ GENRES = ('Unknown','Ambient','Black Metal','Blues'
          ,'Ethnic','Heavy Metal','Game','Grindcore','Goregrind','Metal'
          ,'Pop','Rap','Relaxation','Soundtrack','Thrash Metal','Vocal'
          )
+
+import gettext, gettext_windows
+gettext_windows.setup_env()
+gettext.install(PRODUCT,'../resources/locale')
 
 
 
@@ -312,7 +312,7 @@ class AlbumEditor:
             self.obj.icon(path)
         else:
             self.obj.icon (sh.objs.pdir().add ('..','resources'
-                                              ,'unmusic.gif'
+                                              ,PRODUCT + '.gif'
                                               )
                           )
 
@@ -440,17 +440,80 @@ class Body:
 
 
 
+class Menu:
+    
+    def __init__(self):
+        self.parent = sg.Top(sg.objs.root())
+        self.gui()
+    
+    def icon(self,path=None):
+        if path:
+            self.parent.icon(path)
+        else:
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,PRODUCT + '.gif'
+                                                 )
+                             )
+    
+    def title(self,text=''):
+        if not text:
+            text = PRODUCT
+        self.parent.title(text)
+    
+    def buttons(self):
+        self.btn_edt = sg.Button (parent    = self.parent
+                                 ,text      = _('Album Editor')
+                                 ,side      = 'top'
+                                 ,TakeFocus = True
+                                 )
+        self.btn_prp = sg.Button (parent = self.parent
+                                 ,text   = _('Prepare files')
+                                 ,hint   = _('Move sub-folders to a root folder, split large lossless files, etc.')
+                                 ,hint_width = 500
+                                 ,side   = 'top'
+                                 )
+        self.btn_col = sg.Button (parent = self.parent
+                                 ,text   = _('Collect tags')
+                                 ,side   = 'top'
+                                 )
+        self.btn_obf = sg.Button (parent = self.parent
+                                 ,text   = _('Obfuscate')
+                                 ,side   = 'top'
+                                 )
+        self.btn_qit = sg.Button (parent = self.parent
+                                 ,text   = _('Quit')
+                                 ,side   = 'top'
+                                 )
+    
+    def gui(self):
+        self.buttons()
+        self.icon()
+        self.title()
+    
+    def show(self,event=None):
+        self.parent.show()
+    
+    def close(self,event=None):
+        self.parent.close()
+
+
+
 class Objects:
     
     def __init__(self):
-        self._tracks = None
+        self._tracks = self._menu = None
     
     def tracks(self):
         if self._tracks is None:
-            self._tracks = sg.TextBox(parent=sg.Top(parent=sg.objs.root()))
+            self._tracks = sg.TextBox(sg.Top(sg.objs.root()))
             self._tracks.title(_('Tracks:'))
             sg.Geometry(parent=self._tracks.parent).set('1024x768')
         return self._tracks
+    
+    def menu(self):
+        if self._menu is None:
+            self._menu = Menu()
+        return self._menu
 
 
 
@@ -460,6 +523,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    editor = AlbumEditor()
-    editor.show()
+    objs.menu().show()
     sg.objs.end()
