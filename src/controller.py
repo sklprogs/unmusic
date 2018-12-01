@@ -17,7 +17,6 @@ class AlbumEditor:
     def __init__(self):
         self.gui = gi.AlbumEditor()
         self.bindings()
-        self.reset()
         
     def dump(self,event=None):
         f = 'controller.AlbumEditor.dump'
@@ -523,6 +522,66 @@ class AlbumEditor:
         self.gui.show()
     
     def close(self,event=None):
+        self.gui.close()
+
+
+
+class Menu:
+    
+    def __init__(self):
+        self.gui = gi.Menu()
+        self.bindings()
+        
+    def album_editor(self,event=None):
+        objs.editor().reset()
+        objs._editor.show()
+    
+    def collect(self,event=None,folder='/home/pete/tmp/meta'):
+        f = 'controller.Menu.collect'
+        dirs = lg.Walker(folder).dirs()
+        if dirs:
+            timer = sh.Timer(f)
+            timer.start()
+            for folder in dirs:
+                lg.Directory(path=folder).run()
+            delta = timer.end()
+            sh.objs.mes (f,_('INFO')
+                        ,_('Operation has taken %s') \
+                        % sh.com.human_time(delta)
+                        )
+            objs.editor().reset()
+            objs._editor.show()
+        else:
+            sh.com.empty(f)
+    
+    def prepare(self,event=None):
+        f = 'controller.Menu.prepare'
+        sh.objs.mes (f,_('INFO')
+                    ,_('Not implemented yet!')
+                    )
+    
+    def obfuscate(self,event=None):
+        f = 'controller.Menu.obfuscate'
+        sh.objs.mes (f,_('INFO')
+                    ,_('Not implemented yet!')
+                    )
+    
+    def bindings(self):
+        self.gui.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
+        sg.bind (obj      = self.gui.parent
+                ,bindings = ['<Control-q>','<Control-w>']
+                ,action   = self.close
+                )
+        self.gui._a[0].action = self.album_editor
+        self.gui._a[1].action = self.prepare
+        self.gui._a[2].action = self.collect
+        self.gui._a[3].action = self.obfuscate
+        self.gui._a[4].action = self.close
+    
+    def show(self,event=None):
+        self.gui.show()
+    
+    def close(self,event=None):
         lg.objs.db().save()
         self.gui.close()
 
@@ -546,5 +605,5 @@ objs = Objects()
 if __name__ == '__main__':
     f = 'controller.__main__'
     sg.objs.start()
-    objs.editor().show()
+    Menu().show()
     sg.objs.end()

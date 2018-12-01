@@ -443,8 +443,45 @@ class Body:
 class Menu:
     
     def __init__(self):
+        self._a = []
         self.parent = sg.Top(sg.objs.root())
         self.gui()
+    
+    def bindings(self):
+        sg.bind (obj      = self.parent
+                ,bindings = '<Escape>'
+                ,action   = sg.Geometry(parent=self.parent).minimize
+                )
+        if len(self._a) > 0:
+            for i in range(len(self._a)):
+                sg.bind (obj      = self._a[i]
+                        ,bindings = '<Home>'
+                        ,action   = self._a[0].focus
+                        )
+                sg.bind (obj      = self._a[i]
+                        ,bindings = '<End>'
+                        ,action   = self._a[-1].focus
+                        )
+                if i > 0:
+                    sg.bind (obj      = self._a[i]
+                            ,bindings = '<Up>'
+                            ,action   = self._a[i-1].focus
+                            )
+                else:
+                    sg.bind (obj      = self._a[i]
+                            ,bindings = '<Up>'
+                            ,action   = self._a[-1].focus
+                            )
+                if i < len(self._a) - 1:
+                    sg.bind (obj      = self._a[i]
+                            ,bindings = '<Down>'
+                            ,action   = self._a[i+1].focus
+                            )
+                else:
+                    sg.bind (obj      = self._a[i]
+                            ,bindings = '<Down>'
+                            ,action   = self._a[0].focus
+                            )
     
     def icon(self,path=None):
         if path:
@@ -461,34 +498,41 @@ class Menu:
         self.parent.title(text)
     
     def buttons(self):
-        self.btn_edt = sg.Button (parent    = self.parent
-                                 ,text      = _('Album Editor')
-                                 ,side      = 'top'
-                                 ,TakeFocus = True
-                                 )
-        self.btn_prp = sg.Button (parent     = self.parent
-                                 ,text       = _('Prepare files')
-                                 ,hint       = _('Move sub-folders to a root folder, split large lossless files, etc.')
-                                 ,hint_width = 600
-                                 ,side       = 'top'
-                                 )
-        self.btn_col = sg.Button (parent = self.parent
-                                 ,text   = _('Collect tags')
-                                 ,side   = 'top'
-                                 )
-        self.btn_obf = sg.Button (parent = self.parent
-                                 ,text   = _('Obfuscate')
-                                 ,side   = 'top'
-                                 )
-        self.btn_qit = sg.Button (parent = self.parent
-                                 ,text   = _('Quit')
-                                 ,side   = 'top'
-                                 )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Album Editor')
+                                  ,side   = 'top'
+                                  )
+                       )
+        self._a.append (sg.Button (parent     = self.parent
+                                  ,text       = _('Prepare files')
+                                  ,hint       = _('Move sub-folders to a root folder, split large lossless files, etc.')
+                                  ,hint_width = 600
+                                  ,side       = 'top'
+                                  )
+                       )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Collect tags')
+                                  ,side   = 'top'
+                                  )
+                       )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Obfuscate')
+                                  ,side   = 'top'
+                                  )
+                       )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Quit')
+                                  ,side   = 'top'
+                                  )
+                       )
     
     def gui(self):
         self.buttons()
         self.icon()
         self.title()
+        self.bindings()
+        if len(self._a) > 0:
+            self._a[0].focus()
     
     def show(self,event=None):
         self.parent.show()
@@ -501,7 +545,7 @@ class Menu:
 class Objects:
     
     def __init__(self):
-        self._tracks = self._menu = None
+        self._tracks = None
     
     def tracks(self):
         if self._tracks is None:
@@ -509,11 +553,6 @@ class Objects:
             self._tracks.title(_('Tracks:'))
             sg.Geometry(parent=self._tracks.parent).set('1024x768')
         return self._tracks
-    
-    def menu(self):
-        if self._menu is None:
-            self._menu = Menu()
-        return self._menu
 
 
 
@@ -523,5 +562,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    objs.menu().show()
+    Menu().show()
     sg.objs.end()
