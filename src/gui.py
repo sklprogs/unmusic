@@ -556,6 +556,165 @@ class Menu:
 
 
 
+class Tracks:
+    
+    def __init__(self,width=0,height=768):
+        self.parent  = sg.Top(sg.objs.root())
+        self._tracks = []
+        self._width  = width
+        self._height = height
+        self.gui()
+    
+    def after_add(self):
+        sg.objs.root().widget.update_idletasks()
+        max_x = self.label.widget.winfo_reqwidth()
+        max_y = self.label.widget.winfo_reqheight()
+        self.canvas.region (x        = max_x
+                           ,y        = max_y
+                           ,x_border = 10
+                           ,y_border = 20
+                           )
+        if not self._width:
+            self._width = max_x + 40
+        sg.Geometry(parent=self.parent).set ('%dx%d' % (self._width
+                                                       ,self._height
+                                                       )
+                                            )
+        self.canvas.move_top()
+        self.canvas.widget.xview_moveto(0)
+    
+    def show(self,event=None):
+        self.parent.show()
+    
+    def close(self,event=None):
+        self.parent.close()
+    
+    def title(self,text=None):
+        if not text:
+            text = _('Tracks:')
+        self.parent.title(text=text)
+    
+    def frames(self):
+        self.frm_prm = sg.Frame (parent = self.parent)
+        self.frm_hor = sg.Frame (parent = self.frm_prm
+                                ,expand = False
+                                ,fill   = 'x'
+                                ,side   = 'bottom'
+                                )
+        self.frm_ver = sg.Frame (parent = self.frm_prm
+                                ,expand = False
+                                ,fill   = 'y'
+                                ,side   = 'right'
+                                )
+        # This frame must be created after the bottom frame
+        self.frm_sec = sg.Frame (parent = self.frm_prm)
+    
+    def gui(self):
+        self.frames()
+        self.widgets()
+        self.title()
+        self.canvas.top_bindings(self.parent)
+    
+    def widgets(self):
+        self.canvas = sg.Canvas(parent = self.frm_sec)
+        self.label  = sg.Label (parent = self.frm_sec
+                               ,text   = _('Tracks:')
+                               ,expand = True
+                               ,fill   = 'both'
+                               )
+        self.canvas.embed(self.label)
+        self.yscroll = sg.Scrollbar (parent = self.frm_ver
+                                    ,scroll = self.canvas
+                                    )
+        self.canvas.focus()
+        
+    def add(self,event=None):
+        self._tracks.append(Track(self.label))
+        return self._tracks[-1]
+
+
+
+class Track:
+    
+    def __init__(self,parent):
+        self.parent = parent
+        #TITLE,NO,LYRICS,COMMENT,SEARCH,BITRATE,LENGTH,RATING
+        self.gui()
+    
+    def frames(self):
+        self.frm_man = sg.Frame (parent = self.parent
+                                ,expand = False
+                                ,fill   = 'x'
+                                )
+        self.frm_lft = sg.Frame (parent = self.frm_man
+                                ,side   = 'left'
+                                )
+        self.frm_rht = sg.Frame (parent = self.frm_man
+                                ,side   = 'left'
+                                )
+    
+    def labels(self):
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Track #:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Title:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Lyrics:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Comment:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Rating:')
+                 ,ipady  = 2
+                 )
+    
+    def entries(self):
+        self.w_tno = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_tit = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_lyr = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_com = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+    
+    def menus(self):
+        self.w_rtg = sg.OptionMenu (parent = self.frm_rht
+                                   ,items  = (0,1,2,3,4,5,6,7,8,9,10)
+                                   ,side   = 'left'
+                                   )
+    
+    def gui(self):
+        self.frames()
+        self.labels()
+        self.entries()
+        self.menus()
+
+
+
 class Objects:
     
     def __init__(self):
@@ -576,5 +735,12 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    AlbumEditor().show()
+    tracks = Tracks()
+    for i in range(50):
+        tracks.add()
+    for i in range(len(tracks._tracks)):
+        tracks._tracks[i].w_tno.insert(i+1)
+        tracks._tracks[i].w_tit.insert(_('Track #%d') % (i + 1))
+    tracks.after_add()
+    tracks.show()
     sg.objs.end()
