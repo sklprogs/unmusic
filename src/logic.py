@@ -324,6 +324,48 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def mean_rating(self,event=None):
+        f = 'logic.AlbumEditor.mean_rating'
+        if self.Success:
+            mean = objs.db().get_rating()
+            if mean:
+                # This returns float even if all elements are equal
+                return sum(mean) / len(mean)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def get_rating(self):
+        f = 'logic.DB.get_rating'
+        if self.Success:
+            try:
+                self.dbc.execute ('select RATING from TRACKS \
+                                   where ALBUMID = ? order by NO'
+                                  ,(self.albumid,)
+                                 )
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def set_rating(self,value):
+        f = 'logic.DB.set_rating'
+        if self.Success:
+            try:
+                self.dbc.execute ('update TRACKS set RATING = ? \
+                                   where ALBUMID = ?'
+                                  ,(value,self.albumid,)
+                                 )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
     def updateDB(self,query):
         f = 'logic.DB.updateDB'
         if self.Success:
@@ -524,34 +566,19 @@ class DB:
             sh.com.cancel(f)
     
     def has_album(self,artist,year,album):
-        ''' We should not search for empty values since we may have
-            filled them already.
-        '''
         f = 'logic.DB.has_album'
         if self.Success:
-            add = []
-            # Quotes in the text will fail the query, so we screen them
-            if artist:
-                artist = str(artist).replace('"','""')
-                add.append('ARTIST="%s"' % artist)
-            if year:
-                add.append('YEAR="%d"' % year)
-            if album:
-                album = str(album).replace('"','""')
-                add.append('ALBUM="%s"' % album)
-            if add:
-                query = 'begin;select ALBUMID from ALBUMS where '
-                query += ' and '.join(add)
-                query += ';commit;'
-                try:
-                    self.updateDB(query)
-                    result = self.dbc.fetchone()
-                    if result:
-                        return result[0]
-                except Exception as e:
-                    self.fail(f,e)
-            else:
-                sh.com.empty(f)
+            try:
+                self.dbc.execute ('select ALBUMID from ALBUMS \
+                                   where  ARTIST = ? and YEAR = ? \
+                                   and    ALBUM = ?'
+                                   ,(artist,year,album,)
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
+            except Exception as e:
+                self.fail(f,e)
         else:
             sh.com.cancel(f)
     

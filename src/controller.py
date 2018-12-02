@@ -19,6 +19,55 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
         
+    def get_rating(self,event=None):
+        f = 'controller.AlbumEditor.get_rating'
+        if self.Success:
+            rating = lg.objs.db().mean_rating()
+            if isinstance(rating,float):
+                ''' If an album has more songs with rating X that with
+                    rating Y, we should consider that the album has
+                    an overall rating of X. Thus, we use 'round' instead
+                    of 'int'.
+                '''
+                self.gui.top_area.w_rtg.set(round(rating))
+            elif rating is None:
+                sh.com.empty(f)
+            else:
+                sh.objs.mes (f,_('ERROR')
+                            ,_('Wrong input data: "%s"!') % str(rating)
+                            )
+        else:
+            sh.com.cancel(f)
+    
+    def _set_rating(self):
+        f = 'controller.AlbumEditor._set_rating'
+        value = sh.Input (title = f
+                         ,value = self.gui.top_area.w_rtg.choice
+                         ).integer()
+        lg.objs._db.set_rating(value)
+    
+    def set_rating(self,event=None):
+        f = 'controller.AlbumEditor.set_rating'
+        if self.Success:
+            rating = lg.objs.db().mean_rating()
+            if isinstance(rating,float):
+                if rating == int(rating):
+                    self._set_rating()
+                elif sg.Message (f,_('QUESTION')
+                                ,_('Tracks are of a mixed rating. Do you want to assign the same rating to all of them?')
+                                ).Yes:
+                    self._set_rating()
+                else:
+                    self.get_rating()
+            elif rating is None:
+                sh.com.empty(f)
+            else:
+                sh.objs.mes (f,_('ERROR')
+                            ,_('Wrong input data: "%s"!') % str(rating)
+                            )
+        else:
+            sh.com.cancel(f)
+    
     def dump(self,event=None):
         f = 'controller.AlbumEditor.dump'
         if self.Success:
@@ -309,6 +358,7 @@ class AlbumEditor:
         self.gui.top_area.btn_prv.action    = self.prev
         self.gui.top_area.btn_spr.action    = self.search_prev_album
         self.gui.top_area.btn_snx.action    = self.search_next_album
+        self.gui.top_area.w_rtg.action      = self.set_rating
         self.gui.bottom_area.btn_trk.action = self.tracks
         self.gui.bottom_area.btn_rec.action = self.create
         self.gui.bottom_area.btn_sav.action = self.save
@@ -422,6 +472,7 @@ class AlbumEditor:
                                               )
                     self.gui.body.w_cnt.insert(data[4])
                     self.gui.body.w_com.insert(data[5])
+                    self.get_rating()
                     self.update()
                 else:
                     sh.objs.mes (f,_('ERROR')

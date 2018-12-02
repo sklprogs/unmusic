@@ -234,7 +234,18 @@ class TopArea:
         self.search_albums()
         self.meter()
         self.search_tracks()
+        self.rating()
         self.bindings()
+        
+    def rating(self):
+        sg.Label (parent = self.frm
+                 ,text   = _('Rating:')
+                 ,ipady  = 2
+                 )
+        self.w_rtg = sg.OptionMenu (parent = self.frm
+                                   ,items  = (0,1,2,3,4,5,6,7,8,9,10)
+                                   ,side   = 'left'
+                                   )
 
     def bindings(self):
         sg.bind (obj      = self
@@ -341,8 +352,9 @@ class Body:
     def gui(self):
         self.widget = self.parent.widget
         self.frames()
-        self.entries()
         self.labels()
+        self.entries()
+        self.menus()
         self.w_art.focus()
 
     def frames(self):
@@ -352,7 +364,7 @@ class Body:
                                 ,side   = 'top'
                                 )
         self.frm_lft = sg.Frame (parent = self.frm_man
-                                ,expand = 0
+                                ,expand = 1
                                 ,side   = 'left'
                                 )
         self.frm_rht = sg.Frame (parent = self.frm_man
@@ -376,6 +388,12 @@ class Body:
                                 ,side   = 'right'
                                 )
 
+    def menus(self):
+        self.w_gnr = sg.OptionMenu (parent = self.frm_rht
+                                   ,items  = GENRES
+                                   ,side   = 'left'
+                                   )
+    
     def entries(self):
         self.w_art = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
@@ -407,10 +425,6 @@ class Body:
                               ,fill      = 'x'
                               ,ipady     = 1
                               )
-        self.w_gnr = sg.OptionMenu (parent = self.frm_rht
-                                   ,items  = GENRES
-                                   ,side   = 'left'
-                                   )
     
     def labels(self):
         sg.Label (parent = self.frm_lft
@@ -562,5 +576,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    Menu().show()
+    AlbumEditor().show()
     sg.objs.end()
