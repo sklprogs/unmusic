@@ -18,6 +18,100 @@ gettext.install(PRODUCT,'../resources/locale')
 
 
 
+class AlbumEditor:
+    
+    def __init__(self):
+        self.Success = True
+    
+    def get_no(self):
+        f = 'logic.AlbumEditor.get_no'
+        if self.Success:
+            objs.db().albumid = sh.Input (title = f
+                                         ,value = objs.db().albumid
+                                         ).integer()
+        else:
+            sh.com.cancel(f)
+        return objs.db().albumid
+    
+    def get_min(self):
+        f = 'logic.AlbumEditor.get_min'
+        if self.Success:
+            return sh.Input (title = f
+                            ,value = objs.db().min_id()
+                            ).integer()
+        else:
+            sh.com.cancel(f)
+            return 0
+    
+    def get_max(self):
+        f = 'logic.AlbumEditor.get_max'
+        if self.Success:
+            return sh.Input (title = f
+                            ,value = objs.db().max_id()
+                            ).integer()
+        else:
+            sh.com.cancel(f)
+            return 0
+    
+    def inc(self):
+        f = 'logic.AlbumEditor.inc'
+        if self.Success:
+            if self.get_no() == self.get_max():
+                objs.db().albumid = self.get_min()
+            else:
+                objs.db().albumid = objs.db().next_id()
+                self.get_no()
+        else:
+            sh.com.cancel(f)
+    
+    def dec(self):
+        f = 'logic.AlbumEditor.dec'
+        if self.Success:
+            if self.get_no() == self.get_min():
+                objs.db().albumid = self.get_max()
+            else:
+                objs.db().albumid = objs.db().prev_id()
+                self.get_no()
+        else:
+            sh.com.cancel(f)
+
+    def _compare_albums(self,old,new):
+        f = 'logic.AlbumEditor.compare_albums'
+        # Quotes in the text will fail the query, so we screen them
+        new[0] = str(new[0]).replace('"','""')
+        new[1] = str(new[1]).replace('"','""')
+        new[3] = str(new[3]).replace('"','""')
+        new[4] = str(new[4]).replace('"','""')
+        new[5] = str(new[5]).replace('"','""')
+        search = [new[0],new[1],str(new[2]),new[3],new[4],new[5]]
+        search = ' '.join(search)
+        search = sh.Text(search).delete_duplicate_spaces()
+        search = search.strip().lower()
+        
+        add = []
+        for i in range(len(new)):
+            if old[i] != new[i]:
+                if i == 0:
+                    base = 'ALBUM="%s"'
+                elif i == 1:
+                    base = 'ARTIST="%s"'
+                elif i == 2:
+                    base = 'YEAR="%d"'
+                elif i == 3:
+                    base = 'GENRE="%s"'
+                elif i == 4:
+                    base = 'COUNTRY="%s"'
+                elif i == 5:
+                    base = 'COMMENT="%s"'
+                add.append(base % new[i])
+        if add:
+            add.append('SEARCH="%s"' % search)
+            add = 'begin;update ALBUMS set ' + ','.join(add)
+            add += ' where ALBUMID=%d;commit;' % objs.db().albumid
+            return add
+
+
+
 class Directory:
     
     def __init__(self,path,rating=0):
@@ -430,19 +524,34 @@ class DB:
             sh.com.cancel(f)
     
     def has_album(self,artist,year,album):
+        ''' We should not search for empty values since we may have
+            filled them already.
+        '''
         f = 'logic.DB.has_album'
         if self.Success:
-            try:
-                self.dbc.execute ('select ALBUMID from ALBUMS \
-                                   where  ARTIST = ? and YEAR = ? \
-                                   and    ALBUM = ?'
-                                   ,(artist,year,album,)
-                                 )
-                result = self.dbc.fetchone()
-                if result:
-                    return result[0]
-            except Exception as e:
-                self.fail(f,e)
+            add = []
+            # Quotes in the text will fail the query, so we screen them
+            if artist:
+                artist = str(artist).replace('"','""')
+                add.append('ARTIST="%s"' % artist)
+            if year:
+                add.append('YEAR="%d"' % year)
+            if album:
+                album = str(album).replace('"','""')
+                add.append('ALBUM="%s"' % album)
+            if add:
+                query = 'begin;select ALBUMID from ALBUMS where '
+                query += ' and '.join(add)
+                query += ';commit;'
+                try:
+                    self.updateDB(query)
+                    result = self.dbc.fetchone()
+                    if result:
+                        return result[0]
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
         else:
             sh.com.cancel(f)
     

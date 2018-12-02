@@ -15,7 +15,8 @@ gettext.install(lg.PRODUCT,'../resources/locale')
 class AlbumEditor:
     
     def __init__(self):
-        self.gui = gi.AlbumEditor()
+        self.gui   = gi.AlbumEditor()
+        self.logic = lg.AlbumEditor()
         self.bindings()
         
     def dump(self,event=None):
@@ -36,41 +37,6 @@ class AlbumEditor:
             return False
         else:
             sh.com.cancel(f)
-    
-    def _compare_albums(self,old,new):
-        f = 'controller.AlbumEditor.compare_albums'
-        # Quotes in the text will fail the query, so we screen them
-        new[0] = str(new[0]).replace('"','""')
-        new[1] = str(new[1]).replace('"','""')
-        new[3] = str(new[3]).replace('"','""')
-        new[4] = str(new[4]).replace('"','""')
-        new[5] = str(new[5]).replace('"','""')
-        search = [new[0],new[1],str(new[2]),new[3],new[4],new[5]]
-        search = ' '.join(search)
-        search = sh.Text(search).delete_duplicate_spaces()
-        search = search.strip().lower()
-        
-        add = []
-        for i in range(len(new)):
-            if old[i] != new[i]:
-                if i == 0:
-                    base = 'ALBUM="%s"'
-                elif i == 1:
-                    base = 'ARTIST="%s"'
-                elif i == 2:
-                    base = 'YEAR="%d"'
-                elif i == 3:
-                    base = 'GENRE="%s"'
-                elif i == 4:
-                    base = 'COUNTRY="%s"'
-                elif i == 5:
-                    base = 'COMMENT="%s"'
-                add.append(base % new[i])
-        if add:
-            add.append('SEARCH="%s"' % search)
-            add = 'begin;update ALBUMS set ' + ','.join(add)
-            add += ' where ALBUMID=%d;commit;' % lg.objs.db().albumid
-            return add
     
     def dump_album(self,event=None):
         f = 'controller.AlbumEditor.dump_album'
@@ -116,7 +82,7 @@ class AlbumEditor:
                             sh.log.append (f,_('INFO')
                                           ,_('Some fields have been updated.')
                                           )
-                            query = self._compare_albums(old,new)
+                            query = self.logic._compare_albums(old,new)
                             lg.objs._db.updateDB(query)
                             return query
                     else:
@@ -257,33 +223,11 @@ class AlbumEditor:
         else:
             sh.com.cancel(f)
     
-    def inc(self):
-        f = 'controller.AlbumEditor.inc'
-        if self.Success:
-            if self.get_no() == self.get_max():
-                lg.objs.db().albumid = self.get_min()
-            else:
-                lg.objs.db().albumid = lg.objs.db().next_id()
-                self.get_no()
-        else:
-            sh.com.cancel(f)
-    
-    def dec(self):
-        f = 'controller.AlbumEditor.dec'
-        if self.Success:
-            if self.get_no() == self.get_min():
-                lg.objs.db().albumid = self.get_max()
-            else:
-                lg.objs.db().albumid = lg.objs.db().prev_id()
-                self.get_no()
-        else:
-            sh.com.cancel(f)
-    
     def prev(self,event=None):
         f = 'controller.AlbumEditor.prev'
         if self.Success:
             self.save()
-            self.dec()
+            self.logic.dec()
             self.fill()
         else:
             sh.com.cancel(f)
@@ -292,7 +236,7 @@ class AlbumEditor:
         f = 'controller.AlbumEditor.next'
         if self.Success:
             self.save()
-            self.inc()
+            self.logic.inc()
             self.fill()
         else:
             sh.com.cancel(f)
@@ -403,40 +347,10 @@ class AlbumEditor:
                 ,action   = self.next
                 )
     
-    def get_no(self):
-        f = 'controller.AlbumEditor.get_no'
-        if self.Success:
-            lg.objs.db().albumid = sh.Input (title = f
-                                            ,value = lg.objs.db().albumid
-                                            ).integer()
-        else:
-            sh.com.cancel(f)
-        return lg.objs.db().albumid
-    
-    def get_min(self):
-        f = 'controller.AlbumEditor.get_min'
-        if self.Success:
-            return sh.Input (title = f
-                            ,value = lg.objs.db().min_id()
-                            ).integer()
-        else:
-            sh.com.cancel(f)
-            return 0
-    
-    def get_max(self):
-        f = 'controller.AlbumEditor.get_max'
-        if self.Success:
-            return sh.Input (title = f
-                            ,value = lg.objs.db().max_id()
-                            ).integer()
-        else:
-            sh.com.cancel(f)
-            return 0
-    
     def reset(self):
         f = 'controller.AlbumEditor.reset'
-        self.Success = lg.objs.db().Success
-        lg.objs._db.albumid = self.get_max()
+        self.Success = self.logic.Success = lg.objs.db().Success
+        lg.objs._db.albumid = self.logic.get_max()
         self.fill()
     
     def update_album_search(self):
@@ -458,8 +372,8 @@ class AlbumEditor:
     def update_meter(self):
         f = 'controller.AlbumEditor.update_meter'
         if self.Success:
-            _max = self.get_max()
-            self.gui.top_area.lbl_mtr.text ('%d / %d' % (self.get_no()
+            _max = self.logic.get_max()
+            self.gui.top_area.lbl_mtr.text ('%d / %d' % (self.logic.get_no()
                                                         ,_max
                                                         )
                                            )
@@ -467,7 +381,7 @@ class AlbumEditor:
                 self.gui.top_area.btn_nxt.active()
             else:
                 self.gui.top_area.btn_nxt.inactive()
-            if lg.objs._db.albumid == self.get_min():
+            if lg.objs._db.albumid == self.logic.get_min():
                 self.gui.top_area.btn_prv.inactive()
             else:
                 self.gui.top_area.btn_prv.active()
@@ -485,7 +399,7 @@ class AlbumEditor:
     def fill(self,event=None):
         f = 'controller.AlbumEditor.fill'
         if self.Success:
-            self.get_no()
+            self.logic.get_no()
             data = lg.objs.db().get_album()
             if data:
                 if len(data) == 6:
@@ -537,6 +451,11 @@ class Menu:
         objs._editor.show()
     
     def collect(self,event=None,folder='/home/pete/tmp/meta'):
+        ''' If an artist and/or album title were changed and originally
+            were not empty, there is no easy way to tell if we are
+            dealing with the same album or not. So, it's best to add
+            tags to DB only once.
+        '''
         f = 'controller.Menu.collect'
         dirs = lg.Walker(folder).dirs()
         if dirs:
