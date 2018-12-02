@@ -318,7 +318,9 @@ class AlbumEditor:
                 gi.objs._tracks.insert(text=mes)
                 gi.objs._tracks.show()
             else:
-                sh.com.empty(f)
+                sh.objs.mes (f,_('INFO')
+                            ,_('No tracks are associated with this album.')
+                            )
         else:
             sh.com.cancel()
     
