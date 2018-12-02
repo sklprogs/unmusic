@@ -99,22 +99,22 @@ class AlbumEditor:
                     if [item for item in new if item]:
                         if not new[0]:
                             sh.objs.mes (f,_('WARNING')
-                                        ,_('An artist should be indicated.')
+                                        ,_('An album title should be indicated.')
                                         )
                             if old[0]:
                                 new[0] = old[0]
                             else:
                                 # Do not localize (being stored in DB)
-                                new[0] = 'Unknown'
+                                new[0] = '?'
                         if not new[1]:
                             sh.objs.mes (f,_('WARNING')
-                                        ,_('An album title should be indicated.')
+                                        ,_('An artist should be indicated.')
                                         )
                             if old[1]:
                                 new[1] = old[1]
                             else:
                                 # Do not localize (being stored in DB)
-                                new[1] = 'Unknown'
+                                new[1] = '?'
                         # Do not warn if a year is not set
                         if new[2]:
                             new[2] = sh.Input (title = f
@@ -333,8 +333,8 @@ class AlbumEditor:
                                                     % lg.objs._db.albumid
                                             )
                 lg.objs._db.delete()
-                objs.editor().reset()
-                objs._editor.show()
+                lg.objs._db.albumid = self.logic.get_max()
+                self.fill()
         else:
             sh.com.cancel(f)
     
@@ -353,9 +353,9 @@ class AlbumEditor:
     def create(self,event=None):
         f = 'controller.AlbumEditor.create'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            lg.objs.db().add_album(('?','?',2000,'?','','',''))
+            lg.objs._db.albumid = self.logic.get_max()
+            self.fill()
         else:
             sh.com.cancel(f)
     
@@ -470,7 +470,7 @@ class AlbumEditor:
                     genre = data[3]
                     if not genre:
                         # Do not localize (being stored in DB)
-                        genre = 'Unknown'
+                        genre = '?'
                     items = list(gi.GENRES)
                     if not genre in items:
                         items.append(genre)
