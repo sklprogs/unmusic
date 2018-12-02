@@ -325,9 +325,16 @@ class AlbumEditor:
     def delete(self,event=None):
         f = 'controller.AlbumEditor.delete'
         if self.Success:
-            sh.objs.mes (f,_('INFO')
-                        ,_('Not implemented yet!')
-                        )
+            if sg.Message (f,_('QUESTION')
+                          ,_('Are you sure you want to permanently delete record #%d?')\
+                          % lg.objs.db().albumid
+                          ).Yes:
+                self.gui.bottom_area.update (text = _('Delete #%d.') \
+                                                    % lg.objs._db.albumid
+                                            )
+                lg.objs._db.delete()
+                objs.editor().reset()
+                objs._editor.show()
         else:
             sh.com.cancel(f)
     

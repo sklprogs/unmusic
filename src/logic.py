@@ -324,8 +324,23 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
-    def mean_rating(self,event=None):
-        f = 'logic.AlbumEditor.mean_rating'
+    def delete(self):
+        f = 'logic.DB.delete'
+        if self.Success:
+            try:
+                self.dbc.execute ('delete from ALBUMS where ALBUMID = ?'
+                                 ,(self.albumid,)
+                                 )
+                self.dbc.execute ('delete from TRACKS where ALBUMID = ?'
+                                 ,(self.albumid,)
+                                 )
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def mean_rating(self):
+        f = 'logic.DB.mean_rating'
         if self.Success:
             mean = objs.db().get_rating()
             if mean:
