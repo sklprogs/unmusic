@@ -294,7 +294,7 @@ class AlbumEditor:
         self.bindings()
         sg.Geometry(parent=self.obj)
 
-    def dump_album(self,event=None):
+    def dump(self,event=None):
         return (self.body.w_alb.get(),self.body.w_art.get()
                ,self.body.w_yer.get(),self.body.w_gnr.choice
                ,self.body.w_cnt.get(),self.body.w_com.get()
@@ -358,16 +358,16 @@ class Body:
         self.w_art.focus()
 
     def frames(self):
-        self.frm_man = sg.Frame (parent = self.parent
+        self.frm_prm = sg.Frame (parent = self.parent
                                 ,expand = 1
                                 ,fill   = 'both'
                                 ,side   = 'top'
                                 )
-        self.frm_lft = sg.Frame (parent = self.frm_man
+        self.frm_lft = sg.Frame (parent = self.frm_prm
                                 ,expand = 1
                                 ,side   = 'left'
                                 )
-        self.frm_rht = sg.Frame (parent = self.frm_man
+        self.frm_rht = sg.Frame (parent = self.frm_prm
                                 ,expand = 1
                                 ,fill   = 'x'
                                 ,side   = 'left'
@@ -559,11 +559,52 @@ class Menu:
 class Tracks:
     
     def __init__(self,width=0,height=768):
+        self.values()
         self.parent  = sg.Top(sg.objs.root())
-        self._tracks = []
         self._width  = width
         self._height = height
         self.gui()
+    
+    def values(self):
+        self._tracks   = []
+        self._path_rld = sh.objs.pdir().add ('..','resources','buttons'
+                                            ,'icon_36x36_reload.gif'
+                                            )
+        self._path_sav = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_save.gif'
+                                           )
+    
+    def buttons(self):
+        self.btn_rld = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Reload')
+                                 ,hint     = _('Reload the present record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_rld
+                                 ,active   = self._path_rld
+                                 ,bindings = ['<F5>','<Control-r>']
+                                 )
+        self.btn_sav = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Save')
+                                 ,hint     = _('Save changes')
+                                 ,side     = 'right'
+                                 ,inactive = self._path_sav
+                                 ,active   = self._path_sav
+                                 ,bindings = ['<F2>','<Control-s>']
+                                 )
+    
+    def icon(self,path=None):
+        if path:
+            self.parent.icon(path)
+        else:
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,PRODUCT + '.gif'
+                                                 )
+                             )
+    
+    def reset(self):
+        for track in self._tracks:
+            track.frm_prm.widget.destroy()
+        self._tracks = []
     
     def after_add(self):
         sg.objs.root().widget.update_idletasks()
@@ -608,10 +649,17 @@ class Tracks:
                                 )
         # This frame must be created after the bottom frame
         self.frm_sec = sg.Frame (parent = self.frm_prm)
+        self.frm_btn = sg.Frame (parent = self.frm_prm
+                                ,expand = False
+                                ,fill   = 'x'
+                                ,side   = 'bottom'
+                                )
     
     def gui(self):
         self.frames()
         self.widgets()
+        self.buttons()
+        self.icon()
         self.title()
         self.canvas.top_bindings(self.parent)
     
@@ -638,18 +686,17 @@ class Track:
     
     def __init__(self,parent):
         self.parent = parent
-        #TITLE,NO,LYRICS,COMMENT,SEARCH,BITRATE,LENGTH,RATING
         self.gui()
     
     def frames(self):
-        self.frm_man = sg.Frame (parent = self.parent
+        self.frm_prm = sg.Frame (parent = self.parent
                                 ,expand = False
                                 ,fill   = 'x'
                                 )
-        self.frm_lft = sg.Frame (parent = self.frm_man
+        self.frm_lft = sg.Frame (parent = self.frm_prm
                                 ,side   = 'left'
                                 )
-        self.frm_rht = sg.Frame (parent = self.frm_man
+        self.frm_rht = sg.Frame (parent = self.frm_prm
                                 ,side   = 'left'
                                 )
     
@@ -722,9 +769,7 @@ class Objects:
     
     def tracks(self):
         if self._tracks is None:
-            self._tracks = sg.TextBox(sg.Top(sg.objs.root()))
-            self._tracks.title(_('Tracks:'))
-            sg.Geometry(parent=self._tracks.parent).set('1024x768')
+            self._tracks = Tracks()
         return self._tracks
 
 
@@ -736,11 +781,13 @@ objs = Objects()
 if __name__ == '__main__':
     sg.objs.start()
     tracks = Tracks()
-    for i in range(50):
+    tracks.reset()
+    for i in range(20):
         tracks.add()
     for i in range(len(tracks._tracks)):
         tracks._tracks[i].w_tno.insert(i+1)
         tracks._tracks[i].w_tit.insert(_('Track #%d') % (i + 1))
     tracks.after_add()
     tracks.show()
+    #AlbumEditor().show()
     sg.objs.end()

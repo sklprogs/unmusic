@@ -12,6 +12,55 @@ gettext.install(lg.PRODUCT,'../resources/locale')
 
 
 
+class Tracks:
+    
+    
+    def __init__(self):
+        self.Success = lg.objs.db().Success
+        self.gui     = gi.Tracks(height=400)
+    
+    def fill(self):
+        f = 'controller.Tracks.fill'
+        if self.Success:
+            self.gui.reset()
+            data = lg.objs.db().tracks()
+            if data:
+                for i in range(len(data)):
+                    self.gui.add()
+                    record = data[i]
+                    track  = self.gui._tracks[i]
+                    if len(record) == 7:
+                        track.w_tno.clear_text()
+                        track.w_tno.insert(str(record[1]))
+                        track.w_tit.clear_text()
+                        track.w_tit.insert(record[0])
+                        track.w_lyr.clear_text()
+                        track.w_lyr.insert(record[2])
+                        track.w_com.clear_text()
+                        track.w_com.insert(record[3])
+                        track.w_rtg.set(record[6])
+                    else:
+                        self.Success = False
+                        sh.objs.mes (f,_('ERROR')
+                                    ,_('Wrong input data: "%s"!') \
+                                    % str(data)
+                                    )
+                self.gui.after_add()
+            else:
+                sh.objs.mes (f,_('INFO')
+                            ,_('No tracks are associated with this album.')
+                            )
+        else:
+            sh.com.cancel(f)
+    
+    def show(self,event=None):
+        self.gui.show()
+    
+    def close(self,event=None):
+        self.gui.close()
+
+
+
 class AlbumEditor:
     
     def __init__(self):
@@ -71,28 +120,9 @@ class AlbumEditor:
     def dump(self,event=None):
         f = 'controller.AlbumEditor.dump'
         if self.Success:
-            ''' Do not use 'func1() or func2()', otherwise, only 'func1'
-                will run.
-            '''
-            cond1 = self.dump_album()
-            cond2 = self.dump_tracks()
-            return cond1 or cond2
-        else:
-            sh.com.cancel(f)
-    
-    def dump_tracks(self,event=None):
-        f = 'controller.AlbumEditor.dump_tracks'
-        if self.Success:
-            return False
-        else:
-            sh.com.cancel(f)
-    
-    def dump_album(self,event=None):
-        f = 'controller.AlbumEditor.dump_album'
-        if self.Success:
             old = lg.objs.db().get_album()
             if old:
-                new = self.gui.dump_album()
+                new = self.gui.dump()
                 if len(old) == len(new):
                     old = list(old)
                     new = list(new)
@@ -293,34 +323,9 @@ class AlbumEditor:
     def tracks(self,event=None):
         f = 'controller.AlbumEditor.tracks'
         if self.Success:
-            data = lg.objs.db().tracks()
-            if data:
-                mes = ''
-                for track in data:
-                    mes += _('Track #:') + ' %d\n' % track[1]
-                    if track[0]:
-                        mes += _('Title:')   + ' %s\n' % track[0]
-                    if track[4]:
-                        mes += _('Bitrate:') + ' %dk\n' % (track[4] // 1000)
-                    # Length
-                    if track[5]:
-                        minutes = track[5] // 60
-                        seconds = track[5] - minutes * 60
-                        mes += _('Length:') + ' %d ' % minutes \
-                               + _('min')   + ' %d ' % seconds \
-                               + _('sec')   + '\n'
-                    # Rating
-                    if track[6]:
-                        mes += _('Rating:')  + ' %d\n' % track[6]
-                    mes += '\n\n'
-                        
-                gi.objs.tracks().reset()
-                gi.objs._tracks.insert(text=mes)
-                gi.objs._tracks.show()
-            else:
-                sh.objs.mes (f,_('INFO')
-                            ,_('No tracks are associated with this album.')
-                            )
+            objs.tracks().fill()
+            if objs._tracks.gui._tracks:
+                objs._tracks.show()
         else:
             sh.com.cancel()
     
@@ -569,12 +574,17 @@ class Menu:
 class Objects:
     
     def __init__(self):
-        self._editor = None
+        self._editor = self._tracks = None
     
     def editor(self):
-        if not self._editor:
+        if self._editor is None:
             self._editor = AlbumEditor()
         return self._editor
+    
+    def tracks(self):
+        if self._tracks is None:
+            self._tracks = Tracks()
+        return self._tracks
 
 
 objs = Objects()
