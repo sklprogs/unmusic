@@ -676,17 +676,22 @@ class Tracks:
                                     )
         self.canvas.focus()
         
-    def add(self,event=None):
-        self._tracks.append(Track(self.label))
+    def add(self,event=None,Extended=False):
+        self._tracks.append(Track(self.label,Extended))
         return self._tracks[-1]
 
 
 
 class Track:
     
-    def __init__(self,parent):
-        self.parent = parent
+    def __init__(self,parent,Extended=False):
+        self.parent   = parent
+        self.Extended = Extended
         self.gui()
+    
+    # Useful for debug purposes only
+    def show(self,event=None):
+        self.parent.show()
     
     def frames(self):
         self.frm_prm = sg.Frame (parent = self.parent
@@ -701,6 +706,11 @@ class Track:
                                 )
     
     def labels(self):
+        if self.Extended:
+            sg.Label (parent = self.frm_lft
+                     ,text   = _('Album ID:')
+                     ,ipady  = 2
+                     )
         sg.Label (parent = self.frm_lft
                  ,text   = _('Track #:')
                  ,ipady  = 2
@@ -718,11 +728,26 @@ class Track:
                  ,ipady  = 2
                  )
         sg.Label (parent = self.frm_lft
+                 ,text   = _('Bitrate:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Length:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
                  ,text   = _('Rating:')
                  ,ipady  = 2
                  )
     
     def entries(self):
+        if self.Extended:
+            self.w_aid = sg.Entry (parent    = self.frm_rht
+                                  ,Composite = True
+                                  ,expand    = 1
+                                  ,fill      = 'x'
+                                  ,ipady     = 1
+                                  )
         self.w_tno = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
@@ -742,6 +767,18 @@ class Track:
                               ,ipady     = 1
                               )
         self.w_com = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_bit = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_len = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
                               ,fill      = 'x'
@@ -780,14 +817,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    tracks = Tracks()
-    tracks.reset()
-    for i in range(20):
-        tracks.add()
-    for i in range(len(tracks._tracks)):
-        tracks._tracks[i].w_tno.insert(i+1)
-        tracks._tracks[i].w_tit.insert(_('Track #%d') % (i + 1))
-    tracks.after_add()
-    tracks.show()
-    #AlbumEditor().show()
+    Track(sg.objs.new_top(),Extended=1).show()
     sg.objs.end()

@@ -19,6 +19,49 @@ class Tracks:
         self.Success = lg.objs.db().Success
         self.gui     = gi.Tracks(height=400)
     
+    def fill_search(self,data):
+        f = 'controller.Tracks.fill_search'
+        if self.Success:
+            self.gui.reset()
+            if data:
+                for i in range(len(data)):
+                    self.gui.add(Extended=True)
+                    record = data[i]
+                    track  = self.gui._tracks[i]
+                    if len(record) == 8:
+                        track.w_aid.read_only(False)
+                        track.w_aid.clear_text()
+                        track.w_aid.insert(record[0])
+                        track.w_aid.read_only(True)
+                        track.w_tno.clear_text()
+                        track.w_tno.insert(str(record[2]))
+                        track.w_tit.clear_text()
+                        track.w_tit.insert(record[1])
+                        track.w_lyr.clear_text()
+                        track.w_lyr.insert(record[3])
+                        track.w_com.clear_text()
+                        track.w_com.insert(record[4])
+                        track.w_bit.read_only(False)
+                        track.w_bit.clear_text()
+                        track.w_bit.insert(str(record[5]//1000)+'k')
+                        track.w_bit.read_only(True)
+                        track.w_len.read_only(False)
+                        track.w_len.clear_text()
+                        track.w_len.insert(sh.com.human_time(float(record[6])))
+                        track.w_len.read_only(True)
+                        track.w_rtg.set(record[7])
+                    else:
+                        self.Success = False
+                        sh.objs.mes (f,_('ERROR')
+                                    ,_('Wrong input data: "%s"!') \
+                                    % str(data)
+                                    )
+                self.gui.after_add()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def fill(self):
         f = 'controller.Tracks.fill'
         if self.Success:
@@ -38,6 +81,14 @@ class Tracks:
                         track.w_lyr.insert(record[2])
                         track.w_com.clear_text()
                         track.w_com.insert(record[3])
+                        track.w_bit.read_only(False)
+                        track.w_bit.clear_text()
+                        track.w_bit.insert(str(record[4]//1000)+'k')
+                        track.w_bit.read_only(True)
+                        track.w_len.read_only(False)
+                        track.w_len.clear_text()
+                        track.w_len.insert(sh.com.human_time(float(record[5])))
+                        track.w_len.read_only(True)
                         track.w_rtg.set(record[6])
                     else:
                         self.Success = False
@@ -183,41 +234,8 @@ class AlbumEditor:
             if search:
                 data = lg.objs.db().search_track(search)
                 if data:
-                    mes = ''
-                    for track in data:
-                        #todo: get album info
-                        '''
-                        mes =  _('Artist:')  + ' %s\n' % self._artist
-                        mes += _('Album:')   + ' %s\n' % self._album
-                        mes += _('Year:')    + ' %d\n' % self._year
-                        '''
-                        if track[0]:
-                            mes +=  _('Album ID:') + ' %d\n' % track[0]
-                        if track[1]:
-                            mes += _('Title:') + ' %s\n' % track[1]
-                        mes += _('Track #:') + ' %d\n' % track[2]
-                        if track[3]:
-                            mes += _('Lyrics:')   + ' %s\n' % track[3]
-                        if track[4]:
-                            mes += _('Comment:')  + ' %s\n' % track[4]
-                        if track[5]:
-                            mes += _('Bitrate:')  + ' %dk\n' \
-                                   % (track[5] // 1000)
-                        # Length
-                        if track[6]:
-                            minutes = track[6] // 60
-                            seconds = track[6] - minutes * 60
-                            mes += _('Length:') + ' %d ' % minutes \
-                                   + _('min')   + ' %d ' % seconds \
-                                   + _('sec')   + '\n'
-                        # Rating
-                        if track[7]:
-                            mes += _('Rating:')  + ' %d\n' % track[7]
-                        mes += '\n\n'
-                    
-                    gi.objs.tracks().reset()
-                    gi.objs._tracks.insert(text=mes)
-                    gi.objs._tracks.show()
+                    objs.tracks().fill_search(data=data)
+                    objs._tracks.show()
                 else:
                     sh.objs.mes (f,_('INFO')
                                 ,_('No matches!')
