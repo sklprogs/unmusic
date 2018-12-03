@@ -119,10 +119,42 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
         
+    def length(self,event=None):
+        f = 'controller.AlbumEditor.length'
+        if self.Success:
+            total = lg.objs.db().get_length()
+            if total:
+                mes = _('%s (%d tracks)') % (sh.com.human_time(sum(total))
+                                            ,len(total)
+                                            )
+            else:
+                mes = '?'
+            self.gui.body.w_len.read_only(False)
+            self.gui.body.w_len.clear_text()
+            self.gui.body.w_len.insert(mes)
+            self.gui.body.w_len.read_only(True)
+        else:
+            sh.com.cancel(f)
+    
+    def bitrate(self,event=None):
+        f = 'controller.AlbumEditor.bitrate'
+        if self.Success:
+            mean = self.logic.mean_bitrate()
+            if mean:
+                mes = '%dk' % (mean // 1000)
+            else:
+                mes = '?'
+            self.gui.body.w_bit.read_only(False)
+            self.gui.body.w_bit.clear_text()
+            self.gui.body.w_bit.insert(mes)
+            self.gui.body.w_bit.read_only(True)
+        else:
+            sh.com.cancel(f)
+    
     def get_rating(self,event=None):
         f = 'controller.AlbumEditor.get_rating'
         if self.Success:
-            rating = lg.objs.db().mean_rating()
+            rating = self.logic.mean_rating()
             if isinstance(rating,float):
                 ''' If an album has more songs with rating X that with
                     rating Y, we should consider that the album has
@@ -149,7 +181,7 @@ class AlbumEditor:
     def set_rating(self,event=None):
         f = 'controller.AlbumEditor.set_rating'
         if self.Success:
-            rating = lg.objs.db().mean_rating()
+            rating = self.logic.mean_rating()
             if isinstance(rating,float):
                 if rating == int(rating):
                     self._set_rating()
@@ -505,10 +537,13 @@ class AlbumEditor:
                     self.gui.body.w_cnt.insert(data[4])
                     self.gui.body.w_com.insert(data[5])
                     self.get_rating()
+                    self.bitrate()
+                    self.length()
                     self.update()
                 else:
                     sh.objs.mes (f,_('ERROR')
-                                ,_('Wrong input data: "%s"!') % str(data)
+                                ,_('Wrong input data: "%s"!') \
+                                % str(data)
                                 )
             else:
                 sh.com.empty(f)

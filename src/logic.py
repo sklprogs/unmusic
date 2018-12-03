@@ -23,6 +23,32 @@ class AlbumEditor:
     def __init__(self):
         self.Success = True
     
+    def mean_bitrate(self):
+        f = 'logic.AlbumEditor.mean_bitrate'
+        if self.Success:
+            mean = objs.db().get_bitrate()
+            if mean:
+                # This returns 'int' since we don't need 'float' here
+                return sum(mean) // len(mean)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def mean_rating(self):
+        f = 'logic.AlbumEditor.mean_rating'
+        if self.Success:
+            mean = objs.db().get_rating()
+            if mean:
+                ''' This (intentionally) returns float even if all
+                    elements are equal.
+                '''
+                return sum(mean) / len(mean)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def get_no(self):
         f = 'logic.AlbumEditor.get_no'
         if self.Success:
@@ -324,6 +350,38 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def get_length(self):
+        f = 'logic.DB.get_length'
+        if self.Success:
+            try:
+                self.dbc.execute ('select LENGTH from TRACKS \
+                                   where ALBUMID = ? order by NO'
+                                  ,(self.albumid,)
+                                 )
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def get_bitrate(self):
+        f = 'logic.DB.get_bitrate'
+        if self.Success:
+            try:
+                self.dbc.execute ('select BITRATE from TRACKS \
+                                   where ALBUMID = ? order by NO'
+                                  ,(self.albumid,)
+                                 )
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
     def delete(self):
         f = 'logic.DB.delete'
         if self.Success:
@@ -336,18 +394,6 @@ class DB:
                                  )
             except Exception as e:
                 self.fail(f,e)
-        else:
-            sh.com.cancel(f)
-    
-    def mean_rating(self):
-        f = 'logic.DB.mean_rating'
-        if self.Success:
-            mean = objs.db().get_rating()
-            if mean:
-                # This returns float even if all elements are equal
-                return sum(mean) / len(mean)
-            else:
-                sh.com.empty(f)
         else:
             sh.com.cancel(f)
     

@@ -425,6 +425,18 @@ class Body:
                               ,fill      = 'x'
                               ,ipady     = 1
                               )
+        self.w_bit = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
+        self.w_len = sg.Entry (parent    = self.frm_rht
+                              ,Composite = True
+                              ,expand    = 1
+                              ,fill      = 'x'
+                              ,ipady     = 1
+                              )
     
     def labels(self):
         sg.Label (parent = self.frm_lft
@@ -445,6 +457,14 @@ class Body:
                  )
         sg.Label (parent = self.frm_lft
                  ,text   = _('Comment:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Mean bitrate:')
+                 ,ipady  = 2
+                 )
+        sg.Label (parent = self.frm_lft
+                 ,text   = _('Total length:')
                  ,ipady  = 2
                  )
         sg.Label (parent = self.frm_lft
@@ -817,5 +837,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    Track(sg.objs.new_top(),Extended=1).show()
+    AlbumEditor().show()
     sg.objs.end()
