@@ -69,15 +69,20 @@ class Tracks:
     def dump(self):
         f = 'controller.Tracks.dump'
         if self.Success:
-            Extended = False
-            if self.gui._tracks:
-                Extended = self.gui._tracks[0].Extended
-            old = lg.objs.db().tracks()
-            new = self.gui.dump()
-            if Extended:
-                return self._dump_search(old,new)
+            if lg.objs.db().check_nos():
+                Extended = False
+                if self.gui._tracks:
+                    Extended = self.gui._tracks[0].Extended
+                old = lg.objs._db.tracks()
+                new = self.gui.dump()
+                if Extended:
+                    return self._dump_search(old,new)
+                else:
+                    return self._dump(old,new)
             else:
-                return self._dump(old,new)
+                sh.objs.mes (f,_('WARNING')
+                            ,_('Track numbers should be sequential!')
+                            )
         else:
             sh.com.cancel(f)
     
