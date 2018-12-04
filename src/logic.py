@@ -72,9 +72,14 @@ class AlbumEditor:
     def get_max(self):
         f = 'logic.AlbumEditor.get_max'
         if self.Success:
-            return sh.Input (title = f
-                            ,value = objs.db().max_id()
-                            ).integer()
+            _max = objs.db().max_id()
+            if isinstance(_max,int):
+                return _max
+            else:
+                sh.objs.mes (f,_('WARNING')
+                            ,_('The database is empty. You need to fill it first.')
+                            )
+                return 0
         else:
             sh.com.cancel(f)
             return 0
