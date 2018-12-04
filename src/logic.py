@@ -371,6 +371,32 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def update_track(self,no,data):
+        f = 'logic.DB.update_track'
+        if self.Success:
+            if no and data:
+                if len(data) == 4:
+                    try:
+                        self.dbc.execute ('update TRACKS set TITLE = ?\
+                                                 ,LYRICS = ?,COMMENT = ?\
+                                                 ,RATING = ? \
+                                           where ALBUMID = ? and NO = ?'
+                                          ,(data[0],data[1],data[2]
+                                           ,data[3],self.albumid,no
+                                           )
+                                         )
+                    except Exception as e:
+                        self.fail(f,e)
+                else:
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('Condition "%s" is not observed!') \
+                                % '%d == %d' % (len(data),4)
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def check_nos(self):
         ''' We use track NO field instead of an autoincrement, so we
             must keep these fields unique within the same album.

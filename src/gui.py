@@ -115,7 +115,7 @@ class BottomArea:
                                  )
 
     def _info(self):
-        # Bind to 'self.frmt' to avoid bulking and free space
+        # Bind to 'self.frmb' to avoid bulking and free space
         self.lbl = sg.Label (parent = self.frmb
                             ,text   = ''
                             ,font   = 'Sans 9'
@@ -281,18 +281,18 @@ class TopArea:
 class AlbumEditor:
 
     def __init__(self):
-        self.obj    = sg.Top(parent=sg.objs.root())
-        self.widget = self.obj.widget
+        self.parent = sg.Top(parent=sg.objs.root())
+        self.widget = self.parent.widget
         self.icon()
         self.title()
         ''' For some reason, introducing an additional Frame into Top
             does not allow to expand embedded widgets
         '''
-        self.top_area    = TopArea(parent=self.obj)
-        self.body        = Body(parent=self.obj)
-        self.bottom_area = BottomArea(parent=self.obj)
+        self.top_area    = TopArea(parent=self.parent)
+        self.body        = Body(parent=self.parent)
+        self.bottom_area = BottomArea(parent=self.parent)
         self.bindings()
-        sg.Geometry(parent=self.obj)
+        sg.Geometry(parent=self.parent)
 
     def dump(self,event=None):
         return (self.body.w_alb.get(),self.body.w_art.get()
@@ -316,22 +316,22 @@ class AlbumEditor:
     def title(self,text=None):
         if not text:
             text = _('Album Editor')
-        self.obj.title(text=text)
+        self.parent.title(text=text)
 
     def icon(self,path=None):
         if path:
-            self.obj.icon(path)
+            self.parent.icon(path)
         else:
-            self.obj.icon (sh.objs.pdir().add ('..','resources'
-                                              ,PRODUCT + '.gif'
-                                              )
-                          )
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,PRODUCT + '.gif'
+                                                 )
+                             )
 
     def show(self,event=None):
-        self.obj.show()
+        self.parent.show()
         
     def close(self,event=None):
-        self.obj.close()
+        self.parent.close()
 
 
 
@@ -580,10 +580,28 @@ class Tracks:
     
     def __init__(self,width=0,height=768):
         self.values()
+        self.pool    = sh.MessagePool(max_size=3)
         self.parent  = sg.Top(sg.objs.root())
+        self.widget  = self.parent.widget
         self._width  = width
         self._height = height
         self.gui()
+    
+    def _info(self):
+        self.lbl = sg.Label (parent = self.frm_btn
+                            ,text   = ''
+                            ,font   = 'Sans 9'
+                            )
+
+    def update(self,text):
+        self.pool.add(message=text)
+        self.lbl.text(arg=self.pool.get())
+    
+    def dump(self):
+        new = []
+        for track in self._tracks:
+            new.append(track.dump())
+        return new
     
     def values(self):
         self._tracks   = []
@@ -678,6 +696,7 @@ class Tracks:
     def gui(self):
         self.frames()
         self.widgets()
+        self._info()
         self.buttons()
         self.icon()
         self.title()
@@ -708,6 +727,11 @@ class Track:
         self.parent   = parent
         self.Extended = Extended
         self.gui()
+    
+    def dump(self,event=None):
+        return (self.w_tit.get(),self.w_lyr.get(),self.w_com.get()
+               ,int(self.w_rtg.choice)
+               )
     
     # Useful for debug purposes only
     def show(self,event=None):
@@ -837,5 +861,7 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    AlbumEditor().show()
+    itracks = Tracks()
+    itracks.update('Demo.')
+    itracks.show()
     sg.objs.end()

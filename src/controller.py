@@ -16,14 +16,68 @@ class Tracks:
     
     
     def __init__(self):
+        self.Active  = False
         self.Success = lg.objs.db().Success
         self.gui     = gi.Tracks(height=400)
+        self.bindings()
+    
+    def _dump_search(self,old,new):
+        f = 'controller.Tracks._dump'
+        sh.objs.mes (f,_('INFO')
+                    ,_('Not implemented yet!')
+                    )
+        return False
+    
+    def _dump(self,old,new):
+        if old and new:
+            if len(old) == len(new):
+                Dump = False
+                for i in range(len(old)):
+                    if len(old[i]) == 7 and len(new[i]) == 4:
+                        old_record = [old[i][0],old[i][2],old[i][3]
+                                     ,old[i][6]
+                                     ]
+                        new_record = [new[i][0],new[i][1],new[i][2]
+                                     ,new[i][3]
+                                     ]
+                        if old_record != new_record:
+                            if new[i][0]:
+                                self.gui.update(_('Edit #%d.') % (i + 1))
+                                lg.objs.db().update_track (no   = i + 1
+                                                          ,data = new_record
+                                                          )
+                                # We're in loop - do not use 'return'
+                                Dump = True
+                            else:
+                                sh.objs.mes (f,_('WARNING')
+                                            ,_('A track title should be indicated.')
+                                            )
+                    else:
+                        self.Success = False
+                        sh.objs.mes (f,_('ERROR')
+                                    ,_('Wrong input data!')
+                                    )
+                return Dump
+            else:
+                sh.objs.mes (f,_('ERROR')
+                            ,_('Condition "%s" is not observed!') \
+                            % '%d == %d' % (len(old),len(new))
+                            )
+        else:
+            sh.com.empty(f)
     
     def dump(self):
         f = 'controller.Tracks.dump'
         if self.Success:
-            #cur
-            pass
+            Extended = False
+            if self.gui._tracks:
+                Extended = self.gui._tracks[0].Extended
+            old = lg.objs.db().tracks()
+            new = self.gui.dump()
+            if Extended:
+                return self._dump_search(old,new)
+            else:
+                return self._dump(old,new)
         else:
             sh.com.cancel(f)
     
@@ -34,13 +88,27 @@ class Tracks:
         f = 'controller.Tracks.save'
         if self.Success:
             if self.dump():
+                self.gui.update(_('Save DB.'))
                 lg.objs.db().save()
         else:
             sh.com.cancel(f)
     
     def bindings(self):
-        self.gui.btn_rld.action = self.fill
+        self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
+        sg.bind (obj      = self.gui.parent
+                ,bindings = ['<F5>','<Control-r>']
+                ,action   = self.reload
+                )
+        sg.bind (obj      = self.gui.parent
+                ,bindings = ['<F2>','<Control-s>']
+                ,action   = self.save
+                )
+        sg.bind (obj      = self.gui.parent
+                ,bindings = ['<Escape>','<Control-q>','<Control-w>']
+                ,action   = self.close
+                )
     
     def fill_search(self,data):
         f = 'controller.Tracks.fill_search'
@@ -87,6 +155,10 @@ class Tracks:
         else:
             sh.com.cancel(f)
     
+    def reload(self,event=None):
+        self.fill()
+        self.show()
+    
     def fill(self,event=None):
         f = 'controller.Tracks.fill'
         if self.Success:
@@ -95,6 +167,7 @@ class Tracks:
             if data:
                 for i in range(len(data)):
                     self.gui.add()
+                    self.gui.update(_('Load #%d.') % (i + 1))
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 7:
@@ -132,9 +205,11 @@ class Tracks:
             sh.com.cancel(f)
     
     def show(self,event=None):
+        self.Active = True
         self.gui.show()
     
     def close(self,event=None):
+        self.Active = False
         self.gui.close()
 
 
@@ -567,6 +642,8 @@ class AlbumEditor:
                     self.bitrate()
                     self.length()
                     self.update()
+                    if objs.tracks().Active:
+                        objs._tracks.reload()
                 else:
                     sh.objs.mes (f,_('ERROR')
                                 ,_('Wrong input data: "%s"!') \
