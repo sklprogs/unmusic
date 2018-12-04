@@ -53,11 +53,21 @@ class Commands:
         itracks.after_add()
         itracks.show()
     
+    def check_nos(self):
+        f = 'tests.Commands.check_nos'
+        albumid = lg.objs.db().max_id()
+        if albumid:
+            for i in range(albumid):
+                lg.objs._db.albumid = i + 1
+                print(lg.objs._db.albumid,':',lg.objs.db().check_nos())
+        else:
+            sh.com.empty(f)
+    
 
 com = Commands()
 
 
 if __name__ == '__main__':
     sg.objs.start()
-    com.tracks()
+    com.check_nos()
     sg.objs.end()

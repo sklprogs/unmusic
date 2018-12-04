@@ -19,6 +19,29 @@ class Tracks:
         self.Success = lg.objs.db().Success
         self.gui     = gi.Tracks(height=400)
     
+    def dump(self):
+        f = 'controller.Tracks.dump'
+        if self.Success:
+            #cur
+            pass
+        else:
+            sh.com.cancel(f)
+    
+    def save(self,event=None):
+        ''' #NOTE: this should be done before 'albumid' is changed,
+            otherwise, a wrong DB record will be overwritten!
+        '''
+        f = 'controller.Tracks.save'
+        if self.Success:
+            if self.dump():
+                lg.objs.db().save()
+        else:
+            sh.com.cancel(f)
+    
+    def bindings(self):
+        self.gui.btn_rld.action = self.fill
+        self.gui.btn_sav.action = self.save
+    
     def fill_search(self,data):
         f = 'controller.Tracks.fill_search'
         if self.Success:
@@ -33,8 +56,10 @@ class Tracks:
                         track.w_aid.clear_text()
                         track.w_aid.insert(record[0])
                         track.w_aid.read_only(True)
+                        track.w_tno.read_only(False)
                         track.w_tno.clear_text()
                         track.w_tno.insert(str(record[2]))
+                        track.w_tno.read_only(True)
                         track.w_tit.clear_text()
                         track.w_tit.insert(record[1])
                         track.w_lyr.clear_text()
@@ -62,7 +87,7 @@ class Tracks:
         else:
             sh.com.cancel(f)
     
-    def fill(self):
+    def fill(self,event=None):
         f = 'controller.Tracks.fill'
         if self.Success:
             self.gui.reset()
@@ -73,8 +98,10 @@ class Tracks:
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 7:
+                        track.w_tno.read_only(False)
                         track.w_tno.clear_text()
                         track.w_tno.insert(str(record[1]))
+                        track.w_tno.read_only(True)
                         track.w_tit.clear_text()
                         track.w_tit.insert(record[0])
                         track.w_lyr.clear_text()

@@ -171,6 +171,7 @@ class Directory:
         self.get_rating()
         self.create_list()
         self.tracks()
+        self.renumber_tracks()
         self.save_meta()
     
     def _add_album_meta(self):
@@ -269,6 +270,26 @@ class Directory:
         else:
             sh.com.cancel(f)
     
+    def renumber_tracks(self):
+        ''' We use track NO field instead of an autoincrement, so we
+            must keep these fields unique within the same album.
+        '''
+        f = 'logic.Directory.renumber_tracks'
+        if self.Success:
+            nos = [i + 1 for i in range(len(self._tracks))]
+            count = 0
+            for i in range(len(self._tracks)):
+                if self._tracks[i]._no != nos[i]:
+                    count += 1
+                    self._tracks[i]._no = nos[i]
+            if count:
+                sh.log.append (f,_('WARNING')
+                              ,_('%d/%d tracks have been renumbered.') \
+                              % (count,len(self._tracks))
+                              )
+        else:
+            sh.com.cancel(f)
+    
     def tracks(self):
         f = 'logic.Directory.tracks'
         if self.Success:
@@ -349,6 +370,30 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def check_nos(self):
+        ''' We use track NO field instead of an autoincrement, so we
+            must keep these fields unique within the same album.
+            Tracks should have already been renumbered if required
+            with 'logic.Directory.renumber_tracks', however, we check
+            this again just to be sure.
+        '''
+        f = 'logic.DB.check_nos'
+        if self.Success:
+            try:
+                self.dbc.execute ('select NO from TRACKS \
+                                   where ALBUMID = ? order by NO'
+                                  ,(self.albumid,)
+                                 )
+                result = self.dbc.fetchall()
+                if result:
+                    result = [item[0] for item in result]
+                    nos    = [i + 1 for i in range(len(result))]
+                    return result == nos
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def get_length(self):
         f = 'logic.DB.get_length'
@@ -814,6 +859,12 @@ class Track:
             search = ' '.join(search)
             search = sh.Text(search).delete_duplicate_spaces()
             search = search.strip().lower()
+            if not self._album:
+                self._album = '?'
+            if not self._artist:
+                self._artist = '?'
+            if not self._genre:
+                self._genre = '?'
             return (self._album,self._artist,self._year,self._genre
                    ,search
                    )
