@@ -549,9 +549,11 @@ class Menu:
                                   ,side   = 'top'
                                   )
                        )
-        self._a.append (sg.Button (parent = self.parent
-                                  ,text   = _('Obfuscate')
-                                  ,side   = 'top'
+        self._a.append (sg.Button (parent     = self.parent
+                                  ,text       = _('Obfuscate')
+                                  ,hint       = _('Clear tags, name folders by ALBUMID, etc.')
+                                  ,hint_width = 600
+                                  ,side       = 'top'
                                   )
                        )
         self._a.append (sg.Button (parent = self.parent
@@ -861,7 +863,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    itracks = Tracks()
-    itracks.update('Demo.')
-    itracks.show()
+    Menu().show()
     sg.objs.end()
