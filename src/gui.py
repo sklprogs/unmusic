@@ -588,6 +588,10 @@ class Tracks:
         self._width  = width
         self._height = height
         self.gui()
+        
+    def clear_rating(self,event=None):
+        for track in self._tracks:
+            track.w_rtg.set(0)
     
     def _info(self):
         self.lbl = sg.Label (parent = self.frm_btn
@@ -607,9 +611,12 @@ class Tracks:
     
     def values(self):
         self._tracks   = []
-        self._path_rld = sh.objs.pdir().add ('..','resources','buttons'
-                                            ,'icon_36x36_reload.gif'
+        self._path_rat = sh.objs.pdir().add ('..','resources','buttons'
+                                            ,'icon_36x36_clear_rating.gif'
                                             )
+        self._path_rld = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_reload.gif'
+                                           )
         self._path_sav = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_save.gif'
                                            )
@@ -622,6 +629,14 @@ class Tracks:
                                  ,inactive = self._path_rld
                                  ,active   = self._path_rld
                                  ,bindings = ['<F5>','<Control-r>']
+                                 )
+        self.btn_rat = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Clear rating')
+                                 ,hint     = _('Clear rating of all tracks')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_rat
+                                 ,active   = self._path_rat
+                                 ,action   = self.clear_rating
                                  )
         self.btn_sav = sg.Button (parent   = self.frm_btn
                                  ,text     = _('Save')
@@ -862,6 +877,14 @@ objs = Objects()
 
 
 if __name__ == '__main__':
+    import random
     sg.objs.start()
-    Menu().show()
+    itracks = Tracks()
+    for i in range(10):
+        itracks.add()
+        itracks._tracks[-1].w_tno.insert(i+1)
+        itracks._tracks[-1].w_tit.insert(_('Track #%d') % (i+1))
+        itracks._tracks[-1].w_rtg.set(random.randint(a=0,b=10))
+    itracks.after_add()
+    itracks.show()
     sg.objs.end()
