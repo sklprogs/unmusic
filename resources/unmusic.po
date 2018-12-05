@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 14:09+0300\n"
-"PO-Revision-Date: 2018-12-04 14:09+0300\n"
+"POT-Creation-Date: 2018-12-05 11:23+0300\n"
+"PO-Revision-Date: 2018-12-05 11:24+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -250,19 +250,19 @@ msgstr "Создать"
 msgid "Create a new record"
 msgstr "Создать новую запись"
 
-#: gui.py:94 gui.py:627
+#: gui.py:94 gui.py:642
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui.py:95 gui.py:628
+#: gui.py:95 gui.py:643
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: gui.py:102 gui.py:619
+#: gui.py:102 gui.py:626
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui.py:103 gui.py:620
+#: gui.py:103 gui.py:627
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
@@ -302,7 +302,7 @@ msgstr "ИД альбома"
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:242 gui.py:785
+#: gui.py:242 gui.py:800
 msgid "Rating:"
 msgstr "Оценка:"
 
@@ -326,7 +326,7 @@ msgstr "Год:"
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: gui.py:459 gui.py:773
+#: gui.py:459 gui.py:788
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -367,34 +367,47 @@ msgstr "Очистить тэги, переименовать каталоги �
 msgid "Quit"
 msgstr "Выйти"
 
-#: gui.py:675 gui.py:710
+#: gui.py:634
+msgid "Clear rating"
+msgstr "Очистить оценку"
+
+#: gui.py:635
+msgid "Clear rating of all tracks"
+msgstr "Очистить оценку для всех дорожек"
+
+#: gui.py:690 gui.py:725
 msgid "Tracks:"
 msgstr "Дорожки:"
 
-#: gui.py:757
+#: gui.py:772
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: gui.py:761 logic.py:925
+#: gui.py:776 logic.py:925
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: gui.py:765 logic.py:926 sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2884
+#: gui.py:780 logic.py:926 sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2884
 #: sharedGUI.py:2895 sharedGUI.py:3345
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: gui.py:769 logic.py:927
+#: gui.py:784 logic.py:927
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: gui.py:777
+#: gui.py:792
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: gui.py:781 logic.py:933
+#: gui.py:796 logic.py:933
 msgid "Length:"
 msgstr "Продолжительность:"
+
+#: gui.py:886 tests.py:52
+#, python-format
+msgid "Track #%d"
+msgstr "Дорожка №%d"
 
 #: logic.py:80
 msgid "The database is empty. You need to fill it first."
@@ -1265,11 +1278,6 @@ msgstr "Закрыть"
 #: sharedGUI.py:4043
 msgid "Close this window"
 msgstr "Закрыть это окно"
-
-#: tests.py:52
-#, python-format
-msgid "Track #%d"
-msgstr "Дорожка №%d"
 
 #~ msgid "Country:"
 #~ msgstr "Страна:"
