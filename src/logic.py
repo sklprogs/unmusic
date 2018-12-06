@@ -28,8 +28,12 @@ class AlbumEditor:
         if self.Success:
             mean = objs.db().get_bitrate()
             if mean:
-                # This returns 'int' since we don't need 'float' here
-                return sum(mean) // len(mean)
+                mean = [rating for rating in mean if rating]
+                if mean:
+                    # Return 'int' since we don't need 'float' here
+                    return sum(mean) // len(mean)
+                else:
+                    return 0
             else:
                 sh.com.empty(f)
         else:
@@ -40,10 +44,20 @@ class AlbumEditor:
         if self.Success:
             mean = objs.db().get_rating()
             if mean:
-                ''' This (intentionally) returns float even if all
-                    elements are equal.
+                ''' We should not count tracks with an undefined (0)
+                    rating, otherwise, if there is a mix of tracks with
+                    zero and non-zero rating, an overall rating will be
+                    lower than a mean rating of the non-zero rating
+                    tracks.
                 '''
-                return sum(mean) / len(mean)
+                mean = [rating for rating in mean if rating]
+                if mean:
+                    ''' This (intentionally) returns float even if all
+                        elements are equal.
+                    '''
+                    return sum(mean) / len(mean)
+                else:
+                    return 0.0
             else:
                 sh.com.empty(f)
         else:
@@ -867,6 +881,25 @@ class Track:
         self.Success = sh.File(self.file).Success
         self.load()
         self.info()
+        self.decode()
+    
+    def _decode(self,text):
+        try:
+            byted = bytes(text,'iso-8859-1')
+            return byted.decode('cp1251')
+        except UnicodeEncodeError:
+            return text
+    
+    # Fix Cyrillic tags
+    def decode(self):
+        f = 'logic.Track.decode'
+        if self.Success:
+            self._artist = self._decode(self._artist)
+            self._album  = self._decode(self._album)
+            self._title  = self._decode(self._title)
+            self._lyrics = self._decode(self._lyrics)
+        else:
+            sh.com.cancel(f)
     
     def track_meta(self):
         f = 'logic.Track.track_meta'
@@ -1060,33 +1093,114 @@ class Walker:
 
 
 
+class Obfuscate:
+    
+    def __init__(self,source,collection):
+        self.values()
+        self._source = source
+        self._collec = collection
+        self.idir    = Directory(self._source)
+        self.Success = self.idir.Success \
+                       and sh.Directory(self._collec).Success
+    
+    def values(self):
+        # 'albumid' should have an invalid value by default
+        self.albumid = 0
+        self._target = ''
+        self._source = ''
+        self._collec = ''
+        self.Success = True
+        self.idir    = None
+    
+    def create_target(self):
+        f = 'logic.Obfuscate.create_target'
+        if self.Success:
+            self._target = os.path.join(self._collec,str(self.albumid))
+            self.Success = sh.Path(self._target).create()
+        else:
+            sh.com.cancel(f)
+    
+    def get_albumid(self):
+        f = 'logic.Obfuscate.get_albumid'
+        if self.Success:
+            self.idir.create_list()
+            if self.idir._audio:
+                itrack = Track(self.idir._audio[0])
+                if itrack.audio:
+                    self.albumid = objs.db().has_album (artist = itrack._artist
+                                                       ,year   = itrack._year
+                                                       ,album  = itrack._album
+                                                       )
+                    if not self.albumid:
+                        self.Success = False
+                        ''' This error message is case-specific, do not
+                            put it elsewhere.
+                        '''
+                        sh.objs.mes (f,_('WARNING')
+                                    ,_('Albums that are not in DB cannot be obfuscated.')
+                                    )
+                else:
+                    sh.com.empty()
+            else:
+                sh.com.empty(f)
+            ''' The previous check of 'self.albumid' is case-specific
+                (so we can throw a specific error if needed), but we
+                also need a general check.
+            '''
+            if self.albumid:
+                objs.db().albumid = self.albumid
+            else:
+                self.Success = False
+        else:
+            sh.com.cancel(f)
+    
+    def _set_no(self,i,max_len):
+        no = str(i+1)
+        while len(no) < max_len:
+            no = '0' + no
+        return no
+    
+    def move_tracks(self):
+        f = 'logic.Obfuscate.move_tracks'
+        if self.Success:
+            success = []
+            ''' The current algorithm of tracks renumbering guarantees
+                that the file list (*unless changed*) will have
+                a consecutive numbering of tracks.
+            '''
+            max_len = len(self.idir._audio)
+            max_len = len(str(max_len))
+            for i in range(len(self.idir._audio)):
+                file     = self.idir._audio[i]
+                no       = self._set_no(i,max_len)
+                basename = no + sh.Path(file).extension().lower()
+                dest     = os.path.join (self._target
+                                        ,basename
+                                        )
+                success.append(sh.File(file=file,dest=dest).move())
+            self.Success = not (False in success or None in success)
+        else:
+            sh.com.cancel(f)
+    
+    def run(self):
+        self.get_albumid()
+        self.create_target()
+        self.move_tracks()
+
+
+
 objs = Objects()
 objs.default()
 
 
 
 if __name__ == '__main__':
-    sg.objs.start()
+    sh.objs.mes(Silent=1)
     f = 'logic.__main__'
-    dirs = Walker('/home/pete/tmp/meta').dirs()
-    if dirs:
-        timer = sh.Timer(f)
-        timer.start()
-        for folder in dirs:
-            Directory(path=folder).run()
-        timer.end()
-        objs.db().save()
-        print('Max ID:',objs.db().max_id())
-        objs.db().print (table   = 'ALBUMS'
-                        ,Shorten = True
-                        ,MaxRow  = 40
-                        ,MaxRows = 200
-                        )
-        objs._db.print (table   = 'TRACKS'
-                       ,Shorten = True
-                       ,MaxRow  = 40
-                       ,MaxRows = 200
-                       )
-    else:
-        sh.com.empty(f)
-    sg.objs.end()
+    source = sh.Home(app_name=PRODUCT).add_config ('files'
+                                                  ,'test'
+                                                  )
+    collection = sh.Home(app_name=PRODUCT).add_config(_('sorted'))
+    iobfuscate = Obfuscate(source,collection)
+    iobfuscate.run()
+    print(iobfuscate.Success)

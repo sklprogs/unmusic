@@ -677,13 +677,14 @@ class Menu:
         objs.editor().reset()
         objs._editor.show()
     
-    def collect(self,event=None,folder='/home/pete/tmp/meta'):
+    def collect(self,event=None):
         ''' If an artist and/or album title were changed and originally
             were not empty, there is no easy way to tell if we are
             dealing with the same album or not. So, it's best to add
             tags to DB only once.
         '''
         f = 'controller.Menu.collect'
+        folder = sh.Home(app_name=gi.PRODUCT).add_config(_('not processed'))
         dirs = lg.Walker(folder).dirs()
         if dirs:
             timer = sh.Timer(f)
