@@ -883,6 +883,44 @@ class Track:
         self.info()
         self.decode()
     
+    def purge(self):
+        f = 'logic.Track.purge'
+        if self.Success:
+            if self.audio:
+                try:
+                    self.audio.delete()
+                    self.audio.images = {}
+                except Exception as e:
+                    self.Success = False
+                    sh.objs.mes (f,_('WARNING')
+                                ,_('Third-party module has failed!\n\nDetails: %s')\
+                                % str(e)
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def save(self):
+        ''' This is only needed if the file was changed by means of
+            'phrydy', see, for example, 'self.purge'.
+        '''
+        f = 'logic.Track.save'
+        if self.Success:
+            if self.audio:
+                try:
+                    self.audio.save()
+                except Exception as e:
+                    self.Success = False
+                    sh.objs.mes (f,_('WARNING')
+                                ,_('Third-party module has failed!\n\nDetails: %s')\
+                                % str(e)
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def _decode(self,text):
         try:
             byted = bytes(text,'iso-8859-1')
@@ -1029,7 +1067,7 @@ class Track:
                         self._lyrics = self.audio.lyrics
                 except Exception as e:
                     sh.objs.mes (f,_('WARNING')
-                                ,_('Third party module has failed!\n\nDetails: %s')\
+                                ,_('Third-party module has failed!\n\nDetails: %s')\
                                 % str(e)
                                 )
             else:
@@ -1045,7 +1083,7 @@ class Track:
                     self.audio = phrydy.MediaFile(self.file)
                 except Exception as e:
                     sh.objs.mes (f,_('WARNING')
-                                ,_('Third party module has failed!\n\nDetails: %s')\
+                                ,_('Third-party module has failed!\n\nDetails: %s')\
                                 % str(e)
                                 )
             return self.audio
@@ -1101,7 +1139,22 @@ class Obfuscate:
         self._collec = collection
         self.idir    = Directory(self._source)
         self.Success = self.idir.Success \
-                       and sh.Directory(self._collec).Success
+                       and sh.Path(self._collec).create()
+    
+    def purge(self):
+        f = 'logic.Obfuscate.purge'
+        if self.Success:
+            if self.idir._tracks:
+                for track in self.idir._tracks:
+                    track.purge()
+                    track.save()
+                    if not track.Success:
+                        self.Success = False
+                        break
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
     
     def values(self):
         # 'albumid' should have an invalid value by default
@@ -1124,8 +1177,9 @@ class Obfuscate:
         f = 'logic.Obfuscate.get_albumid'
         if self.Success:
             self.idir.create_list()
-            if self.idir._audio:
-                itrack = Track(self.idir._audio[0])
+            self.idir.tracks()
+            if self.idir._tracks:
+                itrack = self.idir._tracks[0]
                 if itrack.audio:
                     self.albumid = objs.db().has_album (artist = itrack._artist
                                                        ,year   = itrack._year
@@ -1185,6 +1239,7 @@ class Obfuscate:
     def run(self):
         self.get_albumid()
         self.create_target()
+        self.purge()
         self.move_tracks()
 
 
@@ -1197,10 +1252,10 @@ objs.default()
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
     f = 'logic.__main__'
-    source = sh.Home(app_name=PRODUCT).add_config (_('not processed')
-                                                  ,'test'
-                                                  )
-    collection = sh.Home(app_name=PRODUCT).add_config(_('processed'))
+    source = sh.Home(app_name=PRODUCT).add_share (_('not processed')
+                                                 ,'Andreas Waldetoft - Crusader Kings II'
+                                                 )
+    collection = sh.Home(app_name=PRODUCT).add_share(_('processed'))
     iobfuscate = Obfuscate(source,collection)
     iobfuscate.run()
     print(iobfuscate.Success)

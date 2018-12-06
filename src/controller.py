@@ -684,22 +684,25 @@ class Menu:
             tags to DB only once.
         '''
         f = 'controller.Menu.collect'
-        folder = sh.Home(app_name=gi.PRODUCT).add_config(_('not processed'))
-        dirs = lg.Walker(folder).dirs()
-        if dirs:
-            timer = sh.Timer(f)
-            timer.start()
-            for folder in dirs:
-                lg.Directory(path=folder).run()
-            delta = timer.end()
-            sh.objs.mes (f,_('INFO')
-                        ,_('Operation has taken %s') \
-                        % sh.com.human_time(delta)
-                        )
-            objs.editor().reset()
-            objs._editor.show()
+        folder = sh.Home(app_name=gi.PRODUCT).add_share(_('not processed'))
+        if sh.Path(folder).create():
+            dirs = lg.Walker(folder).dirs()
+            if dirs:
+                timer = sh.Timer(f)
+                timer.start()
+                for folder in dirs:
+                    lg.Directory(path=folder).run()
+                delta = timer.end()
+                sh.objs.mes (f,_('INFO')
+                            ,_('Operation has taken %s') \
+                            % sh.com.human_time(delta)
+                            )
+                objs.editor().reset()
+                objs._editor.show()
+            else:
+                sh.com.empty(f)
         else:
-            sh.com.empty(f)
+            sh.com.cancel(f)
     
     def prepare(self,event=None):
         f = 'controller.Menu.prepare'
