@@ -1197,10 +1197,10 @@ objs.default()
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
     f = 'logic.__main__'
-    source = sh.Home(app_name=PRODUCT).add_config ('files'
+    source = sh.Home(app_name=PRODUCT).add_config (_('not processed')
                                                   ,'test'
                                                   )
-    collection = sh.Home(app_name=PRODUCT).add_config(_('sorted'))
+    collection = sh.Home(app_name=PRODUCT).add_config(_('processed'))
     iobfuscate = Obfuscate(source,collection)
     iobfuscate.run()
     print(iobfuscate.Success)
