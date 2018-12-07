@@ -98,9 +98,6 @@ class BottomArea:
                                  ,inactive = self._path_del
                                  ,active   = self._path_del
                                  )
-        self.opt_ply = sg.OptionMenu (parent = self.frm2
-                                     ,items  = PLAY
-                                     )
         self.btn_sav = sg.Button (parent   = self.frm2
                                  ,text     = _('Save')
                                  ,hint     = _('Save changes')
@@ -240,18 +237,18 @@ class TopArea:
         self.search_albums()
         self.meter()
         self.search_tracks()
-        self.rating()
+        self.menus()
         self.bindings()
         
-    def rating(self):
-        sg.Label (parent = self.frm
-                 ,text   = _('Rating:')
-                 ,ipady  = 2
-                 )
-        self.w_rtg = sg.OptionMenu (parent = self.frm
-                                   ,items  = (0,1,2,3,4,5,6,7,8,9,10)
-                                   ,side   = 'left'
-                                   )
+    def menus(self):
+        self.opt_rtg = sg.OptionMenu (parent = self.frm
+                                     ,items  = (0,1,2,3,4,5,6,7,8,9,10)
+                                     ,side   = 'left'
+                                     )
+        self.opt_ply = sg.OptionMenu (parent = self.frm
+                                     ,items  = PLAY
+                                     ,side   = 'left'
+                                     )
 
     def bindings(self):
         sg.bind (obj      = self
@@ -301,9 +298,9 @@ class AlbumEditor:
         sg.Geometry(parent=self.parent)
 
     def dump(self,event=None):
-        return (self.body.w_alb.get(),self.body.w_art.get()
-               ,self.body.w_yer.get(),self.body.w_gnr.choice
-               ,self.body.w_cnt.get(),self.body.w_com.get()
+        return (self.body.ent_alb.get(),self.body.ent_art.get()
+               ,self.body.ent_yer.get(),self.body.opt_gnr.choice
+               ,self.body.ent_cnt.get(),self.body.ent_com.get()
                )
     
     def bindings(self):
@@ -348,12 +345,12 @@ class Body:
         self.gui()
 
     def reset(self,event=None):
-        self.w_art.clear_text()
-        self.w_alb.clear_text()
-        self.w_yer.clear_text()
-        self.w_cnt.clear_text()
-        self.w_com.clear_text()
-        self.w_art.focus()
+        self.ent_art.clear_text()
+        self.ent_alb.clear_text()
+        self.ent_yer.clear_text()
+        self.ent_cnt.clear_text()
+        self.ent_com.clear_text()
+        self.ent_art.focus()
 
     def gui(self):
         self.widget = self.parent.widget
@@ -361,7 +358,7 @@ class Body:
         self.labels()
         self.entries()
         self.menus()
-        self.w_art.focus()
+        self.ent_art.focus()
 
     def frames(self):
         self.frm_prm = sg.Frame (parent = self.parent
@@ -395,49 +392,49 @@ class Body:
                                 )
 
     def menus(self):
-        self.w_gnr = sg.OptionMenu (parent = self.frm_rht
+        self.opt_gnr = sg.OptionMenu (parent = self.frm_rht
                                    ,items  = GENRES
                                    ,side   = 'left'
                                    )
     
     def entries(self):
-        self.w_art = sg.Entry (parent    = self.frm_rht
+        self.ent_art = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_alb = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_yer = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,ipady     = 1
+                                ,fill      = 'both'
+                                )
+        self.ent_cnt = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,ipady     = 1
+                                ,fill      = 'both'
+                                )
+        self.ent_com = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_bit = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
                               ,fill      = 'x'
                               ,ipady     = 1
                               )
-        self.w_alb = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_yer = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,ipady     = 1
-                              ,fill      = 'both'
-                              )
-        self.w_cnt = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,ipady     = 1
-                              ,fill      = 'both'
-                              )
-        self.w_com = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_bit = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_len = sg.Entry (parent    = self.frm_rht
+        self.ent_len = sg.Entry (parent    = self.frm_rht
                               ,Composite = True
                               ,expand    = 1
                               ,fill      = 'x'
@@ -632,7 +629,7 @@ class Tracks:
         
     def clear_rating(self,event=None):
         for track in self._tracks:
-            track.w_rtg.set(0)
+            track.opt_rtg.set(0)
     
     def _info(self):
         self.lbl = sg.Label (parent = self.frm_btn
@@ -787,8 +784,8 @@ class Track:
         self.gui()
     
     def dump(self,event=None):
-        return (self.w_tit.get(),self.w_lyr.get(),self.w_com.get()
-               ,int(self.w_rtg.choice)
+        return (self.ent_tit.get(),self.ent_lyr.get(),self.ent_com.get()
+               ,int(self.opt_rtg.choice)
                )
     
     # Useful for debug purposes only
@@ -844,54 +841,54 @@ class Track:
     
     def entries(self):
         if self.Extended:
-            self.w_aid = sg.Entry (parent    = self.frm_rht
-                                  ,Composite = True
-                                  ,expand    = 1
-                                  ,fill      = 'x'
-                                  ,ipady     = 1
-                                  )
-        self.w_tno = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_tit = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_lyr = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_com = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_bit = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
-        self.w_len = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
+            self.ent_aid = sg.Entry (parent    = self.frm_rht
+                                    ,Composite = True
+                                    ,expand    = 1
+                                    ,fill      = 'x'
+                                    ,ipady     = 1
+                                    )
+        self.ent_tno = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_tit = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_lyr = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_com = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_bit = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
+        self.ent_len = sg.Entry (parent    = self.frm_rht
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
     
     def menus(self):
-        self.w_rtg = sg.OptionMenu (parent = self.frm_rht
-                                   ,items  = (0,1,2,3,4,5,6,7,8,9,10)
-                                   ,side   = 'left'
-                                   )
+        self.opt_rtg = sg.OptionMenu (parent = self.frm_rht
+                                     ,items  = (0,1,2,3,4,5,6,7,8,9,10)
+                                     ,side   = 'left'
+                                     )
     
     def gui(self):
         self.frames()

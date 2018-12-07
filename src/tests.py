@@ -48,8 +48,8 @@ class Commands:
         for i in range(20):
             itracks.add()
         for i in range(len(itracks._tracks)):
-            itracks._tracks[i].w_tno.insert(i+1)
-            itracks._tracks[i].w_tit.insert(_('Track #%d') % (i + 1))
+            itracks._tracks[i].ent_tno.insert(i+1)
+            itracks._tracks[i].ent_tit.insert(_('Track #%d') % (i + 1))
         itracks.after_add()
         itracks.show()
     

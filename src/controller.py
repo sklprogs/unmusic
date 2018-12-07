@@ -125,29 +125,29 @@ class Tracks:
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 8:
-                        track.w_aid.read_only(False)
-                        track.w_aid.clear_text()
-                        track.w_aid.insert(record[0])
-                        track.w_aid.read_only(True)
-                        track.w_tno.read_only(False)
-                        track.w_tno.clear_text()
-                        track.w_tno.insert(str(record[2]))
-                        track.w_tno.read_only(True)
-                        track.w_tit.clear_text()
-                        track.w_tit.insert(record[1])
-                        track.w_lyr.clear_text()
-                        track.w_lyr.insert(record[3])
-                        track.w_com.clear_text()
-                        track.w_com.insert(record[4])
-                        track.w_bit.read_only(False)
-                        track.w_bit.clear_text()
-                        track.w_bit.insert(str(record[5]//1000)+'k')
-                        track.w_bit.read_only(True)
-                        track.w_len.read_only(False)
-                        track.w_len.clear_text()
-                        track.w_len.insert(sh.com.human_time(float(record[6])))
-                        track.w_len.read_only(True)
-                        track.w_rtg.set(record[7])
+                        track.ent_aid.read_only(False)
+                        track.ent_aid.clear_text()
+                        track.ent_aid.insert(record[0])
+                        track.ent_aid.read_only(True)
+                        track.ent_tno.read_only(False)
+                        track.ent_tno.clear_text()
+                        track.ent_tno.insert(str(record[2]))
+                        track.ent_tno.read_only(True)
+                        track.ent_tit.clear_text()
+                        track.ent_tit.insert(record[1])
+                        track.ent_lyr.clear_text()
+                        track.ent_lyr.insert(record[3])
+                        track.ent_com.clear_text()
+                        track.ent_com.insert(record[4])
+                        track.ent_bit.read_only(False)
+                        track.ent_bit.clear_text()
+                        track.ent_bit.insert(str(record[5]//1000)+'k')
+                        track.ent_bit.read_only(True)
+                        track.ent_len.read_only(False)
+                        track.ent_len.clear_text()
+                        track.ent_len.insert(sh.com.human_time(float(record[6])))
+                        track.ent_len.read_only(True)
+                        track.opt_rtg.set(record[7])
                     else:
                         self.Success = False
                         sh.objs.mes (f,_('ERROR')
@@ -176,25 +176,25 @@ class Tracks:
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 7:
-                        track.w_tno.read_only(False)
-                        track.w_tno.clear_text()
-                        track.w_tno.insert(str(record[1]))
-                        track.w_tno.read_only(True)
-                        track.w_tit.clear_text()
-                        track.w_tit.insert(record[0])
-                        track.w_lyr.clear_text()
-                        track.w_lyr.insert(record[2])
-                        track.w_com.clear_text()
-                        track.w_com.insert(record[3])
-                        track.w_bit.read_only(False)
-                        track.w_bit.clear_text()
-                        track.w_bit.insert(str(record[4]//1000)+'k')
-                        track.w_bit.read_only(True)
-                        track.w_len.read_only(False)
-                        track.w_len.clear_text()
-                        track.w_len.insert(sh.com.human_time(float(record[5])))
-                        track.w_len.read_only(True)
-                        track.w_rtg.set(record[6])
+                        track.ent_tno.read_only(False)
+                        track.ent_tno.clear_text()
+                        track.ent_tno.insert(str(record[1]))
+                        track.ent_tno.read_only(True)
+                        track.ent_tit.clear_text()
+                        track.ent_tit.insert(record[0])
+                        track.ent_lyr.clear_text()
+                        track.ent_lyr.insert(record[2])
+                        track.ent_com.clear_text()
+                        track.ent_com.insert(record[3])
+                        track.ent_bit.read_only(False)
+                        track.ent_bit.clear_text()
+                        track.ent_bit.insert(str(record[4]//1000)+'k')
+                        track.ent_bit.read_only(True)
+                        track.ent_len.read_only(False)
+                        track.ent_len.clear_text()
+                        track.ent_len.insert(sh.com.human_time(float(record[5])))
+                        track.ent_len.read_only(True)
+                        track.opt_rtg.set(record[6])
                     else:
                         self.Success = False
                         sh.objs.mes (f,_('ERROR')
@@ -236,10 +236,10 @@ class AlbumEditor:
                                             )
             else:
                 mes = '?'
-            self.gui.body.w_len.read_only(False)
-            self.gui.body.w_len.clear_text()
-            self.gui.body.w_len.insert(mes)
-            self.gui.body.w_len.read_only(True)
+            self.gui.body.ent_len.read_only(False)
+            self.gui.body.ent_len.clear_text()
+            self.gui.body.ent_len.insert(mes)
+            self.gui.body.ent_len.read_only(True)
         else:
             sh.com.cancel(f)
     
@@ -251,10 +251,10 @@ class AlbumEditor:
                 mes = '%dk' % (mean // 1000)
             else:
                 mes = '?'
-            self.gui.body.w_bit.read_only(False)
-            self.gui.body.w_bit.clear_text()
-            self.gui.body.w_bit.insert(mes)
-            self.gui.body.w_bit.read_only(True)
+            self.gui.body.ent_bit.read_only(False)
+            self.gui.body.ent_bit.clear_text()
+            self.gui.body.ent_bit.insert(mes)
+            self.gui.body.ent_bit.read_only(True)
         else:
             sh.com.cancel(f)
     
@@ -268,7 +268,7 @@ class AlbumEditor:
                     an overall rating of X. Thus, we use 'round' instead
                     of 'int'.
                 '''
-                self.gui.top_area.w_rtg.set(round(rating))
+                self.gui.top_area.opt_rtg.set(round(rating))
             elif rating is None:
                 sh.com.empty(f)
             else:
@@ -281,7 +281,7 @@ class AlbumEditor:
     def _set_rating(self):
         f = 'controller.AlbumEditor._set_rating'
         value = sh.Input (title = f
-                         ,value = self.gui.top_area.w_rtg.choice
+                         ,value = self.gui.top_area.opt_rtg.choice
                          ).integer()
         lg.objs._db.set_rating(value)
     
@@ -529,7 +529,7 @@ class AlbumEditor:
         self.gui.top_area.btn_prv.action    = self.prev
         self.gui.top_area.btn_spr.action    = self.search_prev_album
         self.gui.top_area.btn_snx.action    = self.search_next_album
-        self.gui.top_area.w_rtg.action      = self.set_rating
+        self.gui.top_area.opt_rtg.action    = self.set_rating
         self.gui.bottom_area.btn_trk.action = self.tracks
         self.gui.bottom_area.btn_rec.action = self.create
         self.gui.bottom_area.btn_sav.action = self.save
@@ -628,9 +628,9 @@ class AlbumEditor:
                                                 % lg.objs._db.albumid
                                                 )
                     self.gui.body.reset()
-                    self.gui.body.w_alb.insert(data[0])
-                    self.gui.body.w_art.insert(data[1])
-                    self.gui.body.w_yer.insert(data[2])
+                    self.gui.body.ent_alb.insert(data[0])
+                    self.gui.body.ent_art.insert(data[1])
+                    self.gui.body.ent_yer.insert(data[2])
                     genre = data[3]
                     if not genre:
                         # Do not localize (being stored in DB)
@@ -638,11 +638,11 @@ class AlbumEditor:
                     items = list(gi.GENRES)
                     if not genre in items:
                         items.append(genre)
-                    self.gui.body.w_gnr.reset (items   = items
-                                              ,default = genre
-                                              )
-                    self.gui.body.w_cnt.insert(data[4])
-                    self.gui.body.w_com.insert(data[5])
+                    self.gui.body.opt_gnr.reset (items   = items
+                                                ,default = genre
+                                                )
+                    self.gui.body.ent_cnt.insert(data[4])
+                    self.gui.body.ent_com.insert(data[5])
                     self.get_rating()
                     self.bitrate()
                     self.length()
