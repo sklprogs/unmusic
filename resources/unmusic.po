@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 11:25+0300\n"
-"PO-Revision-Date: 2018-12-07 11:25+0300\n"
+"POT-Creation-Date: 2018-12-07 12:39+0300\n"
+"PO-Revision-Date: 2018-12-07 12:48+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -243,173 +243,193 @@ msgstr "Обработка \"%s\" (%d/%d)"
 msgid "Operation has taken %s"
 msgstr "Операция завершена за %s"
 
-#: gui.py:76
-msgid "Tracks"
-msgstr "Дорожки"
+#: gui.py:15
+msgid "Play"
+msgstr "Слушать"
 
-#: gui.py:77
-msgid "Edit tracks"
-msgstr "Править дорожки"
+#: gui.py:15
+msgid "Best, local"
+msgstr "Лучшее (этот носитель)"
 
-#: gui.py:86
-msgid "Create"
-msgstr "Создать"
+#: gui.py:15
+msgid "Best, external"
+msgstr "Лучшее (внешний носитель)"
 
-#: gui.py:87
-msgid "Create a new record"
-msgstr "Создать новую запись"
+#: gui.py:15
+msgid "All, local"
+msgstr "Всё (этот носитель)"
 
-#: gui.py:94 gui.py:677
-msgid "Save"
-msgstr "Сохранить"
+#: gui.py:16
+msgid "All, external"
+msgstr "Всё (внешний носитель)"
 
-#: gui.py:95 gui.py:678
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-#: gui.py:102 gui.py:661
+#: gui.py:79 gui.py:667
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui.py:103 gui.py:662
+#: gui.py:80 gui.py:668
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: gui.py:110
+#: gui.py:87
+msgid "Create"
+msgstr "Создать"
+
+#: gui.py:88
+msgid "Create a new record"
+msgstr "Создать новую запись"
+
+#: gui.py:95
 msgid "Delete"
 msgstr "Удалить"
 
-#: gui.py:111
+#: gui.py:96
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: gui.py:165
+#: gui.py:105 gui.py:683
+msgid "Save"
+msgstr "Сохранить"
+
+#: gui.py:106 gui.py:684
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: gui.py:113
+msgid "Tracks"
+msgstr "Дорожки"
+
+#: gui.py:114
+msgid "Edit tracks"
+msgstr "Править дорожки"
+
+#: gui.py:171
 msgid "Search older records"
 msgstr "Поиск более старых записей"
 
-#: gui.py:177
+#: gui.py:183
 msgid "Search newer records"
 msgstr "Поиск более новых записей"
 
-#: gui.py:185
+#: gui.py:191
 msgid "Search in albums"
 msgstr "Поиск по альбомам"
 
-#: gui.py:196
+#: gui.py:202
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: gui.py:203
+#: gui.py:209
 msgid "Go to the preceding record"
 msgstr "Перейти к предыдущей записи"
 
-#: gui.py:218
+#: gui.py:224
 msgid "Album ID"
 msgstr "ИД альбома"
 
-#: gui.py:223
+#: gui.py:229
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:242 gui.py:835
+#: gui.py:248 gui.py:841
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: gui.py:318 gui.py:573
+#: gui.py:324 gui.py:579
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: gui.py:443 logic.py:1058
+#: gui.py:449 logic.py:1058
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:447 logic.py:1059
+#: gui.py:453 logic.py:1059
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:451 logic.py:1061
+#: gui.py:457 logic.py:1061
 msgid "Year:"
 msgstr "Год:"
 
-#: gui.py:455
+#: gui.py:461
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: gui.py:459 gui.py:823
+#: gui.py:465 gui.py:829
 msgid "Comment:"
 msgstr "Комментарий:"
 
-#: gui.py:463
+#: gui.py:469
 msgid "Mean bitrate:"
 msgstr "Средний битрейт:"
 
-#: gui.py:467
+#: gui.py:473
 msgid "Total length:"
 msgstr "Общая длина:"
 
-#: gui.py:471 logic.py:1060
+#: gui.py:477 logic.py:1060
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: gui.py:486 gui.py:496 gui.py:587
+#: gui.py:492 gui.py:502 gui.py:593
 msgid "Collect tags & Obfuscate"
 msgstr "Извлечь тэги и обфусцировать"
 
-#: gui.py:488 gui.py:493
+#: gui.py:494 gui.py:499
 msgid "Collect tags"
 msgstr "Извлечь тэги"
 
-#: gui.py:510
+#: gui.py:516
 msgid "Obfuscate"
 msgstr "Обфусцировать"
 
-#: gui.py:579
+#: gui.py:585
 msgid "Prepare files"
 msgstr "Подготовить файлы"
 
-#: gui.py:580
+#: gui.py:586
 msgid "Move sub-folders to a root folder, split large lossless files, etc."
 msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
 
-#: gui.py:593 sharedGUI.py:203 sharedGUI.py:628 sharedGUI.py:629
+#: gui.py:599 sharedGUI.py:203 sharedGUI.py:628 sharedGUI.py:629
 #: sharedGUI.py:1090 sharedGUI.py:1091 sharedGUI.py:1679 sharedGUI.py:1680
 msgid "Quit"
 msgstr "Выйти"
 
-#: gui.py:669
+#: gui.py:675
 msgid "Clear rating"
 msgstr "Очистить оценку"
 
-#: gui.py:670
+#: gui.py:676
 msgid "Clear rating of all tracks"
 msgstr "Очистить оценку для всех дорожек"
 
-#: gui.py:725 gui.py:760
+#: gui.py:731 gui.py:766
 msgid "Tracks:"
 msgstr "Дорожки:"
 
-#: gui.py:807
+#: gui.py:813
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: gui.py:811 logic.py:1062
+#: gui.py:817 logic.py:1062
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: gui.py:815 logic.py:1063 sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2888
+#: gui.py:821 logic.py:1063 sharedGUI.py:279 sharedGUI.py:988 sharedGUI.py:2888
 #: sharedGUI.py:2899 sharedGUI.py:3349
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: gui.py:819 logic.py:1064
+#: gui.py:825 logic.py:1064
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: gui.py:827
+#: gui.py:833
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: gui.py:831 logic.py:1070
+#: gui.py:837 logic.py:1070
 msgid "Length:"
 msgstr "Продолжительность:"
 
