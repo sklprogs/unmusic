@@ -244,7 +244,7 @@ class AlbumEditor:
                 lg.Play().all_tracks(External=True)
             else:
                 sh.objs.mes (f,_('ERROR')
-                            ,_('An unknown mode "%s"!n\nThe following modes are supported: "%s".')\
+                            ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
                             % (str(choice),';'.join(gi.PLAY))
                             )
         else:
