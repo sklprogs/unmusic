@@ -1164,6 +1164,22 @@ class Walker:
         if path:
             self.reset(path=path)
     
+    def delete_empty(self):
+        ''' Delete empty folders. Since 'sh.Directory' instance is
+            recreated each time, we can call this procedure at any time
+            without the need to reset 'Walker'.
+        '''
+        f = 'logic.Walker.delete_empty'
+        self.dirs()
+        if self.Success:
+            if self._all_dirs:
+                for folder in self._all_dirs:
+                    sh.Directory(folder).delete_empty()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def reset(self,path):
         self.values()
         self._path   = path
@@ -1183,6 +1199,7 @@ class Walker:
                 in os.walk(self.idir.dir):
                     if not dirpath in self._dirs:
                         self._dirs.append(dirpath)
+                self._all_dirs = list(self._dirs)
                 self._dirs = [folder for folder in self._dirs \
                               if not self._embedded(folder)
                              ]
@@ -1191,9 +1208,12 @@ class Walker:
             sh.com.cancel(f)
     
     def values(self):
-        self.Success = True
-        self._path   = ''
-        self._dirs   = []
+        self.Success   = True
+        self._path     = ''
+        # Folders containing audio files
+        self._dirs     = []
+        # All folders (including empty ones)
+        self._all_dirs = []
 
 
 
@@ -1204,8 +1224,12 @@ objs.default()
 
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
+    '''
     f = 'logic.__main__'
     folder = sh.Home(app_name=PRODUCT).add_share (_('not processed')
                                                  ,'Andreas Waldetoft - Crusader Kings II'
                                                  )
     print(Directory(folder).run())
+    '''
+    folder = sh.Home(app_name=PRODUCT).add_share (_('not processed'))
+    print(Walker(folder).dirs())

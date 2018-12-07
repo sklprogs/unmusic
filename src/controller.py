@@ -687,18 +687,24 @@ class Menu:
         folder = sh.Home(app_name=gi.PRODUCT).add_share(_('not processed'))
         Obfuscate = self.gui.cbx_obf.get()
         if sh.Path(folder).create():
-            dirs = lg.Walker(folder).dirs()
+            iwalk = lg.Walker(folder)
+            dirs  = iwalk.dirs()
             if dirs:
+                count = 0
                 timer = sh.Timer(f)
                 timer.start()
                 for folder in dirs:
+                    count += 1
                     basename = sh.Path(folder).basename()
                     itext    = sh.Text(basename)
                     itext.delete_unsupported()
-                    itext.shorten(max_len=20)
+                    itext.shorten(max_len=18)
                     gi.objs.wait().reset (func_title = f
-                                         ,message    = _('Process "%s"')\
-                                                       % itext.text
+                                         ,message    = _('Process "%s" (%d/%d)')\
+                                                       % (itext.text
+                                                         ,count
+                                                         ,len(dirs)
+                                                         )
                                          )
                     gi.objs._wait.show()
                     lg.Directory (path      = folder
@@ -714,6 +720,7 @@ class Menu:
                 objs._editor.show()
             else:
                 sh.com.empty(f)
+            iwalk.delete_empty()
         else:
             sh.com.cancel(f)
     
