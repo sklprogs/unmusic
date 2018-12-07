@@ -12,6 +12,9 @@ GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
          ,'Grindcore','Goregrind','Metal','Pop','Rap','Relaxation'
          ,'Soundtrack','Thrash Metal','Vocal'
          )
+PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
+       ,_('All, external')
+       )
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
@@ -40,11 +43,11 @@ class BottomArea:
         
         self.pool   = sh.MessagePool(max_size=4)
         self.parent = parent
-        self._frames()
-        self._buttons()
-        self._info()
+        self.frames()
+        self.widgets()
+        self.info()
 
-    def _frames(self):
+    def frames(self):
         self.frm  = sg.Frame (parent = self.parent
                              ,expand = 0
                              ,fill   = 'x'
@@ -71,7 +74,7 @@ class BottomArea:
                              ,fill   = 'x'
                              )
 
-    def _buttons(self):
+    def widgets(self):
         self.btn_rld = sg.Button (parent   = self.frm1
                                  ,text     = _('Reload')
                                  ,hint     = _('Reload the present record')
@@ -95,6 +98,9 @@ class BottomArea:
                                  ,inactive = self._path_del
                                  ,active   = self._path_del
                                  )
+        self.opt_ply = sg.OptionMenu (parent = self.frm2
+                                     ,items  = PLAY
+                                     )
         self.btn_sav = sg.Button (parent   = self.frm2
                                  ,text     = _('Save')
                                  ,hint     = _('Save changes')
@@ -114,7 +120,7 @@ class BottomArea:
                                              ]
                                  )
 
-    def _info(self):
+    def info(self):
         # Bind to 'self.frmb' to avoid bulking and free space
         self.lbl = sg.Label (parent = self.frmb
                             ,text   = ''
