@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 10:39+0300\n"
-"PO-Revision-Date: 2018-12-07 10:40+0300\n"
+"POT-Creation-Date: 2018-12-07 11:25+0300\n"
+"PO-Revision-Date: 2018-12-07 11:25+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: controller.py:26 controller.py:206 controller.py:347 controller.py:351
 #: controller.py:379 controller.py:383 controller.py:422 controller.py:428
-#: controller.py:450 controller.py:456 controller.py:709 controller.py:722
+#: controller.py:450 controller.py:456 controller.py:715 controller.py:729
 #: logic.py:200 logic.py:309 logic.py:319 logic.py:386 logic.py:901
 #: logic.py:1072 shared.py:312 shared.py:389 shared.py:443 shared.py:491
 #: shared.py:785 shared.py:849 shared.py:1460 shared.py:1596 shared.py:1612
@@ -39,7 +39,7 @@ msgstr ""
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
-#: controller.py:27 controller.py:723
+#: controller.py:27 controller.py:730
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -229,16 +229,16 @@ msgstr "Вы действительно хотите безвозвратно у
 msgid "Delete #%d."
 msgstr "Удаление №%d."
 
-#: controller.py:687 logic.py:1208
+#: controller.py:687 logic.py:1234
 msgid "not processed"
 msgstr "не обработано"
 
-#: controller.py:700
+#: controller.py:703
 #, python-format
-msgid "Process \"%s\""
-msgstr "Обработка \"%s\""
+msgid "Process \"%s\" (%d/%d)"
+msgstr "Обработка \"%s\" (%d/%d)"
 
-#: controller.py:710
+#: controller.py:716
 #, python-format
 msgid "Operation has taken %s"
 msgstr "Операция завершена за %s"
@@ -1295,6 +1295,9 @@ msgstr "Закрыть это окно"
 #, python-format
 msgid "Track #%d"
 msgstr "Дорожка №%d"
+
+#~ msgid "Process \"%s\""
+#~ msgstr "Обработка \"%s\""
 
 #~ msgid "Clear tags, name folders by ALBUMID, etc."
 #~ msgstr "Очистить тэги, переименовать каталоги по ALBUMID и т.д."
