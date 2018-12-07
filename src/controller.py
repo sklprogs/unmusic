@@ -226,6 +226,30 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
         
+    def play(self,event=None):
+        f = 'controller.AlbumEditor.play'
+        if self.Success:
+            choice = self.gui.top_area.opt_ply.choice
+            if choice == _('Play'):
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
+            elif choice == _('Best, local'):
+                lg.Play().best_tracks()
+            elif choice == _('Best, external'):
+                lg.Play().best_tracks(External=True)
+            elif choice == _('All, local'):
+                lg.Play().all_tracks()
+            elif choice == _('All, external'):
+                lg.Play().all_tracks(External=True)
+            else:
+                sh.objs.mes (f,_('ERROR')
+                            ,_('An unknown mode "%s"!n\nThe following modes are supported: "%s".')\
+                            % (str(choice),';'.join(gi.PLAY))
+                            )
+        else:
+            sh.com.cancel(f)
+    
     def length(self,event=None):
         f = 'controller.AlbumEditor.length'
         if self.Success:
@@ -530,6 +554,7 @@ class AlbumEditor:
         self.gui.top_area.btn_spr.action    = self.search_prev_album
         self.gui.top_area.btn_snx.action    = self.search_next_album
         self.gui.top_area.opt_rtg.action    = self.set_rating
+        self.gui.top_area.opt_ply.action    = self.play
         self.gui.bottom_area.btn_trk.action = self.tracks
         self.gui.bottom_area.btn_rec.action = self.create
         self.gui.bottom_area.btn_sav.action = self.save

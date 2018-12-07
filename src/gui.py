@@ -12,13 +12,14 @@ GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
          ,'Grindcore','Goregrind','Metal','Pop','Rap','Relaxation'
          ,'Soundtrack','Thrash Metal','Vocal'
          )
-PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
-       ,_('All, external')
-       )
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install(PRODUCT,'../resources/locale')
+
+PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
+       ,_('All, external')
+       )
 
 
 

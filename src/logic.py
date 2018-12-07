@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import io
 import re
 import phrydy
 import sqlite3
@@ -11,10 +12,172 @@ import sharedGUI as sg
 
 PRODUCT = 'unmusic'
 VERSION = '1.0'
+# Derived from 'phrydy.mediafile.TYPES'
+TYPES   = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
+          ,'.mpc','.asf','.aiff','.dsf'
+          ]
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install(PRODUCT,'../resources/locale')
+
+
+
+class Play:
+    
+    def __init__(self,External=False):
+        self.values()
+        self.Success  = objs.db().Success
+        self.External = External
+    
+    def call_player(self):
+        f = 'logic.Play.call_player'
+        if self.Success:
+            if self.playlist():
+                sh.Launch(self._playlist).default()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def values(self):
+        self.Success   = True
+        self.External  = False
+        self._collec   = ''
+        self._album    = ''
+        self._playlist = ''
+        self._audio    = []
+    
+    def album(self):
+        f = 'logic.Play.album'
+        if self.Success:
+            if not self._album:
+                self._album = os.path.join (self.collection()
+                                           ,str(objs.db().albumid)
+                                           )
+        else:
+            sh.com.cancel(f)
+        return self._album
+    
+    def collection(self):
+        f = 'logic.Play.collection'
+        if self.Success:
+            if not self._collec:
+                if self.External:
+                    self._collec = sh.Home(app_name=PRODUCT).add_share(_('external collection'))
+                else:
+                    self._collec = sh.Home(app_name=PRODUCT).add_share(_('local collection'))
+        else:
+            sh.com.cancel(f)
+        return self._collec
+    
+    def audio(self):
+        f = 'logic.Play.audio'
+        if self.Success:
+            if not self._audio:
+                idir = Directory(self.album())
+                idir.create_list()
+                self.Success = idir.Success
+                if idir._audio:
+                    self._audio = idir._audio
+        else:
+            sh.com.cancel(f)
+        return self._audio
+    
+    def available(self,nos):
+        f = 'logic.Play.available'
+        if self.Success:
+            self.audio()
+            if self._audio and nos:
+                result = []
+                errors = []
+                for no in nos:
+                    try:
+                        result.append(self._audio[no])
+                    except IndexError:
+                        errors.append(no)
+                if errors:
+                    errors = [str(error) for error in errors]
+                    sh.objs.mes (f,_('WARNING')
+                                ,_('Tracks %s have not been found in "%s"!')\
+                                % (', '.join(errors),self.album())
+                                )
+                return result
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def playlist(self):
+        f = 'logic.Play.playlist'
+        if self.Success:
+            if not self._playlist:
+                self._playlist = _('playlist') + '.m3u8'
+                self._playlist = sh.Home(app_name=PRODUCT).add_share(self._playlist)
+        else:
+            sh.com.cancel(f)
+        return self._playlist
+    
+    def gen_list(self,nos):
+        f = 'logic.Play.gen_list'
+        if self.Success:
+            if nos:
+                self.out = io.StringIO()
+                available = self.available(nos)
+                if available:
+                    self.out.write('#EXTM3U\n')
+                    for track in available:
+                        self.out.write(track)
+                        self.out.write('\n')
+                else:
+                    sh.com.empty(f)
+                text = self.out.getvalue()
+                self.out.close()
+                if text:
+                    sh.WriteTextFile (file       = self.playlist()
+                                     ,AskRewrite = False
+                                     ).write(text)
+                else:
+                    sh.com.empty(f)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def all_tracks(self):
+        f = 'logic.Play.all_tracks'
+        if self.Success:
+            tracks = objs.db().tracks()
+            if tracks:
+                # '-1' since count starts with 1 in DB and we need 0
+                nos = [track[1] - 1 for track in tracks]
+                self.gen_list(nos)
+                self.call_player()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def best_tracks(self):
+        f = 'logic.Play.best_tracks'
+        if self.Success:
+            tracks = objs.db().best_tracks()
+            if tracks:
+                if len(tracks[0]) == 2:
+                    # '-1' since count starts with 1 in DB and we need 0
+                    nos = [item[1] - 1 for item in tracks \
+                           if item[0] == tracks[0][0]
+                          ]
+                    self.gen_list(nos)
+                    self.call_player()
+                else:
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('Wrong input data!')
+                                )
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
 
 
 
@@ -328,11 +491,6 @@ class Directory:
             sh.com.cancel(f)
     
     def values(self):
-        # Derived from 'phrydy.mediafile.TYPES'
-        self._supported   = ['.mp3','.aac','.alac','.ogg','.opus'
-                            ,'.flac','.ape','.wv','.mpc','.asf','.aiff'
-                            ,'.dsf'
-                            ]
         self.Success = True
         self._path   = ''
         self._target = ''
@@ -349,7 +507,7 @@ class Directory:
                 self._files = self.idir.files()
                 for file in self._files:
                     if sh.Path(file).extension().lower() \
-                    in self._supported:
+                    in TYPES:
                         self._audio.append(file)
             return self._files
         else:
@@ -455,6 +613,21 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def best_tracks(self):
+        f = 'logic.DB.best_tracks'
+        if self.Success:
+            try:
+                self.dbc.execute ('select RATING,NO from TRACKS \
+                                   where ALBUMID = ? \
+                                   order by RATING desc,NO'
+                                  ,(self.albumid,)
+                                 )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def update_track(self,no,data):
         f = 'logic.DB.update_track'
@@ -606,7 +779,7 @@ class DB:
                 self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
                                            ,BITRATE,LENGTH,RATING \
                                    from     TRACKS where ALBUMID = ? \
-                                   order by ALBUMID,NO',(self.albumid,)
+                                   order by NO',(self.albumid,)
                                  )
                 return self.dbc.fetchall()
             except Exception as e:
@@ -1224,12 +1397,6 @@ objs.default()
 
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
-    '''
-    f = 'logic.__main__'
-    folder = sh.Home(app_name=PRODUCT).add_share (_('not processed')
-                                                 ,'Andreas Waldetoft - Crusader Kings II'
-                                                 )
-    print(Directory(folder).run())
-    '''
-    folder = sh.Home(app_name=PRODUCT).add_share (_('not processed'))
-    print(Walker(folder).dirs())
+    objs.db().albumid = 7
+    Play().best_tracks()
+    objs._db.close()
