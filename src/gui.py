@@ -481,10 +481,46 @@ class Menu:
         self.parent = sg.Top(sg.objs.root())
         self.gui()
     
+    def toggle_from_cbx(self,event=None):
+        if self.cbx_obf.get():
+            self._a[2].title(_('Collect tags & Obfuscate'))
+        else:
+            self._a[2].title(_('Collect tags'))
+    
+    def toggle_from_lbl(self,event=None):
+        if self.cbx_obf.get():
+            self.cbx_obf.disable()
+            self._a[2].title(_('Collect tags'))
+        else:
+            self.cbx_obf.enable()
+            self._a[2].title(_('Collect tags & Obfuscate'))
+    
+    def bottom(self):
+        self.frm_btm = sg.Frame (parent = self.parent
+                                ,expand = False
+                                ,fill   = 'x'
+                                ,side   = 'bottom'
+                                )
+        self.cbx_obf = sg.CheckBox (parent = self.frm_btm
+                                   ,Active = True
+                                   ,action = self.toggle_from_cbx
+                                   ,side   = 'left'
+                                   )
+        self.lbl_obf = sg.Label (parent = self.frm_btm
+                                ,text   = _('Obfuscate')
+                                ,Close  = False
+                                ,side   = 'left'
+                                ,font   = 'Sans 10'
+                                )
+    
     def bindings(self):
         sg.bind (obj      = self.parent
                 ,bindings = '<Escape>'
                 ,action   = sg.Geometry(parent=self.parent).minimize
+                )
+        sg.bind (obj      = self.lbl_obf
+                ,bindings = '<ButtonRelease-1>'
+                ,action   = self.toggle_from_lbl
                 )
         if len(self._a) > 0:
             for i in range(len(self._a)):
@@ -532,9 +568,11 @@ class Menu:
         self.parent.title(text)
     
     def buttons(self):
+        font = 'Serif 11'
         self._a.append (sg.Button (parent = self.parent
                                   ,text   = _('Album Editor')
                                   ,side   = 'top'
+                                  ,font   = font
                                   )
                        )
         self._a.append (sg.Button (parent     = self.parent
@@ -542,28 +580,25 @@ class Menu:
                                   ,hint       = _('Move sub-folders to a root folder, split large lossless files, etc.')
                                   ,hint_width = 600
                                   ,side       = 'top'
+                                  ,font       = font
                                   )
                        )
         self._a.append (sg.Button (parent = self.parent
-                                  ,text   = _('Collect tags')
+                                  ,text   = _('Collect tags & Obfuscate')
                                   ,side   = 'top'
-                                  )
-                       )
-        self._a.append (sg.Button (parent     = self.parent
-                                  ,text       = _('Obfuscate')
-                                  ,hint       = _('Clear tags, name folders by ALBUMID, etc.')
-                                  ,hint_width = 600
-                                  ,side       = 'top'
+                                  ,font   = font
                                   )
                        )
         self._a.append (sg.Button (parent = self.parent
                                   ,text   = _('Quit')
                                   ,side   = 'top'
+                                  ,font   = font
                                   )
                        )
     
     def gui(self):
         self.buttons()
+        self.bottom()
         self.icon()
         self.title()
         self.bindings()
@@ -863,12 +898,17 @@ class Track:
 class Objects:
     
     def __init__(self):
-        self._tracks = None
+        self._tracks = self._wait = None
     
     def tracks(self):
         if self._tracks is None:
             self._tracks = Tracks()
         return self._tracks
+    
+    def wait(self):
+        if self._wait is None:
+            self._wait = sg.WaitBox(sg.objs.root())
+        return self._wait
 
 
 
@@ -877,14 +917,6 @@ objs = Objects()
 
 
 if __name__ == '__main__':
-    import random
     sg.objs.start()
-    itracks = Tracks()
-    for i in range(10):
-        itracks.add()
-        itracks._tracks[-1].w_tno.insert(i+1)
-        itracks._tracks[-1].w_tit.insert(_('Track #%d') % (i+1))
-        itracks._tracks[-1].w_rtg.set(random.randint(a=0,b=10))
-    itracks.after_add()
-    itracks.show()
+    Menu().show()
     sg.objs.end()

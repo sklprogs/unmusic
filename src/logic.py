@@ -159,18 +159,78 @@ class AlbumEditor:
 
 class Directory:
     
-    def __init__(self,path,rating=0):
+    def __init__(self,path,Obfuscate=True):
         if path:
-            self.reset (path   = path
-                       ,rating = rating
+            self.reset (path      = path
+                       ,Obfuscate = Obfuscate
                        )
     
-    def reset(self,path,rating=0):
+    def _set_no(self,i,max_len):
+        no = str(i+1)
+        while len(no) < max_len:
+            no = '0' + no
+        return no
+    
+    def move_tracks(self):
+        f = 'logic.Directory.move_tracks'
+        if self.Success:
+            success = []
+            ''' The current algorithm of tracks renumbering guarantees
+                that the file list (*unless changed*) will have
+                a consecutive numbering of tracks.
+            '''
+            max_len = len(self._audio)
+            max_len = len(str(max_len))
+            for i in range(len(self._audio)):
+                file     = self._audio[i]
+                no       = self._set_no(i,max_len)
+                basename = no + sh.Path(file).extension().lower()
+                dest     = os.path.join (self._target
+                                        ,basename
+                                        )
+                success.append(sh.File(file=file,dest=dest).move())
+            self.Success = not (False in success or None in success)
+        else:
+            sh.com.cancel(f)
+    
+    def purge(self):
+        f = 'logic.Directory.purge'
+        if self.Success:
+            if self._tracks:
+                sh.log.append (f,_('INFO')
+                              ,_('Purge tracks')
+                              )
+                for track in self._tracks:
+                    track.purge()
+                    track.save()
+                    if not track.Success:
+                        self.Success = False
+                        break
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def create_target(self):
+        f = 'logic.Directory.create_target'
+        if self.Success:
+            if objs.db().albumid:
+                self._target = sh.Home(app_name=PRODUCT).add_share (_('processed')
+                                                                   ,str(objs._db.albumid)
+                                                                   )
+                self.Success = sh.Path(self._target).create()
+            else:
+                self.Success = False
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def reset(self,path,Obfuscate=True):
         self.values()
-        self._path   = path
-        self.idir    = sh.Directory(self._path)
-        self.Success = self.idir.Success
-        self._rating = rating
+        self._path     = path
+        self.Obfuscate = Obfuscate
+        self.idir      = sh.Directory(self._path)
+        self.Success   = self.idir.Success
         
     def get_rating(self):
         f = 'logic.Directory.get_rating'
@@ -192,6 +252,11 @@ class Directory:
         self.tracks()
         self.renumber_tracks()
         self.save_meta()
+        if self.Obfuscate:
+            self.create_target()
+            self.purge()
+            self.move_tracks()
+        return self.Success
     
     def _add_album_meta(self):
         f = 'logic.Directory._add_album_meta'
@@ -270,6 +335,7 @@ class Directory:
                             ]
         self.Success = True
         self._path   = ''
+        self._target = ''
         self._rating = 0
         self._new    = 0
         self._files  = []
@@ -1131,119 +1197,6 @@ class Walker:
 
 
 
-class Obfuscate:
-    
-    def __init__(self,source,collection):
-        self.values()
-        self._source = source
-        self._collec = collection
-        self.idir    = Directory(self._source)
-        self.Success = self.idir.Success \
-                       and sh.Path(self._collec).create()
-    
-    def purge(self):
-        f = 'logic.Obfuscate.purge'
-        if self.Success:
-            if self.idir._tracks:
-                for track in self.idir._tracks:
-                    track.purge()
-                    track.save()
-                    if not track.Success:
-                        self.Success = False
-                        break
-            else:
-                sh.com.empty(f)
-        else:
-            sh.com.cancel(f)
-    
-    def values(self):
-        # 'albumid' should have an invalid value by default
-        self.albumid = 0
-        self._target = ''
-        self._source = ''
-        self._collec = ''
-        self.Success = True
-        self.idir    = None
-    
-    def create_target(self):
-        f = 'logic.Obfuscate.create_target'
-        if self.Success:
-            self._target = os.path.join(self._collec,str(self.albumid))
-            self.Success = sh.Path(self._target).create()
-        else:
-            sh.com.cancel(f)
-    
-    def get_albumid(self):
-        f = 'logic.Obfuscate.get_albumid'
-        if self.Success:
-            self.idir.create_list()
-            self.idir.tracks()
-            if self.idir._tracks:
-                itrack = self.idir._tracks[0]
-                if itrack.audio:
-                    self.albumid = objs.db().has_album (artist = itrack._artist
-                                                       ,year   = itrack._year
-                                                       ,album  = itrack._album
-                                                       )
-                    if not self.albumid:
-                        self.Success = False
-                        ''' This error message is case-specific, do not
-                            put it elsewhere.
-                        '''
-                        sh.objs.mes (f,_('WARNING')
-                                    ,_('Albums that are not in DB cannot be obfuscated.')
-                                    )
-                else:
-                    sh.com.empty()
-            else:
-                sh.com.empty(f)
-            ''' The previous check of 'self.albumid' is case-specific
-                (so we can throw a specific error if needed), but we
-                also need a general check.
-            '''
-            if self.albumid:
-                objs.db().albumid = self.albumid
-            else:
-                self.Success = False
-        else:
-            sh.com.cancel(f)
-    
-    def _set_no(self,i,max_len):
-        no = str(i+1)
-        while len(no) < max_len:
-            no = '0' + no
-        return no
-    
-    def move_tracks(self):
-        f = 'logic.Obfuscate.move_tracks'
-        if self.Success:
-            success = []
-            ''' The current algorithm of tracks renumbering guarantees
-                that the file list (*unless changed*) will have
-                a consecutive numbering of tracks.
-            '''
-            max_len = len(self.idir._audio)
-            max_len = len(str(max_len))
-            for i in range(len(self.idir._audio)):
-                file     = self.idir._audio[i]
-                no       = self._set_no(i,max_len)
-                basename = no + sh.Path(file).extension().lower()
-                dest     = os.path.join (self._target
-                                        ,basename
-                                        )
-                success.append(sh.File(file=file,dest=dest).move())
-            self.Success = not (False in success or None in success)
-        else:
-            sh.com.cancel(f)
-    
-    def run(self):
-        self.get_albumid()
-        self.create_target()
-        self.purge()
-        self.move_tracks()
-
-
-
 objs = Objects()
 objs.default()
 
@@ -1252,10 +1205,7 @@ objs.default()
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
     f = 'logic.__main__'
-    source = sh.Home(app_name=PRODUCT).add_share (_('not processed')
+    folder = sh.Home(app_name=PRODUCT).add_share (_('not processed')
                                                  ,'Andreas Waldetoft - Crusader Kings II'
                                                  )
-    collection = sh.Home(app_name=PRODUCT).add_share(_('processed'))
-    iobfuscate = Obfuscate(source,collection)
-    iobfuscate.run()
-    print(iobfuscate.Success)
+    print(Directory(folder).run())

@@ -685,13 +685,26 @@ class Menu:
         '''
         f = 'controller.Menu.collect'
         folder = sh.Home(app_name=gi.PRODUCT).add_share(_('not processed'))
+        Obfuscate = self.gui.cbx_obf.get()
         if sh.Path(folder).create():
             dirs = lg.Walker(folder).dirs()
             if dirs:
                 timer = sh.Timer(f)
                 timer.start()
                 for folder in dirs:
-                    lg.Directory(path=folder).run()
+                    basename = sh.Path(folder).basename()
+                    itext    = sh.Text(basename)
+                    itext.delete_unsupported()
+                    itext.shorten(max_len=20)
+                    gi.objs.wait().reset (func_title = f
+                                         ,message    = _('Process "%s"')\
+                                                       % itext.text
+                                         )
+                    gi.objs._wait.show()
+                    lg.Directory (path      = folder
+                                 ,Obfuscate = Obfuscate
+                                 ).run()
+                gi.objs.wait().close()
                 delta = timer.end()
                 sh.objs.mes (f,_('INFO')
                             ,_('Operation has taken %s') \
@@ -710,12 +723,6 @@ class Menu:
                     ,_('Not implemented yet!')
                     )
     
-    def obfuscate(self,event=None):
-        f = 'controller.Menu.obfuscate'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
-    
     def bindings(self):
         self.gui.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
         sg.bind (obj      = self.gui.parent
@@ -725,8 +732,7 @@ class Menu:
         self.gui._a[0].action = self.album_editor
         self.gui._a[1].action = self.prepare
         self.gui._a[2].action = self.collect
-        self.gui._a[3].action = self.obfuscate
-        self.gui._a[4].action = self.close
+        self.gui._a[3].action = self.close
     
     def show(self,event=None):
         self.gui.show()
