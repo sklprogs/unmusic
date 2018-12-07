@@ -72,15 +72,13 @@ class BottomArea:
                              )
 
     def _buttons(self):
-        self.btn_trk = sg.Button (parent   = self.frm1
-                                 ,text     = _('Tracks')
-                                 ,hint     = _('Edit tracks')
+        self.btn_rld = sg.Button (parent   = self.frm1
+                                 ,text     = _('Reload')
+                                 ,hint     = _('Reload the present record')
                                  ,side     = 'left'
-                                 ,inactive = self._path_trk
-                                 ,active   = self._path_trk
-                                 ,bindings = ['<F4>','<Control-t>'
-                                             ,'<Alt-t>'
-                                             ]
+                                 ,inactive = self._path_rld
+                                 ,active   = self._path_rld
+                                 ,bindings = ['<F5>','<Control-r>']
                                  )
         self.btn_rec = sg.Button (parent   = self.frm1
                                  ,text     = _('Create')
@@ -90,7 +88,14 @@ class BottomArea:
                                  ,active   = self._path_add
                                  ,bindings = '<Control-n>'
                                  )
-        self.btn_sav = sg.Button (parent   = self.frm1
+        self.btn_del = sg.Button (parent   = self.frm1
+                                 ,text     = _('Delete')
+                                 ,hint     = _('Delete the present record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_del
+                                 ,active   = self._path_del
+                                 )
+        self.btn_sav = sg.Button (parent   = self.frm2
                                  ,text     = _('Save')
                                  ,hint     = _('Save changes')
                                  ,side     = 'left'
@@ -98,20 +103,15 @@ class BottomArea:
                                  ,active   = self._path_sav
                                  ,bindings = ['<F2>','<Control-s>']
                                  )
-        self.btn_rld = sg.Button (parent   = self.frm2
-                                 ,text     = _('Reload')
-                                 ,hint     = _('Reload the present record')
+        self.btn_trk = sg.Button (parent   = self.frm2
+                                 ,text     = _('Tracks')
+                                 ,hint     = _('Edit tracks')
                                  ,side     = 'left'
-                                 ,inactive = self._path_rld
-                                 ,active   = self._path_rld
-                                 ,bindings = ['<F5>','<Control-r>']
-                                 )
-        self.btn_del = sg.Button (parent   = self.frm2
-                                 ,text     = _('Delete')
-                                 ,hint     = _('Delete the present record')
-                                 ,side     = 'left'
-                                 ,inactive = self._path_del
-                                 ,active   = self._path_del
+                                 ,inactive = self._path_trk
+                                 ,active   = self._path_trk
+                                 ,bindings = ['<F4>','<Control-t>'
+                                             ,'<Alt-t>'
+                                             ]
                                  )
 
     def _info(self):
@@ -918,5 +918,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    Menu().show()
+    AlbumEditor().show()
     sg.objs.end()
