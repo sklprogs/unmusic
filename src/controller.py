@@ -42,7 +42,9 @@ class Tracks:
                                      ]
                         if old_record != new_record:
                             if new[i][0]:
-                                self.gui.update(_('Edit #%d.') % (i + 1))
+                                self.gui.update_info (_('Edit #%d.') \
+                                                      % (i + 1)
+                                                     )
                                 lg.objs.db().update_track (no   = i + 1
                                                           ,data = new_record
                                                           )
@@ -93,7 +95,7 @@ class Tracks:
         f = 'controller.Tracks.save'
         if self.Success:
             if self.dump():
-                self.gui.update(_('Save DB.'))
+                self.gui.update_info(_('Save DB.'))
                 lg.objs.db().save()
         else:
             sh.com.cancel(f)
@@ -172,7 +174,7 @@ class Tracks:
             if data:
                 for i in range(len(data)):
                     self.gui.add()
-                    self.gui.update(_('Load #%d.') % (i + 1))
+                    self.gui.update_info(_('Load #%d.') % (i + 1))
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 7:
@@ -229,23 +231,23 @@ class AlbumEditor:
     def play(self,event=None):
         f = 'controller.AlbumEditor.play'
         if self.Success:
-            choice  = self.gui.top_area.opt_ply.choice
+            choice  = self.gui.opt_ply.choice
             default = _('Play')
             if choice == default:
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
             elif choice == _('Best, local'):
-                self.gui.top_area.opt_ply.set(default)
+                self.gui.opt_ply.set(default)
                 lg.Play().best_tracks()
             elif choice == _('Best, external'):
-                self.gui.top_area.opt_ply.set(default)
+                self.gui.opt_ply.set(default)
                 lg.Play().best_tracks(External=True)
             elif choice == _('All, local'):
-                self.gui.top_area.opt_ply.set(default)
+                self.gui.opt_ply.set(default)
                 lg.Play().all_tracks()
             elif choice == _('All, external'):
-                self.gui.top_area.opt_ply.set(default)
+                self.gui.opt_ply.set(default)
                 lg.Play().all_tracks(External=True)
             else:
                 sh.objs.mes (f,_('ERROR')
@@ -265,10 +267,10 @@ class AlbumEditor:
                                             )
             else:
                 mes = '?'
-            self.gui.body.ent_len.read_only(False)
-            self.gui.body.ent_len.clear_text()
-            self.gui.body.ent_len.insert(mes)
-            self.gui.body.ent_len.read_only(True)
+            self.gui.ent_len.read_only(False)
+            self.gui.ent_len.clear_text()
+            self.gui.ent_len.insert(mes)
+            self.gui.ent_len.read_only(True)
         else:
             sh.com.cancel(f)
     
@@ -280,10 +282,10 @@ class AlbumEditor:
                 mes = '%dk' % (mean // 1000)
             else:
                 mes = '?'
-            self.gui.body.ent_bit.read_only(False)
-            self.gui.body.ent_bit.clear_text()
-            self.gui.body.ent_bit.insert(mes)
-            self.gui.body.ent_bit.read_only(True)
+            self.gui.ent_bit.read_only(False)
+            self.gui.ent_bit.clear_text()
+            self.gui.ent_bit.insert(mes)
+            self.gui.ent_bit.read_only(True)
         else:
             sh.com.cancel(f)
     
@@ -297,7 +299,7 @@ class AlbumEditor:
                     an overall rating of X. Thus, we use 'round' instead
                     of 'int'.
                 '''
-                self.gui.top_area.opt_rtg.set(round(rating))
+                self.gui.opt_rtg.set(round(rating))
             elif rating is None:
                 sh.com.empty(f)
             else:
@@ -310,7 +312,7 @@ class AlbumEditor:
     def _set_rating(self):
         f = 'controller.AlbumEditor._set_rating'
         value = sh.Input (title = f
-                         ,value = self.gui.top_area.opt_rtg.choice
+                         ,value = self.gui.opt_rtg.choice
                          ).integer()
         lg.objs._db.set_rating(value)
     
@@ -398,7 +400,7 @@ class AlbumEditor:
     def search_track(self,event=None):
         f = 'controller.AlbumEditor.search_track'
         if self.Success:
-            search = self.gui.top_area.ent_sr2.get()
+            search = self.gui.ent_sr2.get()
             if search:
                 data = lg.objs.db().search_track(search)
                 if data:
@@ -439,7 +441,7 @@ class AlbumEditor:
             '''
             if Save:
                 self.save()
-            search = self.gui.top_area.ent_src.get()
+            search = self.gui.ent_src.get()
             if search:
                 old     = lg.objs.db().albumid
                 albumid = lg.objs._db.next_album(search)
@@ -452,8 +454,8 @@ class AlbumEditor:
                                 ,_('No matches!')
                                 )
             else:
-                self.gui.top_area.btn_spr.inactive()
-                self.gui.top_area.btn_snx.inactive()
+                self.gui.btn_spr.inactive()
+                self.gui.btn_snx.inactive()
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
@@ -467,7 +469,7 @@ class AlbumEditor:
                 prior to 'self.search_prev_album'.
             '''
             self.save()
-            search = self.gui.top_area.ent_src.get()
+            search = self.gui.ent_src.get()
             if search:
                 old     = lg.objs.db().albumid
                 albumid = lg.objs._db.prev_album(search)
@@ -480,8 +482,8 @@ class AlbumEditor:
                                 ,_('No matches!')
                                 )
             else:
-                self.gui.top_area.btn_spr.inactive()
-                self.gui.top_area.btn_snx.inactive()
+                self.gui.btn_spr.inactive()
+                self.gui.btn_snx.inactive()
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
@@ -522,9 +524,9 @@ class AlbumEditor:
                           ,_('Are you sure you want to permanently delete record #%d?')\
                           % lg.objs.db().albumid
                           ).Yes:
-                self.gui.bottom_area.update (text = _('Delete #%d.') \
-                                                    % lg.objs._db.albumid
-                                            )
+                self.gui.update_info (text = _('Delete #%d.') \
+                                             % lg.objs._db.albumid
+                                     )
                 lg.objs._db.delete()
                 lg.objs._db.albumid = self.logic.get_max()
                 self.fill()
@@ -538,7 +540,7 @@ class AlbumEditor:
         f = 'controller.AlbumEditor.save'
         if self.Success:
             if self.dump():
-                self.gui.bottom_area.update(_('Save DB.'))
+                self.gui.update_info(_('Save DB.'))
                 lg.objs.db().save()
         else:
             sh.com.cancel(f)
@@ -554,26 +556,26 @@ class AlbumEditor:
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
-        self.gui.top_area.btn_nxt.action    = self.next
-        self.gui.top_area.btn_prv.action    = self.prev
-        self.gui.top_area.btn_spr.action    = self.search_prev_album
-        self.gui.top_area.btn_snx.action    = self.search_next_album
-        self.gui.top_area.opt_rtg.action    = self.set_rating
-        self.gui.top_area.opt_ply.action    = self.play
-        self.gui.bottom_area.btn_trk.action = self.tracks
-        self.gui.bottom_area.btn_rec.action = self.create
-        self.gui.bottom_area.btn_sav.action = self.save
-        self.gui.bottom_area.btn_rld.action = self.fill
-        self.gui.bottom_area.btn_del.action = self.delete
+        self.gui.btn_nxt.action = self.next
+        self.gui.btn_prv.action = self.prev
+        self.gui.btn_spr.action = self.search_prev_album
+        self.gui.btn_snx.action = self.search_next_album
+        self.gui.opt_rtg.action = self.set_rating
+        self.gui.opt_ply.action = self.play
+        self.gui.btn_trk.action = self.tracks
+        self.gui.btn_rec.action = self.create
+        self.gui.btn_sav.action = self.save
+        self.gui.btn_rld.action = self.fill
+        self.gui.btn_del.action = self.delete
         sg.bind (obj      = self.gui
                 ,bindings = ['<F5>','<Control-r>']
                 ,action   = self.fill
                 )
-        sg.bind (obj      = self.gui.top_area.ent_src
+        sg.bind (obj      = self.gui.ent_src
                 ,bindings = ['<Return>','<KP_Enter>']
                 ,action   = self.search_album
                 )
-        sg.bind (obj      = self.gui.top_area.ent_sr2
+        sg.bind (obj      = self.gui.ent_sr2
                 ,bindings = ['<Return>','<KP_Enter>']
                 ,action   = self.search_track
                 )
@@ -607,16 +609,16 @@ class AlbumEditor:
     def update_album_search(self):
         f = 'controller.AlbumEditor.update_album_search'
         if self.Success:
-            search = self.gui.top_area.ent_src.get()
-            self.gui.top_area.btn_spr.inactive()
-            self.gui.top_area.btn_snx.inactive()
+            search = self.gui.ent_src.get()
+            self.gui.btn_spr.inactive()
+            self.gui.btn_snx.inactive()
             if search:
                 albumid = lg.objs._db.next_album(search)
                 if albumid:
-                    self.gui.top_area.btn_snx.active()
+                    self.gui.btn_snx.active()
                 albumid = lg.objs._db.prev_album(search)
                 if albumid:
-                    self.gui.top_area.btn_spr.active()
+                    self.gui.btn_spr.active()
         else:
             sh.com.cancel(f)
     
@@ -624,18 +626,18 @@ class AlbumEditor:
         f = 'controller.AlbumEditor.update_meter'
         if self.Success:
             _max = self.logic.get_max()
-            self.gui.top_area.lbl_mtr.text ('%d / %d' % (self.logic.get_no()
-                                                        ,_max
-                                                        )
-                                           )
+            self.gui.lbl_mtr.text ('%d / %d' % (self.logic.get_no()
+                                               ,_max
+                                               )
+                                  )
             if lg.objs.db().albumid < _max:
-                self.gui.top_area.btn_nxt.active()
+                self.gui.btn_nxt.active()
             else:
-                self.gui.top_area.btn_nxt.inactive()
+                self.gui.btn_nxt.inactive()
             if lg.objs._db.albumid == self.logic.get_min():
-                self.gui.top_area.btn_prv.inactive()
+                self.gui.btn_prv.inactive()
             else:
-                self.gui.top_area.btn_prv.active()
+                self.gui.btn_prv.active()
         else:
             sh.com.cancel(f)
     
@@ -654,13 +656,13 @@ class AlbumEditor:
             data = lg.objs.db().get_album()
             if data:
                 if len(data) == 6:
-                    self.gui.bottom_area.update (_('Load #%d.') \
-                                                % lg.objs._db.albumid
-                                                )
-                    self.gui.body.reset()
-                    self.gui.body.ent_alb.insert(data[0])
-                    self.gui.body.ent_art.insert(data[1])
-                    self.gui.body.ent_yer.insert(data[2])
+                    self.gui.update_info (_('Load #%d.') \
+                                          % lg.objs._db.albumid
+                                         )
+                    self.gui.clear_entries()
+                    self.gui.ent_alb.insert(data[0])
+                    self.gui.ent_art.insert(data[1])
+                    self.gui.ent_yer.insert(data[2])
                     genre = data[3]
                     if not genre:
                         # Do not localize (being stored in DB)
@@ -668,11 +670,11 @@ class AlbumEditor:
                     items = list(gi.GENRES)
                     if not genre in items:
                         items.append(genre)
-                    self.gui.body.opt_gnr.reset (items   = items
-                                                ,default = genre
-                                                )
-                    self.gui.body.ent_cnt.insert(data[4])
-                    self.gui.body.ent_com.insert(data[5])
+                    self.gui.opt_gnr.reset (items   = items
+                                           ,default = genre
+                                           )
+                    self.gui.ent_cnt.insert(data[4])
+                    self.gui.ent_com.insert(data[5])
                     self.get_rating()
                     self.bitrate()
                     self.length()
