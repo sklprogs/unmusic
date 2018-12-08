@@ -91,7 +91,7 @@ class Play:
         f = 'logic.Play.available'
         if self.Success:
             self.audio()
-            if self._audio and self._nos:
+            if self._audio and self._nos and self._titles and self._len:
                 result = []
                 errors = []
                 for no in self._nos:
@@ -99,29 +99,40 @@ class Play:
                         result.append(self._audio[no])
                     except IndexError:
                         errors.append(no)
+                ''' This may happen when some tracks have been deleted
+                    from a collection after filling DB or when there is
+                    a mismatch of ALBUMID stored in DB and the folder
+                    named after ALBUMID in the collection. In any case,
+                    this should not normally happen.
+                '''
                 if errors:
                     for no in errors:
-                        del self._tracks[no]
-                        del self._nos[no]
-                        del self._len[no]
+                        try:
+                            del self._titles[no]
+                            del self._nos[no]
+                            del self._len[no]
+                        except IndexError:
+                            pass
                     errors = [str(error) for error in errors]
                     sh.objs.mes (f,_('WARNING')
                                 ,_('Tracks %s have not been found in "%s"!')\
                                 % (', '.join(errors),self.album())
                                 )
+                if len(self._nos) == len(self._titles) == len(self._len):
+                    pass
+                else:
+                    self.Success= False
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('Condition "%s" is not observed!') \
+                                % '%d == %d == %d' % (len(self._nos)
+                                                     ,len(self._titles)
+                                                     ,len(self._len)
+                                                     )
+                                )
                 return result
             else:
+                self.Success = False
                 sh.com.empty(f)
-            if len(self._nos) == len(self._tracks) == len(self._len):
-                pass
-            else:
-                self.Success= False
-                sh.objs.mes (f,_('ERROR')
-                            ,_('Condition "%s" is not observed!') \
-                            % '%d == %d == %d' % (self._nos,self._tracks
-                                                 ,self._len
-                                                 )
-                            )
         else:
             sh.com.cancel(f)
     
@@ -142,10 +153,10 @@ class Play:
                 self.out = io.StringIO()
                 result   = objs.db().get_album()
                 ''' Adding #EXTINF will allow to use tags in those
-                    players that support it (e.g., clementine). This
-                    entry should have the following format:
-                    #EXTINF:191,Artist Name - Track Title
-                    (multiple hyphens are not allowed).
+                    players that support it (e.g., clementine,
+                    deadbeef). This entry should have the following
+                    format: #EXTINF:191,Artist Name - Track Title
+                    (multiple hyphens may not be supported).
                 '''
                 if result:
                     header = result[1] + ' (' + result[0] + ') - '
@@ -1323,17 +1334,17 @@ class Track:
                         a separate procedure.
                     '''
                     if self.audio.album:
-                        self._album = self.audio.album
+                        self._album = str(self.audio.album).strip()
                     else:
                         dirname = sh.Path(self.file).dirname()
                         dirname = sh.Path(dirname).basename()
                         self._album = '[[' + dirname + ']]'
                     if self.audio.genre:
-                        self._genre = self.audio.genre
+                        self._genre = str(self.audio.genre).strip()
                     if self.audio.year:
                         self._year = self.audio.year
                     if self.audio.title:
-                        self._title = self.audio.title
+                        self._title = str(self.audio.title).strip()
                     else:
                         extracted = self.extract_title()
                         if extracted:
@@ -1345,7 +1356,7 @@ class Track:
                     if str(self.audio.track).isdigit():
                         self._no = self.audio.track
                     if self.audio.lyrics:
-                        self._lyrics = self.audio.lyrics
+                        self._lyrics = str(self.audio.lyrics).strip()
                 except Exception as e:
                     sh.objs.mes (f,_('WARNING')
                                 ,_('Third-party module has failed!\n\nDetails: %s')\
