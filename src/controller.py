@@ -230,14 +230,15 @@ class AlbumEditor:
         self.bindings()
     
     def values(self):
+        self._defimg   = None
         self._image    = None
         self._path_def = sh.objs._pdir.add ('..','resources','cd.png'
                                            )
     
     def default_image(self):
-        if not self._image:
-            self._image = sg.Image().open(self._path_def)
-        return self._image
+        if not self._defimg:
+            self._defimg = sg.Image().open(self._path_def)
+        return self._defimg
         
     def zoom_image(self,event=None):
         f = 'controller.AlbumEditor.zoom_image'
@@ -270,7 +271,7 @@ class AlbumEditor:
                 ipic.thumbnail(130,212)
                 thumb = ipic.image()
             else:
-                self.default_image()
+                self._image = self.default_image()
                 thumb = self._image
             self.gui.lbl_img.widget.config(image=thumb)
             # Prevent the garbage collector from deleting the image
