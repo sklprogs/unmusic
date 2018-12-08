@@ -229,18 +229,23 @@ class AlbumEditor:
     def play(self,event=None):
         f = 'controller.AlbumEditor.play'
         if self.Success:
-            choice = self.gui.top_area.opt_ply.choice
-            if choice == _('Play'):
+            choice  = self.gui.top_area.opt_ply.choice
+            default = _('Play')
+            if choice == default:
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
             elif choice == _('Best, local'):
+                self.gui.top_area.opt_ply.set(default)
                 lg.Play().best_tracks()
             elif choice == _('Best, external'):
+                self.gui.top_area.opt_ply.set(default)
                 lg.Play().best_tracks(External=True)
             elif choice == _('All, local'):
+                self.gui.top_area.opt_ply.set(default)
                 lg.Play().all_tracks()
             elif choice == _('All, external'):
+                self.gui.top_area.opt_ply.set(default)
                 lg.Play().all_tracks(External=True)
             else:
                 sh.objs.mes (f,_('ERROR')

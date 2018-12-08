@@ -47,6 +47,9 @@ class Play:
         self._album    = ''
         self._playlist = ''
         self._audio    = []
+        self._nos      = []
+        self._titles   = []
+        self._len      = []
     
     def album(self):
         f = 'logic.Play.album'
@@ -84,19 +87,23 @@ class Play:
             sh.com.cancel(f)
         return self._audio
     
-    def available(self,nos):
+    def available(self):
         f = 'logic.Play.available'
         if self.Success:
             self.audio()
-            if self._audio and nos:
+            if self._audio and self._nos:
                 result = []
                 errors = []
-                for no in nos:
+                for no in self._nos:
                     try:
                         result.append(self._audio[no])
                     except IndexError:
                         errors.append(no)
                 if errors:
+                    for no in errors:
+                        del self._tracks[no]
+                        del self._nos[no]
+                        del self._len[no]
                     errors = [str(error) for error in errors]
                     sh.objs.mes (f,_('WARNING')
                                 ,_('Tracks %s have not been found in "%s"!')\
@@ -105,6 +112,16 @@ class Play:
                 return result
             else:
                 sh.com.empty(f)
+            if len(self._nos) == len(self._tracks) == len(self._len):
+                pass
+            else:
+                self.Success= False
+                sh.objs.mes (f,_('ERROR')
+                            ,_('Condition "%s" is not observed!') \
+                            % '%d == %d == %d' % (self._nos,self._tracks
+                                                 ,self._len
+                                                 )
+                            )
         else:
             sh.com.cancel(f)
     
@@ -118,16 +135,33 @@ class Play:
             sh.com.cancel(f)
         return self._playlist
     
-    def gen_list(self,nos):
+    def gen_list(self):
         f = 'logic.Play.gen_list'
         if self.Success:
-            if nos:
+            if self._nos:
                 self.out = io.StringIO()
-                available = self.available(nos)
-                if available:
+                result   = objs.db().get_album()
+                ''' Adding #EXTINF will allow to use tags in those
+                    players that support it (e.g., clementine). This
+                    entry should have the following format:
+                    #EXTINF:191,Artist Name - Track Title
+                    (multiple hyphens are not allowed).
+                '''
+                if result:
+                    header = result[1] + ' (' + result[0] + ') - '
+                else:
+                    header = ''
+                files    = self.available()
+                if files and self._nos:
                     self.out.write('#EXTM3U\n')
-                    for track in available:
-                        self.out.write(track)
+                    for i in range(len(files)):
+                        self.out.write('#EXTINF:')
+                        self.out.write(str(int(self._len[i])))
+                        self.out.write(',')
+                        self.out.write(header)
+                        self.out.write(self._titles[i])
+                        self.out.write('\n')
+                        self.out.write(files[i])
                         self.out.write('\n')
                 else:
                     sh.com.empty(f)
@@ -149,9 +183,11 @@ class Play:
         if self.Success:
             tracks = objs.db().tracks()
             if tracks:
+                self._titles = [track[0] for track in tracks]
+                self._len    = [track[5] for track in tracks]
                 # '-1' since count starts with 1 in DB and we need 0
-                nos = [track[1] - 1 for track in tracks]
-                self.gen_list(nos)
+                self._nos = [track[1] - 1 for track in tracks]
+                self.gen_list()
                 self.call_player()
             else:
                 sh.com.empty(f)
@@ -163,12 +199,18 @@ class Play:
         if self.Success:
             tracks = objs.db().best_tracks()
             if tracks:
-                if len(tracks[0]) == 2:
+                if len(tracks[0]) == 4:
                     # '-1' since count starts with 1 in DB and we need 0
-                    nos = [item[1] - 1 for item in tracks \
-                           if item[0] == tracks[0][0]
-                          ]
-                    self.gen_list(nos)
+                    self._nos = [item[1] - 1 for item in tracks \
+                                 if item[0] == tracks[0][0]
+                                ]
+                    self._titles = [item[2] for item in tracks \
+                                    if item[0] == tracks[0][0]
+                                   ]
+                    self._len = [item[3] for item in tracks \
+                                 if item[0] == tracks[0][0]
+                                ]
+                    self.gen_list()
                     self.call_player()
                 else:
                     sh.objs.mes (f,_('ERROR')
@@ -618,8 +660,8 @@ class DB:
         f = 'logic.DB.best_tracks'
         if self.Success:
             try:
-                self.dbc.execute ('select RATING,NO from TRACKS \
-                                   where ALBUMID = ? \
+                self.dbc.execute ('select RATING,NO,TITLE,LENGTH \
+                                   from TRACKS where ALBUMID = ? \
                                    order by RATING desc,NO'
                                   ,(self.albumid,)
                                  )
