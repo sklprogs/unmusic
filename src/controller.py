@@ -224,10 +224,60 @@ class Tracks:
 class AlbumEditor:
     
     def __init__(self):
+        self.values()
         self.gui   = gi.AlbumEditor()
         self.logic = lg.AlbumEditor()
         self.bindings()
+    
+    def values(self):
+        self._image    = None
+        self._path_def = sh.objs._pdir.add ('..','resources','cd.png'
+                                           )
+    
+    def default_image(self):
+        if not self._image:
+            self._image = sg.Image().open(self._path_def)
+        return self._image
         
+    def zoom_image(self,event=None):
+        f = 'controller.AlbumEditor.zoom_image'
+        if self.Success:
+            if self._image:
+                viewer = gi.ImageViewer()
+                viewer.lbl.widget.config(image=self._image)
+                viewer.lbl.widget.image = self._image
+                viewer.show()
+            else:
+                # This should not happen
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def set_image(self,image):
+        f = 'controller.AlbumEditor.set_image'
+        if self.Success:
+            if image:
+                ipic = sg.Image()
+                ipic._bytes = image
+                ipic.loader()
+                self._image = ipic.image()
+                ipic = sg.Image()
+                ipic._bytes = image
+                ipic.loader()
+                ''' These are dimensions of 'self.gui.frm_img' when
+                    the default image is loaded.
+                '''
+                ipic.thumbnail(130,212)
+                thumb = ipic.image()
+            else:
+                self.default_image()
+                thumb = self._image
+            self.gui.lbl_img.widget.config(image=thumb)
+            # Prevent the garbage collector from deleting the image
+            self.gui.lbl_img.widget.image = thumb
+        else:
+            sh.com.cancel(f)
+    
     def play(self,event=None):
         f = 'controller.AlbumEditor.play'
         if self.Success:
@@ -344,9 +394,11 @@ class AlbumEditor:
             old = lg.objs.db().get_album()
             if old:
                 new = self.gui.dump()
-                if len(old) == len(new):
+                # '-1' since we don't dump IMAGE field
+                if len(old) - 1 == len(new):
                     old = list(old)
                     new = list(new)
+                    old = old[:-1]
                     if [item for item in new if item]:
                         if not new[0]:
                             sh.objs.mes (f,_('WARNING')
@@ -390,7 +442,7 @@ class AlbumEditor:
                 else:
                     sh.objs.mes (f,_('ERROR')
                                 ,_('The condition "%s" is not observed!')\
-                                % ('%d == %d' % (len(old),len(new)))
+                                % ('%d == %d' % (len(old)-1,len(new)))
                                 )
             else:
                 sh.com.empty(f)
@@ -599,6 +651,10 @@ class AlbumEditor:
                 ,bindings = '<Alt-Right>'
                 ,action   = self.next
                 )
+        sg.bind (obj      = self.gui.lbl_img
+                ,bindings = '<ButtonRelease-1>'
+                ,action   = self.zoom_image
+                )
     
     def reset(self):
         f = 'controller.AlbumEditor.reset'
@@ -655,7 +711,7 @@ class AlbumEditor:
             self.logic.get_no()
             data = lg.objs.db().get_album()
             if data:
-                if len(data) == 6:
+                if len(data) == 7:
                     self.gui.update_info (_('Load #%d.') \
                                           % lg.objs._db.albumid
                                          )
@@ -678,6 +734,7 @@ class AlbumEditor:
                     self.get_rating()
                     self.bitrate()
                     self.length()
+                    self.set_image(data[6])
                     self.update()
                     if objs.tracks().Active:
                         objs._tracks.reload()
@@ -778,6 +835,7 @@ class Menu:
     
     def close(self,event=None):
         lg.objs.db().save()
+        lg.objs._db.close()
         self.gui.close()
 
 

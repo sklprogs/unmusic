@@ -481,9 +481,9 @@ class Directory:
             returned, which, when written to DB, can cause confusion.
             Here we check that the track was processed successfully.
         '''
-        if self._tracks[0].audio and data:
+        if self._tracks[0]._audio and data:
             objs._db.add_album ([data[0],data[1],data[2],data[3],'',''
-                                ,data[4]
+                                ,data[4],data[5]
                                 ]
                                )
         else:
@@ -498,7 +498,7 @@ class Directory:
                 confusion. Here we check that the track was processed
                 successfully.
             '''
-            if track.audio and data:
+            if track._audio and data:
                 objs.db().albumid = albumid
                 if not objs._db.has_track (no      = data[1]
                                           ,bitrate = data[4]
@@ -943,7 +943,8 @@ class DB:
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUM,ARTIST,YEAR,GENRE\
-                                         ,COUNTRY,COMMENT from ALBUMS \
+                                         ,COUNTRY,COMMENT,IMAGE \
+                                   from   ALBUMS \
                                    where  ALBUMID = ?',(self.albumid,)
                                  )
                 return self.dbc.fetchone()
@@ -1067,7 +1068,7 @@ class DB:
             if data:
                 try:
                     self.dbc.execute ('insert into ALBUMS values \
-                                       (NULL,?,?,?,?,?,?,?)',data
+                                       (NULL,?,?,?,?,?,?,?,?)',data
                                      )
                 except Exception as e:
                     self.fail(f,e)
@@ -1114,6 +1115,7 @@ class DB:
                     ,COUNTRY   text    \
                     ,COMMENT   text    \
                     ,SEARCH    text    \
+                    ,IMAGE     binary  \
                                                        )'
                                  )
             except Exception as e:
@@ -1178,10 +1180,10 @@ class Track:
     def purge(self):
         f = 'logic.Track.purge'
         if self.Success:
-            if self.audio:
+            if self._audio:
                 try:
-                    self.audio.delete()
-                    self.audio.images = {}
+                    self._audio.delete()
+                    self._audio.images = {}
                 except Exception as e:
                     self.Success = False
                     sh.objs.mes (f,_('WARNING')
@@ -1199,9 +1201,9 @@ class Track:
         '''
         f = 'logic.Track.save'
         if self.Success:
-            if self.audio:
+            if self._audio:
                 try:
-                    self.audio.save()
+                    self._audio.save()
                 except Exception as e:
                     self.Success = False
                     sh.objs.mes (f,_('WARNING')
@@ -1260,14 +1262,15 @@ class Track:
             if not self._genre:
                 self._genre = '?'
             return (self._album,self._artist,self._year,self._genre
-                   ,search
+                   ,search,self._image
                    )
         else:
             sh.com.cancel(f)
     
     def values(self):
         self.Success  = True
-        self.audio    = None
+        self._audio   = None
+        self._image   = None
         self._artist  = ''
         self._album   = ''
         self._title   = ''
@@ -1318,10 +1321,10 @@ class Track:
     def info(self):
         f = 'logic.Track.info'
         if self.Success:
-            if self.audio:
+            if self._audio:
                 try:
-                    artist = [self.audio.artist,self.audio.albumartist
-                             ,self.audio.composer
+                    artist = [self._audio.artist,self._audio.albumartist
+                             ,self._audio.composer
                              ]
                     artist = [item for item in artist if item]
                     if artist:
@@ -1333,32 +1336,34 @@ class Track:
                         a correct type. This does not work as
                         a separate procedure.
                     '''
-                    if self.audio.album:
-                        self._album = str(self.audio.album).strip()
+                    if self._audio.album:
+                        self._album = str(self._audio.album).strip()
                     else:
                         dirname = sh.Path(self.file).dirname()
                         dirname = sh.Path(dirname).basename()
                         self._album = '[[' + dirname + ']]'
-                    if self.audio.genre:
-                        self._genre = str(self.audio.genre).strip()
-                    if self.audio.year:
+                    if self._audio.genre:
+                        self._genre = str(self._audio.genre).strip()
+                    if self._audio.year:
                         self._year = sh.Input (title = f
-                                              ,value = self.audio.year
+                                              ,value = self._audio.year
                                               ).integer()
-                    if self.audio.title:
-                        self._title = str(self.audio.title).strip()
+                    if self._audio.title:
+                        self._title = str(self._audio.title).strip()
                     else:
                         extracted = self.extract_title()
                         if extracted:
                             self._title = extracted
-                    if self.audio.bitrate:
-                        self._bitrate = self.audio.bitrate
-                    if self.audio.length:
-                        self._length = self.audio.length
-                    if str(self.audio.track).isdigit():
-                        self._no = self.audio.track
-                    if self.audio.lyrics:
-                        self._lyrics = str(self.audio.lyrics).strip()
+                    if self._audio.bitrate:
+                        self._bitrate = self._audio.bitrate
+                    if self._audio.length:
+                        self._length = self._audio.length
+                    if str(self._audio.track).isdigit():
+                        self._no = self._audio.track
+                    if self._audio.lyrics:
+                        self._lyrics = str(self._audio.lyrics).strip()
+                    if self._audio.images:
+                        self._image = self._audio.images[0].data
                 except Exception as e:
                     sh.objs.mes (f,_('WARNING')
                                 ,_('Third-party module has failed!\n\nDetails: %s')\
@@ -1372,15 +1377,15 @@ class Track:
     def load(self):
         f = 'logic.Track.load'
         if self.Success:
-            if not self.audio:
+            if not self._audio:
                 try:
-                    self.audio = phrydy.MediaFile(self.file)
+                    self._audio = phrydy.MediaFile(self.file)
                 except Exception as e:
                     sh.objs.mes (f,_('WARNING')
                                 ,_('Third-party module has failed!\n\nDetails: %s')\
                                 % str(e)
                                 )
-            return self.audio
+            return self._audio
         else:
             sh.com.cancel(f)
 

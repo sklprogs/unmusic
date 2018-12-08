@@ -68,6 +68,25 @@ com = Commands()
 
 
 if __name__ == '__main__':
+    f = 'tests.__main__'
     sg.objs.start()
-    com.check_nos()
+    lg.objs.db().albumid = 7
+    data = lg.objs._db.get_album()
+    if data:
+        if data[6]:
+            ipic = sg.Image()
+            ipic._bytes = data[6]
+            ipic.loader()
+            ipic.thumbnail(200,300)
+            top = sg.objs.new_top()
+            lbl = sg.Label (parent = top
+                           ,Close  = False
+                           ,image  = ipic.image()
+                           )
+            top.show()
+        else:
+            sh.com.empty(f)
+    else:
+        sh.com.empty(f)
+    lg.objs._db.close()
     sg.objs.end()

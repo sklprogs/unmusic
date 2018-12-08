@@ -23,6 +23,41 @@ PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
 
 
 
+class ImageViewer:
+    
+    def __init__(self):
+        self.gui()
+    
+    def show(self,event=None):
+        self.parent.show()
+    
+    def close(self,event=None):
+        self.parent.close()
+    
+    def bindings(self):
+        sg.bind (obj      = self.parent
+                ,bindings = '<KeyRelease>'
+                ,action   = self.close
+                )
+    
+    def title(self,arg=None):
+        if not arg:
+            arg = _('Image') + ':'
+        self.parent.title(arg)
+    
+    def gui(self):
+        self.parent = sg.Top(sg.objs.root())
+        self.lbl    = sg.Label (parent = self.parent
+                               ,text   = _('Image:')
+                               ,Close  = False
+                               ,expand = True
+                               ,fill   = 'both'
+                               )
+        self.title()
+        self.bindings()
+
+
+
 class AlbumEditor:
 
     def __init__(self):
@@ -31,7 +66,17 @@ class AlbumEditor:
         self.widget = self.parent.widget
         self.pool   = sh.MessagePool(max_size=4)
         self.gui()
-
+    
+    def image(self):
+        self.lbl_img = sg.Label (parent = self.frm_img
+                                ,text   = _('Image:')
+                                ,side   = 'right'
+                                ,anchor = 'w'
+                                ,Close  = False
+                                ,expand = True
+                                ,fill   = 'both'
+                                )
+    
     def bottom(self):
         self.opt_gnr = sg.OptionMenu (parent = self.frm_rht
                                      ,items  = GENRES
@@ -182,6 +227,7 @@ class AlbumEditor:
         self.menus()
         self.labels()
         self.entries()
+        self.image()
         self.bottom()
         self.icon()
         self.title()
@@ -329,6 +375,11 @@ class AlbumEditor:
                                 ,side   = 'left'
                                 ,ipadx  = 150
                                 )
+        self.frm_img = sg.Frame (parent = self.frm_prm
+                                ,expand = 1
+                                ,fill   = 'both'
+                                ,side   = 'right'
+                                )
         self.frm_btn = sg.Frame (parent = self.parent
                                 ,expand = 0
                                 ,side   = 'bottom'
@@ -386,9 +437,9 @@ class AlbumEditor:
                                                ,'buttons'
                                                ,'icon_36x36_go_forward.gif'
                                                )
-        self._path_add = sh.objs.pdir().add ('..','resources','buttons'
-                                            ,'icon_36x36_add.gif'
-                                            )
+        self._path_add = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_add.gif'
+                                           )
         self._path_del = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_delete_record.gif'
                                            )
@@ -854,7 +905,12 @@ class Track:
 class Objects:
     
     def __init__(self):
-        self._tracks = self._wait = None
+        self._tracks = self._wait = self._viewer = None
+    
+    def viewer(self):
+        if self._viewer is None:
+            self._viewer = ImageViewer()
+        return self._viewer
     
     def tracks(self):
         if self._tracks is None:
@@ -874,5 +930,6 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    AlbumEditor().show()
+    #AlbumEditor().show()
+    objs.viewer().show()
     sg.objs.end()
