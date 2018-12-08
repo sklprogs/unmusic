@@ -1342,7 +1342,9 @@ class Track:
                     if self.audio.genre:
                         self._genre = str(self.audio.genre).strip()
                     if self.audio.year:
-                        self._year = self.audio.year
+                        self._year = sh.Input (title = f
+                                              ,value = self.audio.year
+                                              ).integer()
                     if self.audio.title:
                         self._title = str(self.audio.title).strip()
                     else:
