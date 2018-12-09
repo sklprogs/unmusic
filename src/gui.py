@@ -42,8 +42,17 @@ class ImageViewer:
     
     def title(self,arg=None):
         if not arg:
-            arg = _('Image') + ':'
+            arg = _('Image:')
         self.parent.title(arg)
+    
+    def icon(self,path=None):
+        if path:
+            self.parent.icon(path)
+        else:
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,'unmusic.gif'
+                                                 )
+                             )
     
     def gui(self):
         self.parent = sg.Top(sg.objs.root())
@@ -54,6 +63,7 @@ class ImageViewer:
                                ,fill   = 'both'
                                )
         self.title()
+        self.icon()
         self.bindings()
 
 
@@ -905,12 +915,7 @@ class Track:
 class Objects:
     
     def __init__(self):
-        self._tracks = self._wait = self._viewer = None
-    
-    def viewer(self):
-        if self._viewer is None:
-            self._viewer = ImageViewer()
-        return self._viewer
+        self._tracks = self._wait = None
     
     def tracks(self):
         if self._tracks is None:
@@ -930,6 +935,5 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    #AlbumEditor().show()
-    objs.viewer().show()
+    AlbumEditor().show()
     sg.objs.end()
