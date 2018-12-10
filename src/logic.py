@@ -594,8 +594,10 @@ class Directory:
                     for file in self._audio:
                         self._tracks.append(Track(file))
                 else:
+                    self.Success = False
                     sh.log.append (f,_('INFO')
-                                  ,_('Nothing to do!')
+                                  ,_('Folder "%s" has no audio files.')\
+                                  % self._path
                                   )
             return self._tracks
         else:
@@ -1405,8 +1407,8 @@ class Walker:
         f = 'logic.Walker.delete_empty'
         self.dirs()
         if self.Success:
-            if self._all_dirs:
-                for folder in self._all_dirs:
+            if self._dirs:
+                for folder in self._dirs:
                     sh.Directory(folder).delete_empty()
             else:
                 sh.com.empty(f)
@@ -1419,11 +1421,6 @@ class Walker:
         self.idir    = sh.Directory(self._path)
         self.Success = self.idir.Success
     
-    def _embedded(self,folder):
-        return [item for item in self._dirs \
-                if folder in item and folder != item
-               ]
-    
     def dirs(self):
         f = 'logic.Walker.dirs'
         if self.Success:
@@ -1432,21 +1429,14 @@ class Walker:
                 in os.walk(self.idir.dir):
                     if not dirpath in self._dirs:
                         self._dirs.append(dirpath)
-                self._all_dirs = list(self._dirs)
-                self._dirs = [folder for folder in self._dirs \
-                              if not self._embedded(folder)
-                             ]
             return self._dirs
         else:
             sh.com.cancel(f)
     
     def values(self):
-        self.Success   = True
-        self._path     = ''
-        # Folders containing audio files
-        self._dirs     = []
-        # All folders (including empty ones)
-        self._all_dirs = []
+        self.Success = True
+        self._path   = ''
+        self._dirs   = []
 
 
 
@@ -1457,6 +1447,7 @@ objs.default()
 
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
-    objs.db().albumid = 7
-    Play().best_tracks()
-    objs._db.close()
+    folder = '/home/pete/.local/share/unmusic/не обработано/1994 - Djivan Gasparyan - Armenian Romances (320)'
+    iwalk = Walker(folder)
+    dirs  = iwalk.dirs()
+    print(dirs)

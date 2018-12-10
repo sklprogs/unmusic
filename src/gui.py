@@ -10,7 +10,7 @@ GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
          ,'Brutal Death Metal','Classical','Death Metal','Death/Black'
          ,'Death/Thrash','Electronic','Ethnic','Heavy Metal','Game'
          ,'Grindcore','Goregrind','Metal','Pop','Rap','Relaxation'
-         ,'Soundtrack','Thrash Metal','Vocal'
+         ,'Rock','Soundtrack','Thrash Metal','Vocal'
          )
 
 import gettext, gettext_windows
