@@ -4,7 +4,6 @@
 import shared    as sh
 import sharedGUI as sg
 
-PRODUCT = 'unmusic'
 # Do not localize (being stored in DB)
 GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
          ,'Brutal Death Metal','Classical','Death Metal','Death/Black'
@@ -15,7 +14,7 @@ GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
-gettext.install(PRODUCT,'../resources/locale')
+gettext.install('unmusic','../resources/locale')
 
 PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
        ,_('All, external')
@@ -481,7 +480,7 @@ class AlbumEditor:
             self.parent.icon(path)
         else:
             self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,PRODUCT + '.gif'
+                                                 ,'unmusic.gif'
                                                  )
                              )
 
@@ -577,13 +576,13 @@ class Menu:
             self.parent.icon(path)
         else:
             self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,PRODUCT + '.gif'
+                                                 ,'unmusic.gif'
                                                  )
                              )
     
     def title(self,text=''):
         if not text:
-            text = PRODUCT
+            text = 'unmusic'
         self.parent.title(text)
     
     def buttons(self):
@@ -706,7 +705,7 @@ class Tracks:
             self.parent.icon(path)
         else:
             self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,PRODUCT + '.gif'
+                                                 ,'unmusic.gif'
                                                  )
                              )
     

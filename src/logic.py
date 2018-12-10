@@ -10,7 +10,6 @@ import sqlite3
 import shared    as sh
 import sharedGUI as sg
 
-PRODUCT = 'unmusic'
 VERSION = '1.0'
 # Derived from 'phrydy.mediafile.TYPES'
 TYPES   = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
@@ -19,7 +18,7 @@ TYPES   = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
-gettext.install(PRODUCT,'../resources/locale')
+gettext.install('unmusic','../resources/locale')
 
 
 
@@ -31,7 +30,7 @@ class Play:
         self.External = External
     
     def call_player(self):
-        f = 'logic.Play.call_player'
+        f = 'unmusic.logic.Play.call_player'
         if self.Success:
             if self.playlist():
                 sh.Launch(self._playlist).default()
@@ -52,7 +51,7 @@ class Play:
         self._len      = []
     
     def album(self):
-        f = 'logic.Play.album'
+        f = 'unmusic.logic.Play.album'
         if self.Success:
             if not self._album:
                 self._album = os.path.join (self.collection()
@@ -63,19 +62,19 @@ class Play:
         return self._album
     
     def collection(self):
-        f = 'logic.Play.collection'
+        f = 'unmusic.logic.Play.collection'
         if self.Success:
             if not self._collec:
                 if self.External:
-                    self._collec = sh.Home(app_name=PRODUCT).add_share(_('external collection'))
+                    self._collec = objs.default().ihome.add_share(_('external collection'))
                 else:
-                    self._collec = sh.Home(app_name=PRODUCT).add_share(_('local collection'))
+                    self._collec = objs.default().ihome.add_share(_('local collection'))
         else:
             sh.com.cancel(f)
         return self._collec
     
     def audio(self):
-        f = 'logic.Play.audio'
+        f = 'unmusic.logic.Play.audio'
         if self.Success:
             if not self._audio:
                 idir = Directory(self.album())
@@ -88,7 +87,7 @@ class Play:
         return self._audio
     
     def available(self):
-        f = 'logic.Play.available'
+        f = 'unmusic.logic.Play.available'
         if self.Success:
             self.audio()
             if self._audio and self._nos and self._titles and self._len:
@@ -137,17 +136,17 @@ class Play:
             sh.com.cancel(f)
     
     def playlist(self):
-        f = 'logic.Play.playlist'
+        f = 'unmusic.logic.Play.playlist'
         if self.Success:
             if not self._playlist:
                 self._playlist = _('playlist') + '.m3u8'
-                self._playlist = sh.Home(app_name=PRODUCT).add_share(self._playlist)
+                self._playlist = objs.default().ihome.add_share(self._playlist)
         else:
             sh.com.cancel(f)
         return self._playlist
     
     def gen_list(self):
-        f = 'logic.Play.gen_list'
+        f = 'unmusic.logic.Play.gen_list'
         if self.Success:
             if self._nos:
                 self.out = io.StringIO()
@@ -190,7 +189,7 @@ class Play:
             sh.com.cancel(f)
     
     def all_tracks(self):
-        f = 'logic.Play.all_tracks'
+        f = 'unmusic.logic.Play.all_tracks'
         if self.Success:
             tracks = objs.db().tracks()
             if tracks:
@@ -206,7 +205,7 @@ class Play:
             sh.com.cancel(f)
     
     def best_tracks(self):
-        f = 'logic.Play.best_tracks'
+        f = 'unmusic.logic.Play.best_tracks'
         if self.Success:
             tracks = objs.db().best_tracks()
             if tracks:
@@ -240,7 +239,7 @@ class AlbumEditor:
         self.Success = True
     
     def mean_bitrate(self):
-        f = 'logic.AlbumEditor.mean_bitrate'
+        f = 'unmusic.logic.AlbumEditor.mean_bitrate'
         if self.Success:
             mean = objs.db().get_bitrate()
             if mean:
@@ -256,7 +255,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def mean_rating(self):
-        f = 'logic.AlbumEditor.mean_rating'
+        f = 'unmusic.logic.AlbumEditor.mean_rating'
         if self.Success:
             mean = objs.db().get_rating()
             if mean:
@@ -280,7 +279,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def get_no(self):
-        f = 'logic.AlbumEditor.get_no'
+        f = 'unmusic.logic.AlbumEditor.get_no'
         if self.Success:
             objs.db().albumid = sh.Input (title = f
                                          ,value = objs.db().albumid
@@ -290,7 +289,7 @@ class AlbumEditor:
         return objs.db().albumid
     
     def get_min(self):
-        f = 'logic.AlbumEditor.get_min'
+        f = 'unmusic.logic.AlbumEditor.get_min'
         if self.Success:
             return sh.Input (title = f
                             ,value = objs.db().min_id()
@@ -300,7 +299,7 @@ class AlbumEditor:
             return 0
     
     def get_max(self):
-        f = 'logic.AlbumEditor.get_max'
+        f = 'unmusic.logic.AlbumEditor.get_max'
         if self.Success:
             _max = objs.db().max_id()
             if isinstance(_max,int):
@@ -315,7 +314,7 @@ class AlbumEditor:
             return 0
     
     def inc(self):
-        f = 'logic.AlbumEditor.inc'
+        f = 'unmusic.logic.AlbumEditor.inc'
         if self.Success:
             if self.get_no() == self.get_max():
                 objs.db().albumid = self.get_min()
@@ -326,7 +325,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def dec(self):
-        f = 'logic.AlbumEditor.dec'
+        f = 'unmusic.logic.AlbumEditor.dec'
         if self.Success:
             if self.get_no() == self.get_min():
                 objs.db().albumid = self.get_max()
@@ -337,7 +336,7 @@ class AlbumEditor:
             sh.com.cancel(f)
 
     def _compare_albums(self,old,new):
-        f = 'logic.AlbumEditor.compare_albums'
+        f = 'unmusic.logic.AlbumEditor.compare_albums'
         # Quotes in the text will fail the query, so we screen them
         new[0] = str(new[0]).replace('"','""')
         new[1] = str(new[1]).replace('"','""')
@@ -388,7 +387,7 @@ class Directory:
         return no
     
     def move_tracks(self):
-        f = 'logic.Directory.move_tracks'
+        f = 'unmusic.logic.Directory.move_tracks'
         if self.Success:
             success = []
             ''' The current algorithm of tracks renumbering guarantees
@@ -410,7 +409,7 @@ class Directory:
             sh.com.cancel(f)
     
     def purge(self):
-        f = 'logic.Directory.purge'
+        f = 'unmusic.logic.Directory.purge'
         if self.Success:
             if self._tracks:
                 sh.log.append (f,_('INFO')
@@ -428,12 +427,12 @@ class Directory:
             sh.com.cancel(f)
     
     def create_target(self):
-        f = 'logic.Directory.create_target'
+        f = 'unmusic.logic.Directory.create_target'
         if self.Success:
             if objs.db().albumid:
-                self._target = sh.Home(app_name=PRODUCT).add_share (_('processed')
-                                                                   ,str(objs._db.albumid)
-                                                                   )
+                self._target = objs.default().ihome.add_share (_('processed')
+                                                              ,str(objs._db.albumid)
+                                                              )
                 self.Success = sh.Path(self._target).create()
             else:
                 self.Success = False
@@ -449,7 +448,7 @@ class Directory:
         self.Success   = self.idir.Success
         
     def get_rating(self):
-        f = 'logic.Directory.get_rating'
+        f = 'unmusic.logic.Directory.get_rating'
         if self.Success:
             match = re.search(r'\(rating (\d+)\)',self._path)
             if match:
@@ -475,7 +474,7 @@ class Directory:
         return self.Success
     
     def _add_album_meta(self):
-        f = 'logic.Directory._add_album_meta'
+        f = 'unmusic.logic.Directory._add_album_meta'
         data = self._tracks[0].album_meta()
         ''' If a track could not be processed, empty tags will be
             returned, which, when written to DB, can cause confusion.
@@ -490,7 +489,7 @@ class Directory:
             sh.com.empty(f)
     
     def _add_tracks_meta(self,albumid):
-        f = 'logic.Directory._add_tracks_meta'
+        f = 'unmusic.logic.Directory._add_tracks_meta'
         for track in self._tracks:
             data = track.track_meta()
             ''' If a track could not be processed, empty tags will be
@@ -513,7 +512,7 @@ class Directory:
                 sh.com.empty(f)
     
     def save_meta(self):
-        f = 'logic.Directory.save_meta'
+        f = 'unmusic.logic.Directory.save_meta'
         if self.Success:
             if self._tracks:
                 # Albums of the same bitrate will share the same ID
@@ -554,7 +553,7 @@ class Directory:
         self._tracks = []
     
     def create_list(self):
-        f = 'logic.Directory.create_list'
+        f = 'unmusic.logic.Directory.create_list'
         if self.Success:
             if not self._files:
                 self._files = self.idir.files()
@@ -570,7 +569,7 @@ class Directory:
         ''' We use track NO field instead of an autoincrement, so we
             must keep these fields unique within the same album.
         '''
-        f = 'logic.Directory.renumber_tracks'
+        f = 'unmusic.logic.Directory.renumber_tracks'
         if self.Success:
             nos = [i + 1 for i in range(len(self._tracks))]
             count = 0
@@ -587,7 +586,7 @@ class Directory:
             sh.com.cancel(f)
     
     def tracks(self):
-        f = 'logic.Directory.tracks'
+        f = 'unmusic.logic.Directory.tracks'
         if self.Success:
             if not self._tracks:
                 if self._audio:
@@ -609,7 +608,7 @@ class DefaultConfig:
     
     def __init__(self):
         self.values()
-        self.ihome   = sh.Home(app_name=PRODUCT)
+        self.ihome   = sh.Home(app_name='unmusic')
         self.Success = self.ihome.create_conf()
     
     def run(self):
@@ -619,9 +618,9 @@ class DefaultConfig:
         self._fdb = ''
     
     def db(self):
-        f = 'logic.DefaultConfig.db'
+        f = 'unmusic.logic.DefaultConfig.db'
         if self.Success:
-            self._fdb = self.ihome.add_config(PRODUCT+'.db')
+            self._fdb = self.ihome.add_config('unmusic.db')
             if self._fdb:
                 if os.path.exists(self._fdb):
                     self.Success = sh.File(file=self._fdb).Success
@@ -639,7 +638,7 @@ class Objects:
         self._default = self._db = None
         
     def db(self):
-        f = 'logic.Objects.db'
+        f = 'unmusic.logic.Objects.db'
         if not self._db:
             path = self.default()._fdb
             if self._default.Success:
@@ -670,7 +669,7 @@ class DB:
         self.create_tracks()
     
     def best_tracks(self):
-        f = 'logic.DB.best_tracks'
+        f = 'unmusic.logic.DB.best_tracks'
         if self.Success:
             try:
                 self.dbc.execute ('select RATING,NO,TITLE,LENGTH \
@@ -685,7 +684,7 @@ class DB:
             sh.com.cancel(f)
     
     def update_track(self,no,data):
-        f = 'logic.DB.update_track'
+        f = 'unmusic.logic.DB.update_track'
         if self.Success:
             if no and data:
                 if len(data) == 4:
@@ -714,10 +713,10 @@ class DB:
         ''' We use track NO field instead of an autoincrement, so we
             must keep these fields unique within the same album.
             Tracks should have already been renumbered if required
-            with 'logic.Directory.renumber_tracks', however, we check
+            with 'unmusic.logic.Directory.renumber_tracks', however, we check
             this again just to be sure.
         '''
-        f = 'logic.DB.check_nos'
+        f = 'unmusic.logic.DB.check_nos'
         if self.Success:
             try:
                 self.dbc.execute ('select NO from TRACKS \
@@ -735,7 +734,7 @@ class DB:
             sh.com.cancel(f)
     
     def get_length(self):
-        f = 'logic.DB.get_length'
+        f = 'unmusic.logic.DB.get_length'
         if self.Success:
             try:
                 self.dbc.execute ('select LENGTH from TRACKS \
@@ -751,7 +750,7 @@ class DB:
             sh.com.cancel(f)
     
     def get_bitrate(self):
-        f = 'logic.DB.get_bitrate'
+        f = 'unmusic.logic.DB.get_bitrate'
         if self.Success:
             try:
                 self.dbc.execute ('select BITRATE from TRACKS \
@@ -767,7 +766,7 @@ class DB:
             sh.com.cancel(f)
     
     def delete(self):
-        f = 'logic.DB.delete'
+        f = 'unmusic.logic.DB.delete'
         if self.Success:
             try:
                 self.dbc.execute ('delete from ALBUMS where ALBUMID = ?'
@@ -782,7 +781,7 @@ class DB:
             sh.com.cancel(f)
     
     def get_rating(self):
-        f = 'logic.DB.get_rating'
+        f = 'unmusic.logic.DB.get_rating'
         if self.Success:
             try:
                 self.dbc.execute ('select RATING from TRACKS \
@@ -798,7 +797,7 @@ class DB:
             sh.com.cancel(f)
     
     def set_rating(self,value):
-        f = 'logic.DB.set_rating'
+        f = 'unmusic.logic.DB.set_rating'
         if self.Success:
             try:
                 self.dbc.execute ('update TRACKS set RATING = ? \
@@ -812,7 +811,7 @@ class DB:
             sh.com.cancel(f)
     
     def updateDB(self,query):
-        f = 'logic.DB.updateDB'
+        f = 'unmusic.logic.DB.updateDB'
         if self.Success:
             if query:
                 try:
@@ -828,7 +827,7 @@ class DB:
             sh.com.cancel(f)
     
     def tracks(self):
-        f = 'logic.DB.tracks'
+        f = 'unmusic.logic.DB.tracks'
         if self.Success:
             try:
                 self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
@@ -843,7 +842,7 @@ class DB:
             sh.com.cancel(f)
     
     def search_track(self,search):
-        f = 'logic.DB.search_track'
+        f = 'unmusic.logic.DB.search_track'
         if self.Success:
             if search:
                 search = '%' + search.lower() + '%'
@@ -864,7 +863,7 @@ class DB:
             sh.com.cancel(f)
     
     def next_album(self,search):
-        f = 'logic.DB.next_album'
+        f = 'unmusic.logic.DB.next_album'
         if self.Success:
             if search:
                 search = '%' + search.lower() + '%'
@@ -886,7 +885,7 @@ class DB:
             sh.com.cancel(f)
     
     def prev_album(self,search):
-        f = 'logic.DB.prev_album'
+        f = 'unmusic.logic.DB.prev_album'
         if self.Success:
             if search:
                 search = '%' + search.lower() + '%'
@@ -908,7 +907,7 @@ class DB:
             sh.com.cancel(f)
     
     def prev_id(self):
-        f = 'logic.DB.prev_id'
+        f = 'unmusic.logic.DB.prev_id'
         if self.Success:
             try:
                 self.dbc.execute ('select   ALBUMID from ALBUMS \
@@ -925,7 +924,7 @@ class DB:
             sh.com.cancel(f)
     
     def next_id(self):
-        f = 'logic.DB.next_id'
+        f = 'unmusic.logic.DB.next_id'
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUMID from ALBUMS \
@@ -941,7 +940,7 @@ class DB:
             sh.com.cancel(f)
     
     def get_album(self):
-        f = 'logic.DB.get_album'
+        f = 'unmusic.logic.DB.get_album'
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUM,ARTIST,YEAR,GENRE\
@@ -956,7 +955,7 @@ class DB:
             sh.com.cancel(f)
     
     def min_id(self):
-        f = 'logic.DB.min_id'
+        f = 'unmusic.logic.DB.min_id'
         if self.Success:
             try:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
@@ -974,7 +973,7 @@ class DB:
             sh.com.cancel(f)
     
     def max_id(self):
-        f = 'logic.DB.max_id'
+        f = 'unmusic.logic.DB.max_id'
         if self.Success:
             try:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
@@ -995,7 +994,7 @@ class DB:
         ''' Since tags may be missing, we use a track number to identify
             a track. Different bitrates refer to different tracks.
         '''
-        f = 'logic.DB.has_track'
+        f = 'unmusic.logic.DB.has_track'
         if self.Success:
             try:
                 self.dbc.execute ('select TITLE from TRACKS \
@@ -1012,7 +1011,7 @@ class DB:
             sh.com.cancel(f)
     
     def has_album(self,artist,year,album):
-        f = 'logic.DB.has_album'
+        f = 'unmusic.logic.DB.has_album'
         if self.Success:
             try:
                 self.dbc.execute ('select ALBUMID from ALBUMS \
@@ -1031,7 +1030,7 @@ class DB:
     def print (self,Selected=False,Shorten=False
               ,MaxRow=20,MaxRows=20,table='TRACKS'
               ):
-        f = 'logic.DB.print'
+        f = 'unmusic.logic.DB.print'
         if self.Success:
             ''' 'self.dbc.description' is 'None' without performing 
                 'select' first
@@ -1050,7 +1049,7 @@ class DB:
             sh.com.cancel(f)
     
     def add_track(self,data):
-        f = 'logic.DB.add_track'
+        f = 'unmusic.logic.DB.add_track'
         if self.Success:
             if data:
                 try:
@@ -1065,7 +1064,7 @@ class DB:
             sh.com.cancel(f)
     
     def add_album(self,data):
-        f = 'logic.DB.add_album'
+        f = 'unmusic.logic.DB.add_album'
         if self.Success:
             if data:
                 try:
@@ -1080,7 +1079,7 @@ class DB:
             sh.com.cancel(f)
     
     def create_tracks(self):
-        f = 'logic.DB.create_tracks'
+        f = 'unmusic.logic.DB.create_tracks'
         if self.Success:
             try:
                 # 9 columns by now
@@ -1103,7 +1102,7 @@ class DB:
             sh.com.cancel(f)
     
     def create_albums(self):
-        f = 'logic.DB.create_albums'
+        f = 'unmusic.logic.DB.create_albums'
         if self.Success:
             try:
                 # 8 columns by now
@@ -1126,7 +1125,7 @@ class DB:
             sh.com.cancel(f)
     
     def save(self):
-        f = 'logic.DB.save'
+        f = 'unmusic.logic.DB.save'
         if self.Success:
             sh.log.append (f,_('INFO')
                           ,_('Save "%s"') % self._path
@@ -1147,7 +1146,7 @@ class DB:
                     )
     
     def close(self):
-        f = 'logic.DB.close'
+        f = 'unmusic.logic.DB.close'
         if self.Success:
             try:
                 self.dbc.close()
@@ -1157,7 +1156,7 @@ class DB:
             sh.com.cancel(f)
     
     def connect(self):
-        f = 'logic.DB.connect'
+        f = 'unmusic.logic.DB.connect'
         if self.Success:
             try:
                 self.db  = sqlite3.connect(self._path)
@@ -1180,7 +1179,7 @@ class Track:
         self.decode()
     
     def purge(self):
-        f = 'logic.Track.purge'
+        f = 'unmusic.logic.Track.purge'
         if self.Success:
             if self._audio:
                 try:
@@ -1201,7 +1200,7 @@ class Track:
         ''' This is only needed if the file was changed by means of
             'phrydy', see, for example, 'self.purge'.
         '''
-        f = 'logic.Track.save'
+        f = 'unmusic.logic.Track.save'
         if self.Success:
             if self._audio:
                 try:
@@ -1226,7 +1225,7 @@ class Track:
     
     # Fix Cyrillic tags
     def decode(self):
-        f = 'logic.Track.decode'
+        f = 'unmusic.logic.Track.decode'
         if self.Success:
             self._artist = self._decode(self._artist)
             self._album  = self._decode(self._album)
@@ -1236,7 +1235,7 @@ class Track:
             sh.com.cancel(f)
     
     def track_meta(self):
-        f = 'logic.Track.track_meta'
+        f = 'unmusic.logic.Track.track_meta'
         if self.Success:
             search = [self._title,self._lyrics]
             search = ' '.join(search)
@@ -1249,7 +1248,7 @@ class Track:
             sh.com.cancel(f)
     
     def album_meta(self):
-        f = 'logic.Track.album_meta'
+        f = 'unmusic.logic.Track.album_meta'
         if self.Success:
             search = [self._album,self._artist,str(self._year)
                      ,self._genre
@@ -1284,7 +1283,7 @@ class Track:
         self._no      = 1
     
     def summary(self):
-        f = 'logic.Track.summary'
+        f = 'unmusic.logic.Track.summary'
         if self.Success:
             mes =  _('Artist:')  + ' %s\n' % self._artist
             mes += _('Album:')   + ' %s\n' % self._album
@@ -1307,7 +1306,7 @@ class Track:
             sh.com.cancel(f)
     
     def extract_title(self):
-        f = 'logic.Track.extract_title'
+        f = 'unmusic.logic.Track.extract_title'
         if self.Success:
             title = sh.Path(self.file).filename()
             if title:
@@ -1321,7 +1320,7 @@ class Track:
             sh.com.cancel(f)
     
     def info(self):
-        f = 'logic.Track.info'
+        f = 'unmusic.logic.Track.info'
         if self.Success:
             if self._audio:
                 try:
@@ -1377,7 +1376,7 @@ class Track:
             sh.com.cancel(f)
     
     def load(self):
-        f = 'logic.Track.load'
+        f = 'unmusic.logic.Track.load'
         if self.Success:
             if not self._audio:
                 try:
@@ -1404,7 +1403,7 @@ class Walker:
             recreated each time, we can call this procedure at any time
             without the need to reset 'Walker'.
         '''
-        f = 'logic.Walker.delete_empty'
+        f = 'unmusic.logic.Walker.delete_empty'
         self.dirs()
         if self.Success:
             if self._dirs:
@@ -1422,7 +1421,7 @@ class Walker:
         self.Success = self.idir.Success
     
     def dirs(self):
-        f = 'logic.Walker.dirs'
+        f = 'unmusic.logic.Walker.dirs'
         if self.Success:
             if not self._dirs:
                 for dirpath, dirnames, filenames \
@@ -1447,7 +1446,4 @@ objs.default()
 
 if __name__ == '__main__':
     sh.objs.mes(Silent=1)
-    folder = '/home/pete/.local/share/unmusic/не обработано/1994 - Djivan Gasparyan - Armenian Romances (320)'
-    iwalk = Walker(folder)
-    dirs  = iwalk.dirs()
-    print(dirs)
+    objs.db().close()
