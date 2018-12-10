@@ -865,4 +865,7 @@ if __name__ == '__main__':
     f = 'controller.__main__'
     sg.objs.start()
     Menu().show()
+    sh.log.append (f,_('INFO')
+                  ,_('Goodbye!')
+                  )
     sg.objs.end()

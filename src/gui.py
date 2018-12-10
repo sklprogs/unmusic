@@ -36,7 +36,9 @@ class ImageViewer:
     
     def bindings(self):
         sg.bind (obj      = self.parent
-                ,bindings = '<KeyRelease>'
+                ,bindings = ['<Escape>','<Control-w>','<Control-q>'
+                            ,'<ButtonRelease-1>'
+                            ]
                 ,action   = self.close
                 )
     
