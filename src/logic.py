@@ -465,12 +465,13 @@ class Directory:
         self.get_rating()
         self.create_list()
         self.tracks()
-        self.renumber_tracks()
-        self.save_meta()
-        if self.Obfuscate:
-            self.create_target()
-            self.purge()
-            self.move_tracks()
+        if self._tracks:
+            self.renumber_tracks()
+            self.save_meta()
+            if self.Obfuscate:
+                self.create_target()
+                self.purge()
+                self.move_tracks()
         return self.Success
     
     def _add_album_meta(self):
@@ -515,19 +516,22 @@ class Directory:
         f = 'unmusic.logic.Directory.save_meta'
         if self.Success:
             if self._tracks:
-                # Albums of the same bitrate will share the same ID
-                albumid = objs.db().has_album (artist = self._tracks[0]._artist
-                                              ,year   = self._tracks[0]._year
-                                              ,album  = self._tracks[0]._album
-                                              )
-                if albumid:
-                    sh.log.append (f,_('INFO')
-                                  ,_('Album %s is already in DB!') \
-                                  % str(albumid)
-                                  )
-                else:
-                    self._add_album_meta()
-                    albumid = objs._db.max_id()
+                ''' It seems better to create new ALBUMID without
+                    checking if it already exists. Reasons:
+                    1) CD1, CD2, etc. may share same tags.
+                    2) Albums of different bitrate may share same tags,
+                       however, they are actually different albums.
+                    3) Since extracting metadata and obfucating are 
+                       united by default, the program may try to 
+                       overwrite already existing files in case there is
+                       an ALBUMID conflict (which does not and should
+                       not fail 'Success').
+                    4) If tags have been edited after extraction, there
+                       is no easy way to establish if DB already has
+                       a corresponding ALBUMID.
+                '''
+                self._add_album_meta()
+                albumid = objs._db.max_id()
                 if albumid:
                     self._add_tracks_meta(albumid)
                     if self._new:
@@ -593,7 +597,6 @@ class Directory:
                     for file in self._audio:
                         self._tracks.append(Track(file))
                 else:
-                    self.Success = False
                     sh.log.append (f,_('INFO')
                                   ,_('Folder "%s" has no audio files.')\
                                   % self._path

@@ -835,8 +835,6 @@ class Menu:
         self.gui.show()
     
     def close(self,event=None):
-        lg.objs.db().save()
-        lg.objs._db.close()
         self.gui.close()
 
 
@@ -865,6 +863,8 @@ if __name__ == '__main__':
     f = 'unmusic.controller.__main__'
     sg.objs.start()
     Menu().show()
+    lg.objs.db().save()
+    lg.objs._db.close()
     sh.log.append (f,_('DEBUG')
                   ,_('Goodbye!')
                   )
