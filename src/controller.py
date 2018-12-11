@@ -229,6 +229,24 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
     
+    def decode(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.decode'
+        if self.Success:
+            artist  = self.gui.ent_art.get()
+            album   = self.gui.ent_alb.get()
+            comment = self.gui.ent_com.get()
+            artist  = lg.com.decode_back(artist)
+            album   = lg.com.decode_back(album)
+            comment = lg.com.decode_back(comment)
+            self.gui.ent_art.clear_text()
+            self.gui.ent_art.insert(artist)
+            self.gui.ent_alb.clear_text()
+            self.gui.ent_alb.insert(album)
+            self.gui.ent_com.clear_text()
+            self.gui.ent_com.insert(comment)
+        else:
+            sh.com.cancel(f)
+    
     def values(self):
         self._defimg   = None
         self._image    = None
@@ -619,17 +637,18 @@ class AlbumEditor:
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.btn_dec.action = self.decode
+        self.gui.btn_del.action = self.delete
         self.gui.btn_nxt.action = self.next
         self.gui.btn_prv.action = self.prev
-        self.gui.btn_spr.action = self.search_prev_album
+        self.gui.btn_rec.action = self.create
+        self.gui.btn_rld.action = self.fill
+        self.gui.btn_sav.action = self.save
         self.gui.btn_snx.action = self.search_next_album
+        self.gui.btn_spr.action = self.search_prev_album
+        self.gui.btn_trk.action = self.tracks
         self.gui.opt_rtg.action = self.set_rating
         self.gui.opt_ply.action = self.play
-        self.gui.btn_trk.action = self.tracks
-        self.gui.btn_rec.action = self.create
-        self.gui.btn_sav.action = self.save
-        self.gui.btn_rld.action = self.fill
-        self.gui.btn_del.action = self.delete
         sg.bind (obj      = self.gui
                 ,bindings = ['<F5>','<Control-r>']
                 ,action   = self.fill

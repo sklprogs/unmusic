@@ -1464,8 +1464,23 @@ class Walker:
 
 
 
+class Commands:
+    
+    def __init__(self):
+        pass
+    
+    def decode_back(self,text):
+        try:
+            byted = bytes(text,'cp1251')
+            return byted.decode('utf-8')
+        except UnicodeEncodeError:
+            return text
+
+
+
 objs = Objects()
 objs.default()
+com = Commands()
 
 
 

@@ -6,10 +6,10 @@ import sharedGUI as sg
 
 # Do not localize (being stored in DB)
 GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
-         ,'Brutal Death Metal','Classical','Death Metal','Death/Black'
-         ,'Death/Thrash','Electronic','Ethnic','Heavy Metal','Game'
-         ,'Grindcore','Goregrind','Metal','Pop','Rap','Relaxation'
-         ,'Rock','Soundtrack','Thrash Metal','Vocal'
+         ,'Brutal Death Metal','Chanson','Classical','Death Metal'
+         ,'Death/Black','Death/Thrash','Electronic','Ethnic'
+         ,'Heavy Metal','Game','Grindcore','Goregrind','Metal','Pop'
+         ,'Rap','Relaxation','Rock','Soundtrack','Thrash Metal','Vocal'
          )
 
 import gettext, gettext_windows
@@ -115,6 +115,13 @@ class AlbumEditor:
                                  ,side     = 'left'
                                  ,inactive = self._path_del
                                  ,active   = self._path_del
+                                 )
+        self.btn_dec = sg.Button (parent   = self.frm2
+                                 ,text     = _('Decode')
+                                 ,hint     = _('Decode back to cp1251')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dec
+                                 ,active   = self._path_dec
                                  )
         self.btn_sav = sg.Button (parent   = self.frm2
                                  ,text     = _('Save')
@@ -450,6 +457,9 @@ class AlbumEditor:
                                                )
         self._path_add = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_add.gif'
+                                           )
+        self._path_dec = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_decode.gif'
                                            )
         self._path_del = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_delete_record.gif'
