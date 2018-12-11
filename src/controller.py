@@ -258,18 +258,28 @@ class AlbumEditor:
         f = 'unmusic.controller.AlbumEditor.set_image'
         if self.Success:
             if image:
-                ipic = sg.Image()
-                ipic._bytes = image
-                ipic.loader()
-                self._image = ipic.image()
-                ipic = sg.Image()
-                ipic._bytes = image
-                ipic.loader()
-                ''' These are dimensions of 'self.gui.frm_img' when
-                    the default image is loaded.
-                '''
-                ipic.thumbnail(130,212)
-                thumb = ipic.image()
+                try:
+                    ipic = sg.Image()
+                    ipic._bytes = image
+                    ipic.loader()
+                    self._image = ipic.image()
+                    ipic = sg.Image()
+                    ipic._bytes = image
+                    ipic.loader()
+                    ''' These are dimensions of 'self.gui.frm_img' when
+                        the default image is loaded.
+                    '''
+                    ipic.thumbnail(130,212)
+                    thumb = ipic.image()
+                except Exception as e:
+                    ''' Do not fail 'Success' here - it can just be
+                        an incorrectly ripped image.
+                    '''
+                    thumb = None
+                    sh.objs.mes (f,_('WARNING')
+                                ,_('Third-party module has failed!\n\nDetails: %s')\
+                                % str(e)
+                                )
             else:
                 self._image = self.default_image()
                 thumb = self._image
@@ -293,13 +303,13 @@ class AlbumEditor:
                 lg.Play().best_tracks()
             elif choice == _('Best, external'):
                 self.gui.opt_ply.set(default)
-                lg.Play().best_tracks(External=True)
+                lg.Play(External=True).best_tracks()
             elif choice == _('All, local'):
                 self.gui.opt_ply.set(default)
                 lg.Play().all_tracks()
             elif choice == _('All, external'):
                 self.gui.opt_ply.set(default)
-                lg.Play().all_tracks(External=True)
+                lg.Play(External=True).all_tracks()
             else:
                 sh.objs.mes (f,_('ERROR')
                             ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
@@ -811,6 +821,7 @@ class Menu:
             else:
                 sh.com.empty(f)
             iwalk.delete_empty()
+            lg.objs.db().save()
         else:
             sh.com.cancel(f)
     

@@ -482,10 +482,10 @@ class Directory:
             Here we check that the track was processed successfully.
         '''
         if self._tracks[0]._audio and data:
-            objs._db.add_album ([data[0],data[1],data[2],data[3],'',''
-                                ,data[4],data[5]
-                                ]
-                               )
+            objs.db().add_album ([data[0],data[1],data[2],data[3],'',''
+                                 ,data[4],data[5]
+                                 ]
+                                )
         else:
             sh.com.empty(f)
     
@@ -1180,6 +1180,28 @@ class Track:
         self.load()
         self.info()
         self.decode()
+        self.unsupported()
+        self.trash_meta()
+    
+    def trash_meta(self):
+        f = 'unmusic.logic.Track.trash_meta'
+        if self.Success:
+            self._album = self._album.replace(' (@FLAC)','').replace(' (@VBR)','').replace(' (@vbr)','').replace(', @FLAC','').replace(',@FLAC','').replace(', @VBR','').replace(',@VBR','').replace(', @vbr','').replace(',@vbr','')
+            self._album = re.sub(' \(@\d+\)','',self._album)
+            self._album = re.sub(',[\s]{0,1}@\d+\)','',self._album)
+        else:
+            sh.com.cancel(f)
+    
+    def unsupported(self):
+        f = 'unmusic.logic.Track.unsupported'
+        if self.Success:
+            self._artist = sh.Text(self._artist).delete_unsupported()
+            self._album  = sh.Text(self._album).delete_unsupported()
+            self._title  = sh.Text(self._title).delete_unsupported()
+            self._lyrics = sh.Text(self._lyrics).delete_unsupported()
+            self._genre  = sh.Text(self._genre).delete_unsupported()
+        else:
+            sh.com.cancel(f)
     
     def purge(self):
         f = 'unmusic.logic.Track.purge'
