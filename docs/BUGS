@@ -1,1 +1,2 @@
 - DB.has_album does not always work as expected.
+- Track comment seems not to be added to SEARCH (track search does not work)

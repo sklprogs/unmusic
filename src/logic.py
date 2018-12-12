@@ -1245,7 +1245,7 @@ class Track:
         try:
             byted = bytes(text,'iso-8859-1')
             return byted.decode('cp1251')
-        except UnicodeEncodeError:
+        except:
             return text
     
     # Fix Cyrillic tags
@@ -1473,7 +1473,7 @@ class Commands:
         try:
             byted = bytes(text,'cp1251')
             return byted.decode('utf-8')
-        except UnicodeEncodeError:
+        except:
             return text
 
 

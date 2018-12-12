@@ -829,6 +829,10 @@ class Menu:
                     lg.Directory (path      = folder
                                  ,Obfuscate = Obfuscate
                                  ).run()
+                    ''' In case something went wrong, we should lose 
+                        only 1 album record, not the entire sequence.
+                    '''
+                    lg.objs.db().save()
                 gi.objs.wait().close()
                 delta = timer.end()
                 sh.objs.mes (f,_('INFO')
