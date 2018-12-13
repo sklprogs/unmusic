@@ -78,6 +78,18 @@ class AlbumEditor:
         self.pool   = sh.MessagePool(max_size=4)
         self.gui()
     
+    def set_genre(self,genre):
+        genre = str(genre)
+        if not genre:
+            # Do not localize (being stored in DB)
+            genre = '?'
+        items = list(GENRES)
+        if not genre in items:
+            items.append(genre)
+        self.opt_gnr.reset (items   = items
+                           ,default = genre
+                           )
+    
     def image(self):
         self.lbl_img = sg.Label (parent = self.frm_img
                                 ,text   = _('Image:')
@@ -115,6 +127,20 @@ class AlbumEditor:
                                  ,side     = 'left'
                                  ,inactive = self._path_del
                                  ,active   = self._path_del
+                                 )
+        self.btn_dez = sg.Button (parent   = self.frm2
+                                 ,text     = _('Decypher')
+                                 ,hint     = _('Decypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dez
+                                 ,active   = self._path_dez
+                                 )
+        self.btn_cyp = sg.Button (parent   = self.frm2
+                                 ,text     = _('Cypher')
+                                 ,hint     = _('Cypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_cyp
+                                 ,active   = self._path_cyp
                                  )
         self.btn_dec = sg.Button (parent   = self.frm2
                                  ,text     = _('Decode')
@@ -458,8 +484,14 @@ class AlbumEditor:
         self._path_add = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_add.gif'
                                            )
+        self._path_cyp = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_cypher.gif'
+                                           )
         self._path_dec = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_decode.gif'
+                                           )
+        self._path_dez = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_decypher.gif'
                                            )
         self._path_del = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_delete_record.gif'
@@ -674,9 +706,15 @@ class Tracks:
     
     def values(self):
         self._tracks   = []
-        self._path_dec = sh.objs.pdir().add ('..','resources','buttons'
-                                            ,'icon_36x36_decode.gif'
-                                            )
+        self._path_cyp = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_cypher.gif'
+                                           )
+        self._path_dec = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_decode.gif'
+                                           )
+        self._path_dez = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_decypher.gif'
+                                           )
         self._path_rat = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_clear_rating.gif'
                                            )
@@ -703,6 +741,20 @@ class Tracks:
                                  ,inactive = self._path_rat
                                  ,active   = self._path_rat
                                  ,action   = self.clear_rating
+                                 )
+        self.btn_dez = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Decypher')
+                                 ,hint     = _('Decypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dez
+                                 ,active   = self._path_dez
+                                 )
+        self.btn_cyp = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Cypher')
+                                 ,hint     = _('Cypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_cyp
+                                 ,active   = self._path_cyp
                                  )
         self.btn_dec = sg.Button (parent   = self.frm_btn
                                  ,text     = _('Decode')

@@ -21,6 +21,28 @@ class Tracks:
         self.gui     = gi.Tracks(height=400)
         self.bindings()
     
+    def decypher(self,event=None):
+        f = 'unmusic.controller.Tracks.decypher'
+        if self.Success:
+            for track in self.gui._tracks:
+                title = track.ent_tit.get()
+                title = lg.objs.caesar().decypher(title)
+                track.ent_tit.clear_text()
+                track.ent_tit.insert(title)
+        else:
+            sh.com.cancel(f)
+    
+    def cypher(self,event=None):
+        f = 'unmusic.controller.Tracks.cypher'
+        if self.Success:
+            for track in self.gui._tracks:
+                title = track.ent_tit.get()
+                title = lg.objs.caesar().cypher(title)
+                track.ent_tit.clear_text()
+                track.ent_tit.insert(title)
+        else:
+            sh.com.cancel(f)
+    
     def decode(self,event=None):
         f = 'unmusic.controller.Tracks.decode'
         if self.Success:
@@ -113,6 +135,8 @@ class Tracks:
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.btn_cyp.action = self.cypher
+        self.gui.btn_dez.action = self.decypher
         self.gui.btn_dec.action = self.decode
         self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
@@ -240,6 +264,40 @@ class AlbumEditor:
         self.gui   = gi.AlbumEditor()
         self.logic = lg.AlbumEditor()
         self.bindings()
+    
+    def cypher(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.cypher'
+        if self.Success:
+            artist  = self.gui.ent_art.get()
+            album   = self.gui.ent_alb.get()
+            genre   = self.gui.opt_gnr.choice
+            artist  = lg.objs.caesar().cypher(artist)
+            album   = lg.objs._caesar.cypher(album)
+            genre   = lg.objs._caesar.cypher(genre)
+            self.gui.ent_art.clear_text()
+            self.gui.ent_art.insert(artist)
+            self.gui.ent_alb.clear_text()
+            self.gui.ent_alb.insert(album)
+            self.gui.set_genre(genre)
+        else:
+            sh.com.cancel(f)
+    
+    def decypher(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.decypher'
+        if self.Success:
+            artist  = self.gui.ent_art.get()
+            album   = self.gui.ent_alb.get()
+            genre   = self.gui.opt_gnr.choice
+            artist  = lg.objs.caesar().decypher(artist)
+            album   = lg.objs._caesar.decypher(album)
+            genre   = lg.objs._caesar.decypher(genre)
+            self.gui.ent_art.clear_text()
+            self.gui.ent_art.insert(artist)
+            self.gui.ent_alb.clear_text()
+            self.gui.ent_alb.insert(album)
+            self.gui.set_genre(genre)
+        else:
+            sh.com.cancel(f)
     
     def decode(self,event=None):
         f = 'unmusic.controller.AlbumEditor.decode'
@@ -649,8 +707,10 @@ class AlbumEditor:
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.btn_cyp.action = self.cypher
         self.gui.btn_dec.action = self.decode
         self.gui.btn_del.action = self.delete
+        self.gui.btn_dez.action = self.decypher
         self.gui.btn_nxt.action = self.next
         self.gui.btn_prv.action = self.prev
         self.gui.btn_rec.action = self.create
@@ -762,15 +822,7 @@ class AlbumEditor:
                     self.gui.ent_art.insert(data[1])
                     self.gui.ent_yer.insert(data[2])
                     genre = data[3]
-                    if not genre:
-                        # Do not localize (being stored in DB)
-                        genre = '?'
-                    items = list(gi.GENRES)
-                    if not genre in items:
-                        items.append(genre)
-                    self.gui.opt_gnr.reset (items   = items
-                                           ,default = genre
-                                           )
+                    self.gui.set_genre(genre)
                     self.gui.ent_cnt.insert(data[4])
                     self.gui.ent_com.insert(data[5])
                     self.get_rating()
