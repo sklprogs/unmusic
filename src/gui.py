@@ -16,8 +16,8 @@ import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
-PLAY = (_('Play'),_('Best, local'),_('Best, external'),_('All, local')
-       ,_('All, external')
+PLAY = (_('Play'),_('All, external'),_('All, local'),_('Best, external')
+       ,_('Best, local')
        )
 
 
@@ -674,9 +674,12 @@ class Tracks:
     
     def values(self):
         self._tracks   = []
-        self._path_rat = sh.objs.pdir().add ('..','resources','buttons'
-                                            ,'icon_36x36_clear_rating.gif'
+        self._path_dec = sh.objs.pdir().add ('..','resources','buttons'
+                                            ,'icon_36x36_decode.gif'
                                             )
+        self._path_rat = sh.objs._pdir.add ('..','resources','buttons'
+                                           ,'icon_36x36_clear_rating.gif'
+                                           )
         self._path_rld = sh.objs._pdir.add ('..','resources','buttons'
                                            ,'icon_36x36_reload.gif'
                                            )
@@ -700,6 +703,13 @@ class Tracks:
                                  ,inactive = self._path_rat
                                  ,active   = self._path_rat
                                  ,action   = self.clear_rating
+                                 )
+        self.btn_dec = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Decode')
+                                 ,hint     = _('Decode back to cp1251')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dec
+                                 ,active   = self._path_dec
                                  )
         self.btn_sav = sg.Button (parent   = self.frm_btn
                                  ,text     = _('Save')
@@ -780,7 +790,52 @@ class Tracks:
         self.buttons()
         self.icon()
         self.title()
-        self.canvas.top_bindings(self.parent)
+        self.bindings()
+    
+    def bindings(self):
+        ''' We need a special action for '<Home>' and '<End>' (they are
+            useful to navigate within entries), so we use a modified
+            version of 'Canvas.top_bindings' here.
+        '''
+        sg.bind (obj      = self.parent
+                ,bindings = '<Down>'
+                ,action   = self.canvas.move_down
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Up>'
+                ,action   = self.canvas.move_up
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Left>'
+                ,action   = self.canvas.move_left
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Right>'
+                ,action   = self.canvas.move_right
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Next>'
+                ,action   = self.canvas.move_page_down
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Prior>'
+                ,action   = self.canvas.move_page_up
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Control-End>'
+                ,action   = self.canvas.move_bottom
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = '<Control-Home>'
+                ,action   = self.canvas.move_top
+                )
+        sg.bind (obj      = self.parent
+                ,bindings = ['<MouseWheel>'
+                            ,'<Button 4>'
+                            ,'<Button 5>'
+                            ]
+                ,action   = self.canvas.mouse_wheel
+                )
     
     def widgets(self):
         self.canvas = sg.Canvas(parent = self.frm_sec)

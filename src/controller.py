@@ -21,6 +21,17 @@ class Tracks:
         self.gui     = gi.Tracks(height=400)
         self.bindings()
     
+    def decode(self,event=None):
+        f = 'unmusic.controller.Tracks.decode'
+        if self.Success:
+            for track in self.gui._tracks:
+                title = track.ent_tit.get()
+                title = lg.com.decode_back(title)
+                track.ent_tit.clear_text()
+                track.ent_tit.insert(title)
+        else:
+            sh.com.cancel(f)
+    
     def _dump_search(self,old,new):
         f = 'unmusic.controller.Tracks._dump'
         sh.objs.mes (f,_('INFO')
@@ -102,6 +113,7 @@ class Tracks:
     
     def bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.btn_dec.action = self.decode
         self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
         sg.bind (obj      = self.gui.parent
@@ -596,7 +608,7 @@ class AlbumEditor:
             if objs._tracks.gui._tracks:
                 objs._tracks.show()
         else:
-            sh.com.cancel()
+            sh.com.cancel(f)
     
     def delete(self,event=None):
         f = 'unmusic.controller.AlbumEditor.delete'

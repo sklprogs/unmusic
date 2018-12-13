@@ -22,6 +22,56 @@ gettext.install('unmusic','../resources/locale')
 
 
 
+class Caesar:
+    
+    def __init__(self):
+        self._seq1 = ('a','b','c','d','e','f','g','h','i','j','k','l'
+                     ,'m','n','o','p','q','r','s','t','u','v','w','x'
+                     ,'y','z','A','B','C','D','E','F','G','H','I','J'
+                     ,'K','L','M','N','O','P','Q','R','S','T','U','V'
+                     ,'W','X','Y','Z','а','б','в','г','д','е','ё','ж'
+                     ,'з','и','й','к','л','м','н','о','п','р','с','т'
+                     ,'у','ф','х','ц','ч','ш','щ','ь','ъ','ы','э','ю'
+                     ,'я','А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й'
+                     ,'К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х'
+                     ,'Ц','Ч','Ш','Щ','Ь','Ъ','Ы','Э','Ю','Я'
+                     )
+        self._seq2 = ('C','D','f','d','e','i','R','t','n','g','u','b'
+                     ,'B','k','S','N','y','m','j','U','P','J','M','H'
+                     ,'E','V','I','p','v','l','G','s','Q','Z','h','A'
+                     ,'X','a','W','O','K','c','o','w','T','q','z','x'
+                     ,'r','F','L','Y','Н','И','Щ','ю','д','з','к','г'
+                     ,'л','й','б','ж','ё','в','а','Ш','э','Ы','О','Ф'
+                     ,'П','и','У','е','п','ы','В','А','К','н','м','Л'
+                     ,'ъ','у','ф','М','Б','с','Ц','о','я','Ь','Й','Х'
+                     ,'х','Я','Г','Е','Т','С','Р','Ъ','р','Ж','ц','щ'
+                     ,'Ё','Э','т','Ч','ч','ш','ь','Ю','Д','З'
+                     )
+        assert len(self._seq1) == len(self._seq2)
+    
+    def cypher(self,text):
+        lst = list(text)
+        for i in range(len(lst)):
+            try:
+                ind = self._seq1.index(lst[i])
+                lst[i] = self._seq2[ind]
+            except ValueError:
+                pass
+        return ''.join(lst)
+    
+    def decypher(self,text):
+        lst = list(text)
+        for i in range(len(lst)):
+            try:
+                ind = self._seq2.index(lst[i])
+                lst[i] = self._seq1[ind]
+            except ValueError:
+                pass
+        return ''.join(lst)
+        
+
+
+
 class Play:
     
     def __init__(self,External=False):
@@ -169,6 +219,8 @@ class Play:
                         self.out.write(str(int(self._len[i])))
                         self.out.write(',')
                         self.out.write(header)
+                        self.out.write(str(i+1))
+                        self.out.write('. ')
                         self.out.write(self._titles[i])
                         self.out.write('\n')
                         self.out.write(files[i])
@@ -446,6 +498,8 @@ class Directory:
         self.Obfuscate = Obfuscate
         self.idir      = sh.Directory(self._path)
         self.Success   = self.idir.Success
+        if self.Success and '(decypher)' in self._path:
+            self.Decypher = True
         
     def get_rating(self):
         f = 'unmusic.logic.Directory.get_rating'
@@ -474,20 +528,80 @@ class Directory:
                 self.move_tracks()
         return self.Success
     
-    def _add_album_meta(self):
-        f = 'unmusic.logic.Directory._add_album_meta'
-        data = self._tracks[0].album_meta()
-        ''' If a track could not be processed, empty tags will be
-            returned, which, when written to DB, can cause confusion.
-            Here we check that the track was processed successfully.
-        '''
-        if self._tracks[0]._audio and data:
-            objs.db().add_album ([data[0],data[1],data[2],data[3],'',''
-                                 ,data[4],data[5]
-                                 ]
-                                )
+    def decypher_album(self):
+        f = 'unmusic.logic.Directory.decypher_album'
+        if self.Success:
+            if self.Decypher:
+                basename = sh.Path(self._path).basename()
+                basename = objs.caesar().decypher(basename)
+                if basename:
+                    if basename.count(' - ') == 2:
+                        return basename.split(' - ')
+                    else:
+                        sh.log.append (f,_('WARNING')
+                                      ,_('Wrong input data: "%s"!') \
+                                      % basename
+                                      )
+                else:
+                    sh.com.empty(f)
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
         else:
-            sh.com.empty(f)
+            sh.com.cancel(f)
+    
+    def add_album_meta(self):
+        f = 'unmusic.logic.Directory.add_album_meta'
+        if self.Success:
+            if self._tracks:
+                ''' If a track could not be processed, empty tags will
+                    be returned, which, when written to DB, can cause
+                    confusion. Here we check that the track was
+                    processed successfully.
+                '''
+                if self._tracks[0]._audio:
+                    album  = self._tracks[0]._album
+                    artist = self._tracks[0]._artist
+                    year   = self._tracks[0]._year
+                    genre  = self._tracks[0]._genre
+                    image  = self._tracks[0]._image
+                    result = self.decypher_album()
+                    if result:
+                        if len(result) == 3:
+                            artist = result[0]
+                            if str(year).isdigit():
+                                year = int(result[1])
+                            album = result[2]
+                        else:
+                            sh.objs.mes (f,_('ERROR')
+                                        ,_('Condition "%s" is not observed!')\
+                                         % '%d == %d' % (len(result),3)
+                                        )
+                    album  = com.sane(album)
+                    album  = com.album_trash(album)
+                    artist = com.sane(artist)
+                    if str(year).isdigit():
+                        year = int(year)
+                    else:
+                        # Prevent from storing an incorrect value
+                        year = 0
+                    genre = com.sane(genre)
+                    
+                    search = [album,artist,str(year),genre]
+                    search = ' '.join(search)
+                    search = search.lower()
+                    
+                    objs.db().add_album ([album,artist,year,genre,'',''
+                                         ,search,image
+                                         ]
+                                        )
+                else:
+                    sh.com.empty(f)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
     
     def _add_tracks_meta(self,albumid):
         f = 'unmusic.logic.Directory._add_tracks_meta'
@@ -500,15 +614,11 @@ class Directory:
             '''
             if track._audio and data:
                 objs.db().albumid = albumid
-                if not objs._db.has_track (no      = data[1]
-                                          ,bitrate = data[4]
-                                          ):
-                    self._new += 1
-                    objs._db.add_track ([albumid,data[0],data[1],data[2]
-                                        ,'',data[3],data[4],data[5]
-                                        ,self._rating
-                                        ]
-                                       )
+                objs._db.add_track ([albumid,data[0],data[1],data[2]
+                                    ,'',data[3],data[4],data[5]
+                                    ,self._rating
+                                    ]
+                                   )
             else:
                 sh.com.empty(f)
     
@@ -530,15 +640,14 @@ class Directory:
                        is no easy way to establish if DB already has
                        a corresponding ALBUMID.
                 '''
-                self._add_album_meta()
+                self.add_album_meta()
                 albumid = objs._db.max_id()
                 if albumid:
                     self._add_tracks_meta(albumid)
-                    if self._new:
-                        sh.log.append (f,_('INFO')
-                                      ,_('Album %d: %d new tracks.') \
-                                      % (albumid,self._new)
-                                      )
+                    sh.log.append (f,_('INFO')
+                                  ,_('Album %d: %d tracks.') \
+                                  % (albumid,len(self._tracks))
+                                  )
                 else:
                     sh.com.empty(f)
             else:
@@ -547,14 +656,14 @@ class Directory:
             sh.com.cancel(f)
     
     def values(self):
-        self.Success = True
-        self._path   = ''
-        self._target = ''
-        self._rating = 0
-        self._new    = 0
-        self._files  = []
-        self._audio  = []
-        self._tracks = []
+        self.Success  = True
+        self.Decypher = False
+        self._path    = ''
+        self._target  = ''
+        self._rating  = 0
+        self._files   = []
+        self._audio   = []
+        self._tracks  = []
     
     def create_list(self):
         f = 'unmusic.logic.Directory.create_list'
@@ -595,7 +704,10 @@ class Directory:
             if not self._tracks:
                 if self._audio:
                     for file in self._audio:
-                        self._tracks.append(Track(file))
+                        self._tracks.append (Track (file     = file
+                                                   ,Decypher = self.Decypher
+                                                   )
+                                            )
                 else:
                     sh.log.append (f,_('INFO')
                                   ,_('Folder "%s" has no audio files.')\
@@ -638,11 +750,16 @@ class DefaultConfig:
 class Objects:
     
     def __init__(self):
-        self._default = self._db = None
+        self._default = self._db = self._caesar = None
         
+    def caesar(self):
+        if self._caesar is None:
+            self._caesar = Caesar()
+        return self._caesar
+    
     def db(self):
         f = 'unmusic.logic.Objects.db'
-        if not self._db:
+        if self._db is None:
             path = self.default()._fdb
             if self._default.Success:
                 self._db = DB(path=path)
@@ -654,7 +771,7 @@ class Objects:
         return self._db
     
     def default(self):
-        if not self._default:
+        if self._default is None:
             self._default = DefaultConfig()
             self._default.run()
         return self._default
@@ -1173,33 +1290,35 @@ class DB:
 
 class Track:
     
-    def __init__(self,file):
+    def __init__(self,file,Decypher=False):
         self.values()
-        self.file    = file
-        self.Success = sh.File(self.file).Success
+        self.file     = file
+        self.Success  = sh.File(self.file).Success
+        self.Decypher = Decypher
         self.load()
         self.info()
         self.decode()
         self.unsupported()
-        self.trash_meta()
+        self.decypher()
     
-    def trash_meta(self):
-        f = 'unmusic.logic.Track.trash_meta'
+    def decypher(self):
+        f = 'unmusic.logic.Track.decypher'
         if self.Success:
-            self._album = self._album.replace(' (@FLAC)','').replace(' (@VBR)','').replace(' (@vbr)','').replace(', @FLAC','').replace(',@FLAC','').replace(', @VBR','').replace(',@VBR','').replace(', @vbr','').replace(',@vbr','')
-            self._album = re.sub(' \(@\d+\)','',self._album)
-            self._album = re.sub(',[\s]{0,1}@\d+\)','',self._album)
+            ''' Since we need to create a SEARCH field, for the purpose
+                of solidity we decypher track title right here.
+            '''
+            if self.Decypher:
+                self._title = objs.caesar().decypher(self._title)
+                self._genre = objs._caesar.decypher(self._genre)
         else:
             sh.com.cancel(f)
     
     def unsupported(self):
         f = 'unmusic.logic.Track.unsupported'
         if self.Success:
-            self._artist = sh.Text(self._artist).delete_unsupported()
-            self._album  = sh.Text(self._album).delete_unsupported()
+            # Other fields should be processed before writing to DB
             self._title  = sh.Text(self._title).delete_unsupported()
             self._lyrics = sh.Text(self._lyrics).delete_unsupported()
-            self._genre  = sh.Text(self._genre).delete_unsupported()
         else:
             sh.com.cancel(f)
     
@@ -1241,21 +1360,13 @@ class Track:
         else:
             sh.com.cancel(f)
     
-    def _decode(self,text):
-        try:
-            byted = bytes(text,'iso-8859-1')
-            return byted.decode('cp1251')
-        except:
-            return text
-    
     # Fix Cyrillic tags
     def decode(self):
         f = 'unmusic.logic.Track.decode'
         if self.Success:
-            self._artist = self._decode(self._artist)
-            self._album  = self._decode(self._album)
-            self._title  = self._decode(self._title)
-            self._lyrics = self._decode(self._lyrics)
+            # Other fields should be decoded before writing to DB
+            self._title  = com.decode(self._title)
+            self._lyrics = com.decode(self._lyrics)
         else:
             sh.com.cancel(f)
     
@@ -1268,27 +1379,6 @@ class Track:
             search = search.strip().lower()
             return (self._title,self._no,self._lyrics,search
                    ,self._bitrate,self._length
-                   )
-        else:
-            sh.com.cancel(f)
-    
-    def album_meta(self):
-        f = 'unmusic.logic.Track.album_meta'
-        if self.Success:
-            search = [self._album,self._artist,str(self._year)
-                     ,self._genre
-                     ]
-            search = ' '.join(search)
-            search = sh.Text(search).delete_duplicate_spaces()
-            search = search.strip().lower()
-            if not self._album:
-                self._album = '?'
-            if not self._artist:
-                self._artist = '?'
-            if not self._genre:
-                self._genre = '?'
-            return (self._album,self._artist,self._year,self._genre
-                   ,search,self._image
                    )
         else:
             sh.com.cancel(f)
@@ -1363,19 +1453,19 @@ class Track:
                         a separate procedure.
                     '''
                     if self._audio.album:
-                        self._album = str(self._audio.album).strip()
+                        self._album = str(self._audio.album)
                     else:
                         dirname = sh.Path(self.file).dirname()
                         dirname = sh.Path(dirname).basename()
                         self._album = '[[' + dirname + ']]'
                     if self._audio.genre:
-                        self._genre = str(self._audio.genre).strip()
+                        self._genre = str(self._audio.genre)
                     if self._audio.year:
                         self._year = sh.Input (title = f
                                               ,value = self._audio.year
                                               ).integer()
                     if self._audio.title:
-                        self._title = str(self._audio.title).strip()
+                        self._title = str(self._audio.title)
                     else:
                         extracted = self.extract_title()
                         if extracted:
@@ -1387,7 +1477,7 @@ class Track:
                     if str(self._audio.track).isdigit():
                         self._no = self._audio.track
                     if self._audio.lyrics:
-                        self._lyrics = str(self._audio.lyrics).strip()
+                        self._lyrics = str(self._audio.lyrics)
                     if self._audio.images:
                         self._image = self._audio.images[0].data
                 except Exception as e:
@@ -1468,6 +1558,28 @@ class Commands:
     
     def __init__(self):
         pass
+    
+    def sane(self,field):
+        field = sh.Text(field).delete_unsupported()
+        field = sh.Text(field).delete_duplicate_spaces()
+        field = field.strip()
+        field = self.decode(field)
+        if not field:
+            field = '?'
+        return field
+    
+    def album_trash(self,album):
+        album = album.replace(' (@FLAC)','').replace(' (@VBR)','').replace(' (@vbr)','').replace(', @FLAC','').replace(',@FLAC','').replace(', @VBR','').replace(',@VBR','').replace(', @vbr','').replace(',@vbr','')
+        album = re.sub(' \(@\d+\)','',album)
+        album = re.sub(',[\s]{0,1}@\d+\)','',album)
+        return album
+    
+    def decode(self,text):
+        try:
+            byted = bytes(text,'iso-8859-1')
+            return byted.decode('cp1251')
+        except:
+            return text
     
     def decode_back(self,text):
         try:
