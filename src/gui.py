@@ -5,11 +5,14 @@ import shared    as sh
 import sharedGUI as sg
 
 # Do not localize (being stored in DB)
-GENRES = ('?','Ambient','Black Metal','Blues','Brutal Death/Grindcore'
-         ,'Brutal Death Metal','Chanson','Classical','Death Metal'
-         ,'Death/Black','Death/Thrash','Electronic','Ethnic'
-         ,'Heavy Metal','Game','Grindcore','Goregrind','Metal','Pop'
-         ,'Rap','Relaxation','Rock','Soundtrack','Thrash Metal','Vocal'
+GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
+         ,'Brutal Death/Grindcore','Brutal Death Metal','Chanson'
+         ,'Classical','Death Metal','Death/Black','Death/Thrash'
+         ,'Electronic','Ethnic','Heavy Metal','Game','Grindcore'
+         ,'Goregrind','Industrial Metal','Melodic Death Metal','Metal'
+         ,'Pop','Rap','Relaxation','Rock','Soundtrack'
+         ,'Technical Death Metal','Technical Brutal Death Metal'
+         ,'Thrash Metal','Vocal'
          )
 
 import gettext, gettext_windows

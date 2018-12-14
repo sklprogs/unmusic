@@ -570,7 +570,7 @@ class Directory:
                     if result:
                         if len(result) == 3:
                             artist = result[0]
-                            if str(year).isdigit():
+                            if str(result[1]).isdigit():
                                 year = int(result[1])
                             album = result[2]
                         else:
