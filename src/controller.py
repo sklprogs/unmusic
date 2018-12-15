@@ -877,26 +877,29 @@ class Menu:
                 timer = sh.Timer(f)
                 timer.start()
                 for folder in dirs:
-                    count += 1
-                    basename = sh.Path(folder).basename()
-                    itext    = sh.Text(basename)
-                    itext.delete_unsupported()
-                    itext.shorten(max_len=18)
-                    gi.objs.wait().reset (func_title = f
-                                         ,message    = _('Process "%s" (%d/%d)')\
-                                                       % (itext.text
-                                                         ,count
-                                                         ,len(dirs)
-                                                         )
-                                         )
-                    gi.objs._wait.show()
-                    lg.Directory (path      = folder
-                                 ,Obfuscate = Obfuscate
-                                 ).run()
-                    ''' In case something went wrong, we should lose 
-                        only 1 album record, not the entire sequence.
-                    '''
-                    lg.objs.db().save()
+                    if lg.objs.db().Success:
+                        count += 1
+                        basename = sh.Path(folder).basename()
+                        itext    = sh.Text(basename)
+                        itext.delete_unsupported()
+                        itext.shorten(max_len=15)
+                        gi.objs.wait().reset (func_title = f
+                                             ,message    = _('Process "%s" (%d/%d)')\
+                                                           % (itext.text
+                                                             ,count
+                                                             ,len(dirs)
+                                                             )
+                                             )
+                        gi.objs._wait.show()
+                        lg.Directory (path      = folder
+                                     ,Obfuscate = Obfuscate
+                                     ).run()
+                        ''' In case something went wrong, we should lose 
+                            only 1 album record, not the entire sequence.
+                        '''
+                        lg.objs.db().save()
+                    else:
+                        sh.com.cancel(f)
                 gi.objs.wait().close()
                 delta = timer.end()
                 sh.objs.mes (f,_('INFO')

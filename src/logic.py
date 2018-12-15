@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import sys
 import io
 import re
 import phrydy
@@ -1264,6 +1265,11 @@ class DB:
                     ,_('Database "%s" has failed!\n\nDetails: %s') \
                     % (self._path,str(error))
                     )
+        ''' We need to quit as soon as possible, otherwise, folders
+            will be obfuscated, but the info about them will not be
+            stored in the DB!
+        '''
+        sys.exit()
     
     def close(self):
         f = 'unmusic.logic.DB.close'
