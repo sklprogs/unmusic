@@ -265,6 +265,43 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
     
+    def search_id(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.search_id'
+        if self.Success:
+            ''' #NOTE: If we change 'albumid' BEFORE saving, then
+                a wrong DB record will be overwritten!
+            '''
+            self.save()
+            albumid = self.gui.ent_ids.get()
+            if albumid:
+                if str(albumid).isdigit():
+                    albumid = int(albumid)
+                    if albumid > 0:
+                        data = lg.objs.db().has_id(albumid)
+                        if data:
+                            lg.objs._db.albumid = albumid
+                            self.fill()
+                        else:
+                            sh.objs.mes (f,_('INFO')
+                                        ,_('No matches!')
+                                        )
+                    else:
+                        sh.objs.mes (f,_('WARNING')
+                                    ,_('Wrong input data: "%s"!') \
+                                    % str(albumid)
+                                    )
+                else:
+                    sh.objs.mes (f,_('WARNING')
+                                ,_('Wrong input data: "%s"!') \
+                                % str(albumid)
+                                )
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
+        else:
+            sh.com.cancel(f)
+    
     def cypher(self,event=None):
         f = 'unmusic.controller.AlbumEditor.cypher'
         if self.Success:
@@ -724,6 +761,10 @@ class AlbumEditor:
         sg.bind (obj      = self.gui
                 ,bindings = ['<F5>','<Control-r>']
                 ,action   = self.fill
+                )
+        sg.bind (obj      = self.gui.ent_ids
+                ,bindings = ['<Return>','<KP_Enter>']
+                ,action   = self.search_id
                 )
         sg.bind (obj      = self.gui.ent_src
                 ,bindings = ['<Return>','<KP_Enter>']

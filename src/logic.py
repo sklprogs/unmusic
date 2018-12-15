@@ -789,6 +789,24 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
+    def has_id(self,albumid):
+        ''' A major difference from 'get_album': we do not need
+            to assign 'self.albumid' to establish whether the input is
+            valid or not.
+        '''
+        f = 'unmusic.logic.DB.has_id'
+        if self.Success:
+            try:
+                self.dbc.execute ('select ALBUMID \
+                                   from   ALBUMS \
+                                   where  ALBUMID = ?',(albumid,)
+                                 )
+                return self.dbc.fetchone()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
     def best_tracks(self):
         f = 'unmusic.logic.DB.best_tracks'
         if self.Success:

@@ -7,12 +7,13 @@ import sharedGUI as sg
 # Do not localize (being stored in DB)
 GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
          ,'Brutal Death Metal','Chanson','Classical','Death Metal'
-         ,'Death/Black Metal','Death/Thrash Metal'
-         ,'Death Metal/Grindcore','Electronic','Ethnic','Heavy Metal'
-         ,'Game','Grindcore','Goregrind','Industrial Metal'
+         ,'Death Metal/Grindcore','Death/Black Metal'
+         ,'Death/Thrash Metal','Deathcore','Electronic','Ethnic','Game'
+         ,'Goregrind','Grindcore','Heavy Metal','Industrial Metal'
          ,'Melodic Death Metal','Metal','Pop','Power Metal','Rap'
-         ,'Relaxation','Rock','Soundtrack','Technical Death Metal'
-         ,'Technical Brutal Death Metal','Thrash Metal','Vocal'
+         ,'Relaxation','Rock','Soundtrack'
+         ,'Technical Brutal Death Metal','Technical Death Metal'
+         ,'Thrash Metal','Vocal'
          )
 
 import gettext, gettext_windows
@@ -80,6 +81,34 @@ class AlbumEditor:
         self.widget = self.parent.widget
         self.pool   = sh.MessagePool(max_size=4)
         self.gui()
+    
+    def clear_ids(self,event=None):
+        self.ent_ids.focus()
+        self.ent_ids.clear_text()
+    
+    def clear_album_search(self,event=None):
+        self.ent_src.focus()
+        self.ent_src.clear_text()
+    
+    def clear_track_search(self,event=None):
+        self.ent_sr2.focus()
+        self.ent_sr2.clear_text()
+    
+    def focus_ids(self,event=None):
+        self.ent_ids.focus()
+        self.ent_ids.select_all()
+    
+    def search_ids(self):
+        self.ent_ids = sg.Entry (parent    = self.frm
+                                ,Composite = 1
+                                ,side      = 'left'
+                                ,width     = 5
+                                )
+        sg.ToolTip (obj        = self.ent_ids
+                   ,text       = _('Search an album by ID')
+                   ,hint_width = 190
+                   ,hint_dir   = 'bottom'
+                   )
     
     def set_genre(self,genre):
         genre = str(genre)
@@ -269,6 +298,7 @@ class AlbumEditor:
     def gui(self):
         self.frames()
         self.search_albums()
+        self.search_ids()
         self.meter()
         self.search_tracks()
         self.menus()
@@ -379,6 +409,10 @@ class AlbumEditor:
                 )
         sg.bind (obj      = self
                 ,bindings = '<F6>'
+                ,action   = self.focus_ids
+                )
+        sg.bind (obj      = self
+                ,bindings = '<F7>'
                 ,action   = self.focus_track_search
                 )
         ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will
@@ -388,9 +422,25 @@ class AlbumEditor:
                 ,bindings = '<ButtonRelease-1>'
                 ,action   = self.focus_album_search
                 )
+        sg.bind (obj      = self.ent_src
+                ,bindings = '<ButtonRelease-3>'
+                ,action   = self.clear_album_search
+                )
         sg.bind (obj      = self.ent_sr2
                 ,bindings = '<ButtonRelease-1>'
                 ,action   = self.focus_track_search
+                )
+        sg.bind (obj      = self.ent_sr2
+                ,bindings = '<ButtonRelease-3>'
+                ,action   = self.clear_track_search
+                )
+        sg.bind (obj      = self.ent_ids
+                ,bindings = '<ButtonRelease-1>'
+                ,action   = self.focus_ids
+                )
+        sg.bind (obj      = self.ent_ids
+                ,bindings = '<ButtonRelease-3>'
+                ,action   = self.clear_ids
                 )
 
     def focus_album_search(self,event=None):
