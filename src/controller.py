@@ -265,6 +265,38 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
     
+    def go_end(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.go_end'
+        if self.Success:
+            ''' #NOTE: If we change 'albumid' BEFORE saving, then
+                a wrong DB record will be overwritten!
+            '''
+            self.save()
+            albumid = lg.objs.db().max_id()
+            if albumid:
+                lg.objs._db.albumid = albumid
+                self.fill()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def go_start(self,event=None):
+        f = 'unmusic.controller.AlbumEditor.go_start'
+        if self.Success:
+            ''' #NOTE: If we change 'albumid' BEFORE saving, then
+                a wrong DB record will be overwritten!
+            '''
+            self.save()
+            albumid = lg.objs.db().min_id()
+            if albumid:
+                lg.objs._db.albumid = albumid
+                self.fill()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def search_id(self,event=None):
         f = 'unmusic.controller.AlbumEditor.search_id'
         if self.Success:
@@ -797,6 +829,14 @@ class AlbumEditor:
         sg.bind (obj      = self.gui.lbl_img
                 ,bindings = '<ButtonRelease-1>'
                 ,action   = self.zoom_image
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Alt-Home>'
+                ,action   = self.go_start
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Alt-End>'
+                ,action   = self.go_end
                 )
     
     def reset(self):
