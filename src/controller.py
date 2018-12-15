@@ -357,8 +357,8 @@ class AlbumEditor:
     def values(self):
         self._defimg   = None
         self._image    = None
-        self._path_def = sh.objs._pdir.add ('..','resources','cd.png'
-                                           )
+        self._path_def = sh.objs.pdir().add ('..','resources','cd.png'
+                                            )
     
     def default_image(self):
         if not self._defimg:
