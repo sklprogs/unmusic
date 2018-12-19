@@ -22,7 +22,7 @@ class Tracks:
         self.bindings()
     
     def decypher(self,event=None):
-        f = 'unmusic.controller.Tracks.decypher'
+        f = '[unmusic] unmusic.Tracks.decypher'
         if self.Success:
             for track in self.gui._tracks:
                 title = track.ent_tit.get()
@@ -33,7 +33,7 @@ class Tracks:
             sh.com.cancel(f)
     
     def cypher(self,event=None):
-        f = 'unmusic.controller.Tracks.cypher'
+        f = '[unmusic] unmusic.Tracks.cypher'
         if self.Success:
             for track in self.gui._tracks:
                 title = track.ent_tit.get()
@@ -44,7 +44,7 @@ class Tracks:
             sh.com.cancel(f)
     
     def decode(self,event=None):
-        f = 'unmusic.controller.Tracks.decode'
+        f = '[unmusic] unmusic.Tracks.decode'
         if self.Success:
             for track in self.gui._tracks:
                 title = track.ent_tit.get()
@@ -55,7 +55,7 @@ class Tracks:
             sh.com.cancel(f)
     
     def _dump_search(self,old,new):
-        f = 'unmusic.controller.Tracks._dump'
+        f = '[unmusic] unmusic.Tracks._dump'
         sh.objs.mes (f,_('INFO')
                     ,_('Not implemented yet!')
                     )
@@ -102,7 +102,7 @@ class Tracks:
             sh.com.empty(f)
     
     def dump(self):
-        f = 'unmusic.controller.Tracks.dump'
+        f = '[unmusic] unmusic.Tracks.dump'
         if self.Success:
             if lg.objs.db().check_nos():
                 Extended = False
@@ -125,7 +125,7 @@ class Tracks:
         ''' #NOTE: this should be done before 'albumid' is changed,
             otherwise, a wrong DB record will be overwritten!
         '''
-        f = 'unmusic.controller.Tracks.save'
+        f = '[unmusic] unmusic.Tracks.save'
         if self.Success:
             if self.dump():
                 self.gui.update_info(_('Save DB.'))
@@ -154,7 +154,7 @@ class Tracks:
                 )
     
     def fill_search(self,data):
-        f = 'unmusic.controller.Tracks.fill_search'
+        f = '[unmusic] unmusic.Tracks.fill_search'
         if self.Success:
             self.gui.reset()
             if data:
@@ -203,7 +203,7 @@ class Tracks:
         self.show()
     
     def fill(self,event=None):
-        f = 'unmusic.controller.Tracks.fill'
+        f = '[unmusic] unmusic.Tracks.fill'
         if self.Success:
             self.gui.reset()
             data = lg.objs.db().tracks()
@@ -266,7 +266,7 @@ class AlbumEditor:
         self.bindings()
     
     def go_end(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.go_end'
+        f = '[unmusic] unmusic.AlbumEditor.go_end'
         if self.Success:
             ''' #NOTE: If we change 'albumid' BEFORE saving, then
                 a wrong DB record will be overwritten!
@@ -282,7 +282,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def go_start(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.go_start'
+        f = '[unmusic] unmusic.AlbumEditor.go_start'
         if self.Success:
             ''' #NOTE: If we change 'albumid' BEFORE saving, then
                 a wrong DB record will be overwritten!
@@ -298,7 +298,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def search_id(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.search_id'
+        f = '[unmusic] unmusic.AlbumEditor.search_id'
         if self.Success:
             ''' #NOTE: If we change 'albumid' BEFORE saving, then
                 a wrong DB record will be overwritten!
@@ -335,7 +335,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def cypher(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.cypher'
+        f = '[unmusic] unmusic.AlbumEditor.cypher'
         if self.Success:
             artist  = self.gui.ent_art.get()
             album   = self.gui.ent_alb.get()
@@ -352,7 +352,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def decypher(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.decypher'
+        f = '[unmusic] unmusic.AlbumEditor.decypher'
         if self.Success:
             artist  = self.gui.ent_art.get()
             album   = self.gui.ent_alb.get()
@@ -369,7 +369,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def decode(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.decode'
+        f = '[unmusic] unmusic.AlbumEditor.decode'
         if self.Success:
             artist  = self.gui.ent_art.get()
             album   = self.gui.ent_alb.get()
@@ -398,7 +398,7 @@ class AlbumEditor:
         return self._defimg
         
     def zoom_image(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.zoom_image'
+        f = '[unmusic] unmusic.AlbumEditor.zoom_image'
         if self.Success:
             if self._image:
                 viewer = gi.ImageViewer()
@@ -412,7 +412,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def set_image(self,image):
-        f = 'unmusic.controller.AlbumEditor.set_image'
+        f = '[unmusic] unmusic.AlbumEditor.set_image'
         if self.Success:
             if image:
                 try:
@@ -447,7 +447,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def play(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.play'
+        f = '[unmusic] unmusic.AlbumEditor.play'
         if self.Success:
             choice  = self.gui.opt_ply.choice
             default = _('Play')
@@ -476,7 +476,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def length(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.length'
+        f = '[unmusic] unmusic.AlbumEditor.length'
         if self.Success:
             total = lg.objs.db().get_length()
             if total:
@@ -493,7 +493,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def bitrate(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.bitrate'
+        f = '[unmusic] unmusic.AlbumEditor.bitrate'
         if self.Success:
             mean = self.logic.mean_bitrate()
             if mean:
@@ -508,7 +508,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def get_rating(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.get_rating'
+        f = '[unmusic] unmusic.AlbumEditor.get_rating'
         if self.Success:
             rating = self.logic.mean_rating()
             if isinstance(rating,float):
@@ -528,14 +528,14 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def _set_rating(self):
-        f = 'unmusic.controller.AlbumEditor._set_rating'
+        f = '[unmusic] unmusic.AlbumEditor._set_rating'
         value = sh.Input (title = f
                          ,value = self.gui.opt_rtg.choice
                          ).integer()
         lg.objs._db.set_rating(value)
     
     def set_rating(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.set_rating'
+        f = '[unmusic] unmusic.AlbumEditor.set_rating'
         if self.Success:
             rating = self.logic.mean_rating()
             if isinstance(rating,float):
@@ -557,7 +557,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def dump(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.dump'
+        f = '[unmusic] unmusic.AlbumEditor.dump'
         if self.Success:
             old = lg.objs.db().get_album()
             if old:
@@ -618,7 +618,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def search_track(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.search_track'
+        f = '[unmusic] unmusic.AlbumEditor.search_track'
         if self.Success:
             search = self.gui.ent_sr2.get()
             if search:
@@ -638,7 +638,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def search_album(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.search_album'
+        f = '[unmusic] unmusic.AlbumEditor.search_album'
         if self.Success:
             self.save()
             old = lg.objs.db().albumid
@@ -651,7 +651,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def search_next_album(self,event=None,Save=True):
-        f = 'unmusic.controller.AlbumEditor.search_next_album'
+        f = '[unmusic] unmusic.AlbumEditor.search_next_album'
         if self.Success:
             ''' #NOTE: If we change 'albumid' BEFORE saving, then
                 a wrong DB record will be overwritten! Since
@@ -683,7 +683,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def search_prev_album(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.search_prev_album'
+        f = '[unmusic] unmusic.AlbumEditor.search_prev_album'
         if self.Success:
             ''' #NOTE: Make sure that actual 'albumid' is not changed
                 prior to 'self.search_prev_album'.
@@ -711,7 +711,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def prev(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.prev'
+        f = '[unmusic] unmusic.AlbumEditor.prev'
         if self.Success:
             self.save()
             self.logic.dec()
@@ -720,7 +720,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def next(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.next'
+        f = '[unmusic] unmusic.AlbumEditor.next'
         if self.Success:
             self.save()
             self.logic.inc()
@@ -729,7 +729,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def tracks(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.tracks'
+        f = '[unmusic] unmusic.AlbumEditor.tracks'
         if self.Success:
             objs.tracks().fill()
             if objs._tracks.gui._tracks:
@@ -738,7 +738,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def delete(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.delete'
+        f = '[unmusic] unmusic.AlbumEditor.delete'
         if self.Success:
             if sg.Message (f,_('QUESTION')
                           ,_('Are you sure you want to permanently delete record #%d?')\
@@ -757,7 +757,7 @@ class AlbumEditor:
         ''' #NOTE: this should be done before 'albumid' is changed,
             otherwise, a wrong DB record will be overwritten!
         '''
-        f = 'unmusic.controller.AlbumEditor.save'
+        f = '[unmusic] unmusic.AlbumEditor.save'
         if self.Success:
             if self.dump():
                 self.gui.update_info(_('Save DB.'))
@@ -766,7 +766,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def create(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.create'
+        f = '[unmusic] unmusic.AlbumEditor.create'
         if self.Success:
             lg.objs.db().add_album(('?','?',2000,'?','','',''))
             lg.objs._db.albumid = self.logic.get_max()
@@ -840,13 +840,13 @@ class AlbumEditor:
                 )
     
     def reset(self):
-        f = 'unmusic.controller.AlbumEditor.reset'
+        f = '[unmusic] unmusic.AlbumEditor.reset'
         self.Success = self.logic.Success = lg.objs.db().Success
         lg.objs._db.albumid = self.logic.get_max()
         self.fill()
     
     def update_album_search(self):
-        f = 'unmusic.controller.AlbumEditor.update_album_search'
+        f = '[unmusic] unmusic.AlbumEditor.update_album_search'
         if self.Success:
             search = self.gui.ent_src.get()
             self.gui.btn_spr.inactive()
@@ -862,7 +862,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def update_meter(self):
-        f = 'unmusic.controller.AlbumEditor.update_meter'
+        f = '[unmusic] unmusic.AlbumEditor.update_meter'
         if self.Success:
             _max = self.logic.get_max()
             self.gui.lbl_mtr.text ('%d / %d' % (self.logic.get_no()
@@ -881,7 +881,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def update(self):
-        f = 'unmusic.controller.AlbumEditor.update'
+        f = '[unmusic] unmusic.AlbumEditor.update'
         if self.Success:
             self.update_meter()
             self.update_album_search()
@@ -889,7 +889,7 @@ class AlbumEditor:
             sh.com.cancel(f)
     
     def fill(self,event=None):
-        f = 'unmusic.controller.AlbumEditor.fill'
+        f = '[unmusic] unmusic.AlbumEditor.fill'
         if self.Success:
             self.logic.get_no()
             data = lg.objs.db().get_album()
@@ -947,7 +947,7 @@ class Menu:
             dealing with the same album or not. So, it's best to add
             tags to DB only once.
         '''
-        f = 'unmusic.controller.Menu.collect'
+        f = '[unmusic] unmusic.Menu.collect'
         folder = sh.Home(app_name='unmusic').add_share(_('not processed'))
         Obfuscate = self.gui.cbx_obf.get()
         if sh.Path(folder).create():
@@ -997,7 +997,7 @@ class Menu:
             sh.com.cancel(f)
     
     def prepare(self,event=None):
-        f = 'unmusic.controller.Menu.prepare'
+        f = '[unmusic] unmusic.Menu.prepare'
         sh.objs.mes (f,_('INFO')
                     ,_('Not implemented yet!')
                     )
@@ -1042,7 +1042,7 @@ objs = Objects()
 
 
 if __name__ == '__main__':
-    f = 'unmusic.controller.__main__'
+    f = '[unmusic] unmusic.__main__'
     sg.objs.start()
     Menu().show()
     lg.objs.db().save()

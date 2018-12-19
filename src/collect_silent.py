@@ -9,7 +9,7 @@ gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
-f = 'unmusic.collect_silent.__main__'
+f = '[unmusic] collect_silent.__main__'
 sh.objs.mes(Silent=1)
 folder = sh.Home(app_name='unmusic').add_share(_('not processed'))
 if sh.Path(folder).create():
