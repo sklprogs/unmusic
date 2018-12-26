@@ -231,8 +231,8 @@ class Play:
                 text = self.out.getvalue()
                 self.out.close()
                 if text:
-                    sh.WriteTextFile (file       = self.playlist()
-                                     ,AskRewrite = False
+                    sh.WriteTextFile (file    = self.playlist()
+                                     ,Rewrite = True
                                      ).write(text)
                 else:
                     sh.com.empty(f)
