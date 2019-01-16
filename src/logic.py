@@ -980,7 +980,7 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def search_track(self,search):
+    def search_track(self,search,limit=50):
         f = '[unmusic] logic.DB.search_track'
         if self.Success:
             if search:
@@ -990,8 +990,8 @@ class DB:
                                                ,COMMENT,BITRATE,LENGTH\
                                                ,RATING from TRACKS \
                                        where    SEARCH like ? \
-                                       order by ALBUMID,NO'
-                                      ,(search,)
+                                       order by ALBUMID,NO limit ?'
+                                      ,(search,limit,)
                                      )
                     return self.dbc.fetchall()
                 except Exception as e:
