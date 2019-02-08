@@ -209,7 +209,11 @@ class Play:
                     (multiple hyphens may not be supported).
                 '''
                 if result:
-                    header = result[1] + ' (' + result[0] + ') - '
+                    ''' The hyphen here is actually useless, but
+                        'deadbeef' will not separate an album and
+                        a title correctly otherwise.
+                    '''
+                    header = result[1] + ': ' + result[0] + ' - '
                 else:
                     header = ''
                 files    = self.available()
@@ -222,7 +226,11 @@ class Play:
                         self.out.write(header)
                         self.out.write(str(self._nos[i]+1))
                         self.out.write('. ')
-                        self.out.write(self._titles[i])
+                        ''' Replacing a hyphen will allow 'deadbeef'
+                            to correctly distinguish between an album
+                            and a title.
+                        '''
+                        self.out.write(self._titles[i].replace(' - ',': ').replace(' ~ ',': '))
                         self.out.write('\n')
                         self.out.write(files[i])
                         self.out.write('\n')
