@@ -220,7 +220,7 @@ class Play:
                         self.out.write(str(int(self._len[i])))
                         self.out.write(',')
                         self.out.write(header)
-                        self.out.write(str(i+1))
+                        self.out.write(str(self._nos[i]+1))
                         self.out.write('. ')
                         self.out.write(self._titles[i])
                         self.out.write('\n')
@@ -264,15 +264,15 @@ class Play:
             if tracks:
                 if len(tracks[0]) == 4:
                     # '-1' since count starts with 1 in DB and we need 0
-                    self._nos = [item[1] - 1 for item in tracks \
-                                 if item[0] == tracks[0][0]
-                                ]
+                    self._nos    = [item[1] - 1 for item in tracks \
+                                    if item[0] == tracks[0][0]
+                                   ]
                     self._titles = [item[2] for item in tracks \
                                     if item[0] == tracks[0][0]
                                    ]
-                    self._len = [item[3] for item in tracks \
-                                 if item[0] == tracks[0][0]
-                                ]
+                    self._len    = [item[3] for item in tracks \
+                                    if item[0] == tracks[0][0]
+                                   ]
                     self.gen_list()
                     self.call_player()
                 else:
