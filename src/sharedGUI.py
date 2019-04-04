@@ -12,12 +12,16 @@ gettext_windows.setup_env()
 gettext.install('shared','../resources/locale')
 
 
+SHOW_HINTS = True
+
+
 # Привязать горячие клавиши или кнопки мыши к действию
 # object, str/list, function
 def bind(obj,bindings,action):
     f = '[shared] sharedGUI.bind'
     if hasattr(obj,'widget'):
-        if isinstance(bindings,str) or isinstance(bindings,list):
+        if isinstance(bindings,str) or isinstance(bindings,list) \
+        or isinstance(bindings,tuple):
             if isinstance(bindings,str):
                 bindings = [bindings]
             for binding in bindings:
@@ -130,32 +134,30 @@ class WidgetShared:
 
     def insert(object,text,pos):
         f = '[shared] sharedGUI.WidgetShared.insert'
-        # Do not allow None
-        if text:
-            if object.type == 'TextBox' or object.type == 'Entry':
+        # We should allow zeros
+        if text is None:
+            text = ''
+        ''' Allows to input digits. Get rid of None first as we may
+            get 'None' as a string).
+        '''
+        text = str(text)
+        if object.type == 'TextBox' or object.type == 'Entry':
+            try:
+                object.widget.insert(pos,text)
+            except tk.TclError:
                 try:
-                    object.widget.insert(pos,text)
+                    object.widget.insert (pos
+                                         ,_('Failed to insert the text!')
+                                         )
                 except tk.TclError:
-                    try:
-                        object.widget.insert (pos
-                                             ,_('Failed to insert the text!')
-                                             )
-                    except tk.TclError:
-                        sh.log.append (f,_('ERROR')
-                                      ,_('Failed to insert the text!')
-                                      )
-            else:
-                sh.log.append (f,_('ERROR')
-                              ,_('A logic error: unknown object type: "%s"!') \
-                              % str(object.type)
-                              )
-        # Too frequent
-        '''
+                    sh.log.append (f,_('ERROR')
+                                  ,_('Failed to insert the text!')
+                                  )
         else:
-            sh.log.append (f,_('WARNING')
-                          ,_('Empty input is not allowed!')
+            sh.log.append (f,_('ERROR')
+                          ,_('A logic error: unknown object type: "%s"!')\
+                          % str(object.type)
                           )
-        '''
 
     # font_style, sh.globs['var']['menu_font']
     def font(object,font='Sans 11'):
@@ -542,9 +544,15 @@ class TextBox:
                  ,expand=1,side=None,fill='both'
                  ,words=None,font='Serif 14'
                  ,ScrollX=False,ScrollY=True
-                 ,SpecialReturn=True,state='normal'
+                 ,SpReturn=True,state='normal'
                  ):
         self.type      = 'TextBox'
+        self.scr_ver   = None
+        self.scr_hor   = None
+        self.Active    = False
+        self.Save      = False
+        self.tags      = []
+        self.marks     = []
         self.Composite = Composite
         self.ScrollX   = ScrollX
         self.ScrollY   = ScrollY
@@ -554,14 +562,10 @@ class TextBox:
             выберите 'disabled', чтобы надпись на кнопке была другой
         '''
         self.state     = state
-        self.SpecialReturn = SpecialReturn
+        self.SpReturn  = SpReturn
         ''' (optional, external) Prevent resetting the active (already
             shown) widget
         '''
-        self.Active    = False
-        self.Save      = False
-        self.tags      = []
-        self.marks     = []
         self.parent    = parent
         self.expand    = expand
         self.side      = side
@@ -574,13 +578,13 @@ class TextBox:
 
     def _gui_txt(self):
         if self.parent.type in ('Root','Toplevel'):
-            self.widget = tk.Text (master = self.parent.widget
+            self.widget = tk.Text (master = self.frm_txt.widget
                                   ,font   = self.font
                                   ,wrap   = 'word'
                                   ,height = 1
                                   )
         else:
-            self.widget = tk.Text (master = self.parent.widget
+            self.widget = tk.Text (master = self.frm_txt.widget
                                   ,font   = self.font
                                   ,wrap   = 'word'
                                   )
@@ -589,42 +593,51 @@ class TextBox:
                          ,side   = self.side
                          )
 
-    def _gui_scroll_hor(self):
-        frame = Frame (parent = self.parent
-                      ,expand = 0
-                      ,fill   = 'x'
-                      ,side   = 'top'
-                      )
-        self.scrollbar_hor = tk.Scrollbar (master    = frame.widget
-                                          ,orient    = tk.HORIZONTAL
-                                          ,jump      = 0
-                                          ,takefocus = False
-                                          )
-        self.widget.config(xscrollcommand=self.scrollbar_hor.set)
-        self.scrollbar_hor.config(command=self.widget.xview)
-        self.scrollbar_hor.pack(expand=1,fill='x')
-
-    def _gui_scroll_ver(self):
-        self.scrollbar = tk.Scrollbar (master    = self.widget
-                                      ,jump      = 0
-                                      ,takefocus = False
-                                      )
-        self.widget.config(yscrollcommand=self.scrollbar.set)
-        self.scrollbar.config(command=self.widget.yview)
-        self.scrollbar.pack(side='right',fill='y')
-
+    def frames(self):
+        self.frm_prm = Frame (parent = self.parent
+                             ,propag = not self.Composite
+                             )
+        self.frm_top = Frame (parent = self.frm_prm
+                             ,side   = 'top'
+                             ,expand = True
+                             ,fill   = 'both'
+                             )
+        self.frm_btm = Frame (parent = self.frm_prm
+                             ,side   = 'bottom'
+                             ,expand = False
+                             ,fill   = 'x'
+                             )
+        self.frm_txt = Frame (parent = self.frm_top
+                             ,side   = 'left'
+                             )
+        self.frm_ver = Frame (parent = self.frm_top
+                             ,expand = False
+                             ,side   = 'right'
+                             ,fill   = 'y'
+                             )
+        self.frm_hor = Frame (parent = self.frm_btm
+                             ,expand = False
+                             ,fill   = 'x'
+                             )
+    
     def gui(self):
+        self.frames()
         self._gui_txt()
         if self.ScrollY:
-            self._gui_scroll_ver()
+            self.scr_ver = Scrollbar (parent = self.frm_ver
+                                     ,scroll = self
+                                     )
         if self.ScrollX:
-            self._gui_scroll_hor()
+            self.scr_hor = Scrollbar (parent = self.frm_hor
+                                     ,scroll = self
+                                     ,Horiz  = True
+                                     )
         if not self.Composite and \
            not hasattr(self.parent,'close_button'):
             if self.parent.type == 'Toplevel' \
             or self.parent.type == 'Root':
                 self.parent.close_button = \
-                Button (parent = self.parent
+                Button (parent = self.frm_btm
                        ,text   = _('Quit')
                        ,hint   = _('Quit')
                        ,action = self.close
@@ -683,7 +696,7 @@ class TextBox:
         # Только для несоставных виджетов
         if not self.Composite:
             self.widget.unbind('<Return>')
-            if self.state == 'disabled' or self.SpecialReturn:
+            if self.state == 'disabled' or self.SpReturn:
                 ''' Разрешать считывать текст после нажатия Escape
                     (в Entry запрещено)
                 '''
@@ -713,25 +726,24 @@ class TextBox:
              ,action   = self.insert_clipboard
              )
         bind (obj      = self
-             ,bindings = '<Key>'
-             ,action   = self.clear_on_key
-             )
-        bind (obj      = self
              ,bindings = '<Control-Alt-u>'
              ,action   = self.toggle_case
              )
         if hasattr(self.parent,'type') \
-            and self.parent.type == 'Toplevel':
+        and self.parent.type == 'Toplevel':
             self.parent.widget.protocol ("WM_DELETE_WINDOW"
-                                            ,self.close
-                                            )
+                                        ,self.close
+                                        )
 
     def toggle_case(self,event=None):
         f = '[shared] sharedGUI.TextBox.toggle_case'
         text = sh.Text(text=self.selection.text()).toggle_case()
         pos1, pos2 = self.selection.get()
         self.clear_selection()
-        self.insert(text=text,pos=self.cursor(),MoveTop=0)
+        self.insert (text    = text
+                    ,pos     = self.cursor()
+                    ,MoveTop = 0
+                    )
         if pos1 and pos2:
             self.selection.reset (pos1tk     = pos1
                                  ,pos2tk     = pos2
@@ -800,7 +812,10 @@ class TextBox:
     #todo: simplify
     def tag_remove(self,tag_name='sel',pos1tk='1.0',pos2tk='end'):
         f = '[shared] sharedGUI.TextBox.tag_remove'
-        self._tag_remove(tag_name=tag_name,pos1tk=pos1tk,pos2tk=pos2tk)
+        self._tag_remove (tag_name = tag_name
+                         ,pos1tk   = pos1tk
+                         ,pos2tk   = pos2tk
+                         )
         if self.tags:
             try:
                 self.tags.remove(tag_name)
@@ -904,24 +919,13 @@ class TextBox:
                           ,_('The parent has already been destroyed.')
                           )
 
-    #fix Tkinter limitations
-    def clear_on_key(self,event=None):
-        if event and event.char:
-            if event.char.isspace() or event.char in sh.lat_alphabet \
-            or event.char in sh.ru_alphabet or event.char in sh.digits \
-            or event.char in sh.punc_array or event.char \
-            in sh.punc_ext_array:
-                ''' #todo: suppress excessive logging (Selection.get,
-                    TextBox.clear_selection, TextBox.cursor,
-                    Clipboard.paste, Words.no_by_tk)
-                '''
-                self.clear_selection()
-
     def clear_selection(self,event=None):
         f = '[shared] sharedGUI.TextBox.clear_selection'
         pos1tk, pos2tk = self.selection.get()
         if pos1tk and pos2tk:
-            self.clear_text(pos1=pos1tk,pos2=pos2tk)
+            self.clear_text (pos1 = pos1tk
+                            ,pos2 = pos2tk
+                            )
             return 'break'
         # Too frequent
         '''
@@ -1042,7 +1046,9 @@ class TextBox:
                 sh.log.append (f,_('DEBUG')
                               ,_('%d tags to assign') % len(result)
                               )
-                self.tag_config(tag_name='spell',background='red')
+                self.tag_config (tag_name   = 'spell'
+                                ,background = 'red'
+                                )
             else:
                 sh.log.append (f,_('INFO')
                               ,_('Spelling seems to be correct.')
@@ -1060,6 +1066,7 @@ class Entry:
                 ,side=None,ipadx=None,ipady=None
                 ,fill=None,width=None,expand=None
                 ,font='Sans 11',bg=None,fg=None
+                ,justify='left'
                 ):
         self.type      = 'Entry'
         self.Composite = Composite
@@ -1067,11 +1074,12 @@ class Entry:
         self.state     = 'normal'
         self.Save      = False
         self.parent    = parent
-        self.widget    = tk.Entry (master = self.parent.widget
-                                  ,font   = font
-                                  ,bg     = bg
-                                  ,fg     = fg
-                                  ,width  = width
+        self.widget    = tk.Entry (master  = self.parent.widget
+                                  ,font    = font
+                                  ,bg      = bg
+                                  ,fg      = fg
+                                  ,width   = width
+                                  ,justify = justify
                                   )
         bind (obj      = self
              ,bindings = '<Control-a>'
@@ -1096,6 +1104,18 @@ class Entry:
             WidgetShared.custom_buttons(self)
         self.bindings()
 
+    def reset_data(self):
+        ''' This is added for compliance with 'TextBox' (especially
+            useful when the parent may be different).
+        '''
+        self.clear_text()
+    
+    def reset(self):
+        ''' This is added for compliance with 'TextBox' (especially
+            useful when the parent may be different).
+        '''
+        self.clear_text()
+    
     def read_only(self,ReadOnly=True):
         ''' Setting ReadOnly state works only after filling text. Only
             tk.Text, tk.Entry and not tk.Toplevel are supported.
@@ -1450,7 +1470,7 @@ class ToolTipBase:
 
     def showtip(self):
         f = '[shared] sharedGUI.ToolTipBase.showtip'
-        if self.tip:
+        if self.tip or not SHOW_HINTS:
             return
         ''' The tip window must be completely outside the widget;
             otherwise, when the mouse enters the tip window we get
@@ -1514,20 +1534,22 @@ class ToolTip(ToolTipBase):
         ToolTipBase.__init__(self,obj=obj)
 
     def showcontents(self):
-        self.frm = Frame (parent = self.tip
-                         ,bg     = self.hint_bcolor
-                         ,bd     = self.hint_bwidth
-                         ,expand = False
-                         )
-        self.lbl = Label (parent  = self.frm
-                         ,text    = self.text
-                         ,bg      = self.hint_bg
-                         ,width   = self.hint_width
-                         ,height  = self.hint_height
-                         ,justify = 'center'
-                         ,Close   = False
-                         ,font    = self.hint_font
-                         )
+        # Assign this boolean externally to stop showing hints
+        if SHOW_HINTS:
+            self.frm = Frame (parent = self.tip
+                             ,bg     = self.hint_bcolor
+                             ,bd     = self.hint_bwidth
+                             ,expand = False
+                             )
+            self.lbl = Label (parent  = self.frm
+                             ,text    = self.text
+                             ,bg      = self.hint_bg
+                             ,width   = self.hint_width
+                             ,height  = self.hint_height
+                             ,justify = 'center'
+                             ,Close   = False
+                             ,font    = self.hint_font
+                             )
 
 
 
@@ -1858,10 +1880,14 @@ class ListBox:
 
 
 class OptionMenu:
-    ''' tk.OptionMenu will convert integers to strings, but we better do
-        this here to avoid problems with iterating ("in requires int as
-        the left operand") later (this happens when we pass a sequence
-        of chars instead of a list of strings).
+    ''' - 'action' parameter defines an action triggered any time we
+          select an OptionMenu item. Use 'sg.bind' to set an action each
+          time the entire OptionMenu (and not an item) is clicked. These
+          bindings do not interfere with each other.
+        - tk.OptionMenu will convert integers to strings, but we better
+          do this here to avoid problems with iterating ("in requires
+          int as the left operand") later (this happens when we pass
+          a sequence of chars instead of a list of strings).
     '''
     def __init__ (self
                  ,parent
@@ -2758,18 +2784,21 @@ class MessageBuilder:
                  ,Single=True,YesNo=False
                  ):
         self.Yes    = False
+        self.Lock   = False
         self.YesNo  = YesNo
         self.Single = Single
         self.level  = level
-        self.Lock   = False
         self.paths()
         self.parent = parent
+        self.gui()
+        
+    def gui(self):
         self.obj    = Top(parent=self.parent)
         self.widget = self.obj.widget
         self.icon()
         self.frames()
         self.picture()
-        self.txt = TextBox (parent    = self.top_right
+        self.txt = TextBox (parent    = self.frm_tpr
                            ,Composite = True
                            )
         self.buttons()
@@ -2789,23 +2818,19 @@ class MessageBuilder:
     def paths(self):
         f = '[shared] sharedGUI.MessageBuilder.paths'
         if self.level == _('WARNING'):
-            self.path = sh.objs.pdir().add ('..'
-                                           ,'resources'
+            self.path = sh.objs.pdir().add ('..','resources'
                                            ,'warning.gif'
                                            )
         elif self.level == _('INFO'):
-            self.path = sh.objs.pdir().add ('..'
-                                           ,'resources'
+            self.path = sh.objs.pdir().add ('..','resources'
                                            ,'info.gif'
                                            )
         elif self.level == _('QUESTION'):
-            self.path = sh.objs.pdir().add ('..'
-                                           ,'resources'
+            self.path = sh.objs.pdir().add ('..','resources'
                                            ,'question.gif'
                                            )
         elif self.level == _('ERROR'):
-            self.path = sh.objs.pdir().add ('..'
-                                           ,'resources'
+            self.path = sh.objs.pdir().add ('..','resources'
                                            ,'error.gif'
                                            )
         else:
@@ -2826,33 +2851,28 @@ class MessageBuilder:
             self.obj.icon(path=self.path)
 
     def frames(self):
-        frame = Frame (parent = self.obj
-                      ,expand = 1
-                      )
-        top = Frame (parent = frame
-                    ,expand = 1
-                    ,side   = 'top'
-                    )
-        bottom = Frame (parent = frame
-                       ,expand = 0
-                       ,side   = 'bottom'
-                       )
-        self.top_left = Frame (parent = top
-                              ,expand = 0
-                              ,side   = 'left'
-                              )
-        self.top_right = Frame (parent = top
-                               ,expand = 1
-                               ,side   = 'right'
-                               )
-        self.bottom_left = Frame (parent = bottom
-                                 ,expand = 1
-                                 ,side   = 'left'
-                                 )
-        self.bottom_right = Frame (parent = bottom
-                                  ,expand = 1
-                                  ,side   = 'right'
-                                  )
+        self.frm_prm = Frame (parent = self.obj)
+        self.frm_top = Frame (parent = self.frm_prm
+                             ,side   = 'top'
+                             )
+        self.frm_btm = Frame (parent = self.frm_prm
+                             ,expand = False
+                             ,side   = 'bottom'
+                             )
+        self.frm_tpl = Frame (parent = self.frm_top
+                             ,expand = False
+                             ,side   = 'left'
+                             )
+        self.frm_tpr = Frame (parent = self.frm_top
+                             ,side   = 'right'
+                             ,propag = False
+                             )
+        self.frm_btl = Frame (parent = self.frm_btm
+                             ,side   = 'left'
+                             )
+        self.frm_btr = Frame (parent = self.frm_btm
+                             ,side   = 'right'
+                             )
 
     def buttons(self):
         if self.YesNo or self.level == _('QUESTION'):
@@ -2862,7 +2882,7 @@ class MessageBuilder:
             YesName = 'OK'
             NoName  = _('Cancel')
         if self.Single and self.level != _('QUESTION'):
-            self.btn_yes = Button (parent    = self.bottom_left
+            self.btn_yes = Button (parent    = self.frm_btl
                                   ,action    = self.close_yes
                                   ,hint      = _('Accept and close')
                                   ,text      = YesName
@@ -2870,13 +2890,13 @@ class MessageBuilder:
                                   ,side      = 'right'
                                   )
         else:
-            self.btn_no  = Button (parent = self.bottom_left
+            self.btn_no  = Button (parent = self.frm_btl
                                   ,action = self.close_no
                                   ,hint   = _('Reject and close')
                                   ,text   = NoName
                                   ,side   = 'left'
                                   )
-            self.btn_yes = Button (parent    = self.bottom_right
+            self.btn_yes = Button (parent    = self.frm_btr
                                   ,action    = self.close_yes
                                   ,hint      = _('Accept and close')
                                   ,text      = YesName
@@ -2926,9 +2946,9 @@ class MessageBuilder:
                 Without explicitly indicating 'master', we get
                 "image pyimage1 doesn't exist".
             '''
-            self.label = Label (parent = self.top_left
+            self.label = Label (parent = self.frm_tpl
                                ,image  = \
-                         tk.PhotoImage (master = self.top_left.widget
+                         tk.PhotoImage (master = self.frm_tpl.widget
                                        ,file   = self.path
                                        )
                                )
@@ -3029,6 +3049,10 @@ class Canvas:
         self.fill         = fill
         self.gui()
         
+    def move_left_corner(self,event=None):
+        self.move_top()
+        self.widget.xview_moveto(0)
+    
     def mouse_wheel(self,event=None):
         ''' Windows XP has the delta of -120, however, it differs
             depending on the version.
@@ -3040,7 +3064,7 @@ class Canvas:
         return 'break'
     
     # These bindings are not enabled by default
-    def top_bindings(self,top):
+    def top_bindings(self,top,Control=True):
         f = '[shared] sharedGUI.Canvas.top_bindings'
         if top:
             if hasattr(top,'type') and top.type == 'Toplevel':
@@ -3069,20 +3093,30 @@ class Canvas:
                      ,action   = self.move_page_up
                      )
                 bind (obj      = top
-                     ,bindings = '<End>'
-                     ,action   = self.move_bottom
-                     )
-                bind (obj      = top
-                     ,bindings = '<Home>'
-                     ,action   = self.move_top
-                     )
-                bind (obj      = top
                      ,bindings = ['<MouseWheel>'
                                  ,'<Button 4>'
                                  ,'<Button 5>'
                                  ]
                      ,action   = self.mouse_wheel
                      )
+                if Control:
+                    bind (obj      = top
+                         ,bindings = '<Control-Home>'
+                         ,action   = self.move_top
+                         )
+                    bind (obj      = top
+                         ,bindings = '<Control-End>'
+                         ,action   = self.move_bottom
+                         )
+                else:
+                    bind (obj      = top
+                         ,bindings = '<Home>'
+                         ,action   = self.move_top
+                         )
+                    bind (obj      = top
+                         ,bindings = '<End>'
+                         ,action   = self.move_bottom
+                         )
             else:
                 sh.log.append (f,_('WARNING')
                               ,_('Wrong input data!')
@@ -3387,17 +3421,17 @@ class SimpleTop:
 
 class Scrollbar:
     
-    def __init__(self,parent,scroll,Horizontal=False):
-        self.type       = 'Scrollbar'
-        self.parent     = parent
-        self.scroll     = scroll
-        self.Horizontal = Horizontal
+    def __init__(self,parent,scroll,Horiz=False):
+        self.type   = 'Scrollbar'
+        self.parent = parent
+        self.scroll = scroll
+        self.Horiz  = Horiz
         self.gui()
     
     def gui(self):
         f = '[shared] sharedGUI.Scrollbar.gui'
         if hasattr(self.parent,'widget'):
-            if self.Horizontal:
+            if self.Horiz:
                 orient = tk.HORIZONTAL
                 fill   = 'x'
                 side   = None
@@ -3412,7 +3446,7 @@ class Scrollbar:
                              ,fill   = fill
                              ,side   = side
                              )
-            if self.Horizontal:
+            if self.Horiz:
                 self.scroll.widget.config(xscrollcommand=self.widget.set)
                 self.widget.config(command=self.scroll.widget.xview)
             else:
@@ -3497,98 +3531,170 @@ class Panes:
     def __init__(self,background='old lace',Extended=False):
         self._bg      = background
         self.Extended = Extended
+        self.parent   = objs.new_top(Maximize=1)
         self.gui()
         
     def frames(self):
-        self.frame1 = Frame (parent = self.obj
-                            ,side   = 'top'
-                            ,fill   = 'both'
-                            )
+        self.frm_prm = Frame (parent = self.parent)
+        self.frm_top = Frame (parent = self.frm_prm
+                             ,side   = 'top'
+                             )
+        self.frm_btm = Frame (parent = self.frm_prm
+                             ,side   = 'bottom'
+                             )
+        self.frm_pn1 = Frame (parent = self.frm_top
+                             ,side   = 'left'
+                             )
+        self.frm_pn2 = Frame (parent = self.frm_top
+                             ,side   = 'right'
+                             )
         if self.Extended:
-            self.frame2 = Frame (parent = self.obj
-                                ,side   = 'bottom'
-                                ,fill   = 'both'
-                                )
+            self.frm_pn3 = Frame (parent = self.frm_btm
+                                 ,side   = 'left'
+                                 )
+            self.frm_pn4 = Frame (parent = self.frm_btm
+                                 ,side   = 'right'
+                                 )
 
     def panes(self):
-        self.pane1 = TextBox (parent    = self.frame1
+        self.pane1 = TextBox (parent    = self.frm_pn1
                              ,Composite = True
-                             ,side      = 'left'
                              )
-        self.pane2 = TextBox (parent    = self.frame1
+        self.pane2 = TextBox (parent    = self.frm_pn2
                              ,Composite = True
-                             ,side      = 'left'
                              )
         if self.Extended:
-            self.pane3 = TextBox (parent    = self.frame2
+            self.pane3 = TextBox (parent    = self.frm_pn3
                                  ,Composite = True
-                                 ,side      = 'left'
                                  )
-            self.pane4 = TextBox (parent    = self.frame2
+            self.pane4 = TextBox (parent    = self.frm_pn4
                                  ,Composite = True
-                                 ,side      = 'left'
                                  )
     
     def gui(self):
-        self.obj = objs.new_top(Maximize=1)
-        self.widget = self.obj.widget
+        self.widget = self.parent.widget
         self.frames()
         self.panes()
         self.pane1.focus()
-        #todo: reenable for 4 panes after GUI glitches are fixed
-        if not self.Extended:
+        if self.Extended:
             self.pane1.widget.config(bg=self._bg)
         self.icon()
         self.title()
         self.bindings()
         
     def title(self,text=_('Compare texts:')):
-        self.obj.title(text=text)
+        self.parent.title(text=text)
         
     def show(self,event=None):
-        self.obj.show()
+        self.parent.show()
         
     def close(self,event=None):
-        self.obj.close()
+        self.parent.close()
         
     def bindings(self):
-        ''' We do not bind 'select1' to 'pane1' and 'select2' to 'pane3'
-            since we need to further synchronize references by LMB
-            anyway, and this further binding will rewrite the current
-            binging.
+        ''' - We do not bind 'select1' to 'pane1' and 'select2' to
+              'pane3' since we need to further synchronize references
+              by LMB anyway, and this further binding will rewrite
+              the current binging.
+            - We do not use 'Control' for bindings. If we use it,
+              Tkinter will execute its internal bindings for
+              '<Control-Down/Up>' and '<Control-Left/Right>' before
+              executing our own. Even though we can return 'break'
+              in 'select1'-4, we should not do that because we need
+              internal bindings for '<Control-Left>' and
+              '<Control-Right>'. Thus, we should not use 'Control' at
+              all because we cannot replace 'Alt' with 'Control'
+              for all actions.
         '''
         bind (obj      = self
-             ,bindings = ['<Control-q>','<Control-w>']
+             ,bindings = ('<Control-q>','<Control-w>')
              ,action   = self.close
              )
         bind (obj      = self
              ,bindings = '<Escape>'
-             ,action   = Geometry(parent=self.obj).minimize
+             ,action   = Geometry(parent=self.parent).minimize
              )
         bind (obj      = self
-             ,bindings = ['<Alt-Key-1>','<Control-Key-1>']
+             ,bindings = ('<Alt-Key-1>','<Control-Key-1>')
              ,action   = self.select1
              )
         bind (obj      = self
-             ,bindings = ['<Alt-Key-2>','<Control-Key-2>']
+             ,bindings = ('<Alt-Key-2>','<Control-Key-2>')
              ,action   = self.select2
+             )
+        bind (obj      = self.pane1
+             ,bindings = '<ButtonRelease-1>'
+             ,action   = self.select1
              )
         bind (obj      = self.pane2
              ,bindings = '<ButtonRelease-1>'
              ,action   = self.select2
              )
+        bind (obj      = self.pane1
+             ,bindings = '<Alt-Right>'
+             ,action   = self.select2
+             )
+        bind (obj      = self.pane2
+             ,bindings = '<Alt-Left>'
+             ,action   = self.select1
+             )
         if self.Extended:
             bind (obj      = self
-                 ,bindings = ['<Alt-Key-3>','<Control-Key-3>']
+                 ,bindings = ('<Alt-Key-3>','<Control-Key-3>')
                  ,action   = self.select3
                  )
             bind (obj      = self
-                 ,bindings = ['<Alt-Key-4>','<Control-Key-4>']
+                 ,bindings = ('<Alt-Key-4>','<Control-Key-4>')
                  ,action   = self.select4
+                 )
+            bind (obj      = self.pane3
+                 ,bindings = '<ButtonRelease-1>'
+                 ,action   = self.select3
                  )
             bind (obj      = self.pane4
                  ,bindings = '<ButtonRelease-1>'
                  ,action   = self.select4
+                 )
+            bind (obj      = self.pane2
+                 ,bindings = '<Alt-Right>'
+                 ,action   = self.select3
+                 )
+            bind (obj      = self.pane3
+                 ,bindings = '<Alt-Right>'
+                 ,action   = self.select4
+                 )
+            bind (obj      = self.pane3
+                 ,bindings = '<Alt-Left>'
+                 ,action   = self.select2
+                 )
+            bind (obj      = self.pane4
+                 ,bindings = '<Alt-Left>'
+                 ,action   = self.select3
+                 )
+            bind (obj      = self.pane1
+                 ,bindings = '<Alt-Down>'
+                 ,action   = self.select3
+                 )
+            bind (obj      = self.pane2
+                 ,bindings = '<Alt-Down>'
+                 ,action   = self.select4
+                 )
+            bind (obj      = self.pane3
+                 ,bindings = '<Alt-Up>'
+                 ,action   = self.select1
+                 )
+            bind (obj      = self.pane4
+                 ,bindings = '<Alt-Up>'
+                 ,action   = self.select2
+                 )
+        else:
+            bind (obj      = self.pane1
+                 ,bindings = '<Alt-Down>'
+                 ,action   = self.select2
+                 )
+            bind (obj      = self.pane2
+                 ,bindings = '<Alt-Up>'
+                 ,action   = self.select1
                  )
              
     def decolorize(self):
@@ -3601,42 +3707,45 @@ class Panes:
     def select1(self,event=None):
         # Without this the search doesn't work (the pane is inactive)
         self.pane1.focus()
-        #todo: reenable for 4 panes after GUI glitches are fixed
-        if not self.Extended:
+        if self.Extended:
             self.decolorize()
             self.pane1.widget.config(bg=self._bg)
+        # Ignore 'Alt-Up/Down'
+        return 'break'
         
     def select2(self,event=None):
         # Without this the search doesn't work (the pane is inactive)
         self.pane2.focus()
-        #todo: reenable for 4 panes after GUI glitches are fixed
-        if not self.Extended:
+        if self.Extended:
             self.decolorize()
             self.pane2.widget.config(bg=self._bg)
+        # Ignore 'Alt-Up/Down'
+        return 'break'
         
     def select3(self,event=None):
         # Without this the search doesn't work (the pane is inactive)
         self.pane3.focus()
-        #fix: GUI glitches when doing this
-        #self.decolorize()
-        #self.pane3.widget.config(bg=self._bg)
+        self.decolorize()
+        self.pane3.widget.config(bg=self._bg)
+        # Ignore 'Alt-Up/Down'
+        return 'break'
         
     def select4(self,event=None):
         # Without this the search doesn't work (the pane is inactive)
         self.pane4.focus()
-        #fix: GUI glitches when doing this
-        #self.decolorize()
-        #self.pane4.widget.config(bg=self._bg)
+        self.decolorize()
+        self.pane4.widget.config(bg=self._bg)
+        # Ignore 'Alt-Up/Down'
+        return 'break'
         
     def icon(self,path=None):
         if path:
-            self.obj.icon(path)
+            self.parent.icon(path)
         else:
-            self.obj.icon (sh.objs.pdir().add ('..'
-                                              ,'resources'
-                                              ,'icon_64x64_cpt.gif'
-                                              )
-                          )
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,'icon_64x64_cpt.gif'
+                                                 )
+                             )
                           
     def reset(self,words1,words2,words3=None,words4=None):
         self.pane1.reset(words=words1)
@@ -3644,6 +3753,7 @@ class Panes:
         if self.Extended:
             self.pane3.reset(words=words3)
             self.pane4.reset(words=words4)
+            self.select1()
 
 
 
@@ -4199,12 +4309,12 @@ class MultCBoxes:
         self.frm1 = Frame (parent = self.frm)
         
     def scrollbars(self):
-        self.xscr = Scrollbar (parent     = self.frmx
-                              ,scroll     = self.cvs
-                              ,Horizontal = True
+        self.xscr = Scrollbar (parent = self.frmx
+                              ,scroll = self.cvs
+                              ,Horiz  = True
                               )
-        self.yscr = Scrollbar (parent     = self.frmy
-                              ,scroll     = self.cvs
+        self.yscr = Scrollbar (parent = self.frmy
+                              ,scroll = self.cvs
                               )
                                  
     def show(self,event=None):
