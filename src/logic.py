@@ -13,9 +13,33 @@ import sharedGUI as sg
 
 VERSION = '1.0'
 # Derived from 'phrydy.mediafile.TYPES'
-TYPES   = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
-          ,'.mpc','.asf','.aiff','.dsf'
-          ]
+TYPES = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
+        ,'.mpc','.asf','.aiff','.dsf'
+        ]
+# Do not localize (being stored in DB)
+GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
+         ,'Brutal Death Metal','Chanson','Classical','Death Metal'
+         ,'Death Metal/Grindcore','Death/Black Metal'
+         ,'Death/Thrash Metal','Deathcore','Electronic','Ethnic','Game'
+         ,'Goregrind','Grindcore','Heavy Metal','Industrial Metal'
+         ,'Melodic Death Metal','Metal','Pop','Power Metal','Rap'
+         ,'Relaxation','Rock','Soundtrack'
+         ,'Technical Brutal Death Metal','Technical Death Metal'
+         ,'Thrash Metal','Vocal'
+         )
+LIGHT = ('Alternative Rock','Ambient','Blues','Chanson','Classical'
+        ,'Electronic','Ethnic','Game','Pop','Rap','Relaxation','Rock'
+        ,'Soundtrack','Vocal'
+        )
+HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
+        ,'Death Metal/Grindcore','Death/Black Metal'
+        ,'Death/Thrash Metal','Deathcore','Goregrind','Grindcore'
+        ,'Heavy Metal','Industrial Metal','Melodic Death Metal','Metal'
+        ,'Power Metal','Technical Brutal Death Metal'
+        ,'Technical Death Metal','Thrash Metal'
+        )
+#todo: do not hardcode
+DEST_HEAVY = '/media/COWON/MUSIC'
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
@@ -1625,6 +1649,8 @@ class Commands:
 objs = Objects()
 objs.default()
 com = Commands()
+#todo: do not hardcode
+DEST_LIGHT = objs._default.ihome.add_share(_('local collection'))
 
 
 

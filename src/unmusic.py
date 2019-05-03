@@ -265,6 +265,22 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
     
+    def set_genre(self,genre):
+        f = '[unmusic] unmusic.AlbumEditor.set_genre'
+        if self.Success:
+            genre = str(genre)
+            if not genre:
+                # Do not localize (being stored in DB)
+                genre = '?'
+            items = list(lg.GENRES)
+            if not genre in items:
+                items.append(genre)
+            self.gui.opt_gnr.reset (items   = items
+                                   ,default = genre
+                                   )
+        else:
+            sh.com.cancel(f)
+    
     def go_end(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.go_end'
         if self.Success:
@@ -347,7 +363,7 @@ class AlbumEditor:
             self.gui.ent_art.insert(artist)
             self.gui.ent_alb.clear_text()
             self.gui.ent_alb.insert(album)
-            self.gui.set_genre(genre)
+            self.set_genre(genre)
         else:
             sh.com.cancel(f)
     
@@ -364,7 +380,7 @@ class AlbumEditor:
             self.gui.ent_art.insert(artist)
             self.gui.ent_alb.clear_text()
             self.gui.ent_alb.insert(album)
-            self.gui.set_genre(genre)
+            self.set_genre(genre)
         else:
             sh.com.cancel(f)
     
@@ -903,7 +919,7 @@ class AlbumEditor:
                     self.gui.ent_art.insert(data[1])
                     self.gui.ent_yer.insert(data[2])
                     genre = data[3]
-                    self.gui.set_genre(genre)
+                    self.set_genre(genre)
                     self.gui.ent_cnt.insert(data[4])
                     self.gui.ent_com.insert(data[5])
                     self.get_rating()
@@ -937,6 +953,20 @@ class Menu:
         self.gui = gi.Menu()
         self.bindings()
         
+    def copy_heavy(self,event=None):
+        f = '[unmusic] unmusic.Menu.copy_heavy'
+        sh.objs.mes (f,_('INFO')
+                    ,_('Random unrated music will now be copied to "%s".')\
+                    % lg.DEST_HEAVY
+                    )
+    
+    def copy_light(self,event=None):
+        f = '[unmusic] unmusic.Menu.copy_light'
+        sh.objs.mes (f,_('INFO')
+                    ,_('Random unrated music will now be copied to "%s".')\
+                    % lg.DEST_LIGHT
+                    )
+    
     def album_editor(self,event=None):
         objs.editor().reset()
         objs._editor.show()
@@ -1011,7 +1041,9 @@ class Menu:
         self.gui._a[0].action = self.album_editor
         self.gui._a[1].action = self.prepare
         self.gui._a[2].action = self.collect
-        self.gui._a[3].action = self.close
+        self.gui._a[3].action = self.copy_light
+        self.gui._a[4].action = self.copy_heavy
+        self.gui._a[5].action = self.close
     
     def show(self,event=None):
         self.gui.show()

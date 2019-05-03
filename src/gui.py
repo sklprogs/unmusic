@@ -4,18 +4,6 @@
 import shared    as sh
 import sharedGUI as sg
 
-# Do not localize (being stored in DB)
-GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
-         ,'Brutal Death Metal','Chanson','Classical','Death Metal'
-         ,'Death Metal/Grindcore','Death/Black Metal'
-         ,'Death/Thrash Metal','Deathcore','Electronic','Ethnic','Game'
-         ,'Goregrind','Grindcore','Heavy Metal','Industrial Metal'
-         ,'Melodic Death Metal','Metal','Pop','Power Metal','Rap'
-         ,'Relaxation','Rock','Soundtrack'
-         ,'Technical Brutal Death Metal','Technical Death Metal'
-         ,'Thrash Metal','Vocal'
-         )
-
 import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
@@ -110,18 +98,6 @@ class AlbumEditor:
                    ,hint_dir   = 'bottom'
                    )
     
-    def set_genre(self,genre):
-        genre = str(genre)
-        if not genre:
-            # Do not localize (being stored in DB)
-            genre = '?'
-        items = list(GENRES)
-        if not genre in items:
-            items.append(genre)
-        self.opt_gnr.reset (items   = items
-                           ,default = genre
-                           )
-    
     def image(self):
         self.lbl_img = sg.Label (parent = self.frm_img
                                 ,text   = _('Image:')
@@ -134,7 +110,6 @@ class AlbumEditor:
     
     def bottom(self):
         self.opt_gnr = sg.OptionMenu (parent = self.frm_rht
-                                     ,items  = GENRES
                                      ,side   = 'left'
                                      )
         self.btn_rld = sg.Button (parent     = self.frm1
@@ -706,6 +681,18 @@ class Menu:
                        )
         self._a.append (sg.Button (parent = self.parent
                                   ,text   = _('Collect tags & Obfuscate')
+                                  ,side   = 'top'
+                                  ,font   = font
+                                  )
+                       )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Copy light music')
+                                  ,side   = 'top'
+                                  ,font   = font
+                                  )
+                       )
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Copy heavy music')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
