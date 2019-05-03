@@ -471,18 +471,15 @@ class AlbumEditor:
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
-            elif choice == _('Best, local'):
-                self.gui.opt_ply.set(default)
-                lg.Play().best_tracks()
-            elif choice == _('Best, external'):
-                self.gui.opt_ply.set(default)
-                lg.Play(External=True).best_tracks()
-            elif choice == _('All, local'):
+            elif choice == _('All'):
                 self.gui.opt_ply.set(default)
                 lg.Play().all_tracks()
-            elif choice == _('All, external'):
+            elif choice == _('Good'):
                 self.gui.opt_ply.set(default)
-                lg.Play(External=True).all_tracks()
+                lg.Play().good_tracks()
+            elif choice == _('Best'):
+                self.gui.opt_ply.set(default)
+                lg.Play().best_tracks()
             else:
                 sh.objs.mes (f,_('ERROR')
                             ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\

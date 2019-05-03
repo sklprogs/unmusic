@@ -8,10 +8,11 @@ import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
-PLAY = (_('Play'),_('All, external'),_('All, local'),_('Best, external')
-       ,_('Best, local')
+PLAY = (_('Play')
+       ,_('All')
+       ,_('Good')
+       ,_('Best')
        )
-
 
 
 class ImageViewer:

@@ -99,10 +99,9 @@ class Caesar:
 
 class Play:
     
-    def __init__(self,External=False):
+    def __init__(self):
         self.values()
-        self.Success  = objs.db().Success
-        self.External = External
+        self.Success = objs.db().Success
     
     def call_player(self):
         f = '[unmusic] logic.Play.call_player'
@@ -116,8 +115,6 @@ class Play:
     
     def values(self):
         self.Success   = True
-        self.External  = False
-        self._collec   = ''
         self._album    = ''
         self._playlist = ''
         self._audio    = []
@@ -129,24 +126,21 @@ class Play:
         f = '[unmusic] logic.Play.album'
         if self.Success:
             if not self._album:
-                self._album = os.path.join (self.collection()
-                                           ,str(objs.db().albumid)
-                                           )
+                local_album = objs.default().ihome.add_share (_('local collection')
+                                                             ,str(objs.db().albumid)
+                                                             )
+                exter_album = objs._default.ihome.add_share (_('external collection')
+                                                            ,str(objs._db.albumid)
+                                                            )
+                local_exists = os.path.exists(local_album)
+                exter_exists = os.path.exists(exter_album)
+                if local_exists:
+                    self._album = local_album
+                elif exter_exists:
+                    self._album = exter_album
         else:
             sh.com.cancel(f)
         return self._album
-    
-    def collection(self):
-        f = '[unmusic] logic.Play.collection'
-        if self.Success:
-            if not self._collec:
-                if self.External:
-                    self._collec = objs.default().ihome.add_share(_('external collection'))
-                else:
-                    self._collec = objs.default().ihome.add_share(_('local collection'))
-        else:
-            sh.com.cancel(f)
-        return self._collec
     
     def audio(self):
         f = '[unmusic] logic.Play.audio'
@@ -277,6 +271,22 @@ class Play:
         f = '[unmusic] logic.Play.all_tracks'
         if self.Success:
             tracks = objs.db().tracks()
+            if tracks:
+                self._titles = [track[0] for track in tracks]
+                self._len    = [track[5] for track in tracks]
+                # '-1' since count starts with 1 in DB and we need 0
+                self._nos = [track[1] - 1 for track in tracks]
+                self.gen_list()
+                self.call_player()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def good_tracks(self):
+        f = '[unmusic] logic.Play.good_tracks'
+        if self.Success:
+            tracks = objs.db().good_tracks()
             if tracks:
                 self._titles = [track[0] for track in tracks]
                 self._len    = [track[5] for track in tracks]
@@ -820,6 +830,22 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def good_tracks(self):
+        f = '[unmusic] logic.DB.good_tracks'
+        if self.Success:
+            try:
+                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
+                                           ,BITRATE,LENGTH,RATING \
+                                   from     TRACKS where ALBUMID = ? \
+                                   and      RATING >= ?\
+                                   order by NO',(self.albumid,8,)
+                                 )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def has_id(self,albumid):
         ''' A major difference from 'get_album': we do not need
