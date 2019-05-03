@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-03 08:14+0300\n"
-"PO-Revision-Date: 2019-05-03 08:16+0300\n"
+"POT-Creation-Date: 2019-05-03 08:45+0300\n"
+"PO-Revision-Date: 2019-05-03 08:45+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -21,20 +21,20 @@ msgstr ""
 #: album_editor.py:22 shared.py:308 shared.py:2604 shared.py:3185
 #: shared.py:3590 shared.py:3911 shared.py:3938 sharedGUI.py:1006
 #: sharedGUI.py:1046 sharedGUI.py:1617 sharedGUI.py:4102 sharedGUI.py:4106
-#: unmusic.py:1082
+#: unmusic.py:1079
 msgid "DEBUG"
 msgstr "ОТЛАДКА"
 
-#: album_editor.py:23 unmusic.py:1083
+#: album_editor.py:23 unmusic.py:1080
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: collect_silent.py:14 unmusic.py:981
+#: collect_silent.py:14 unmusic.py:978
 msgid "not processed"
 msgstr "не обработано"
 
-#: collect_silent.py:30 collect_silent.py:45 logic.py:500 logic.py:581
-#: logic.py:680 logic.py:745 logic.py:1301 logic.py:1473 shared.py:419
+#: collect_silent.py:30 collect_silent.py:45 logic.py:510 logic.py:591
+#: logic.py:690 logic.py:755 logic.py:1327 logic.py:1499 shared.py:419
 #: shared.py:481 shared.py:516 shared.py:548 shared.py:842 shared.py:906
 #: shared.py:1514 shared.py:1650 shared.py:1666 shared.py:1710 shared.py:1723
 #: shared.py:1770 shared.py:1783 shared.py:1826 shared.py:1836 shared.py:1938
@@ -49,19 +49,19 @@ msgstr "не обработано"
 #: sharedGUI.py:2696 sharedGUI.py:2708 sharedGUI.py:2737 sharedGUI.py:2741
 #: sharedGUI.py:2826 sharedGUI.py:2843 sharedGUI.py:3259 sharedGUI.py:3291
 #: sharedGUI.py:3298 sharedGUI.py:3415 sharedGUI.py:4157 unmusic.py:59
-#: unmusic.py:244 unmusic.py:333 unmusic.py:347 unmusic.py:471 unmusic.py:614
-#: unmusic.py:618 unmusic.py:646 unmusic.py:650 unmusic.py:689 unmusic.py:695
-#: unmusic.py:717 unmusic.py:723 unmusic.py:958 unmusic.py:965 unmusic.py:1016
-#: unmusic.py:1031
+#: unmusic.py:244 unmusic.py:333 unmusic.py:347 unmusic.py:471 unmusic.py:611
+#: unmusic.py:615 unmusic.py:643 unmusic.py:647 unmusic.py:686 unmusic.py:692
+#: unmusic.py:714 unmusic.py:720 unmusic.py:955 unmusic.py:962 unmusic.py:1013
+#: unmusic.py:1028
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
-#: collect_silent.py:31 unmusic.py:998
+#: collect_silent.py:31 unmusic.py:995
 #, python-format
 msgid "Process \"%s\" (%d/%d)"
 msgstr "Обработка \"%s\" (%d/%d)"
 
-#: collect_silent.py:46 unmusic.py:1017
+#: collect_silent.py:46 unmusic.py:1014
 #, python-format
 msgid "Operation has taken %s"
 msgstr "Операция завершена за %s"
@@ -70,242 +70,238 @@ msgstr "Операция завершена за %s"
 msgid "Play"
 msgstr "Слушать"
 
-#: gui.py:11 unmusic.py:483
-msgid "All, external"
-msgstr "Всё (внешний носитель)"
-
-#: gui.py:11 unmusic.py:480
-msgid "All, local"
-msgstr "Всё (этот носитель)"
-
-#: gui.py:11 unmusic.py:477
-msgid "Best, external"
-msgstr "Лучшее (внешний носитель)"
-
 #: gui.py:12 unmusic.py:474
-msgid "Best, local"
-msgstr "Лучшее (этот носитель)"
+msgid "All"
+msgstr "Все"
 
-#: gui.py:38 gui.py:53 gui.py:103
+#: gui.py:13 unmusic.py:477
+msgid "Good"
+msgstr "Хорошее"
+
+#: gui.py:14 unmusic.py:480
+msgid "Best"
+msgstr "Лучшее"
+
+#: gui.py:39 gui.py:54 gui.py:104
 msgid "Image:"
 msgstr "Изображение:"
 
-#: gui.py:96
+#: gui.py:97
 msgid "Search an album by ID"
 msgstr "Поиск альбома по ИД"
 
-#: gui.py:116 gui.py:778
+#: gui.py:117 gui.py:779
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui.py:117 gui.py:779
+#: gui.py:118 gui.py:780
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: gui.py:125
+#: gui.py:126
 msgid "Create"
 msgstr "Создать"
 
-#: gui.py:126
+#: gui.py:127
 msgid "Create a new record"
 msgstr "Создать новую запись"
 
-#: gui.py:134
+#: gui.py:135
 msgid "Delete"
 msgstr "Удалить"
 
-#: gui.py:135
+#: gui.py:136
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: gui.py:142 gui.py:796
+#: gui.py:143 gui.py:797
 msgid "Decypher"
 msgstr "Расшифровать"
 
-#: gui.py:143 gui.py:797
+#: gui.py:144 gui.py:798
 msgid "Decypher text (Caesar algorithm)"
 msgstr "Расшифровать текст (алгоритм Цезаря)"
 
-#: gui.py:150 gui.py:804
+#: gui.py:151 gui.py:805
 msgid "Cypher"
 msgstr "Зашифровать"
 
-#: gui.py:151 gui.py:805
+#: gui.py:152 gui.py:806
 msgid "Cypher text (Caesar algorithm)"
 msgstr "Зашифровать текст (алгоритм Цезаря)"
 
-#: gui.py:158 gui.py:812
+#: gui.py:159 gui.py:813
 msgid "Decode"
 msgstr "Декодировать"
 
-#: gui.py:159 gui.py:813
+#: gui.py:160 gui.py:814
 msgid "Decode back to cp1251"
 msgstr "Декодировать обратно в cp1251"
 
-#: gui.py:166 gui.py:820
+#: gui.py:167 gui.py:821
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui.py:167 gui.py:821
+#: gui.py:168 gui.py:822
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: gui.py:175
+#: gui.py:176
 msgid "Tracks"
 msgstr "Дорожки"
 
-#: gui.py:176
+#: gui.py:177
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: gui.py:236 logic.py:1459
+#: gui.py:237 logic.py:1485
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:240 logic.py:1460
+#: gui.py:241 logic.py:1486
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:244 logic.py:1462
+#: gui.py:245 logic.py:1488
 msgid "Year:"
 msgstr "Год:"
 
-#: gui.py:248
+#: gui.py:249
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: gui.py:252 gui.py:1012
+#: gui.py:253 gui.py:1013
 msgid "Comment:"
 msgstr "Комментарий:"
 
-#: gui.py:256
+#: gui.py:257
 msgid "Mean bitrate:"
 msgstr "Средний битрейт:"
 
-#: gui.py:260
+#: gui.py:261
 msgid "Total length:"
 msgstr "Общая длина:"
 
-#: gui.py:264 logic.py:1461
+#: gui.py:265 logic.py:1487
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: gui.py:300
+#: gui.py:301
 msgid "Search older records"
 msgstr "Поиск более старых записей"
 
-#: gui.py:312
+#: gui.py:313
 msgid "Search newer records"
 msgstr "Поиск более новых записей"
 
-#: gui.py:320
+#: gui.py:321
 msgid "Search in albums"
 msgstr "Поиск по альбомам"
 
-#: gui.py:331
+#: gui.py:332
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: gui.py:338
+#: gui.py:339
 msgid "Go to the preceding record"
 msgstr "Перейти к предыдущей записи"
 
-#: gui.py:353
+#: gui.py:354
 msgid "Album ID"
 msgstr "ИД альбома"
 
-#: gui.py:358
+#: gui.py:359
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:553 gui.py:669
+#: gui.py:554 gui.py:670
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: gui.py:582 gui.py:592 gui.py:683
+#: gui.py:583 gui.py:593 gui.py:684
 msgid "Collect tags & Obfuscate"
 msgstr "Извлечь тэги и обфусцировать"
 
-#: gui.py:584 gui.py:589
+#: gui.py:585 gui.py:590
 msgid "Collect tags"
 msgstr "Извлечь тэги"
 
-#: gui.py:606
+#: gui.py:607
 msgid "Obfuscate"
 msgstr "Обфусцировать"
 
-#: gui.py:675
+#: gui.py:676
 msgid "Prepare files"
 msgstr "Подготовить файлы"
 
-#: gui.py:676
+#: gui.py:677
 msgid "Move sub-folders to a root folder, split large lossless files, etc."
 msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
 
-#: gui.py:689
+#: gui.py:690
 msgid "Copy light music"
 msgstr "Копировать легкую музыку"
 
-#: gui.py:695
+#: gui.py:696
 msgid "Copy heavy music"
 msgstr "Копировать тяжелую музыку"
 
-#: gui.py:701 sharedGUI.py:205 sharedGUI.py:641 sharedGUI.py:642
+#: gui.py:702 sharedGUI.py:205 sharedGUI.py:641 sharedGUI.py:642
 #: sharedGUI.py:1098 sharedGUI.py:1099 sharedGUI.py:1702 sharedGUI.py:1703
 msgid "Quit"
 msgstr "Выйти"
 
-#: gui.py:787
+#: gui.py:788
 msgid "Clear rating"
 msgstr "Очистить оценку"
 
-#: gui.py:788
+#: gui.py:789
 msgid "Clear rating of all tracks"
 msgstr "Очистить оценку для всех дорожек"
 
-#: gui.py:869 gui.py:949
+#: gui.py:870 gui.py:950
 msgid "Tracks:"
 msgstr "Дорожки:"
 
-#: gui.py:996
+#: gui.py:997
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: gui.py:1000 logic.py:1463
+#: gui.py:1001 logic.py:1489
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: gui.py:1004 logic.py:1464 sharedGUI.py:281 sharedGUI.py:992
+#: gui.py:1005 logic.py:1490 sharedGUI.py:281 sharedGUI.py:992
 #: sharedGUI.py:2911 sharedGUI.py:2922 sharedGUI.py:3386
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: gui.py:1008 logic.py:1465
+#: gui.py:1009 logic.py:1491
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: gui.py:1016
+#: gui.py:1017
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: gui.py:1020 logic.py:1471
+#: gui.py:1021 logic.py:1497
 msgid "Length:"
 msgstr "Продолжительность:"
 
-#: gui.py:1024
+#: gui.py:1025
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: logic.py:144
-msgid "external collection"
-msgstr "внешняя коллекция"
-
-#: logic.py:146 logic.py:1653
+#: logic.py:129 logic.py:1679
 msgid "local collection"
 msgstr "локальная коллекция"
 
-#: logic.py:191 logic.py:393 logic.py:574 logic.py:727 logic.py:800
-#: logic.py:1314 logic.py:1390 logic.py:1410 logic.py:1540 logic.py:1556
+#: logic.py:132
+msgid "external collection"
+msgstr "внешняя коллекция"
+
+#: logic.py:185 logic.py:403 logic.py:584 logic.py:737 logic.py:810
+#: logic.py:1340 logic.py:1416 logic.py:1436 logic.py:1566 logic.py:1582
 #: shared.py:102 shared.py:382 shared.py:396 shared.py:451 shared.py:469
 #: shared.py:491 shared.py:510 shared.py:560 shared.py:565 shared.py:579
 #: shared.py:603 shared.py:622 shared.py:626 shared.py:649 shared.py:672
@@ -352,16 +348,16 @@ msgstr "локальная коллекция"
 #: sharedGUI.py:3408 sharedGUI.py:3486 sharedGUI.py:3500 sharedGUI.py:3505
 #: sharedGUI.py:3516 sharedGUI.py:3984 sharedGUI.py:3989 sharedGUI.py:4087
 #: sharedGUI.py:4111 unmusic.py:87 unmusic.py:118 unmusic.py:337 unmusic.py:342
-#: unmusic.py:452 unmusic.py:588 unmusic.py:597
+#: unmusic.py:452 unmusic.py:585 unmusic.py:594
 msgid "WARNING"
 msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
-#: logic.py:192
+#: logic.py:186
 #, python-format
 msgid "Tracks %s have not been found in \"%s\"!"
 msgstr "Дорожки %s не были найдены в \"%s\"!"
 
-#: logic.py:199 logic.py:311 logic.py:610 logic.py:874 logic.py:991
+#: logic.py:193 logic.py:321 logic.py:620 logic.py:900 logic.py:1017
 #: shared.py:319 shared.py:324 shared.py:333 shared.py:342 shared.py:351
 #: shared.py:411 shared.py:427 shared.py:431 shared.py:447 shared.py:465
 #: shared.py:491 shared.py:642 shared.py:665 shared.py:772 shared.py:782
@@ -385,21 +381,21 @@ msgstr "Дорожки %s не были найдены в \"%s\"!"
 #: sharedGUI.py:2958 sharedGUI.py:2984 sharedGUI.py:2990 sharedGUI.py:2994
 #: sharedGUI.py:3014 sharedGUI.py:3024 sharedGUI.py:3192 sharedGUI.py:3275
 #: sharedGUI.py:3305 sharedGUI.py:3458 sharedGUI.py:3994 sharedGUI.py:4077
-#: unmusic.py:92 unmusic.py:97 unmusic.py:191 unmusic.py:238 unmusic.py:487
-#: unmusic.py:540 unmusic.py:569 unmusic.py:627 unmusic.py:933
+#: unmusic.py:92 unmusic.py:97 unmusic.py:191 unmusic.py:238 unmusic.py:484
+#: unmusic.py:537 unmusic.py:566 unmusic.py:624 unmusic.py:930
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: logic.py:200 logic.py:611 logic.py:875 unmusic.py:98
+#: logic.py:194 logic.py:621 logic.py:901 unmusic.py:98
 #, python-format
 msgid "Condition \"%s\" is not observed!"
 msgstr "Условие \"%s\" не выполнено!"
 
-#: logic.py:217
+#: logic.py:211
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: logic.py:312 logic.py:801 shared.py:580 shared.py:783 shared.py:896
+#: logic.py:322 logic.py:811 shared.py:580 shared.py:783 shared.py:896
 #: shared.py:1566 shared.py:2043 shared.py:2706 shared.py:2782 shared.py:3673
 #: shared.py:4306 shared.py:4483 sharedGUI.py:42 sharedGUI.py:421
 #: sharedGUI.py:2298 sharedGUI.py:2315 sharedGUI.py:2336 sharedGUI.py:2342
@@ -409,47 +405,47 @@ msgstr "список воспроизведения"
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
-#: logic.py:394
+#: logic.py:404
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: logic.py:501
+#: logic.py:511
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: logic.py:518
+#: logic.py:528
 msgid "processed"
 msgstr "обработано"
 
-#: logic.py:575 shared.py:103 shared.py:4700 shared.py:4790 unmusic.py:192
-#: unmusic.py:239 unmusic.py:338 unmusic.py:343 unmusic.py:541 unmusic.py:570
-#: unmusic.py:934
+#: logic.py:585 shared.py:103 shared.py:4700 shared.py:4790 unmusic.py:192
+#: unmusic.py:239 unmusic.py:338 unmusic.py:343 unmusic.py:538 unmusic.py:567
+#: unmusic.py:931
 #, python-format
 msgid "Wrong input data: \"%s\"!"
 msgstr "Недопустимые входные данные: \"%s\"!"
 
-#: logic.py:582 shared.py:4834 sharedGUI.py:1393 sharedGUI.py:1957
-#: sharedGUI.py:4158 unmusic.py:348 unmusic.py:472 unmusic.py:651
-#: unmusic.py:696 unmusic.py:724
+#: logic.py:592 shared.py:4834 sharedGUI.py:1393 sharedGUI.py:1957
+#: sharedGUI.py:4158 unmusic.py:348 unmusic.py:472 unmusic.py:648
+#: unmusic.py:693 unmusic.py:721
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
-#: logic.py:681
+#: logic.py:691
 #, python-format
 msgid "Album %d: %d tracks."
 msgstr "Альбом %d: %d дорожек."
 
-#: logic.py:728
+#: logic.py:738
 #, python-format
 msgid "%d/%d tracks have been renumbered."
 msgstr "%d/%d дорожек перенумеровано."
 
-#: logic.py:746
+#: logic.py:756
 #, python-format
 msgid "Folder \"%s\" has no audio files."
 msgstr "Каталог \"%s\" не содержит аудиофайлов."
 
-#: logic.py:992
+#: logic.py:1018
 #, python-format
 msgid ""
 "Unable to execute:\n"
@@ -462,12 +458,12 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:1302
+#: logic.py:1328
 #, python-format
 msgid "Save \"%s\""
 msgstr "Сохранение \"%s\""
 
-#: logic.py:1315
+#: logic.py:1341
 #, python-format
 msgid ""
 "Database \"%s\" has failed!\n"
@@ -478,7 +474,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:1391 logic.py:1411 logic.py:1541 logic.py:1557 sharedGUI.py:3501
+#: logic.py:1417 logic.py:1437 logic.py:1567 logic.py:1583 sharedGUI.py:3501
 #: unmusic.py:453
 #, python-format
 msgid ""
@@ -490,11 +486,11 @@ msgstr ""
 "\n"
 "Детали: %s"
 
-#: logic.py:1471 shared.py:4783
+#: logic.py:1497 shared.py:4783
 msgid "min"
 msgstr "мин"
 
-#: logic.py:1472 shared.py:4752 shared.py:4785
+#: logic.py:1498 shared.py:4752 shared.py:4785
 msgid "sec"
 msgstr "сек"
 
@@ -560,7 +556,7 @@ msgstr "Не удается записать файл \"%s\"!"
 
 #: shared.py:432 shared.py:1955 sharedGUI.py:1492 sharedGUI.py:1983
 #: sharedGUI.py:2706 sharedGUI.py:2840 sharedGUI.py:3995 sharedGUI.py:4078
-#: unmusic.py:488
+#: unmusic.py:485
 #, python-format
 msgid ""
 "An unknown mode \"%s\"!\n"
@@ -600,7 +596,7 @@ msgid "Empty input is not allowed!"
 msgstr "Пустые входные данные не допускаются!"
 
 #: shared.py:643 shared.py:666 shared.py:2117 shared.py:2141 shared.py:4345
-#: shared.py:4365 shared.py:4416 sharedGUI.py:85 unmusic.py:628
+#: shared.py:4365 shared.py:4416 sharedGUI.py:85 unmusic.py:625
 #, python-format
 msgid "The condition \"%s\" is not observed!"
 msgstr "Условие \"%s\" не выполнено!"
@@ -1014,7 +1010,7 @@ msgstr "Неожиданный конец текста!"
 
 #: shared.py:4718 sharedGUI.py:2702 sharedGUI.py:2709 sharedGUI.py:2753
 #: sharedGUI.py:2758 sharedGUI.py:2830 sharedGUI.py:2843 sharedGUI.py:2880
-#: sharedGUI.py:2886 sharedGUI.py:3283 unmusic.py:560 unmusic.py:759
+#: sharedGUI.py:2886 sharedGUI.py:3283 unmusic.py:557 unmusic.py:756
 msgid "QUESTION"
 msgstr "ВОПРОС"
 
@@ -1096,7 +1092,7 @@ msgid "Find:"
 msgstr "Найти:"
 
 #: sharedGUI.py:360 sharedGUI.py:478 sharedGUI.py:506 unmusic.py:334
-#: unmusic.py:647 unmusic.py:690 unmusic.py:718
+#: unmusic.py:644 unmusic.py:687 unmusic.py:715
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
@@ -1351,7 +1347,7 @@ msgstr "Закрыть это окно"
 msgid "Track #%d"
 msgstr "Дорожка №%d"
 
-#: unmusic.py:60 unmusic.py:1032
+#: unmusic.py:60 unmusic.py:1029
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -1368,11 +1364,11 @@ msgstr "Необходимо указать название дорожки."
 msgid "Track numbers should be sequential!"
 msgstr "Номера дорожек должны идти последовательно!"
 
-#: unmusic.py:131 unmusic.py:779
+#: unmusic.py:131 unmusic.py:776
 msgid "Save DB."
 msgstr "Сохранение БД."
 
-#: unmusic.py:213 unmusic.py:914
+#: unmusic.py:213 unmusic.py:911
 #, python-format
 msgid "Load #%d."
 msgstr "Загрузка №%d."
@@ -1381,48 +1377,60 @@ msgstr "Загрузка №%d."
 msgid "No tracks are associated with this album."
 msgstr "Для этого альбома дорожки не указаны."
 
-#: unmusic.py:499
+#: unmusic.py:496
 #, python-format
 msgid "%s (%d tracks)"
 msgstr "%s (%d дорожек)"
 
-#: unmusic.py:561
+#: unmusic.py:558
 msgid ""
 "Tracks are of a mixed rating. Do you want to assign the same rating to all "
 "of them?"
 msgstr ""
 "Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
 
-#: unmusic.py:589
+#: unmusic.py:586
 msgid "An album title should be indicated."
 msgstr "Необходимо указать название альбома."
 
-#: unmusic.py:598
+#: unmusic.py:595
 msgid "An artist should be indicated."
 msgstr "Необходимо указать исполнителя."
 
-#: unmusic.py:615
+#: unmusic.py:612
 msgid "No changes!"
 msgstr "Изменений не было!"
 
-#: unmusic.py:619
+#: unmusic.py:616
 msgid "Some fields have been updated."
 msgstr "Некоторые поля были обновлены."
 
-#: unmusic.py:760
+#: unmusic.py:757
 #, python-format
 msgid "Are you sure you want to permanently delete record #%d?"
 msgstr "Вы действительно хотите безвозвратно удалить запись №%d?"
 
-#: unmusic.py:763
+#: unmusic.py:760
 #, python-format
 msgid "Delete #%d."
 msgstr "Удаление №%d."
 
-#: unmusic.py:959 unmusic.py:966
+#: unmusic.py:956 unmusic.py:963
 #, python-format
 msgid "Random unrated music will now be copied to \"%s\"."
 msgstr "Сейчас случайная музыка без рейтинга будет скопирована в \"%s\"."
+
+#~ msgid "All, external"
+#~ msgstr "Всё (внешний носитель)"
+
+#~ msgid "All, local"
+#~ msgstr "Всё (этот носитель)"
+
+#~ msgid "Best, external"
+#~ msgstr "Лучшее (внешний носитель)"
+
+#~ msgid "Best, local"
+#~ msgstr "Лучшее (этот носитель)"
 
 #~ msgid "***** Start of log. *****"
 #~ msgstr "***** Начало записи лога. *****"
