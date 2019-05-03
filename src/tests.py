@@ -71,4 +71,5 @@ if __name__ == '__main__':
     f = 'tests.__main__'
     sg.objs.start()
     #lg.objs.db().close()
+    lg.CopyLight().run()
     sg.objs.end()

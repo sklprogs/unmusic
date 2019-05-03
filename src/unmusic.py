@@ -952,17 +952,27 @@ class Menu:
         
     def copy_heavy(self,event=None):
         f = '[unmusic] unmusic.Menu.copy_heavy'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Random unrated music will now be copied to "%s".')\
-                    % lg.DEST_HEAVY
-                    )
+        if sg.Message (f,_('INFO')
+                      ,_('Random unrated music will now be copied to "%s".\n\nContinue?')\
+                      % lg.DEST_HEAVY
+                      ).Yes:
+            pass
+        else:
+            sh.log.append (f,_('QUESTION')
+                          ,_('Operation has been canceled by the user.')
+                          )
     
     def copy_light(self,event=None):
         f = '[unmusic] unmusic.Menu.copy_light'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Random unrated music will now be copied to "%s".')\
-                    % lg.DEST_LIGHT
-                    )
+        if sg.Message (f,_('QUESTION')
+                      ,_('Random unrated music will now be copied to "%s".\n\nContinue?')\
+                      % lg.DEST_LIGHT
+                      ).Yes:
+            lg.CopyLight().run()
+        else:
+            sh.log.append (f,_('INFO')
+                          ,_('Operation has been canceled by the user.')
+                          )
     
     def album_editor(self,event=None):
         objs.editor().reset()

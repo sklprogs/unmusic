@@ -27,9 +27,12 @@ GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
          ,'Technical Brutal Death Metal','Technical Death Metal'
          ,'Thrash Metal','Vocal'
          )
+''' Can have genres not comprised by GENRES (since GENRES is used to
+    fill GUI and has a limit).
+'''
 LIGHT = ('Alternative Rock','Ambient','Blues','Chanson','Classical'
         ,'Electronic','Ethnic','Game','Pop','Rap','Relaxation','Rock'
-        ,'Soundtrack','Vocal'
+        ,'Soundtrack','Vocal','Folk'
         )
 HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         ,'Death Metal/Grindcore','Death/Black Metal'
@@ -44,6 +47,36 @@ DEST_HEAVY = '/media/COWON/MUSIC'
 import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
+
+
+class CopyLight:
+    
+    def __init__(self,limit=100):
+        source = objs.default().ihome.add_share(_('external collection'))
+        # We do not check target since it can be a symlink
+        self.Success = sh.Directory(source).Success
+        self._limit  = limit
+        self._ids    = []
+    
+    def select(self):
+        f = '[unmusic] logic.CopyLight.select'
+        if self.Success:
+            self._ids = objs.db().unrated_light(self._limit)
+            if self._ids:
+                sh.log.append (f,_('DEBUG')
+                              ,'; '.join ([str(albumid) \
+                                           for albumid in self._ids
+                                          ]
+                                         )
+                              )
+            else:
+                self.Success = False
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def run(self):
+        self.select()
 
 
 
@@ -804,18 +837,42 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
-    def unrated_light(self):
+    def unrated_light(self,limit=100):
         f = '[unmusic] logic.DB.unrated_light'
         if self.Success:
+            ids = self.unrated(300)
+            if ids:
+                try:
+                    query = 'select ALBUMID from ALBUMS \
+                             where ALBUMID in (%s) and GENRE in (%s) \
+                             order by ALBUMID limit %d' \
+                             % (','.join('?'*len(ids))
+                               ,','.join('?'*len(LIGHT))
+                               ,limit
+                               )
+                    lst = list(ids) + list(LIGHT)
+                    self.dbc.execute(query,lst)
+                    result = self.dbc.fetchall()
+                    if result:
+                        return [item[0] for item in result]
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def unrated(self,limit=100):
+        f = '[unmusic] logic.DB.unrated'
+        if self.Success:
             try:
-                #cur
-                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
-                                           ,BITRATE,LENGTH,RATING \
-                                   from     TRACKS where ALBUMID = ? \
-                                   and      RATING >= ?\
-                                   order by NO',(self.albumid,8,)
+                self.dbc.execute ('select distinct ALBUMID \
+                                   from TRACKS where RATING = ? limit ?'
+                                 ,(0,limit,)
                                  )
-                return self.dbc.fetchall()
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
             except Exception as e:
                 self.fail(f,e)
         else:
