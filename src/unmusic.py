@@ -479,7 +479,7 @@ class AlbumEditor:
                 lg.Play().good_tracks()
             elif choice == _('Best'):
                 self.gui.opt_ply.set(default)
-                lg.Play().best_tracks()
+                lg.Play().good_tracks(9)
             else:
                 sh.objs.mes (f,_('ERROR')
                             ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\

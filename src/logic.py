@@ -283,10 +283,10 @@ class Play:
         else:
             sh.com.cancel(f)
     
-    def good_tracks(self):
+    def good_tracks(self,rating=8):
         f = '[unmusic] logic.Play.good_tracks'
         if self.Success:
-            tracks = objs.db().good_tracks()
+            tracks = objs.db().good_tracks(rating)
             if tracks:
                 self._titles = [track[0] for track in tracks]
                 self._len    = [track[5] for track in tracks]
@@ -294,33 +294,6 @@ class Play:
                 self._nos = [track[1] - 1 for track in tracks]
                 self.gen_list()
                 self.call_player()
-            else:
-                sh.com.empty(f)
-        else:
-            sh.com.cancel(f)
-    
-    def best_tracks(self):
-        f = '[unmusic] logic.Play.best_tracks'
-        if self.Success:
-            tracks = objs.db().best_tracks()
-            if tracks:
-                if len(tracks[0]) == 4:
-                    # '-1' since count starts with 1 in DB and we need 0
-                    self._nos    = [item[1] - 1 for item in tracks \
-                                    if item[0] == tracks[0][0]
-                                   ]
-                    self._titles = [item[2] for item in tracks \
-                                    if item[0] == tracks[0][0]
-                                   ]
-                    self._len    = [item[3] for item in tracks \
-                                    if item[0] == tracks[0][0]
-                                   ]
-                    self.gen_list()
-                    self.call_player()
-                else:
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('Wrong input data!')
-                                )
             else:
                 sh.com.empty(f)
         else:
@@ -831,7 +804,24 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
-    def good_tracks(self):
+    def unrated_light(self):
+        f = '[unmusic] logic.DB.unrated_light'
+        if self.Success:
+            try:
+                #cur
+                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
+                                           ,BITRATE,LENGTH,RATING \
+                                   from     TRACKS where ALBUMID = ? \
+                                   and      RATING >= ?\
+                                   order by NO',(self.albumid,8,)
+                                 )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def good_tracks(self,rating=8):
         f = '[unmusic] logic.DB.good_tracks'
         if self.Success:
             try:
@@ -839,7 +829,7 @@ class DB:
                                            ,BITRATE,LENGTH,RATING \
                                    from     TRACKS where ALBUMID = ? \
                                    and      RATING >= ?\
-                                   order by NO',(self.albumid,8,)
+                                   order by NO',(self.albumid,rating,)
                                  )
                 return self.dbc.fetchall()
             except Exception as e:
@@ -860,21 +850,6 @@ class DB:
                                    where  ALBUMID = ?',(albumid,)
                                  )
                 return self.dbc.fetchone()
-            except Exception as e:
-                self.fail(f,e)
-        else:
-            sh.com.cancel(f)
-    
-    def best_tracks(self):
-        f = '[unmusic] logic.DB.best_tracks'
-        if self.Success:
-            try:
-                self.dbc.execute ('select RATING,NO,TITLE,LENGTH \
-                                   from TRACKS where ALBUMID = ? \
-                                   order by RATING desc,NO'
-                                  ,(self.albumid,)
-                                 )
-                return self.dbc.fetchall()
             except Exception as e:
                 self.fail(f,e)
         else:
