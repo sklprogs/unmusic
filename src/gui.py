@@ -93,10 +93,9 @@ class AlbumEditor:
                                 ,side      = 'left'
                                 ,width     = 5
                                 )
-        sg.ToolTip (obj        = self.ent_ids
-                   ,text       = _('Search an album by ID')
-                   ,hint_width = 190
-                   ,hint_dir   = 'bottom'
+        sg.ToolTip (obj      = self.ent_ids
+                   ,text     = _('Search an album by ID')
+                   ,hint_dir = 'bottom'
                    )
     
     def image(self):
@@ -113,75 +112,67 @@ class AlbumEditor:
         self.opt_gnr = sg.OptionMenu (parent = self.frm_rht
                                      ,side   = 'left'
                                      )
-        self.btn_rld = sg.Button (parent     = self.frm1
-                                 ,text       = _('Reload')
-                                 ,hint       = _('Reload the present record')
-                                 ,side       = 'left'
-                                 ,hint_width = 290
-                                 ,inactive   = self._path_rld
-                                 ,active     = self._path_rld
-                                 ,bindings   = ['<F5>','<Control-r>']
+        self.btn_rld = sg.Button (parent   = self.frm1
+                                 ,text     = _('Reload')
+                                 ,hint     = _('Reload the present record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_rld
+                                 ,active   = self._path_rld
+                                 ,bindings = ['<F5>','<Control-r>']
                                  )
-        self.btn_rec = sg.Button (parent     = self.frm1
-                                 ,text       = _('Create')
-                                 ,hint       = _('Create a new record')
-                                 ,side       = 'left'
-                                 ,hint_width = 210
-                                 ,inactive   = self._path_add
-                                 ,active     = self._path_add
-                                 ,bindings   = '<Control-n>'
+        self.btn_rec = sg.Button (parent   = self.frm1
+                                 ,text     = _('Create')
+                                 ,hint     = _('Create a new record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_add
+                                 ,active   = self._path_add
+                                 ,bindings = '<Control-n>'
                                  )
-        self.btn_del = sg.Button (parent     = self.frm1
-                                 ,text       = _('Delete')
-                                 ,hint       = _('Delete the present record')
-                                 ,side       = 'left'
-                                 ,hint_width = 230
-                                 ,inactive   = self._path_del
-                                 ,active     = self._path_del
+        self.btn_del = sg.Button (parent   = self.frm1
+                                 ,text     = _('Delete')
+                                 ,hint     = _('Delete the present record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_del
+                                 ,active   = self._path_del
                                  )
-        self.btn_dez = sg.Button (parent     = self.frm2
-                                 ,text       = _('Decypher')
-                                 ,hint       = _('Decypher text (Caesar algorithm)')
-                                 ,side       = 'left'
-                                 ,hint_width = 340
-                                 ,inactive   = self._path_dez
-                                 ,active     = self._path_dez
+        self.btn_dez = sg.Button (parent   = self.frm2
+                                 ,text     = _('Decypher')
+                                 ,hint     = _('Decypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dez
+                                 ,active   = self._path_dez
                                  )
-        self.btn_cyp = sg.Button (parent     = self.frm2
-                                 ,text       = _('Cypher')
-                                 ,hint       = _('Cypher text (Caesar algorithm)')
-                                 ,side       = 'left'
-                                 ,hint_width = 330
-                                 ,inactive   = self._path_cyp
-                                 ,active     = self._path_cyp
+        self.btn_cyp = sg.Button (parent   = self.frm2
+                                 ,text     = _('Cypher')
+                                 ,hint     = _('Cypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_cyp
+                                 ,active   = self._path_cyp
                                  )
-        self.btn_dec = sg.Button (parent     = self.frm2
-                                 ,text       = _('Decode')
-                                 ,hint       = _('Decode back to cp1251')
-                                 ,side       = 'left'
-                                 ,inactive   = self._path_dec
-                                 ,active     = self._path_dec
-                                 ,hint_width = 280
+        self.btn_dec = sg.Button (parent   = self.frm2
+                                 ,text     = _('Decode')
+                                 ,hint     = _('Decode back to cp1251')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dec
+                                 ,active   = self._path_dec
                                  )
-        self.btn_sav = sg.Button (parent     = self.frm2
-                                 ,text       = _('Save')
-                                 ,hint       = _('Save changes')
-                                 ,side       = 'left'
-                                 ,inactive   = self._path_sav
-                                 ,active     = self._path_sav
-                                 ,bindings   = ['<F2>','<Control-s>']
-                                 ,hint_width = 200
+        self.btn_sav = sg.Button (parent   = self.frm2
+                                 ,text     = _('Save')
+                                 ,hint     = _('Save changes')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_sav
+                                 ,active   = self._path_sav
+                                 ,bindings = ['<F2>','<Control-s>']
                                  )
-        self.btn_trk = sg.Button (parent     = self.frm2
-                                 ,text       = _('Tracks')
-                                 ,hint       = _('Edit tracks')
-                                 ,side       = 'left'
-                                 ,inactive   = self._path_trk
-                                 ,active     = self._path_trk
-                                 ,bindings   = ['<F4>','<Control-t>'
-                                               ,'<Alt-t>'
-                                               ]
-                                 ,hint_width = 190
+        self.btn_trk = sg.Button (parent   = self.frm2
+                                 ,text     = _('Tracks')
+                                 ,hint     = _('Edit tracks')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_trk
+                                 ,active   = self._path_trk
+                                 ,bindings = ['<F4>','<Control-t>'
+                                             ,'<Alt-t>'
+                                             ]
                                  )
 
     def update_info(self,text):
@@ -317,10 +308,9 @@ class AlbumEditor:
                                  ,hint_dir = 'bottom'
                                  ,side     = 'left'
                                  )
-        sg.ToolTip (obj        = self.ent_src
-                   ,text       = _('Search in albums')
-                   ,hint_width = 170
-                   ,hint_dir   = 'bottom'
+        sg.ToolTip (obj      = self.ent_src
+                   ,text     = _('Search in albums')
+                   ,hint_dir = 'bottom'
                    )
     
     def search_tracks(self):
@@ -328,10 +318,9 @@ class AlbumEditor:
                                 ,Composite = 1
                                 ,side      = 'left'
                                 )
-        sg.ToolTip (obj        = self.ent_sr2
-                   ,text       = _('Search in tracks')
-                   ,hint_width = 170
-                   ,hint_dir   = 'bottom'
+        sg.ToolTip (obj      = self.ent_sr2
+                   ,text     = _('Search in tracks')
+                   ,hint_dir = 'bottom'
                    )
     
     def meter(self):
@@ -350,10 +339,9 @@ class AlbumEditor:
                                 ,expand = 0
                                 ,side   = 'left'
                                 )
-        sg.ToolTip (obj        = self.lbl_mtr
-                   ,text       = _('Album ID')
-                   ,hint_width = 150
-                   ,hint_dir   = 'bottom'
+        sg.ToolTip (obj      = self.lbl_mtr
+                   ,text     = _('Album ID')
+                   ,hint_dir = 'bottom'
                    )
         self.btn_nxt = sg.Button (parent   = self.frm
                                  ,hint     = _('Go to the following record')
@@ -672,12 +660,11 @@ class Menu:
                                   ,font   = font
                                   )
                        )
-        self._a.append (sg.Button (parent     = self.parent
-                                  ,text       = _('Prepare files')
-                                  ,hint       = _('Move sub-folders to a root folder, split large lossless files, etc.')
-                                  ,hint_width = 600
-                                  ,side       = 'top'
-                                  ,font       = font
+        self._a.append (sg.Button (parent = self.parent
+                                  ,text   = _('Prepare files')
+                                  ,hint   = _('Move sub-folders to a root folder, split large lossless files, etc.')
+                                  ,side   = 'top'
+                                  ,font   = font
                                   )
                        )
         self._a.append (sg.Button (parent = self.parent
@@ -775,56 +762,50 @@ class Tracks:
                                            )
     
     def buttons(self):
-        self.btn_rld = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Reload')
-                                 ,hint       = _('Reload the present record')
-                                 ,side       = 'left'
-                                 ,hint_width = 290
-                                 ,inactive   = self._path_rld
-                                 ,active     = self._path_rld
-                                 ,bindings   = ['<F5>','<Control-r>']
+        self.btn_rld = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Reload')
+                                 ,hint     = _('Reload the present record')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_rld
+                                 ,active   = self._path_rld
+                                 ,bindings = ['<F5>','<Control-r>']
                                  )
-        self.btn_rat = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Clear rating')
-                                 ,hint       = _('Clear rating of all tracks')
-                                 ,side       = 'left'
-                                 ,hint_width = 310
-                                 ,inactive   = self._path_rat
-                                 ,active     = self._path_rat
-                                 ,action     = self.clear_rating
+        self.btn_rat = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Clear rating')
+                                 ,hint     = _('Clear rating of all tracks')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_rat
+                                 ,active   = self._path_rat
+                                 ,action   = self.clear_rating
                                  )
-        self.btn_dez = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Decypher')
-                                 ,hint       = _('Decypher text (Caesar algorithm)')
-                                 ,side       = 'left'
-                                 ,hint_width = 340
-                                 ,inactive   = self._path_dez
-                                 ,active     = self._path_dez
+        self.btn_dez = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Decypher')
+                                 ,hint     = _('Decypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dez
+                                 ,active   = self._path_dez
                                  )
-        self.btn_cyp = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Cypher')
-                                 ,hint       = _('Cypher text (Caesar algorithm)')
-                                 ,side       = 'left'
-                                 ,hint_width = 330
-                                 ,inactive   = self._path_cyp
-                                 ,active     = self._path_cyp
+        self.btn_cyp = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Cypher')
+                                 ,hint     = _('Cypher text (Caesar algorithm)')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_cyp
+                                 ,active   = self._path_cyp
                                  )
-        self.btn_dec = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Decode')
-                                 ,hint       = _('Decode back to cp1251')
-                                 ,side       = 'left'
-                                 ,hint_width = 280
-                                 ,inactive   = self._path_dec
-                                 ,active     = self._path_dec
+        self.btn_dec = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Decode')
+                                 ,hint     = _('Decode back to cp1251')
+                                 ,side     = 'left'
+                                 ,inactive = self._path_dec
+                                 ,active   = self._path_dec
                                  )
-        self.btn_sav = sg.Button (parent     = self.frm_btn
-                                 ,text       = _('Save')
-                                 ,hint       = _('Save changes')
-                                 ,side       = 'right'
-                                 ,hint_width = 200
-                                 ,inactive   = self._path_sav
-                                 ,active     = self._path_sav
-                                 ,bindings   = ['<F2>','<Control-s>']
+        self.btn_sav = sg.Button (parent   = self.frm_btn
+                                 ,text     = _('Save')
+                                 ,hint     = _('Save changes')
+                                 ,side     = 'right'
+                                 ,inactive = self._path_sav
+                                 ,active   = self._path_sav
+                                 ,bindings = ['<F2>','<Control-s>']
                                  )
     
     def icon(self,path=None):

@@ -169,6 +169,26 @@ class Hotkeys:
         f = '[shared] shared.Hotkeys.replace'
         if key:
             key = key.replace('<','').replace('>','')
+            key = key.replace('Left','←').replace('Right','→')
+            key = key.replace ('Button-1'
+                              ,_('Left mouse button')
+                              )
+            key = key.replace ('ButtonRelease-1'
+                              ,_('Left mouse button')
+                              )
+            key = key.replace ('Button-2'
+                              ,_('Middle mouse button')
+                              )
+            key = key.replace ('ButtonRelease-2'
+                              ,_('Middle mouse button')
+                              )
+            key = key.replace ('Button-3'
+                              ,_('Right mouse button')
+                              )
+            key = key.replace ('ButtonRelease-3'
+                              ,_('Right mouse button')
+                              )
+            key = key.replace('grave','~')
             # Left and right Alt and Shift are usually interchangeable
             key = key.replace('Alt_R','Alt_L')
             key = key.replace('Alt_L','Alt')
@@ -183,11 +203,11 @@ class Hotkeys:
             key = key.replace('Scroll_Lock','ScrollLock')
             key = key.replace('Print','PrintScrn')
             key = key.replace('Up','↑').replace('Down','↓')
-            key = key.replace('Left','←').replace('Right','→')
             key = key.replace('Execute','SysReq')
             key = key.replace('Num_Lock','NumLock')
             key = key.replace('Prior','PgUp')
             key = key.replace('Next','PgDn')
+            key = key.replace('Escape','Esc')
             ''' We should leave only 1 key if there are key
                 both for keyboard and keypad. Thus, we generally should
                 not have to use keypad key without keyboard
@@ -4212,9 +4232,10 @@ class Get:
     
     def __init__ (self,url,encoding='UTF-8'
                  ,Verbose=True,Verify=False
+                 ,timeout=6
                  ):
-        self._timeout  = 6
         self._html     = ''
+        self._timeout  = timeout
         self._url      = url
         self._encoding = encoding
         self.Verbose   = Verbose
