@@ -476,6 +476,7 @@ class AlbumEditor:
 class Directory:
     
     def __init__(self,path,Obfuscate=True):
+        self.values()
         if path:
             self.reset (path      = path
                        ,Obfuscate = Obfuscate
@@ -705,24 +706,29 @@ class Directory:
             sh.com.cancel(f)
     
     def values(self):
-        self.Success  = True
-        self.Decypher = False
-        self._path    = ''
-        self._target  = ''
-        self._rating  = 0
-        self._files   = []
-        self._audio   = []
-        self._tracks  = []
+        self.Success   = True
+        self.Decypher  = False
+        self.Obfuscate = False
+        self.idir      = None
+        self._path     = ''
+        self._target   = ''
+        self._rating   = 0
+        self._files    = []
+        self._audio    = []
+        self._tracks   = []
     
     def create_list(self):
         f = '[unmusic] logic.Directory.create_list'
         if self.Success:
             if not self._files:
-                self._files = self.idir.files()
-                for file in self._files:
-                    if sh.Path(file).extension().lower() \
-                    in TYPES:
-                        self._audio.append(file)
+                if self.idir:
+                    self._files = self.idir.files()
+                    for file in self._files:
+                        if sh.Path(file).extension().lower() \
+                        in TYPES:
+                            self._audio.append(file)
+                else:
+                    sh.com.empty(f)
             return self._files
         else:
             sh.com.cancel(f)
