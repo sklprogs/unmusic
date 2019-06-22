@@ -70,6 +70,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sg.objs.start()
-    #lg.objs.db().close()
-    lg.CopyLight().run()
+    lg.Copy().run()
+    lg.objs.db().close()
     sg.objs.end()

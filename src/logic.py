@@ -49,19 +49,78 @@ gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
-class CopyLight:
+class Copy:
     
-    def __init__(self,limit=100):
-        source = objs.default().ihome.add_share(_('external collection'))
-        # We do not check target since it can be a symlink
-        self.Success = sh.Directory(source).Success
+    def __init__(self,genre=_('Any'),limit=100):
+        #source = objs.default().ihome.add_share(_('external collection'))
+        # We do not check the target since it can be a symlink
+        #self.Success = sh.Directory(source).Success
+        self.Success = True
+        self._genre  = genre
         self._limit  = limit
         self._ids    = []
+        self._query  = ''
     
     def select(self):
-        f = '[unmusic] logic.CopyLight.select'
+        f = '[unmusic] logic.Copy.select'
         if self.Success:
-            self._ids = objs.db().unrated_light(self._limit)
+            try:
+                if self._genre == _('Light'):
+                    lst = list(ids) + list(LIGHT)
+                elif self._genre == _('Heavy'):
+                    lst = list(ids) + list(HEAVY)
+                else:
+                    lst = list(ids)
+                self.dbc.execute(self._query,lst)
+                result = self.dbc.fetchall()
+                if result:
+                    self._ids = [item[0] for item in result]
+            except Exception as e:
+                self.Success = False
+                sh.objs.mes (f,_('WARNING')
+                            ,_('Operation has failed!\n\nDetails: %s')\
+                            % str(e)
+                            )
+        else:
+            sh.com.cancel(f)
+    
+    def query(self):
+        f = '[unmusic] logic.Copy.query'
+        if self.Success:
+            ids = objs.db().unrated(300)
+            if ids:
+                self._query = 'select ALBUMID from ALBUMS \
+                               where ALBUMID in (%s)'
+                if self._genre == _('Any'):
+                    pass
+                elif self._genre == _('Light'):
+                    self._query += ' and GENRE in (%s)' \
+                                   % (','.join('?'*len(ids))
+                                     ,','.join('?'*len(LIGHT))
+                                     )
+                elif self._genre == _('Heavy'):
+                    self._query += ' and GENRE in (%s)' \
+                                   % (','.join('?'*len(ids))
+                                     ,','.join('?'*len(HEAVY))
+                                     )
+                else:
+                    self.Success = False
+                    genres = (_('Any'),_('Light'),_('Heavy'))
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
+                                % (str(self._genre),'; '.join(genres))
+                                )
+                    
+                self._query += ' order by ALBUMID limit %d' \
+                               % self._limit
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def report(self):
+        f = '[unmusic] logic.Copy.report'
+        if self.Success:
             if self._ids:
                 sh.log.append (f,_('DEBUG')
                               ,'; '.join ([str(albumid) \
@@ -70,13 +129,14 @@ class CopyLight:
                                          )
                               )
             else:
-                self.Success = False
                 sh.com.empty(f)
         else:
             sh.com.cancel(f)
     
     def run(self):
+        self.query()
         self.select()
+        self.report()
 
 
 
@@ -842,31 +902,6 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
-    
-    def unrated_light(self,limit=100):
-        f = '[unmusic] logic.DB.unrated_light'
-        if self.Success:
-            ids = self.unrated(300)
-            if ids:
-                try:
-                    query = 'select ALBUMID from ALBUMS \
-                             where ALBUMID in (%s) and GENRE in (%s) \
-                             order by ALBUMID limit %d' \
-                             % (','.join('?'*len(ids))
-                               ,','.join('?'*len(LIGHT))
-                               ,limit
-                               )
-                    lst = list(ids) + list(LIGHT)
-                    self.dbc.execute(query,lst)
-                    result = self.dbc.fetchall()
-                    if result:
-                        return [item[0] for item in result]
-                except Exception as e:
-                    self.fail(f,e)
-            else:
-                sh.com.empty(f)
-        else:
-            sh.com.cancel(f)
     
     def unrated(self,limit=100):
         f = '[unmusic] logic.DB.unrated'
