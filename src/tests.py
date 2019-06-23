@@ -70,6 +70,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sg.objs.start()
-    lg.Copy().run()
+    lg.Copy(limit=10,genre=_('Any'),year=2019).run()
     lg.objs.db().close()
     sg.objs.end()

@@ -51,13 +51,19 @@ gettext.install('unmusic','../resources/locale')
 
 class Copy:
     
-    def __init__(self,genre=_('Any'),limit=100):
+    def __init__ (self,genre=_('Any')
+                 ,limit=100,year=0
+                 ,syear=0,eyear=0
+                 ):
         #source = objs.default().ihome.add_share(_('external collection'))
         # We do not check the target since it can be a symlink
         #self.Success = sh.Directory(source).Success
         self.Success = True
         self._genre  = genre
         self._limit  = limit
+        self._year   = year
+        self._syear  = syear
+        self._eyear  = eyear
         self._ids    = []
         self._query  = ''
     
@@ -66,15 +72,18 @@ class Copy:
         if self.Success:
             try:
                 if self._genre == _('Light'):
-                    lst = list(ids) + list(LIGHT)
+                    lst = list(self._ids) + list(LIGHT)
                 elif self._genre == _('Heavy'):
-                    lst = list(ids) + list(HEAVY)
+                    lst = list(self._ids) + list(HEAVY)
                 else:
-                    lst = list(ids)
-                self.dbc.execute(self._query,lst)
-                result = self.dbc.fetchall()
+                    lst = list(self._ids)
+                objs.db().dbc.execute(self._query,lst)
+                result = objs._db.dbc.fetchall()
                 if result:
                     self._ids = [item[0] for item in result]
+                else:
+                    sh.com.empty(f)
+                    self.Success = False
             except Exception as e:
                 self.Success = False
                 sh.objs.mes (f,_('WARNING')
@@ -87,22 +96,20 @@ class Copy:
     def query(self):
         f = '[unmusic] logic.Copy.query'
         if self.Success:
-            ids = objs.db().unrated(300)
+            ids = objs.db().rated()
             if ids:
+                self._ids = ids
                 self._query = 'select ALBUMID from ALBUMS \
-                               where ALBUMID in (%s)'
+                               where ALBUMID in (%s)' \
+                               % ','.join('?'*len(self._ids))
                 if self._genre == _('Any'):
                     pass
                 elif self._genre == _('Light'):
                     self._query += ' and GENRE in (%s)' \
-                                   % (','.join('?'*len(ids))
-                                     ,','.join('?'*len(LIGHT))
-                                     )
+                                   % ','.join('?'*len(LIGHT))
                 elif self._genre == _('Heavy'):
                     self._query += ' and GENRE in (%s)' \
-                                   % (','.join('?'*len(ids))
-                                     ,','.join('?'*len(HEAVY))
-                                     )
+                                   % ','.join('?'*len(HEAVY))
                 else:
                     self.Success = False
                     genres = (_('Any'),_('Light'),_('Heavy'))
@@ -110,9 +117,20 @@ class Copy:
                                 ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
                                 % (str(self._genre),'; '.join(genres))
                                 )
-                    
-                self._query += ' order by ALBUMID limit %d' \
-                               % self._limit
+                ''' If an exact year is set then only this year should
+                    be used; otherwise, a starting-ending years range
+                    should be used.
+                '''
+                if self._year:
+                    self._query += ' and YEAR = %d' % self._year
+                else:
+                    if self._syear:
+                        self._query += ' and YEAR >= %d' % self._syear
+                    if self._eyear:
+                        self._query += ' and YEAR <= %d' % self._eyear
+                self._query += ' order by ALBUMID'
+                if self._limit:
+                    self._query += ' limit %d' % self._limit
             else:
                 sh.com.empty(f)
         else:
@@ -903,14 +921,20 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
-    def unrated(self,limit=100):
+    def rated(self,rating=0,limit=0):
         f = '[unmusic] logic.DB.unrated'
         if self.Success:
             try:
-                self.dbc.execute ('select distinct ALBUMID \
-                                   from TRACKS where RATING = ? limit ?'
-                                 ,(0,limit,)
-                                 )
+                if limit:
+                    self.dbc.execute ('select distinct ALBUMID \
+                                       from TRACKS where RATING = ? \
+                                       limit ?',(rating,limit,)
+                                     )
+                else:
+                    self.dbc.execute ('select distinct ALBUMID \
+                                       from TRACKS where RATING = ?'
+                                     ,(rating,)
+                                     )
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
