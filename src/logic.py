@@ -67,6 +67,44 @@ class Copy:
         self._ids    = []
         self._query  = ''
     
+    def filter(self):
+        f = '[unmusic] logic.Copy.filter'
+        if self.Success:
+            if self._ids:
+                lst = objs.db().brief(self._ids)
+                if lst:
+                    lst = lst.splitlines()
+                    ibox = sg.MultCBoxes(lst=lst)
+                    ibox.show()
+                    selected = ibox.selected()
+                    poses = []
+                    if selected:
+                        for item in selected:
+                            try:
+                                poses.append(lst.index(item))
+                            except ValueError:
+                                self.Success = False
+                                sh.objs.mes (f,_('ERROR')
+                                            ,_('Wrong input data!')
+                                            )
+                        ids = []
+                        for pos in poses:
+                            try:
+                                ids.append(self._ids[pos])
+                            except IndexError:
+                                sh.objs.mes (f,_('ERROR')
+                                            ,_('Wrong input data!')
+                                            )
+                        self._ids = ids
+                    else:
+                        sh.com.empty(f)
+                else:
+                    sh.com.empty(f)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def select(self):
         f = '[unmusic] logic.Copy.select'
         if self.Success:
@@ -102,7 +140,7 @@ class Copy:
                 self._query = 'select ALBUMID from ALBUMS \
                                where ALBUMID in (%s)' \
                                % ','.join('?'*len(self._ids))
-                if self._genre == _('Any'):
+                if self._genre in (_('All'),_('Any')):
                     pass
                 elif self._genre == _('Light'):
                     self._query += ' and GENRE in (%s)' \
@@ -112,7 +150,7 @@ class Copy:
                                    % ','.join('?'*len(HEAVY))
                 else:
                     self.Success = False
-                    genres = (_('Any'),_('Light'),_('Heavy'))
+                    genres = (_('All'),_('Any'),_('Light'),_('Heavy'))
                     sh.objs.mes (f,_('ERROR')
                                 ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
                                 % (str(self._genre),'; '.join(genres))
@@ -140,12 +178,15 @@ class Copy:
         f = '[unmusic] logic.Copy.report'
         if self.Success:
             if self._ids:
+                '''
                 sh.log.append (f,_('DEBUG')
                               ,'; '.join ([str(albumid) \
                                            for albumid in self._ids
                                           ]
                                          )
                               )
+                '''
+                sg.fast_txt(objs.db().brief(self._ids))
             else:
                 sh.com.empty(f)
         else:
@@ -154,6 +195,7 @@ class Copy:
     def run(self):
         self.query()
         self.select()
+        self.filter()
         self.report()
 
 
@@ -920,6 +962,55 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def brief(self,ids):
+        f = '[unmusic] logic.DB.brief'
+        if self.Success:
+            if ids:
+                try:
+                    query = 'select ARTIST,YEAR,ALBUM from ALBUMS \
+                             where ALBUMID in (%s)' \
+                             % ','.join('?'*len(ids))
+                    self.dbc.execute(query,ids)
+                    result = self.dbc.fetchall()
+                    if result:
+                        lst = [' - '.join ([item[0],str(item[1])
+                                           ,item[2]
+                                           ]
+                                          )\
+                               for item in result
+                              ]
+                        return '\n'.join(lst)
+                        
+                except Exception as e:
+                    self.fail(f,e)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def unknown_genre(self,limit=0):
+        f = '[unmusic] logic.DB.unknown_genre'
+        if self.Success:
+            try:
+                if limit:
+                    self.dbc.execute ('select ALBUMID from ALBUMS \
+                                       where GENRE = ? limit ? \
+                                       order by ALBUMID'
+                                     ,('?',limit,)
+                                     )
+                else:
+                    self.dbc.execute ('select ALBUMID from ALBUMS \
+                                       where GENRE = ? order by ALBUMID'
+                                     ,('?',)
+                                     )
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def rated(self,rating=0,limit=0):
         f = '[unmusic] logic.DB.unrated'
