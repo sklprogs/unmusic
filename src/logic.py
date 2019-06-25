@@ -16,7 +16,7 @@ VERSION = '1.0'
 TYPES = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
         ,'.mpc','.asf','.aiff','.dsf'
         ]
-# Do not localize (being stored in DB)
+#note: Do not localize (being stored in DB)
 GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
          ,'Brutal Death Metal','Chanson','Classical','Death Metal'
          ,'Death Metal/Grindcore','Death/Black Metal'
@@ -41,8 +41,6 @@ HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         ,'Power Metal','Technical Brutal Death Metal'
         ,'Technical Death Metal','Thrash Metal'
         )
-#todo: do not hardcode
-DEST_HEAVY = '/media/COWON/MUSIC'
 
 import gettext, gettext_windows
 gettext_windows.setup_env()
@@ -55,26 +53,75 @@ class Copy:
                  ,limit=100,year=0
                  ,syear=0,eyear=0
                  ):
-        #source = objs.default().ihome.add_share(_('external collection'))
-        # We do not check the target since it can be a symlink
-        #self.Success = sh.Directory(source).Success
-        self.Success = True
+        self.values()
+        self.Success = objs.db().Success
         self._genre  = genre
         self._limit  = limit
         self._year   = year
         self._syear  = syear
         self._eyear  = eyear
-        self._ids    = []
-        self._query  = ''
     
-    def filter(self):
-        f = '[unmusic] logic.Copy.filter'
+    def values(self):
+        self._ids    = []
+        self._sizes  = []
+        self._dirs   = []
+        self._query  = ''
+        self._source = ''
+    
+    #todo: reimplement with GUI
+    def select_source(self):
+        f = '[unmusic] logic.Copy.select_source'
+        ''' Adding 'os.path.sep' at the end allows to follow symlinks
+            (avoid errors in case the path is a symlink and not
+            a directory).
+        '''
+        if self.Success:
+            self._source = objs.default().ihome.add_share(_('external collection'))
+            idir = sh.Directory(self._source)
+            self.Success = idir.Success
+            self._source = idir.dir
+        else:
+            sh.com.cancel(f)
+    
+    def sizes(self):
+        f = '[unmusic] logic.Copy.sizes'
+        if self.Success:
+            self._sizes = []
+            if self._ids:
+                for myid in self._ids:
+                    mydir = os.path.join(self._source,str(myid))
+                    idir  = sh.Directory(mydir)
+                    self.Success = idir.Success
+                    if self.Success:
+                        self._sizes.append(idir.size())
+                    else:
+                        sh.com.cancel(f)
+                        break
+                if self.Success:
+                    total = sum(self._sizes)
+                    total = sh.com.human_size(total,LargeOnly=1)
+                    sh.log.append (f,_('INFO')
+                                  ,_('Total size: %s') % total
+                                  )
+                else:
+                    sh.com.cancel(f)
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
+        else:
+            sh.com.cancel(f)
+    
+    def select_albums(self):
+        f = '[unmusic] logic.Copy.select_albums'
         if self.Success:
             if self._ids:
-                lst = objs.db().brief(self._ids)
-                if lst:
-                    lst = lst.splitlines()
-                    ibox = sg.MultCBoxes(lst=lst)
+                text = objs.db().brief(self._ids)
+                if text:
+                    lst  = text.splitlines()
+                    ibox = sg.MultCBoxes (text      = text
+                                         ,SelectAll = True
+                                         )
                     ibox.show()
                     selected = ibox.selected()
                     poses = []
@@ -105,8 +152,8 @@ class Copy:
         else:
             sh.com.cancel(f)
     
-    def select(self):
-        f = '[unmusic] logic.Copy.select'
+    def fetch(self):
+        f = '[unmusic] logic.Copy.fetch'
         if self.Success:
             try:
                 if self._genre == _('Light'):
@@ -174,8 +221,8 @@ class Copy:
         else:
             sh.com.cancel(f)
     
-    def report(self):
-        f = '[unmusic] logic.Copy.report'
+    def debug(self):
+        f = '[unmusic] logic.Copy.debug'
         if self.Success:
             if self._ids:
                 '''
@@ -186,17 +233,26 @@ class Copy:
                                          )
                               )
                 '''
-                sg.fast_txt(objs.db().brief(self._ids))
+                ids = objs.db().brief(self._ids)
+                ids = ids.splitlines()
+                ids.sort()
+                sg.fast_txt('\n'.join(ids))
             else:
                 sh.com.empty(f)
         else:
             sh.com.cancel(f)
     
     def run(self):
+        ''' Actually, we can run 'self.fetch' before selecting a source
+            and building a query. However, in case setting the source
+            fails, it is more coherent to fail as early as possible.
+        '''
+        self.select_source()
         self.query()
-        self.select()
-        self.filter()
-        self.report()
+        self.fetch()
+        self.select_albums()
+        self.debug()
+        self.sizes()
 
 
 
@@ -1863,8 +1919,6 @@ class Commands:
 objs = Objects()
 objs.default()
 com = Commands()
-#todo: do not hardcode
-DEST_LIGHT = objs._default.ihome.add_share(_('local collection'))
 
 
 
