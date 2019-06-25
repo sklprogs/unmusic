@@ -22,6 +22,14 @@ class Copy:
         self.parent = sg.objs.new_top()
         self.gui()
     
+    def reset(self,event=None):
+        self.opt_gnr.set(_('All'))
+        self.opt_yer.set(_('Not set'))
+        self.ent_yer.reset()
+        self.opt_src.set(_('external collection'))
+        self.opt_trg.set(_('mobile collection'))
+        self.btn_str.focus()
+    
     def bindings(self):
         sg.bind (obj      = self.parent
                 ,bindings = ('<Escape>','<Control-w>','<Control-q>')
@@ -90,6 +98,7 @@ class Copy:
         self.btn_rst = sg.Button (parent = self.frm_btl
                                  ,text   = _('Reset')
                                  ,side   = 'right'
+                                 ,action = self.reset
                                  )
         self.btn_str = sg.Button (parent    = self.frm_btr
                                  ,text      = _('Start')
