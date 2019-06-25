@@ -52,20 +52,17 @@ class Copy:
             if self.gui.opt_yer.choice == _('Not set'):
                 pass
             elif self.gui.opt_yer.choice == '=':
-                self._year = self.gui.ent_yer.get()
-                sh.Input (title = f
-                         ,value = self._year
-                         ).integer()
+                self._year = sh.Input (title = f
+                                      ,value = self.gui.ent_yer.get()
+                                      ).integer()
             elif self.gui.opt_yer.choice == '>=':
-                self._syear = self.gui.ent_yer.get()
-                sh.Input (title = f
-                         ,value = self._syear
-                         ).integer()
+                self._syear = sh.Input (title = f
+                                       ,value = self.gui.ent_yer.get()
+                                       ).integer()
             elif self.gui.opt_yer.choice == '<=':
-                self._eyear = self.gui.ent_yer.get()
-                sh.Input (title = f
-                         ,value = self._eyear
-                         ).integer()
+                self._eyear = sh.Input (title = f
+                                       ,value = self.gui.ent_yer.get()
+                                       ).integer()
             else:
                 sh.objs.mes (f,_('ERROR')
                             ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
@@ -75,8 +72,9 @@ class Copy:
                             )
             self._source = lg.objs.default().ihome.add_share(self.gui.opt_src.choice)
             self._target = lg.objs._default.ihome.add_share(self.gui.opt_trg.choice)
-            #todo: implement
-            self._limit  = 100
+            self._limit  = sh.Input (title = f
+                                    ,value = self.gui.ent_lim.get()
+                                    ).integer()
         else:
             sh.com.cancel(f)
     
@@ -101,13 +99,17 @@ class Copy:
         self._year   = 0
         self._syear  = 0
         self._eyear  = 0
+        # At least 30 MiB should remain free on the target device
+        self._minfr  = 31457280
         self.Success = lg.objs.db().Success
     
     def confirm(self):
         f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
             total = sum(self._sizes)
-            if total:
+            free  = sh.Path(self._target).free_space()
+            cond  = total and free and total + self._minfr < free
+            if cond:
                 total    = sh.com.human_size(total,LargeOnly=1)
                 message  = _('Selected albums: %d') % len(self._ids) \
                            + '\n'
@@ -116,11 +118,15 @@ class Copy:
                 return sh.objs.mes (f,_('QUESTION')
                                    ,message
                                    ).Yes
-            else:
+            elif not total:
                 # Do not fail here since we may change settings after
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
                               )
+            else:
+                sh.objs.mes (f,_('WARNING')
+                            ,_('Not enough free space on "{}"!').format(self._target)
+                            )
         else:
             sh.com.cancel(f)
     

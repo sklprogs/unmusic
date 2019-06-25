@@ -24,12 +24,28 @@ class Copy:
         self.parent = sg.objs.new_top()
         self.gui()
     
+    def limit(self):
+        self.lbl_lim = sg.Label (parent = self.frm_lim
+                                ,text   = _('Limit:')
+                                ,side   = 'left'
+                                ,Close  = False
+                                ,width  = self._width
+                                )
+        self.ent_lim = sg.Entry (parent    = self.frm_lim
+                                ,Composite = True
+                                ,side      = 'left'
+                                ,width     = 5
+                                )
+        self.ent_lim.insert(100)
+    
     def reset(self,event=None):
         self.opt_gnr.set(_('All'))
         self.opt_yer.set(_('Not set'))
-        self.ent_yer.reset()
         self.opt_src.set(_('external collection'))
         self.opt_trg.set(_('mobile collection'))
+        self.ent_yer.reset()
+        self.ent_lim.reset()
+        self.ent_lim.insert(100)
         self.btn_str.focus()
     
     def bindings(self):
@@ -75,6 +91,11 @@ class Copy:
                                 )
         
         self.frm_trg = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'top'
+                                )
+        self.frm_lim = sg.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
@@ -128,6 +149,7 @@ class Copy:
                                 ,side      = 'left'
                                 ,fill      = None
                                 ,expand    = None
+                                ,width     = 4
                                 )
     
     def genre(self):
@@ -187,6 +209,7 @@ class Copy:
         self.year()
         self.source()
         self.target()
+        self.limit()
         self.buttons()
         self.icon()
         self.title()
