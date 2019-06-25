@@ -110,10 +110,16 @@ class Copy:
             free  = sh.Path(self._target).free_space()
             cond  = total and free and total + self._minfr < free
             if cond:
-                total    = sh.com.human_size(total,LargeOnly=1)
-                message  = _('Selected albums: %d') % len(self._ids) \
-                           + '\n'
-                message += _('Total size: %s') % total + '\n\n'
+                free  = sh.com.human_size (bsize     = free
+                                          ,LargeOnly = True
+                                          )
+                total = sh.com.human_size(total,LargeOnly=1)
+                message  = _('Selected albums: {}').format(len(self._ids))
+                message += '\n'
+                message += _('Total size: {}').format(total)
+                message += '\n'
+                message += _('Free space: {}').format(free)
+                message += '\n\n'
                 message += _('Continue?')
                 return sh.objs.mes (f,_('QUESTION')
                                    ,message
@@ -124,8 +130,19 @@ class Copy:
                               ,_('Nothing to do!')
                               )
             else:
+                free = sh.com.human_size (bsize     = free
+                                         ,LargeOnly = True
+                                         )
+                required = sh.com.human_size (bsize     = total + self._minfr
+                                             ,LargeOnly = True
+                                             )
+                message  = _('Not enough free space on "{}"!').format(self._target)
+                message += '\n'
+                message += _('Free space: {}').format(free)
+                message += '\n'
+                message += _('Required: {}').format(required)
                 sh.objs.mes (f,_('WARNING')
-                            ,_('Not enough free space on "{}"!').format(self._target)
+                            ,message
                             )
         else:
             sh.com.cancel(f)
@@ -147,6 +164,10 @@ class Copy:
         if self.Success:
             self._sizes = []
             if self._ids:
+                sg.objs.waitbox().reset (func_title = f
+                                        ,message    = _('Calculate required space')
+                                        )
+                sg.objs._waitbox.show()
                 for myid in self._ids:
                     mydir = os.path.join(self._source,str(myid))
                     idir  = sh.Directory(mydir)
@@ -156,6 +177,7 @@ class Copy:
                     else:
                         sh.com.cancel(f)
                         break
+                sg.objs._waitbox.close()
             else:
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
@@ -172,6 +194,8 @@ class Copy:
                     lst  = text.splitlines()
                     ibox = sg.MultCBoxes (text      = text
                                          ,SelectAll = True
+                                         ,width     = 1024
+                                         ,height    = 768
                                          )
                     ibox.show()
                     selected = ibox.selected()
