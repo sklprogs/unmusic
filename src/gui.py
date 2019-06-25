@@ -15,6 +15,168 @@ PLAY = (_('Play')
        )
 
 
+class Copy:
+    
+    def __init__(self):
+        self.parent = sg.objs.new_top()
+        self.gui()
+    
+    def icon(self,path=None):
+        if path:
+            self.parent.icon(path)
+        else:
+            self.parent.icon (sh.objs.pdir().add ('..','resources'
+                                                 ,'unmusic.gif'
+                                                 )
+                             )
+    
+    def title(self,arg=None):
+        if not arg:
+            arg = _('Copy music')
+        self.parent.title(arg)
+    
+    def frames(self):
+        self.frm_prm = sg.Frame (parent = self.parent
+                                ,expand = True
+                                ,fill   = 'both'
+                                )
+        self.frm_gnr = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'top'
+                                )
+        self.frm_yer = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'top'
+                                )
+        self.frm_src = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'top'
+                                )
+        
+        self.frm_trg = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'top'
+                                )
+        self.frm_btn = sg.Frame (parent = self.frm_prm
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,side   = 'bottom'
+                                ,pady   = 7
+                                )
+        self.frm_btl = sg.Frame (parent = self.frm_btn
+                                ,side   = 'left'
+                                )
+        self.frm_btr = sg.Frame (parent = self.frm_btn
+                                ,side   = 'right'
+                                )
+    
+    def buttons(self):
+        self.btn_cls = sg.Button (parent = self.frm_btl
+                                 ,text   = _('Close')
+                                 ,side   = 'left'
+                                 )
+        self.btn_rst = sg.Button (parent = self.frm_btl
+                                 ,text   = _('Reset')
+                                 ,side   = 'right'
+                                 )
+        self.btn_str = sg.Button (parent    = self.frm_btr
+                                 ,text      = _('Start')
+                                 ,side      = 'right'
+                                 ,TakeFocus = True
+                                 )
+    
+    def year(self):
+        self.lbl_yer = sg.Label (parent = self.frm_yer
+                                ,text   = _('Year:')
+                                ,side   = 'left'
+                                ,fill   = None
+                                ,expand = False
+                                ,Close  = False
+                                )
+        self.opt_yer = sg.OptionMenu (parent  = self.frm_yer
+                                     ,items   = (_('Not set'),'=','>='
+                                                ,'<='
+                                                )
+                                     ,side    = 'left'
+                                     ,default = _('Not set')
+                                     )
+        self.ent_yer = sg.Entry (parent    = self.frm_yer
+                                ,Composite = True
+                                ,side      = 'left'
+                                ,fill      = None
+                                ,expand    = None
+                                )
+    
+    def genre(self):
+        self.lbl_gnr = sg.Label (parent = self.frm_gnr
+                                ,text   = _('Genres:')
+                                ,side   = 'left'
+                                ,fill   = None
+                                ,expand = False
+                                ,Close  = False
+                                )
+        self.opt_gnr = sg.OptionMenu (parent  = self.frm_gnr
+                                     ,items   = (_('All'),_('Heavy')
+                                                ,_('Light')
+                                                )
+                                     ,side    = 'left'
+                                     ,default = _('All')
+                                     )
+    
+    def source(self):
+        self.lbl_src = sg.Label (parent = self.frm_src
+                                ,text   = _('Source (read-only):')
+                                ,side   = 'left'
+                                ,fill   = None
+                                ,expand = False
+                                ,Close  = False
+                                )
+        self.opt_src = sg.OptionMenu (parent  = self.frm_src
+                                     ,items   = (_('external collection')
+                                                ,_('local collection')
+                                                )
+                                     ,side    = 'left'
+                                     ,default = _('external collection')
+                                     )
+    
+    def target(self):
+        self.lbl_trg = sg.Label (parent = self.frm_trg
+                                ,text   = _('Target (writable):')
+                                ,side   = 'left'
+                                ,fill   = None
+                                ,expand = False
+                                ,Close  = False
+                                )
+        self.opt_trg = sg.OptionMenu (parent  = self.frm_trg
+                                     ,items   = (_('mobile collection')
+                                                ,_('local collection')
+                                                )
+                                     ,side    = 'left'
+                                     ,default = _('mobile collection')
+                                     )
+    
+    def gui(self):
+        self.frames()
+        self.genre()
+        self.year()
+        self.source()
+        self.target()
+        self.buttons()
+        self.icon()
+        self.title()
+    
+    def show(self,event=None):
+        self.parent.show()
+    
+    def close(self,event=None):
+        self.parent.close()
+
+
+
 class ImageViewer:
     
     def __init__(self):
@@ -1089,6 +1251,6 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    AlbumEditor().show()
+    Copy().show()
     #Tracks().show()
     sg.objs.end()
