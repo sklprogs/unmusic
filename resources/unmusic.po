@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-22 19:56+0300\n"
-"PO-Revision-Date: 2019-06-22 19:57+0300\n"
+"POT-Creation-Date: 2019-06-25 15:16+0300\n"
+"PO-Revision-Date: 2019-06-25 15:16+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Poedit-Basepath: ../src\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: album_editor.py:22 logic.py:125 shared.py:331 shared.py:2623 shared.py:3204
-#: shared.py:3609 shared.py:3930 shared.py:3957 sharedGUI.py:1112
+#: album_editor.py:22 shared.py:331 shared.py:2705 shared.py:3286
+#: shared.py:3691 shared.py:4012 shared.py:4039 sharedGUI.py:1112
 #: sharedGUI.py:1152 sharedGUI.py:1735 sharedGUI.py:4231 sharedGUI.py:4235
 #: unmusic.py:1089
 msgid "DEBUG"
@@ -33,26 +33,26 @@ msgstr "До свидания!"
 msgid "not processed"
 msgstr "не обработано"
 
-#: collect_silent.py:30 collect_silent.py:45 logic.py:577 logic.py:658
-#: logic.py:757 logic.py:827 logic.py:1400 logic.py:1572 shared.py:442
-#: shared.py:504 shared.py:539 shared.py:571 shared.py:865 shared.py:929
-#: shared.py:1533 shared.py:1669 shared.py:1685 shared.py:1729 shared.py:1742
-#: shared.py:1789 shared.py:1802 shared.py:1845 shared.py:1855 shared.py:1957
-#: shared.py:2001 shared.py:2031 shared.py:2268 shared.py:2380 shared.py:2468
-#: shared.py:2481 shared.py:2518 shared.py:2524 shared.py:2696 shared.py:2756
-#: shared.py:2779 shared.py:2795 shared.py:2808 shared.py:2838 shared.py:2993
-#: shared.py:3317 shared.py:4078 shared.py:4124 shared.py:4280 shared.py:4399
-#: shared.py:4404 shared.py:4409 shared.py:4853 sharedGUI.py:465
-#: sharedGUI.py:573 sharedGUI.py:577 sharedGUI.py:583 sharedGUI.py:600
-#: sharedGUI.py:604 sharedGUI.py:611 sharedGUI.py:1159 sharedGUI.py:1495
-#: sharedGUI.py:1601 sharedGUI.py:1650 sharedGUI.py:2085 sharedGUI.py:2422
-#: sharedGUI.py:2434 sharedGUI.py:2825 sharedGUI.py:2837 sharedGUI.py:2866
-#: sharedGUI.py:2870 sharedGUI.py:2955 sharedGUI.py:2972 sharedGUI.py:3388
-#: sharedGUI.py:3420 sharedGUI.py:3427 sharedGUI.py:3544 sharedGUI.py:4286
-#: unmusic.py:59 unmusic.py:244 unmusic.py:333 unmusic.py:347 unmusic.py:471
-#: unmusic.py:611 unmusic.py:615 unmusic.py:643 unmusic.py:647 unmusic.py:686
-#: unmusic.py:692 unmusic.py:714 unmusic.py:720 unmusic.py:955 unmusic.py:973
-#: unmusic.py:1023 unmusic.py:1038
+#: collect_silent.py:30 collect_silent.py:45 logic.py:103 logic.py:109
+#: logic.py:693 logic.py:774 logic.py:873 logic.py:943 logic.py:1571
+#: logic.py:1743 shared.py:442 shared.py:504 shared.py:539 shared.py:571
+#: shared.py:865 shared.py:929 shared.py:1533 shared.py:1693 shared.py:1709
+#: shared.py:1753 shared.py:1766 shared.py:1813 shared.py:1826 shared.py:1890
+#: shared.py:1900 shared.py:2007 shared.py:2051 shared.py:2081 shared.py:2318
+#: shared.py:2462 shared.py:2550 shared.py:2563 shared.py:2600 shared.py:2606
+#: shared.py:2778 shared.py:2838 shared.py:2861 shared.py:2877 shared.py:2890
+#: shared.py:2920 shared.py:3075 shared.py:3399 shared.py:4160 shared.py:4206
+#: shared.py:4362 shared.py:4481 shared.py:4486 shared.py:4491 shared.py:4964
+#: sharedGUI.py:465 sharedGUI.py:573 sharedGUI.py:577 sharedGUI.py:583
+#: sharedGUI.py:600 sharedGUI.py:604 sharedGUI.py:611 sharedGUI.py:1159
+#: sharedGUI.py:1495 sharedGUI.py:1601 sharedGUI.py:1650 sharedGUI.py:2085
+#: sharedGUI.py:2422 sharedGUI.py:2434 sharedGUI.py:2825 sharedGUI.py:2837
+#: sharedGUI.py:2866 sharedGUI.py:2870 sharedGUI.py:2955 sharedGUI.py:2972
+#: sharedGUI.py:3388 sharedGUI.py:3420 sharedGUI.py:3427 sharedGUI.py:3544
+#: sharedGUI.py:4298 unmusic.py:59 unmusic.py:244 unmusic.py:333 unmusic.py:347
+#: unmusic.py:471 unmusic.py:611 unmusic.py:615 unmusic.py:643 unmusic.py:647
+#: unmusic.py:686 unmusic.py:692 unmusic.py:714 unmusic.py:720 unmusic.py:955
+#: unmusic.py:973 unmusic.py:1023 unmusic.py:1038
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
@@ -70,7 +70,7 @@ msgstr "Операция завершена за %s"
 msgid "Play"
 msgstr "Слушать"
 
-#: gui.py:12 unmusic.py:474
+#: gui.py:12 logic.py:190 logic.py:200 tests.py:73 unmusic.py:474
 msgid "All"
 msgstr "Все"
 
@@ -154,15 +154,15 @@ msgstr "Дорожки"
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: gui.py:228 logic.py:1558
+#: gui.py:228 logic.py:1729
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:232 logic.py:1559
+#: gui.py:232 logic.py:1730
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:236 logic.py:1561
+#: gui.py:236 logic.py:1732
 msgid "Year:"
 msgstr "Год:"
 
@@ -182,7 +182,7 @@ msgstr "Средний битрейт:"
 msgid "Total length:"
 msgstr "Общая длина:"
 
-#: gui.py:256 logic.py:1560
+#: gui.py:256 logic.py:1731
 msgid "Genre:"
 msgstr "Жанр:"
 
@@ -267,16 +267,16 @@ msgstr "Дорожки:"
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: gui.py:982 logic.py:1562
+#: gui.py:982 logic.py:1733
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: gui.py:986 logic.py:1563 sharedGUI.py:387 sharedGUI.py:1098
+#: gui.py:986 logic.py:1734 sharedGUI.py:387 sharedGUI.py:1098
 #: sharedGUI.py:3040 sharedGUI.py:3051 sharedGUI.py:3515
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: gui.py:990 logic.py:1564
+#: gui.py:990 logic.py:1735
 msgid "Lyrics:"
 msgstr "Слова:"
 
@@ -284,7 +284,7 @@ msgstr "Слова:"
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: gui.py:1002 logic.py:1570
+#: gui.py:1002 logic.py:1741
 msgid "Length:"
 msgstr "Продолжительность:"
 
@@ -292,54 +292,110 @@ msgstr "Продолжительность:"
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: logic.py:54 logic.py:94 logic.py:108
+#: logic.py:52 logic.py:190 logic.py:200
 msgid "Any"
 msgstr "Любой"
 
-#: logic.py:68 logic.py:96 logic.py:108
+#: logic.py:79 logic.py:341
+msgid "external collection"
+msgstr "внешняя коллекция"
+
+#: logic.py:104
+#, python-format
+msgid "Total size: %s"
+msgstr "Общий размер: %s"
+
+#: logic.py:110 logic.py:775 shared.py:4965 sharedGUI.py:1496 sharedGUI.py:1651
+#: sharedGUI.py:2086 sharedGUI.py:4299 unmusic.py:348 unmusic.py:472
+#: unmusic.py:648 unmusic.py:693 unmusic.py:721
+msgid "Nothing to do!"
+msgstr "Действие не требуется."
+
+#: logic.py:134 logic.py:142 logic.py:201 logic.py:402 logic.py:803
+#: logic.py:1144 logic.py:1261 shared.py:342 shared.py:347 shared.py:356
+#: shared.py:365 shared.py:374 shared.py:434 shared.py:450 shared.py:454
+#: shared.py:470 shared.py:488 shared.py:514 shared.py:665 shared.py:688
+#: shared.py:795 shared.py:805 shared.py:883 shared.py:906 shared.py:934
+#: shared.py:1652 shared.py:1700 shared.py:1716 shared.py:1744 shared.py:1908
+#: shared.py:1914 shared.py:2019 shared.py:2023 shared.py:2035 shared.py:2185
+#: shared.py:2209 shared.py:2546 shared.py:2695 shared.py:2867 shared.py:2900
+#: shared.py:4446 shared.py:4466 shared.py:4517 sharedGUI.py:35 sharedGUI.py:81
+#: sharedGUI.py:109 sharedGUI.py:137 sharedGUI.py:142 sharedGUI.py:147
+#: sharedGUI.py:167 sharedGUI.py:259 sharedGUI.py:263 sharedGUI.py:274
+#: sharedGUI.py:289 sharedGUI.py:300 sharedGUI.py:315 sharedGUI.py:332
+#: sharedGUI.py:337 sharedGUI.py:526 sharedGUI.py:945 sharedGUI.py:958
+#: sharedGUI.py:966 sharedGUI.py:974 sharedGUI.py:991 sharedGUI.py:1007
+#: sharedGUI.py:1013 sharedGUI.py:1065 sharedGUI.py:1594 sharedGUI.py:1880
+#: sharedGUI.py:1897 sharedGUI.py:2111 sharedGUI.py:2125 sharedGUI.py:2179
+#: sharedGUI.py:2303 sharedGUI.py:2426 sharedGUI.py:2443 sharedGUI.py:2460
+#: sharedGUI.py:2464 sharedGUI.py:2470 sharedGUI.py:2484 sharedGUI.py:2496
+#: sharedGUI.py:2507 sharedGUI.py:2516 sharedGUI.py:2527 sharedGUI.py:2560
+#: sharedGUI.py:2564 sharedGUI.py:2622 sharedGUI.py:2721 sharedGUI.py:2822
+#: sharedGUI.py:2829 sharedGUI.py:2834 sharedGUI.py:2838 sharedGUI.py:2850
+#: sharedGUI.py:2854 sharedGUI.py:2963 sharedGUI.py:2968 sharedGUI.py:2971
+#: sharedGUI.py:3087 sharedGUI.py:3113 sharedGUI.py:3119 sharedGUI.py:3123
+#: sharedGUI.py:3143 sharedGUI.py:3153 sharedGUI.py:3321 sharedGUI.py:3404
+#: sharedGUI.py:3434 sharedGUI.py:3587 sharedGUI.py:4123 sharedGUI.py:4206
+#: unmusic.py:92 unmusic.py:97 unmusic.py:191 unmusic.py:238 unmusic.py:484
+#: unmusic.py:537 unmusic.py:566 unmusic.py:624 unmusic.py:930
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: logic.py:135 logic.py:143 logic.py:999 shared.py:603 shared.py:806
+#: shared.py:919 shared.py:1585 shared.py:2112 shared.py:2807 shared.py:2883
+#: shared.py:3774 shared.py:4408 shared.py:4585 sharedGUI.py:148
+#: sharedGUI.py:527 sharedGUI.py:2427 sharedGUI.py:2444 sharedGUI.py:2465
+#: sharedGUI.py:2471 sharedGUI.py:2485 sharedGUI.py:2497 sharedGUI.py:2508
+#: sharedGUI.py:2517 sharedGUI.py:2528 sharedGUI.py:2623 sharedGUI.py:3253
+#: sharedGUI.py:3322 sharedGUI.py:3588 sharedGUI.py:4114 unmusic.py:93
+msgid "Wrong input data!"
+msgstr "Недопустимые входные данные!"
+
+#: logic.py:159 logic.py:192 logic.py:200
 msgid "Light"
 msgstr "Легкий"
 
-#: logic.py:70 logic.py:101 logic.py:108
+#: logic.py:161 logic.py:195 logic.py:200
 msgid "Heavy"
 msgstr "Тяжелый"
 
-#: logic.py:80 logic.py:278 logic.py:469 logic.py:651 logic.py:809 logic.py:882
-#: logic.py:1413 logic.py:1489 logic.py:1509 logic.py:1639 logic.py:1655
-#: shared.py:102 shared.py:405 shared.py:419 shared.py:474 shared.py:492
-#: shared.py:514 shared.py:533 shared.py:583 shared.py:588 shared.py:602
-#: shared.py:626 shared.py:645 shared.py:649 shared.py:672 shared.py:695
-#: shared.py:742 shared.py:746 shared.py:765 shared.py:777 shared.py:800
-#: shared.py:824 shared.py:835 shared.py:846 shared.py:856 shared.py:888
-#: shared.py:918 shared.py:1080 shared.py:1124 shared.py:1230 shared.py:1255
-#: shared.py:1267 shared.py:1462 shared.py:1467 shared.py:1480 shared.py:1484
-#: shared.py:1498 shared.py:1503 shared.py:1517 shared.py:1521 shared.py:1537
-#: shared.py:1552 shared.py:1584 shared.py:1600 shared.py:1617 shared.py:1621
-#: shared.py:1657 shared.py:1662 shared.py:1706 shared.py:1711 shared.py:1733
-#: shared.py:1749 shared.py:1753 shared.py:1766 shared.py:1771 shared.py:1780
-#: shared.py:1793 shared.py:1809 shared.py:1816 shared.py:1851 shared.py:1951
-#: shared.py:1989 shared.py:2005 shared.py:2043 shared.py:2047 shared.py:2061
-#: shared.py:2097 shared.py:2114 shared.py:2118 shared.py:2142 shared.py:2166
-#: shared.py:2217 shared.py:2221 shared.py:2240 shared.py:2252 shared.py:2279
-#: shared.py:2290 shared.py:2325 shared.py:2350 shared.py:2361 shared.py:2373
-#: shared.py:2386 shared.py:2391 shared.py:2413 shared.py:2440 shared.py:2455
-#: shared.py:2475 shared.py:2488 shared.py:2529 shared.py:2557 shared.py:2562
-#: shared.py:2573 shared.py:2578 shared.py:2709 shared.py:2724 shared.py:2762
-#: shared.py:2773 shared.py:2800 shared.py:2844 shared.py:2856 shared.py:2901
-#: shared.py:2907 shared.py:2917 shared.py:2949 shared.py:2953 shared.py:2967
-#: shared.py:2989 shared.py:3020 shared.py:3025 shared.py:3051 shared.py:3056
-#: shared.py:3273 shared.py:3292 shared.py:3331 shared.py:3368 shared.py:3378
-#: shared.py:3411 shared.py:3430 shared.py:3440 shared.py:3459 shared.py:3478
-#: shared.py:3493 shared.py:3508 shared.py:3528 shared.py:3540 shared.py:3554
-#: shared.py:3568 shared.py:3583 shared.py:3614 shared.py:3618 shared.py:3622
-#: shared.py:3643 shared.py:3648 shared.py:3666 shared.py:3691 shared.py:3702
-#: shared.py:3715 shared.py:3730 shared.py:3746 shared.py:3763 shared.py:4023
-#: shared.py:4032 shared.py:4041 shared.py:4102 shared.py:4151 shared.py:4164
-#: shared.py:4261 shared.py:4285 shared.py:4302 shared.py:4307 shared.py:4325
-#: shared.py:4329 shared.py:4349 shared.py:4369 shared.py:4389 shared.py:4421
-#: shared.py:4440 shared.py:4454 shared.py:4493 shared.py:4502 shared.py:4550
-#: shared.py:4562 shared.py:4580 shared.py:4719 shared.py:4809 shared.py:4813
-#: shared.py:4820 shared.py:4826 sharedGUI.py:186 sharedGUI.py:190
+#: logic.py:174 logic.py:394 logic.py:585 logic.py:767 logic.py:925
+#: logic.py:998 logic.py:1584 logic.py:1660 logic.py:1680 logic.py:1810
+#: logic.py:1826 shared.py:102 shared.py:405 shared.py:419 shared.py:474
+#: shared.py:492 shared.py:514 shared.py:533 shared.py:583 shared.py:588
+#: shared.py:602 shared.py:626 shared.py:645 shared.py:649 shared.py:672
+#: shared.py:695 shared.py:742 shared.py:746 shared.py:765 shared.py:777
+#: shared.py:800 shared.py:824 shared.py:835 shared.py:846 shared.py:856
+#: shared.py:888 shared.py:918 shared.py:1080 shared.py:1124 shared.py:1230
+#: shared.py:1255 shared.py:1267 shared.py:1462 shared.py:1467 shared.py:1480
+#: shared.py:1484 shared.py:1498 shared.py:1503 shared.py:1517 shared.py:1521
+#: shared.py:1537 shared.py:1552 shared.py:1584 shared.py:1600 shared.py:1617
+#: shared.py:1621 shared.py:1657 shared.py:1662 shared.py:1682 shared.py:1730
+#: shared.py:1735 shared.py:1757 shared.py:1773 shared.py:1777 shared.py:1790
+#: shared.py:1795 shared.py:1804 shared.py:1817 shared.py:1833 shared.py:1840
+#: shared.py:1860 shared.py:1865 shared.py:1896 shared.py:2001 shared.py:2039
+#: shared.py:2055 shared.py:2093 shared.py:2097 shared.py:2111 shared.py:2147
+#: shared.py:2164 shared.py:2168 shared.py:2192 shared.py:2216 shared.py:2267
+#: shared.py:2271 shared.py:2290 shared.py:2302 shared.py:2329 shared.py:2340
+#: shared.py:2380 shared.py:2403 shared.py:2432 shared.py:2443 shared.py:2455
+#: shared.py:2468 shared.py:2473 shared.py:2495 shared.py:2522 shared.py:2537
+#: shared.py:2557 shared.py:2570 shared.py:2611 shared.py:2639 shared.py:2644
+#: shared.py:2655 shared.py:2660 shared.py:2791 shared.py:2806 shared.py:2844
+#: shared.py:2855 shared.py:2882 shared.py:2926 shared.py:2938 shared.py:2983
+#: shared.py:2989 shared.py:2999 shared.py:3031 shared.py:3035 shared.py:3049
+#: shared.py:3071 shared.py:3102 shared.py:3107 shared.py:3133 shared.py:3138
+#: shared.py:3355 shared.py:3374 shared.py:3413 shared.py:3450 shared.py:3460
+#: shared.py:3493 shared.py:3512 shared.py:3522 shared.py:3541 shared.py:3560
+#: shared.py:3575 shared.py:3590 shared.py:3610 shared.py:3622 shared.py:3636
+#: shared.py:3650 shared.py:3665 shared.py:3696 shared.py:3700 shared.py:3704
+#: shared.py:3725 shared.py:3730 shared.py:3748 shared.py:3773 shared.py:3784
+#: shared.py:3797 shared.py:3812 shared.py:3828 shared.py:3845 shared.py:4105
+#: shared.py:4114 shared.py:4123 shared.py:4184 shared.py:4233 shared.py:4246
+#: shared.py:4343 shared.py:4367 shared.py:4384 shared.py:4389 shared.py:4407
+#: shared.py:4411 shared.py:4431 shared.py:4451 shared.py:4471 shared.py:4503
+#: shared.py:4522 shared.py:4536 shared.py:4575 shared.py:4584 shared.py:4632
+#: shared.py:4644 shared.py:4662 shared.py:4830 shared.py:4920 shared.py:4924
+#: shared.py:4931 shared.py:4937 sharedGUI.py:186 sharedGUI.py:190
 #: sharedGUI.py:471 sharedGUI.py:487 sharedGUI.py:498 sharedGUI.py:508
 #: sharedGUI.py:538 sharedGUI.py:560 sharedGUI.py:587 sharedGUI.py:615
 #: sharedGUI.py:630 sharedGUI.py:641 sharedGUI.py:861 sharedGUI.py:872
@@ -352,11 +408,11 @@ msgstr "Тяжелый"
 #: sharedGUI.py:3537 sharedGUI.py:3615 sharedGUI.py:3629 sharedGUI.py:3634
 #: sharedGUI.py:3645 sharedGUI.py:4113 sharedGUI.py:4118 sharedGUI.py:4216
 #: sharedGUI.py:4240 unmusic.py:87 unmusic.py:118 unmusic.py:337 unmusic.py:342
-#: unmusic.py:452 unmusic.py:585 unmusic.py:594
+#: unmusic.py:452 unmusic.py:585 unmusic.py:594 utils.py:45
 msgid "WARNING"
 msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
-#: logic.py:81
+#: logic.py:175 utils.py:46
 #, python-format
 msgid ""
 "Operation has failed!\n"
@@ -367,37 +423,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:109 logic.py:286 logic.py:687 logic.py:973 logic.py:1090
-#: shared.py:342 shared.py:347 shared.py:356 shared.py:365 shared.py:374
-#: shared.py:434 shared.py:450 shared.py:454 shared.py:470 shared.py:488
-#: shared.py:514 shared.py:665 shared.py:688 shared.py:795 shared.py:805
-#: shared.py:883 shared.py:906 shared.py:934 shared.py:1652 shared.py:1676
-#: shared.py:1692 shared.py:1720 shared.py:1863 shared.py:1869 shared.py:1969
-#: shared.py:1973 shared.py:1985 shared.py:2135 shared.py:2159 shared.py:2464
-#: shared.py:2613 shared.py:2785 shared.py:2818 shared.py:4364 shared.py:4384
-#: shared.py:4435 sharedGUI.py:35 sharedGUI.py:81 sharedGUI.py:109
-#: sharedGUI.py:137 sharedGUI.py:142 sharedGUI.py:147 sharedGUI.py:167
-#: sharedGUI.py:259 sharedGUI.py:263 sharedGUI.py:274 sharedGUI.py:289
-#: sharedGUI.py:300 sharedGUI.py:315 sharedGUI.py:332 sharedGUI.py:337
-#: sharedGUI.py:526 sharedGUI.py:945 sharedGUI.py:958 sharedGUI.py:966
-#: sharedGUI.py:974 sharedGUI.py:991 sharedGUI.py:1007 sharedGUI.py:1013
-#: sharedGUI.py:1065 sharedGUI.py:1594 sharedGUI.py:1880 sharedGUI.py:1897
-#: sharedGUI.py:2111 sharedGUI.py:2125 sharedGUI.py:2179 sharedGUI.py:2303
-#: sharedGUI.py:2426 sharedGUI.py:2443 sharedGUI.py:2460 sharedGUI.py:2464
-#: sharedGUI.py:2470 sharedGUI.py:2484 sharedGUI.py:2496 sharedGUI.py:2507
-#: sharedGUI.py:2516 sharedGUI.py:2527 sharedGUI.py:2560 sharedGUI.py:2564
-#: sharedGUI.py:2622 sharedGUI.py:2721 sharedGUI.py:2822 sharedGUI.py:2829
-#: sharedGUI.py:2834 sharedGUI.py:2838 sharedGUI.py:2850 sharedGUI.py:2854
-#: sharedGUI.py:2963 sharedGUI.py:2968 sharedGUI.py:2971 sharedGUI.py:3087
-#: sharedGUI.py:3113 sharedGUI.py:3119 sharedGUI.py:3123 sharedGUI.py:3143
-#: sharedGUI.py:3153 sharedGUI.py:3321 sharedGUI.py:3404 sharedGUI.py:3434
-#: sharedGUI.py:3587 sharedGUI.py:4123 sharedGUI.py:4206 unmusic.py:92
-#: unmusic.py:97 unmusic.py:191 unmusic.py:238 unmusic.py:484 unmusic.py:537
-#: unmusic.py:566 unmusic.py:624 unmusic.py:930
-msgid "ERROR"
-msgstr "ОШИБКА"
-
-#: logic.py:110 shared.py:455 shared.py:1974 sharedGUI.py:1595
+#: logic.py:202 shared.py:455 shared.py:2024 sharedGUI.py:1595
 #: sharedGUI.py:2112 sharedGUI.py:2835 sharedGUI.py:2969 sharedGUI.py:4124
 #: sharedGUI.py:4207 unmusic.py:485
 #, python-format
@@ -410,79 +436,59 @@ msgstr ""
 "\n"
 "Поддерживаются следующие режимы: \"%s\"."
 
-#: logic.py:222 logic.py:1752
+#: logic.py:338
 msgid "local collection"
 msgstr "локальная коллекция"
 
-#: logic.py:225
-msgid "external collection"
-msgstr "внешняя коллекция"
-
-#: logic.py:279
+#: logic.py:395
 #, python-format
 msgid "Tracks %s have not been found in \"%s\"!"
 msgstr "Дорожки %s не были найдены в \"%s\"!"
 
-#: logic.py:287 logic.py:688 logic.py:974 unmusic.py:98
+#: logic.py:403 logic.py:804 logic.py:1145 unmusic.py:98
 #, python-format
 msgid "Condition \"%s\" is not observed!"
 msgstr "Условие \"%s\" не выполнено!"
 
-#: logic.py:304
+#: logic.py:420
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: logic.py:470
+#: logic.py:586
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: logic.py:578
+#: logic.py:694
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: logic.py:595
+#: logic.py:711
 msgid "processed"
 msgstr "обработано"
 
-#: logic.py:652 shared.py:103 shared.py:4720 shared.py:4810 sharedGUI.py:36
-#: unmusic.py:192 unmusic.py:239 unmusic.py:338 unmusic.py:343 unmusic.py:538
-#: unmusic.py:567 unmusic.py:931
+#: logic.py:768 shared.py:103 shared.py:1866 shared.py:4831 shared.py:4921
+#: sharedGUI.py:36 unmusic.py:192 unmusic.py:239 unmusic.py:338 unmusic.py:343
+#: unmusic.py:538 unmusic.py:567 unmusic.py:931
 #, python-format
 msgid "Wrong input data: \"%s\"!"
 msgstr "Недопустимые входные данные: \"%s\"!"
 
-#: logic.py:659 shared.py:4854 sharedGUI.py:1496 sharedGUI.py:1651
-#: sharedGUI.py:2086 sharedGUI.py:4287 unmusic.py:348 unmusic.py:472
-#: unmusic.py:648 unmusic.py:693 unmusic.py:721
-msgid "Nothing to do!"
-msgstr "Действие не требуется."
-
-#: logic.py:758
+#: logic.py:874
 #, python-format
 msgid "Album %d: %d tracks."
 msgstr "Альбом %d: %d дорожек."
 
-#: logic.py:810
+#: logic.py:926
 #, python-format
 msgid "%d/%d tracks have been renumbered."
 msgstr "%d/%d дорожек перенумеровано."
 
-#: logic.py:828
+#: logic.py:944
 #, python-format
 msgid "Folder \"%s\" has no audio files."
 msgstr "Каталог \"%s\" не содержит аудиофайлов."
 
-#: logic.py:883 shared.py:603 shared.py:806 shared.py:919 shared.py:1585
-#: shared.py:2062 shared.py:2725 shared.py:2801 shared.py:3692 shared.py:4326
-#: shared.py:4503 sharedGUI.py:148 sharedGUI.py:527 sharedGUI.py:2427
-#: sharedGUI.py:2444 sharedGUI.py:2465 sharedGUI.py:2471 sharedGUI.py:2485
-#: sharedGUI.py:2497 sharedGUI.py:2508 sharedGUI.py:2517 sharedGUI.py:2528
-#: sharedGUI.py:2623 sharedGUI.py:3253 sharedGUI.py:3322 sharedGUI.py:3588
-#: sharedGUI.py:4114 unmusic.py:93
-msgid "Wrong input data!"
-msgstr "Недопустимые входные данные!"
-
-#: logic.py:1091
+#: logic.py:1262
 #, python-format
 msgid ""
 "Unable to execute:\n"
@@ -495,12 +501,12 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:1401
+#: logic.py:1572
 #, python-format
 msgid "Save \"%s\""
 msgstr "Сохранение \"%s\""
 
-#: logic.py:1414
+#: logic.py:1585
 #, python-format
 msgid ""
 "Database \"%s\" has failed!\n"
@@ -511,7 +517,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: logic.py:1490 logic.py:1510 logic.py:1640 logic.py:1656 sharedGUI.py:3630
+#: logic.py:1661 logic.py:1681 logic.py:1811 logic.py:1827 sharedGUI.py:3630
 #: unmusic.py:453
 #, python-format
 msgid ""
@@ -523,11 +529,11 @@ msgstr ""
 "\n"
 "Детали: %s"
 
-#: logic.py:1570 shared.py:4803
+#: logic.py:1741 shared.py:4914
 msgid "min"
 msgstr "мин"
 
-#: logic.py:1571 shared.py:4772 shared.py:4805
+#: logic.py:1742 shared.py:4883 shared.py:4916
 msgid "sec"
 msgstr "сек"
 
@@ -552,13 +558,13 @@ msgstr "Пробел"
 msgid "Custom arguments: \"%s\""
 msgstr "Особые параметры: \"%s\""
 
-#: shared.py:343 shared.py:3021 shared.py:3052
+#: shared.py:343 shared.py:3103 shared.py:3134
 #, python-format
 msgid "Failed to run \"%s\"!"
 msgstr "Не удалось запустить \"%s\"!"
 
 #: shared.py:348 shared.py:435 shared.py:471 shared.py:489 shared.py:796
-#: shared.py:1870 shared.py:3274 shared.py:3293 sharedGUI.py:1164
+#: shared.py:1915 shared.py:3356 shared.py:3375 sharedGUI.py:1164
 #: sharedGUI.py:2565 sharedGUI.py:2823
 msgid "Not enough input data!"
 msgstr "Недостаточно входных данных!"
@@ -575,21 +581,21 @@ msgstr ""
 #: shared.py:650 shared.py:673 shared.py:696 shared.py:747 shared.py:766
 #: shared.py:778 shared.py:825 shared.py:836 shared.py:847 shared.py:857
 #: shared.py:889 shared.py:1468 shared.py:1485 shared.py:1504 shared.py:1522
-#: shared.py:1538 shared.py:1553 shared.py:1601 shared.py:1622 shared.py:1712
-#: shared.py:1734 shared.py:1754 shared.py:1772 shared.py:1794 shared.py:1817
-#: shared.py:1952 shared.py:1990 shared.py:2006 shared.py:2048 shared.py:2119
-#: shared.py:2143 shared.py:2167 shared.py:2222 shared.py:2241 shared.py:2253
-#: shared.py:2291 shared.py:2351 shared.py:2362 shared.py:2374 shared.py:2392
-#: shared.py:2414 shared.py:2441 shared.py:2456 shared.py:2476 shared.py:2530
-#: shared.py:2563 shared.py:2579 shared.py:2774 shared.py:2845 shared.py:2857
-#: shared.py:2908 shared.py:2918 shared.py:2954 shared.py:2968 shared.py:3026
-#: shared.py:3057 shared.py:3332 shared.py:3369 shared.py:3379 shared.py:3412
-#: shared.py:3431 shared.py:3441 shared.py:3460 shared.py:3479 shared.py:3494
-#: shared.py:3509 shared.py:3529 shared.py:3541 shared.py:3555 shared.py:3569
-#: shared.py:3584 shared.py:3623 shared.py:3649 shared.py:3667 shared.py:3703
-#: shared.py:3716 shared.py:3731 shared.py:3747 shared.py:3764 shared.py:4152
-#: shared.py:4165 shared.py:4370 shared.py:4390 shared.py:4422 shared.py:4441
-#: shared.py:4455 shared.py:4551 shared.py:4563 shared.py:4581 shared.py:4821
+#: shared.py:1538 shared.py:1553 shared.py:1601 shared.py:1622 shared.py:1736
+#: shared.py:1758 shared.py:1778 shared.py:1796 shared.py:1818 shared.py:1841
+#: shared.py:2002 shared.py:2040 shared.py:2056 shared.py:2098 shared.py:2169
+#: shared.py:2193 shared.py:2217 shared.py:2272 shared.py:2291 shared.py:2303
+#: shared.py:2341 shared.py:2433 shared.py:2444 shared.py:2456 shared.py:2474
+#: shared.py:2496 shared.py:2523 shared.py:2538 shared.py:2558 shared.py:2612
+#: shared.py:2645 shared.py:2661 shared.py:2856 shared.py:2927 shared.py:2939
+#: shared.py:2990 shared.py:3000 shared.py:3036 shared.py:3050 shared.py:3108
+#: shared.py:3139 shared.py:3414 shared.py:3451 shared.py:3461 shared.py:3494
+#: shared.py:3513 shared.py:3523 shared.py:3542 shared.py:3561 shared.py:3576
+#: shared.py:3591 shared.py:3611 shared.py:3623 shared.py:3637 shared.py:3651
+#: shared.py:3666 shared.py:3705 shared.py:3731 shared.py:3749 shared.py:3785
+#: shared.py:3798 shared.py:3813 shared.py:3829 shared.py:3846 shared.py:4234
+#: shared.py:4247 shared.py:4452 shared.py:4472 shared.py:4504 shared.py:4523
+#: shared.py:4537 shared.py:4633 shared.py:4645 shared.py:4663 shared.py:4932
 #: sharedGUI.py:472 sharedGUI.py:488 sharedGUI.py:499 sharedGUI.py:509
 #: sharedGUI.py:539 sharedGUI.py:561 sharedGUI.py:588 sharedGUI.py:616
 #: sharedGUI.py:631 sharedGUI.py:642 sharedGUI.py:2855 sharedGUI.py:2871
@@ -597,12 +603,12 @@ msgstr ""
 msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
-#: shared.py:443 shared.py:1958
+#: shared.py:443 shared.py:2008
 #, python-format
 msgid "Write file \"%s\""
 msgstr "Запись файла \"%s\""
 
-#: shared.py:451 shared.py:1970
+#: shared.py:451 shared.py:2020
 #, python-format
 msgid "Unable to write file \"%s\"!"
 msgstr "Не удается записать файл \"%s\"!"
@@ -611,12 +617,12 @@ msgstr "Не удается записать файл \"%s\"!"
 msgid "Cannot print the message!"
 msgstr "Не удаётся показать сообщение!"
 
-#: shared.py:572 shared.py:2032
+#: shared.py:572 shared.py:2082
 #, python-format
 msgid "Entries deleted: %d (%d-%d)"
 msgstr "Удалено вхождений: %d (%d-%d)"
 
-#: shared.py:584 shared.py:743 shared.py:2044 shared.py:2218
+#: shared.py:584 shared.py:743 shared.py:2094 shared.py:2268
 #, python-format
 msgid "File \"%s\" is not sortable!"
 msgstr "Файл \"%s\" не подлежит сортировке!"
@@ -626,17 +632,17 @@ msgstr "Файл \"%s\" не подлежит сортировке!"
 msgid "Dictionary \"%s\": Incorrect line #%d: \"%s\"!"
 msgstr "Словарь \"%s\": Неправильная строка №%d: \"%s\"!"
 
-#: shared.py:646 shared.py:1653 shared.py:1986 shared.py:2115 shared.py:2710
-#: shared.py:2902 shared.py:4024 shared.py:4103 shared.py:4308 shared.py:4330
-#: shared.py:4350 shared.py:4814 shared.py:4827 sharedGUI.py:862
+#: shared.py:646 shared.py:1653 shared.py:2036 shared.py:2165 shared.py:2792
+#: shared.py:2984 shared.py:4106 shared.py:4185 shared.py:4390 shared.py:4412
+#: shared.py:4432 shared.py:4925 shared.py:4938 sharedGUI.py:862
 #: sharedGUI.py:1093 sharedGUI.py:1881 sharedGUI.py:1902 sharedGUI.py:3133
 #: sharedGUI.py:3257 sharedGUI.py:3298 sharedGUI.py:3616 sharedGUI.py:3635
 #: sharedGUI.py:3646 sharedGUI.py:4119
 msgid "Empty input is not allowed!"
 msgstr "Пустые входные данные не допускаются!"
 
-#: shared.py:666 shared.py:689 shared.py:2136 shared.py:2160 shared.py:4365
-#: shared.py:4385 shared.py:4436 sharedGUI.py:191 unmusic.py:625
+#: shared.py:666 shared.py:689 shared.py:2186 shared.py:2210 shared.py:4447
+#: shared.py:4467 shared.py:4518 sharedGUI.py:191 unmusic.py:625
 #, python-format
 msgid "The condition \"%s\" is not observed!"
 msgstr "Условие \"%s\" не выполнено!"
@@ -646,7 +652,7 @@ msgstr "Условие \"%s\" не выполнено!"
 msgid "File \"%s\" has not been found!"
 msgstr "Файл \"%s\" не найден!"
 
-#: shared.py:866 shared.py:2269
+#: shared.py:866 shared.py:2319
 #, python-format
 msgid "Load file \"%s\""
 msgstr "Загрузка файла \"%s\""
@@ -772,51 +778,60 @@ msgstr "дек"
 msgid "The object \"%s\" is not a file!"
 msgstr "Объект \"%s\" не является файлом!"
 
-#: shared.py:1670 shared.py:2482
+#: shared.py:1683 shared.py:1861 shared.py:2404 shared.py:3072
+#, python-format
+msgid ""
+"Operation has failed!\n"
+"Details: %s"
+msgstr ""
+"Операция завершилась с ошибкой!\n"
+"Подробности: %s"
+
+#: shared.py:1694 shared.py:2564
 #, python-format
 msgid "Copy \"%s\" to \"%s\""
 msgstr "Копирование \"%s\" в \"%s\""
 
-#: shared.py:1677
+#: shared.py:1701
 #, python-format
 msgid "Failed to copy file \"%s\" to \"%s\"!"
 msgstr "Не удалось скопировать файл \"%s\" в \"%s\"!"
 
-#: shared.py:1686
+#: shared.py:1710
 #, python-format
 msgid "Move \"%s\" to \"%s\""
 msgstr "Перемещение \"%s\" в \"%s\""
 
-#: shared.py:1693
+#: shared.py:1717
 #, python-format
 msgid "Failed to move \"%s\" to \"%s\"!"
 msgstr "Не удалось переместить \"%s\" в \"%s\"!"
 
-#: shared.py:1707 shared.py:1767
+#: shared.py:1731 shared.py:1791
 #, python-format
 msgid "Failed to get the date of the file \"%s\"!"
 msgstr "Не удалось определить дату файла \"%s\"!"
 
-#: shared.py:1721
+#: shared.py:1745
 #, python-format
 msgid "Unable to copy the file \"%s\" to iself!"
 msgstr "Нельзя скопировать файл \"%s\" сам в себя!"
 
-#: shared.py:1730 shared.py:1790 shared.py:2002 unmusic.py:962 unmusic.py:974
+#: shared.py:1754 shared.py:1814 shared.py:2052 unmusic.py:962 unmusic.py:974
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
-#: shared.py:1743 shared.py:2381
+#: shared.py:1767 shared.py:2463
 #, python-format
 msgid "Delete \"%s\""
 msgstr "Удаление \"%s\""
 
-#: shared.py:1750
+#: shared.py:1774
 #, python-format
 msgid "Failed to delete file \"%s\"!"
 msgstr "Не удается удалить файл \"%s\"!"
 
-#: shared.py:1781
+#: shared.py:1805
 #, python-format
 msgid ""
 "Moving is not necessary, because the source and destination are identical "
@@ -825,41 +840,41 @@ msgstr ""
 "Перемещение не требуется, поскольку на входе и выходе указан один и тот же "
 "объект (%s)."
 
-#: shared.py:1803
+#: shared.py:1827
 #, python-format
 msgid "Change the time of the file \"%s\" to %s"
 msgstr "Изменение времени файла \"%s\" на %s"
 
-#: shared.py:1810
+#: shared.py:1834
 #, python-format
 msgid "Failed to change the time of the file \"%s\" to \"%s\"!"
 msgstr "Не удалось изменить время файла \"%s\" на \"%s\"!"
 
-#: shared.py:1846 shared.py:2469
+#: shared.py:1891 shared.py:2551
 #, python-format
 msgid "Directory \"%s\" already exists."
 msgstr "Каталог \"%s\" уже существует."
 
-#: shared.py:1852
+#: shared.py:1897
 #, python-format
 msgid "The path \"%s\" is invalid!"
 msgstr "Путь \"%s\" неверен!"
 
-#: shared.py:1856
+#: shared.py:1901
 #, python-format
 msgid "Create directory \"%s\""
 msgstr "Создание каталога \"%s\""
 
-#: shared.py:1864
+#: shared.py:1909
 #, python-format
 msgid "Failed to create directory \"%s\"!"
 msgstr "Не удается создать каталог \"%s\"!"
 
-#: shared.py:2098
+#: shared.py:2148
 msgid "The following lines cannot be parsed:"
 msgstr "Не удается обработать следующие строки:"
 
-#: shared.py:2280
+#: shared.py:2330
 #, python-format
 msgid ""
 "Unable to read file \"%s\"!\n"
@@ -870,56 +885,56 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: shared.py:2326 shared.py:3615 shared.py:3619 sharedGUI.py:143
+#: shared.py:2381 shared.py:3697 shared.py:3701 sharedGUI.py:143
 #: sharedGUI.py:2126 sharedGUI.py:2180
 #, python-format
 msgid "Wrong input data: \"%s\""
 msgstr "Недопустимые входные данные: \"%s\""
 
-#: shared.py:2387
+#: shared.py:2469
 #, python-format
 msgid "Failed to delete directory \"%s\"! Delete it manually."
 msgstr "Не удается удалить каталог \"%s\"! Удалите его вручную."
 
-#: shared.py:2465
+#: shared.py:2547
 #, python-format
 msgid "Unable to copy \"%s\" to iself!"
 msgstr "Нельзя скопировать \"%s\" сам в себя!"
 
-#: shared.py:2489
+#: shared.py:2571
 #, python-format
 msgid "Failed to copy \"%s\" to \"%s\"!"
 msgstr "Не удалось скопировать \"%s\" в \"%s\"!"
 
-#: shared.py:2505
+#: shared.py:2587
 msgid "The following sections and/or keys are missing:"
 msgstr "ОШИБКА"
 
-#: shared.py:2519
+#: shared.py:2601
 #, python-format
 msgid "New value of the key \"%s\" has been loaded."
 msgstr "Загружено новое значение ключа \"%s\"."
 
-#: shared.py:2525
+#: shared.py:2607
 #, python-format
 msgid "Keys loaded in total: %d, whereas %d are modified."
 msgstr "Всего загружено ключей: %d, из них измененных: %d"
 
-#: shared.py:2551
+#: shared.py:2633
 #, python-format
 msgid "Missing sections: %d"
 msgstr "Отсутствующих разделов: %d"
 
-#: shared.py:2553
+#: shared.py:2635
 #, python-format
 msgid "Missing keys: %d"
 msgstr "Отсутствующих ключей: %d"
 
-#: shared.py:2555
+#: shared.py:2637
 msgid "The default configuration has been loaded."
 msgstr "Загружена конфигурация по умолчанию."
 
-#: shared.py:2574
+#: shared.py:2656
 #, python-format
 msgid ""
 "Failed to read the configuration file \"%s\". This file must share the same "
@@ -930,7 +945,7 @@ msgstr ""
 "находиться в одном каталоге с программой и иметь кодировку utf-8 (без BOM), "
 "тип разрыва строки - UNIX."
 
-#: shared.py:2614
+#: shared.py:2696
 #, python-format
 msgid ""
 "Failed to open URL \"%s\" in a default browser!\n"
@@ -941,142 +956,153 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: shared.py:2672
+#: shared.py:2754
 msgid "Differences:"
 msgstr "Различия:"
 
-#: shared.py:2697
+#: shared.py:2779
 msgid "Texts are identical!"
 msgstr "Различий нет!"
 
-#: shared.py:2757
+#: shared.py:2839
 #, python-format
 msgid "Delete the symbolic link \"%s\""
 msgstr "Удаление ярлыка \"%s\""
 
-#: shared.py:2763
+#: shared.py:2845
 #, python-format
 msgid "Failed to remove shortcut \"%s\". Remove it manually and press OK."
 msgstr "Не удается удалить ярлык \"%s\". Удалите его вручную и нажмите OK."
 
-#: shared.py:2780 shared.py:2809
+#: shared.py:2862 shared.py:2891
 #, python-format
 msgid "Create a symbolic link \"%s\""
 msgstr "Создание ярлыка \"%s\""
 
-#: shared.py:2786 shared.py:2819
+#: shared.py:2868 shared.py:2901
 #, python-format
 msgid "Failed to create shortcut \"%s\". Create it manually and press OK."
 msgstr "Не удается создать ярлык \"%s\". Создайте его вручную и нажмите OK."
 
-#: shared.py:2796 shared.py:2839 sharedGUI.py:3538 sharedGUI.py:3545
+#: shared.py:2878 shared.py:2921 sharedGUI.py:3538 sharedGUI.py:3545
 msgid "Nothing to do."
 msgstr "Действие не требуется."
 
-#: shared.py:2950
+#: shared.py:3032
 msgid "Failed to load an e-mail client."
 msgstr "Не удалось загрузить почтовый клиент."
 
-#: shared.py:2990
-#, python-format
-msgid ""
-"Operation has failed!\n"
-"Details: %s"
-msgstr ""
-"Операция завершилась с ошибкой!\n"
-"Подробности: %s"
-
-#: shared.py:2994
+#: shared.py:3076
 msgid "This operation cannot be executed on your operating system."
 msgstr "Эта операция не может быть выполнена на вашей операционной системе."
 
-#: shared.py:3318
+#: shared.py:3400
 msgid "Analyze the text"
 msgstr "Анализ текста"
 
-#: shared.py:3644
+#: shared.py:3726
 #, python-format
 msgid "Failed to find words of paragraph #%d!"
 msgstr "Не удалось найти слова абзаца #%d!"
 
-#: shared.py:4033 shared.py:4042
+#: shared.py:4115 shared.py:4124
 msgid "The pool is empty!"
 msgstr "Пул пуст!"
 
-#: shared.py:4079
+#: shared.py:4161
 #, python-format
 msgid "The operation has taken %f s."
 msgstr "Операция завершена за %f с."
 
-#: shared.py:4125
+#: shared.py:4207
 #, python-format
 msgid "Set the max number of rows to %d"
 msgstr "Задать максимальное число столбцов: %d"
 
-#: shared.py:4262
+#: shared.py:4344
 msgid "Unable to use unverified certificates!"
 msgstr "Не удается использовать неподтвержденные сертификаты!"
 
-#: shared.py:4281
+#: shared.py:4363
 #, python-format
 msgid "[OK]: \"%s\""
 msgstr "[Успешно]: \"%s\""
 
-#: shared.py:4286
+#: shared.py:4368
 #, python-format
 msgid "[FAILED]: \"%s\". Details: %s"
 msgstr "[ОШИБКА]: \"%s\". Подробности: %s"
 
-#: shared.py:4303
+#: shared.py:4385
 #, python-format
 msgid "Unable to decode \"%s\"!"
 msgstr "Не удается изменить кодировку \"%s\"!"
 
-#: shared.py:4400
+#: shared.py:4482
 msgid "No references have been found!"
 msgstr "Ориентиры не найдены!"
 
-#: shared.py:4405
+#: shared.py:4487
 msgid "No references to the right!"
 msgstr "Справа ориентиров нет!"
 
-#: shared.py:4410
+#: shared.py:4492
 msgid "No references to the left!"
 msgstr "Слева ориентиров нет!"
 
-#: shared.py:4494
+#: shared.py:4576
 msgid "Unexpected end of text!"
 msgstr "Неожиданный конец текста!"
 
-#: shared.py:4738 sharedGUI.py:2831 sharedGUI.py:2838 sharedGUI.py:2882
+#: shared.py:4730 shared.py:4752
+msgid "B"
+msgstr "Б"
+
+#: shared.py:4743
+msgid "TiB"
+msgstr "ТиБ"
+
+#: shared.py:4745
+msgid "GiB"
+msgstr "ГиБ"
+
+#: shared.py:4747
+msgid "MiB"
+msgstr "МиБ"
+
+#: shared.py:4750
+msgid "KiB"
+msgstr "КиБ"
+
+#: shared.py:4849 sharedGUI.py:2831 sharedGUI.py:2838 sharedGUI.py:2882
 #: sharedGUI.py:2887 sharedGUI.py:2959 sharedGUI.py:2972 sharedGUI.py:3009
 #: sharedGUI.py:3015 sharedGUI.py:3412 unmusic.py:557 unmusic.py:756
 #: unmusic.py:961 unmusic.py:967
 msgid "QUESTION"
 msgstr "ВОПРОС"
 
-#: shared.py:4739
+#: shared.py:4850
 #, python-format
 msgid "ATTENTION: Do yo really want to rewrite file \"%s\"?"
 msgstr "ВНИМАНИЕ: Перезаписать файл \"%s\"?"
 
-#: shared.py:4793
+#: shared.py:4904
 msgid "yrs"
 msgstr "лет"
 
-#: shared.py:4795
+#: shared.py:4906
 msgid "mths"
 msgstr "мес"
 
-#: shared.py:4797
+#: shared.py:4908
 msgid "wks"
 msgstr "нед"
 
-#: shared.py:4799
+#: shared.py:4910
 msgid "days"
 msgstr "дн"
 
-#: shared.py:4801
+#: shared.py:4912
 msgid "hrs"
 msgstr "ч"
 
@@ -1363,23 +1389,23 @@ msgstr "Геометрия виджета 1: %dx%d+%d+%d"
 msgid "Widget 2 geometry: %dx%d+%d+%d"
 msgstr "Геометрия виджета 2: %dx%d+%d+%d"
 
-#: sharedGUI.py:4273
+#: sharedGUI.py:4284
 msgid "Select files:"
 msgstr "Выберите файлы:"
 
-#: sharedGUI.py:4301
+#: sharedGUI.py:4313
 msgid "Toggle all"
 msgstr "Переключить все"
 
-#: sharedGUI.py:4302
+#: sharedGUI.py:4314
 msgid "Mark/unmark all checkboxes"
 msgstr "Добавить/убрать все пометы"
 
-#: sharedGUI.py:4307
+#: sharedGUI.py:4319
 msgid "Close"
 msgstr "Закрыть"
 
-#: sharedGUI.py:4308
+#: sharedGUI.py:4320
 msgid "Close this window"
 msgstr "Закрыть это окно"
 
