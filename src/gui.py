@@ -129,7 +129,7 @@ class Copy:
     
     def source(self):
         self.lbl_src = sg.Label (parent = self.frm_src
-                                ,text   = _('Source (read-only):')
+                                ,text   = _('Read:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False
@@ -145,7 +145,7 @@ class Copy:
     
     def target(self):
         self.lbl_trg = sg.Label (parent = self.frm_trg
-                                ,text   = _('Target (writable):')
+                                ,text   = _('Write:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False

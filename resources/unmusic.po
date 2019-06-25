@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-25 16:26+0300\n"
-"PO-Revision-Date: 2019-06-25 16:29+0300\n"
+"POT-Creation-Date: 2019-06-25 16:33+0300\n"
+"PO-Revision-Date: 2019-06-25 16:34+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -120,8 +120,8 @@ msgid "Light"
 msgstr "Легкие"
 
 #: gui.py:132
-msgid "Source (read-only):"
-msgstr "Источник (только чтение):"
+msgid "Read:"
+msgstr "Чтение:"
 
 #: gui.py:139 gui.py:143 logic.py:132 unmusic.py:44
 msgid "external collection"
@@ -132,8 +132,8 @@ msgid "local collection"
 msgstr "локальная коллекция"
 
 #: gui.py:148
-msgid "Target (writable):"
-msgstr "Цель (запись):"
+msgid "Write:"
+msgstr "Запись:"
 
 #: gui.py:155 gui.py:159
 msgid "mobile collection"
@@ -1525,6 +1525,12 @@ msgstr ""
 "Сейчас случайная музыка без рейтинга будет скопирована в \"%s\".\n"
 "\n"
 "Продолжить?"
+
+#~ msgid "Source (read-only):"
+#~ msgstr "Источник (только чтение):"
+
+#~ msgid "Target (writable):"
+#~ msgstr "Цель (запись):"
 
 #~ msgid "All, external"
 #~ msgstr "Всё (внешний носитель)"
