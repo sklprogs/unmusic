@@ -14,6 +14,8 @@ PLAY = (_('Play')
        ,_('Best')
        )
 
+items_year = (_('Not set'),'=','>=','<=')
+
 
 class Copy:
     
@@ -94,6 +96,7 @@ class Copy:
         self.btn_cls = sg.Button (parent = self.frm_btl
                                  ,text   = _('Close')
                                  ,side   = 'left'
+                                 ,action = self.close
                                  )
         self.btn_rst = sg.Button (parent = self.frm_btl
                                  ,text   = _('Reset')
@@ -116,9 +119,7 @@ class Copy:
                                 ,width  = self._width
                                 )
         self.opt_yer = sg.OptionMenu (parent  = self.frm_yer
-                                     ,items   = (_('Not set'),'=','>='
-                                                ,'<='
-                                                )
+                                     ,items   = items_year
                                      ,side    = 'left'
                                      ,default = _('Not set')
                                      )
@@ -783,6 +784,11 @@ class Menu:
                                 )
     
     def bindings(self):
+        self.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
+        sg.bind (obj      = self.parent
+                ,bindings = ('<Control-q>','<Control-w>')
+                ,action   = self.close
+                )
         sg.bind (obj      = self.parent
                 ,bindings = '<Escape>'
                 ,action   = sg.Geometry(parent=self.parent).minimize
@@ -858,13 +864,7 @@ class Menu:
                                   )
                        )
         self._a.append (sg.Button (parent = self.parent
-                                  ,text   = _('Copy light music')
-                                  ,side   = 'top'
-                                  ,font   = font
-                                  )
-                       )
-        self._a.append (sg.Button (parent = self.parent
-                                  ,text   = _('Copy heavy music')
+                                  ,text   = _('Copy music')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
@@ -873,6 +873,7 @@ class Menu:
                                   ,text   = _('Quit')
                                   ,side   = 'top'
                                   ,font   = font
+                                  ,action = self.close
                                   )
                        )
     

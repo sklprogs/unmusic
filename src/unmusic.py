@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import time
 import shared    as sh
 import sharedGUI as sg
 import logic     as lg
@@ -14,17 +15,79 @@ gettext.install('unmusic','../resources/locale')
 
 class Copy:
     
-    def __init__ (self,genre=_('Any')
-                 ,limit=100,year=0
-                 ,syear=0,eyear=0
-                 ):
+    def __init__(self):
         self.values()
-        self.Success = lg.objs.db().Success
-        self._genre  = genre
-        self._limit  = limit
-        self._year   = year
-        self._syear  = syear
-        self._eyear  = eyear
+        self.gui = gi.Copy()
+        self.bindings()
+    
+    def wait_carrier(self,carrier,event=None):
+        f = '[unmusic] unmusic.Copy.wait_carrier'
+        if self.Success:
+            if carrier:
+                carrier    = os.path.realpath(carrier)
+                carrier_sh = sh.Text(carrier).shorten (max_len = 25
+                                                      ,Enclose = True
+                                                      ,FromEnd = True
+                                                      )
+                sg.objs.waitbox().reset (func_title = f
+                                        ,message    = _('Waiting for {}').format(carrier_sh)
+                                        )
+                sg.objs._waitbox.show()
+                while not os.path.isdir(carrier):
+                    time.sleep(1)
+                sg.objs._waitbox.close()    
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel()
+    
+    def reset(self,event=None):
+        self.values()
+        self.gui.reset()
+    
+    def get_settings(self,event=None):
+        f = '[unmusic] unmusic.Copy.get_settings'
+        if self.Success:
+            self._genre = self.gui.opt_gnr.choice
+            if self.gui.opt_yer.choice == _('Not set'):
+                pass
+            elif self.gui.opt_yer.choice == '=':
+                self._year = self.gui.ent_yer.get()
+                sh.Input (title = f
+                         ,value = self._year
+                         ).integer()
+            elif self.gui.opt_yer.choice == '>=':
+                self._syear = self.gui.ent_yer.get()
+                sh.Input (title = f
+                         ,value = self._syear
+                         ).integer()
+            elif self.gui.opt_yer.choice == '<=':
+                self._eyear = self.gui.ent_yer.get()
+                sh.Input (title = f
+                         ,value = self._eyear
+                         ).integer()
+            else:
+                sh.objs.mes (f,_('ERROR')
+                            ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
+                            % (str(self.gui.opt_yer.choice)
+                              ,'; '.join(gi.items_year)
+                              )
+                            )
+            self._source = lg.objs.default().ihome.add_share(self.gui.opt_src.choice)
+            self._target = lg.objs._default.ihome.add_share(self.gui.opt_trg.choice)
+            #todo: implement
+            self._limit  = 100
+        else:
+            sh.com.cancel(f)
+    
+    def show(self,event=None):
+        self.gui.show()
+    
+    def close(self,event=None):
+        self.gui.close()
+    
+    def bindings(self):
+        self.gui.btn_str.action = self.start
     
     def values(self):
         self._ids    = []
@@ -32,19 +95,44 @@ class Copy:
         self._dirs   = []
         self._query  = ''
         self._source = ''
+        self._target = ''
+        self._genre  = _('All')
+        self._limit  = 100
+        self._year   = 0
+        self._syear  = 0
+        self._eyear  = 0
+        self.Success = lg.objs.db().Success
     
-    #todo: reimplement with GUI
-    def select_source(self):
-        f = '[unmusic] unmusic.Copy.select_source'
-        ''' Adding 'os.path.sep' at the end allows to follow symlinks
-            (avoid errors in case the path is a symlink and not
-            a directory).
-        '''
+    def confirm(self):
+        f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
-            self._source = lg.objs.default().ihome.add_share(_('external collection'))
-            idir = sh.Directory(self._source)
-            self.Success = idir.Success
-            self._source = idir.dir
+            total = sum(self._sizes)
+            if total:
+                total    = sh.com.human_size(total,LargeOnly=1)
+                message  = _('Selected albums: %d') % len(self._ids) \
+                           + '\n'
+                message += _('Total size: %s') % total + '\n\n'
+                message += _('Continue?')
+                return sh.objs.mes (f,_('QUESTION')
+                                   ,message
+                                   ).Yes
+            else:
+                # Do not fail here since we may change settings after
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
+        else:
+            sh.com.cancel(f)
+    
+    def copy(self):
+        f = '[unmusic] unmusic.Copy.copy'
+        if self.Success:
+            if self.confirm():
+                sh.com.not_ready(f)
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Operation has been canceled by the user.')
+                              )
         else:
             sh.com.cancel(f)
     
@@ -62,14 +150,6 @@ class Copy:
                     else:
                         sh.com.cancel(f)
                         break
-                if self.Success:
-                    total = sum(self._sizes)
-                    total = sh.com.human_size(total,LargeOnly=1)
-                    sh.log.append (f,_('INFO')
-                                  ,_('Total size: %s') % total
-                                  )
-                else:
-                    sh.com.cancel(f)
             else:
                 sh.log.append (f,_('INFO')
                               ,_('Nothing to do!')
@@ -207,17 +287,15 @@ class Copy:
         else:
             sh.com.cancel(f)
     
-    def run(self):
-        ''' Actually, we can run 'self.fetch' before selecting a source
-            and building a query. However, in case setting the source
-            fails, it is more coherent to fail as early as possible.
-        '''
-        self.select_source()
+    def start(self,event=None):
+        self.get_settings()
+        self.wait_carrier(self._source)
+        self.wait_carrier(self._target)
         self.query()
         self.fetch()
         self.select_albums()
-        self.debug()
         self.sizes()
+        self.copy()
 
 
 
@@ -1159,29 +1237,8 @@ class Menu:
         self.gui = gi.Menu()
         self.bindings()
         
-    def copy_heavy(self,event=None):
-        f = '[unmusic] unmusic.Menu.copy_heavy'
-        if sg.Message (f,_('INFO')
-                      ,_('Random unrated music will now be copied to "%s".\n\nContinue?')\
-                      % lg.DEST_HEAVY
-                      ).Yes:
-            pass
-        else:
-            sh.log.append (f,_('QUESTION')
-                          ,_('Operation has been canceled by the user.')
-                          )
-    
-    def copy_light(self,event=None):
-        f = '[unmusic] unmusic.Menu.copy_light'
-        if sg.Message (f,_('QUESTION')
-                      ,_('Random unrated music will now be copied to "%s".\n\nContinue?')\
-                      % lg.DEST_LIGHT
-                      ).Yes:
-            lg.CopyLight().run()
-        else:
-            sh.log.append (f,_('INFO')
-                          ,_('Operation has been canceled by the user.')
-                          )
+    def copy(self,event=None):
+        objs.copy().show()
     
     def album_editor(self,event=None):
         objs.editor().reset()
@@ -1249,17 +1306,10 @@ class Menu:
                     )
     
     def bindings(self):
-        self.gui.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
-        sg.bind (obj      = self.gui.parent
-                ,bindings = ['<Control-q>','<Control-w>']
-                ,action   = self.close
-                )
         self.gui._a[0].action = self.album_editor
         self.gui._a[1].action = self.prepare
         self.gui._a[2].action = self.collect
-        self.gui._a[3].action = self.copy_light
-        self.gui._a[4].action = self.copy_heavy
-        self.gui._a[5].action = self.close
+        self.gui._a[3].action = self.copy
     
     def show(self,event=None):
         self.gui.show()
@@ -1272,7 +1322,12 @@ class Menu:
 class Objects:
     
     def __init__(self):
-        self._editor = self._tracks = None
+        self._editor = self._tracks = self._copy = None
+    
+    def copy(self):
+        if self._copy is None:
+            self._copy = Copy()
+        return self._copy
     
     def editor(self):
         if self._editor is None:

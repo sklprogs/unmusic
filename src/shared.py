@@ -4927,16 +4927,19 @@ class Commands:
         return result
     
     def cancel(self,func):
-        log.append (func
-                   ,_('WARNING')
+        log.append (func,_('WARNING')
                    ,_('Operation has been canceled.')
                    )
     
     def empty(self,func):
-        log.append (func
-                   ,_('WARNING')
+        log.append (func,_('WARNING')
                    ,_('Empty input is not allowed!')
                    )
+    
+    def not_ready(self,func):
+        objs.mes (func,_('INFO')
+                 ,_('Not implemented yet!')
+                 )
 
 
 ''' If there are problems with import or tkinter's wait_variable, put
