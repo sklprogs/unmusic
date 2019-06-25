@@ -41,10 +41,6 @@ class Copy:
         else:
             sh.com.cancel()
     
-    def reset(self,event=None):
-        self.values()
-        self.gui.reset()
-    
     def get_settings(self,event=None):
         f = '[unmusic] unmusic.Copy.get_settings'
         if self.Success:
@@ -318,6 +314,8 @@ class Copy:
             sh.com.cancel(f)
     
     def start(self,event=None):
+        # Do not reset GUI here
+        self.values()
         self.get_settings()
         self.wait_carrier(self._source)
         self.wait_carrier(self._target)
