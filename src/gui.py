@@ -14,7 +14,8 @@ PLAY = (_('Play')
        ,_('Best')
        )
 
-items_year = (_('Not set'),'=','>=','<=')
+ITEMS_YEAR = (_('Not set'),'=','>=','<=')
+ICON_PATH  = sh.objs.pdir().add('..','resources','unmusic.gif')
 
 
 class Copy:
@@ -59,10 +60,7 @@ class Copy:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,'unmusic.gif'
-                                                 )
-                             )
+            self.parent.icon(ICON_PATH)
     
     def title(self,arg=None):
         if not arg:
@@ -140,7 +138,7 @@ class Copy:
                                 ,width  = self._width
                                 )
         self.opt_yer = sg.OptionMenu (parent  = self.frm_yer
-                                     ,items   = items_year
+                                     ,items   = ITEMS_YEAR
                                      ,side    = 'left'
                                      ,default = _('Not set')
                                      )
@@ -251,10 +249,7 @@ class ImageViewer:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,'unmusic.gif'
-                                                 )
-                             )
+            self.parent.icon(ICON_PATH)
     
     def gui(self):
         self.parent = sg.Top(sg.objs.root())
@@ -754,10 +749,7 @@ class AlbumEditor:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,'unmusic.gif'
-                                                 )
-                             )
+            self.parent.icon(ICON_PATH)
 
     def show(self,event=None):
         self.parent.show()
@@ -855,10 +847,7 @@ class Menu:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,'unmusic.gif'
-                                                 )
-                             )
+            self.parent.icon(ICON_PATH)
     
     def title(self,text=''):
         if not text:
@@ -1020,10 +1009,7 @@ class Tracks:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon (sh.objs.pdir().add ('..','resources'
-                                                 ,'unmusic.gif'
-                                                 )
-                             )
+            self.parent.icon(ICON_PATH)
     
     def reset(self):
         for track in self._tracks:
@@ -1277,7 +1263,15 @@ class Track:
 class Objects:
     
     def __init__(self):
-        self._tracks = self._wait = None
+        self._tracks = self._wait = self._progress = None
+    
+    def progress(self):
+        if self._progress is None:
+            self._progress = sg.ProgressBar()
+            self._progress.title(_('Copy progress'))
+            self._progress.icon(ICON_PATH)
+            # Widget is not created yet, do not 'center' it here!
+        return self._progress
     
     def tracks(self):
         if self._tracks is None:

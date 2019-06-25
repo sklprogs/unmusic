@@ -20,6 +20,20 @@ class Copy:
         self.gui = gi.Copy()
         self.bindings()
     
+    def update_progress(self,i):
+        f = '[unmusic] unmusic.Copy.update_progress'
+        if self.Success:
+            # Prevent ZeroDivisionError
+            if self._ids:
+                percent = (100 * (i + 1)) // len(self._ids)
+            else:
+                percent = 0
+            gi.objs.progress()._item.widget['value'] = percent
+            # This is required to fill the progress bar on-the-fly
+            sg.objs.root().widget.update_idletasks()
+        else:
+            sh.com.cancel(f)
+    
     def wait_carrier(self,carrier,event=None):
         f = '[unmusic] unmusic.Copy.wait_carrier'
         if self.Success:
@@ -63,7 +77,7 @@ class Copy:
                 sh.objs.mes (f,_('ERROR')
                             ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
                             % (str(self.gui.opt_yer.choice)
-                              ,'; '.join(gi.items_year)
+                              ,'; '.join(gi.ITEMS_YEAR)
                               )
                             )
             self._source = lg.objs.default().ihome.add_share(self.gui.opt_src.choice)
@@ -147,7 +161,37 @@ class Copy:
         f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
             if self.confirm():
-                sh.com.not_ready(f)
+                sg.Geometry(parent=gi.objs.progress().obj).activate()
+                gi.objs._progress.obj.center()
+                gi.objs._progress.add()
+                gi.objs._progress._items[-1].label.text(_('Copy progress'))
+                sg.objs.root().widget.update_idletasks()
+                gi.objs._progress.show()
+                for i in range(len(self._ids)):
+                    myid      = str(self._ids[i])
+                    source    = os.path.join(self._source,myid)
+                    target    = os.path.join(self._target,myid)
+                    source_sh = sh.Text(source).shorten (max_len = 30
+                                                        ,FromEnd = True
+                                                        )
+                    target_sh = sh.Text(target).shorten (max_len = 30
+                                                        ,FromEnd = True
+                                                        )
+                    message = '({}/{}) {} -> {}'.format (i + 1
+                                                        ,len(self._ids)
+                                                        ,source_sh
+                                                        ,target_sh
+                                                        )
+                    gi.objs._progress._items[-1].label.text(message)
+                    self.update_progress(i)
+                    idir = sh.Directory (path = source
+                                        ,dest = target
+                                        )
+                    idir.copy()
+                    if not idir.Success:
+                        self.Success = False
+                        break
+                gi.objs._progress.close()
             else:
                 sh.log.append (f,_('INFO')
                               ,_('Operation has been canceled by the user.')

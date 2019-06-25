@@ -3965,6 +3965,10 @@ class ProgressBar:
         # This frame must be created after the bottom frame
         self.frm_sec = Frame (parent = self.frm_prm)
     
+    def icon(self,path=None):
+        if path:
+            self.obj.icon(path)
+    
     def title(self,text=None):
         if not text:
             text = _('Download progress')
