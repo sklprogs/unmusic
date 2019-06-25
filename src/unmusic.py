@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import os
 import shared    as sh
 import sharedGUI as sg
 import logic     as lg
@@ -9,6 +10,214 @@ import gui       as gi
 import gettext, gettext_windows
 gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
+
+
+class Copy:
+    
+    def __init__ (self,genre=_('Any')
+                 ,limit=100,year=0
+                 ,syear=0,eyear=0
+                 ):
+        self.values()
+        self.Success = lg.objs.db().Success
+        self._genre  = genre
+        self._limit  = limit
+        self._year   = year
+        self._syear  = syear
+        self._eyear  = eyear
+    
+    def values(self):
+        self._ids    = []
+        self._sizes  = []
+        self._dirs   = []
+        self._query  = ''
+        self._source = ''
+    
+    #todo: reimplement with GUI
+    def select_source(self):
+        f = '[unmusic] unmusic.Copy.select_source'
+        ''' Adding 'os.path.sep' at the end allows to follow symlinks
+            (avoid errors in case the path is a symlink and not
+            a directory).
+        '''
+        if self.Success:
+            self._source = lg.objs.default().ihome.add_share(_('external collection'))
+            idir = sh.Directory(self._source)
+            self.Success = idir.Success
+            self._source = idir.dir
+        else:
+            sh.com.cancel(f)
+    
+    def sizes(self):
+        f = '[unmusic] unmusic.Copy.sizes'
+        if self.Success:
+            self._sizes = []
+            if self._ids:
+                for myid in self._ids:
+                    mydir = os.path.join(self._source,str(myid))
+                    idir  = sh.Directory(mydir)
+                    self.Success = idir.Success
+                    if self.Success:
+                        self._sizes.append(idir.size())
+                    else:
+                        sh.com.cancel(f)
+                        break
+                if self.Success:
+                    total = sum(self._sizes)
+                    total = sh.com.human_size(total,LargeOnly=1)
+                    sh.log.append (f,_('INFO')
+                                  ,_('Total size: %s') % total
+                                  )
+                else:
+                    sh.com.cancel(f)
+            else:
+                sh.log.append (f,_('INFO')
+                              ,_('Nothing to do!')
+                              )
+        else:
+            sh.com.cancel(f)
+    
+    def select_albums(self):
+        f = '[unmusic] unmusic.Copy.select_albums'
+        if self.Success:
+            if self._ids:
+                text = lg.objs.db().brief(self._ids)
+                if text:
+                    lst  = text.splitlines()
+                    ibox = sg.MultCBoxes (text      = text
+                                         ,SelectAll = True
+                                         )
+                    ibox.show()
+                    selected = ibox.selected()
+                    poses = []
+                    if selected:
+                        for item in selected:
+                            try:
+                                poses.append(lst.index(item))
+                            except ValueError:
+                                self.Success = False
+                                sh.objs.mes (f,_('ERROR')
+                                            ,_('Wrong input data!')
+                                            )
+                        ids = []
+                        for pos in poses:
+                            try:
+                                ids.append(self._ids[pos])
+                            except IndexError:
+                                sh.objs.mes (f,_('ERROR')
+                                            ,_('Wrong input data!')
+                                            )
+                        self._ids = ids
+                    else:
+                        sh.com.empty(f)
+                else:
+                    sh.com.empty(f)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def fetch(self):
+        f = '[unmusic] unmusic.Copy.fetch'
+        if self.Success:
+            try:
+                if self._genre == _('Light'):
+                    lst = list(self._ids) + list(lg.LIGHT)
+                elif self._genre == _('Heavy'):
+                    lst = list(self._ids) + list(lg.HEAVY)
+                else:
+                    lst = list(self._ids)
+                lg.objs.db().dbc.execute(self._query,lst)
+                result = lg.objs._db.dbc.fetchall()
+                if result:
+                    self._ids = [item[0] for item in result]
+                else:
+                    sh.com.empty(f)
+                    self.Success = False
+            except Exception as e:
+                self.Success = False
+                sh.objs.mes (f,_('WARNING')
+                            ,_('Operation has failed!\n\nDetails: %s')\
+                            % str(e)
+                            )
+        else:
+            sh.com.cancel(f)
+    
+    def query(self):
+        f = '[unmusic] unmusic.Copy.query'
+        if self.Success:
+            ids = lg.objs.db().rated()
+            if ids:
+                self._ids = ids
+                self._query = 'select ALBUMID from ALBUMS \
+                               where ALBUMID in (%s)' \
+                               % ','.join('?'*len(self._ids))
+                if self._genre in (_('All'),_('Any')):
+                    pass
+                elif self._genre == _('Light'):
+                    self._query += ' and GENRE in (%s)' \
+                                   % ','.join('?'*len(lg.LIGHT))
+                elif self._genre == _('Heavy'):
+                    self._query += ' and GENRE in (%s)' \
+                                   % ','.join('?'*len(lg.HEAVY))
+                else:
+                    self.Success = False
+                    genres = (_('All'),_('Any'),_('Light'),_('Heavy'))
+                    sh.objs.mes (f,_('ERROR')
+                                ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
+                                % (str(self._genre),'; '.join(genres))
+                                )
+                ''' If an exact year is set then only this year should
+                    be used; otherwise, a starting-ending years range
+                    should be used.
+                '''
+                if self._year:
+                    self._query += ' and YEAR = %d' % self._year
+                else:
+                    if self._syear:
+                        self._query += ' and YEAR >= %d' % self._syear
+                    if self._eyear:
+                        self._query += ' and YEAR <= %d' % self._eyear
+                self._query += ' order by ALBUMID'
+                if self._limit:
+                    self._query += ' limit %d' % self._limit
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def debug(self):
+        f = '[unmusic] unmusic.Copy.debug'
+        if self.Success:
+            if self._ids:
+                '''
+                sh.log.append (f,_('DEBUG')
+                              ,'; '.join ([str(albumid) \
+                                           for albumid in self._ids
+                                          ]
+                                         )
+                              )
+                '''
+                ids = lg.objs.db().brief(self._ids)
+                ids = ids.splitlines()
+                ids.sort()
+                sg.fast_txt('\n'.join(ids))
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def run(self):
+        ''' Actually, we can run 'self.fetch' before selecting a source
+            and building a query. However, in case setting the source
+            fails, it is more coherent to fail as early as possible.
+        '''
+        self.select_source()
+        self.query()
+        self.fetch()
+        self.select_albums()
+        self.debug()
+        self.sizes()
 
 
 
