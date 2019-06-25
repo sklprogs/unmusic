@@ -18,8 +18,16 @@ PLAY = (_('Play')
 class Copy:
     
     def __init__(self):
+        self._width = 7
         self.parent = sg.objs.new_top()
         self.gui()
+    
+    def bindings(self):
+        sg.bind (obj      = self.parent
+                ,bindings = ('<Escape>','<Control-w>','<Control-q>')
+                ,action   = self.close
+                )
+        self.opt_yer.action = self.ent_yer.focus
     
     def icon(self,path=None):
         if path:
@@ -96,6 +104,7 @@ class Copy:
                                 ,fill   = None
                                 ,expand = False
                                 ,Close  = False
+                                ,width  = self._width
                                 )
         self.opt_yer = sg.OptionMenu (parent  = self.frm_yer
                                      ,items   = (_('Not set'),'=','>='
@@ -118,6 +127,7 @@ class Copy:
                                 ,fill   = None
                                 ,expand = False
                                 ,Close  = False
+                                ,width  = self._width
                                 )
         self.opt_gnr = sg.OptionMenu (parent  = self.frm_gnr
                                      ,items   = (_('All'),_('Heavy')
@@ -134,6 +144,7 @@ class Copy:
                                 ,fill   = None
                                 ,expand = False
                                 ,Close  = False
+                                ,width  = self._width
                                 )
         self.opt_src = sg.OptionMenu (parent  = self.frm_src
                                      ,items   = (_('external collection')
@@ -150,6 +161,7 @@ class Copy:
                                 ,fill   = None
                                 ,expand = False
                                 ,Close  = False
+                                ,width  = self._width
                                 )
         self.opt_trg = sg.OptionMenu (parent  = self.frm_trg
                                      ,items   = (_('mobile collection')
@@ -168,6 +180,7 @@ class Copy:
         self.buttons()
         self.icon()
         self.title()
+        self.bindings()
     
     def show(self,event=None):
         self.parent.show()
@@ -1251,6 +1264,7 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    Copy().show()
+    icopy = Copy()
+    icopy.show()
     #Tracks().show()
     sg.objs.end()
