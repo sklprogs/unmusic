@@ -814,17 +814,25 @@ class DB:
         f = '[unmusic] logic.DB.brief'
         if self.Success:
             if ids:
+                ''' Sometimes ARTIST + YEAR + ALBUM combinations are
+                    identical, e.g., there are several CDs for the same
+                    album or there are identical albums of a different
+                    quality. This leads to identical IDs at
+                    'unmusic.Copy.select_albums'. To avoid this, we add
+                    ALBUMID.
+                '''
                 try:
-                    query = 'select ARTIST,YEAR,ALBUM from ALBUMS \
-                             where ALBUMID in (%s)' \
+                    query = 'select ALBUMID,ARTIST,YEAR,ALBUM \
+                             from ALBUMS where ALBUMID in (%s)' \
                              % ','.join('?'*len(ids))
                     self.dbc.execute(query,ids)
                     result = self.dbc.fetchall()
                     if result:
-                        lst = [' - '.join ([item[0],str(item[1])
-                                           ,item[2]
-                                           ]
-                                          )\
+                        lst = [str(item[0]) + ': ' + ' - '.join ([item[1]
+                                                                 ,str(item[2])
+                                                                 ,item[3]
+                                                                 ]
+                                                                )\
                                for item in result
                               ]
                         return '\n'.join(lst)

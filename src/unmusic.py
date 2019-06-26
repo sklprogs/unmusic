@@ -299,6 +299,7 @@ class Copy:
             ids = lg.objs.db().rated()
             if ids:
                 self._ids = ids
+                # We assume that 'self._ids' are already distinct
                 self._query = 'select ALBUMID from ALBUMS \
                                where ALBUMID in (%s)' \
                                % ','.join('?'*len(self._ids))
