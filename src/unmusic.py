@@ -238,30 +238,29 @@ class Copy:
                                          ,height    = 768
                                          )
                     ibox.show()
+                    # Always a list
                     selected = ibox.selected()
                     poses = []
-                    if selected:
-                        for item in selected:
-                            try:
-                                poses.append(lst.index(item))
-                            except ValueError:
-                                self.Success = False
-                                sh.objs.mes (f,_('ERROR')
-                                            ,_('Wrong input data!')
-                                            )
-                        ids = []
-                        for pos in poses:
-                            try:
-                                ids.append(self._ids[pos])
-                            except IndexError:
-                                sh.objs.mes (f,_('ERROR')
-                                            ,_('Wrong input data!')
-                                            )
-                        self._ids = ids
-                    else:
-                        sh.com.empty(f)
-                        # Cancel copying if no albums are selected
-                        self._ids = []
+                    for item in selected:
+                        try:
+                            poses.append(lst.index(item))
+                        except ValueError:
+                            self.Success = False
+                            sh.objs.mes (f,_('ERROR')
+                                        ,_('Wrong input data!')
+                                        )
+                    ids = []
+                    for pos in poses:
+                        try:
+                            ids.append(self._ids[pos])
+                        except IndexError:
+                            sh.objs.mes (f,_('ERROR')
+                                        ,_('Wrong input data!')
+                                        )
+                    ''' Allow an empty list here to cancel copying if no
+                        albums are selected.
+                    '''
+                    self._ids = ids
                 else:
                     sh.com.empty(f)
             else:
