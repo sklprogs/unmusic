@@ -260,6 +260,8 @@ class Copy:
                         self._ids = ids
                     else:
                         sh.com.empty(f)
+                        # Cancel copying if no albums are selected
+                        self._ids = []
                 else:
                     sh.com.empty(f)
             else:
