@@ -3939,15 +3939,18 @@ class ProgressBarItem:
 
 class ProgressBar:
     
-    def __init__(self):
+    def __init__ (self,width=750,height=200
+                 ,YScroll = True
+                 ):
         self.values()
+        self._width  = width
+        self._height = height
+        self.YScroll = YScroll
         self.gui()
         
     def values(self):
         self._items  = []
         self._item   = None
-        self._height = 200
-        self._width  = 750
         self._border = 80
     
     def frames(self):
@@ -4042,9 +4045,10 @@ class ProgressBar:
                             ,fill   = 'both'
                             )
         self.canvas.embed(self.label)
-        self.yscroll = Scrollbar (parent = self.frm_ver
-                                 ,scroll = self.canvas
-                                 )
+        if self.YScroll:
+            self.yscroll = Scrollbar (parent = self.frm_ver
+                                     ,scroll = self.canvas
+                                     )
         self.canvas.focus()
         
     def add(self,event=None):

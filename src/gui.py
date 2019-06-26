@@ -1267,7 +1267,9 @@ class Objects:
     
     def progress(self):
         if self._progress is None:
-            self._progress = sg.ProgressBar()
+            self._progress = sg.ProgressBar (height  = 100
+                                            ,YScroll = False
+                                            )
             self._progress.title(_('Copy progress'))
             self._progress.icon(ICON_PATH)
             # Widget is not created yet, do not 'center' it here!
