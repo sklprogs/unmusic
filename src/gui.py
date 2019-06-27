@@ -274,6 +274,38 @@ class AlbumEditor:
         self.pool   = sh.MessagePool(max_size=4)
         self.gui()
     
+    def present(self):
+        self.cbx_loc = sg.CheckBox (parent = self.frm_prs
+                                   ,side   = 'left'
+                                   )
+        self.lbl_loc = sg.Label (parent = self.frm_prs
+                                ,text   = _('local collection')
+                                ,side   = 'left'
+                                ,Close  = False
+                                )
+        self.cbx_ext = sg.CheckBox (parent = self.frm_prs
+                                   ,side   = 'left'
+                                   )
+        self.lbl_ext = sg.Label (parent = self.frm_prs
+                                ,text   = _('external collection')
+                                ,side   = 'left'
+                                ,Close  = False
+                                )
+        self.cbx_mob = sg.CheckBox (parent = self.frm_prs
+                                   ,side   = 'left'
+                                   )
+        self.lbl_mob = sg.Label (parent = self.frm_prs
+                                ,text   = _('mobile collection')
+                                ,side   = 'left'
+                                ,Close  = False
+                                )
+        ''' We can call 'cbx_loc.widget.config(state="disabled")'
+            but this makes the checkbox indistinguishable.
+        '''
+        self.cbx_loc.reset(action=self.cbx_loc.toggle)
+        self.cbx_ext.reset(action=self.cbx_ext.toggle)
+        self.cbx_mob.reset(action=self.cbx_mob.toggle)
+    
     def clear_ids(self,event=None):
         self.ent_ids.focus()
         self.ent_ids.clear_text()
@@ -414,17 +446,17 @@ class AlbumEditor:
                                 ,ipady     = 1
                                 )
         self.ent_bit = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
                               )
         self.ent_len = sg.Entry (parent    = self.frm_rht
-                              ,Composite = True
-                              ,expand    = 1
-                              ,fill      = 'x'
-                              ,ipady     = 1
-                              )
+                                ,Composite = True
+                                ,expand    = 1
+                                ,fill      = 'x'
+                                ,ipady     = 1
+                                )
     
     def labels(self):
         sg.Label (parent = self.frm_lft
@@ -482,6 +514,7 @@ class AlbumEditor:
         self.menus()
         self.labels()
         self.entries()
+        self.present()
         self.image()
         self.bottom()
         self.icon()
@@ -646,6 +679,10 @@ class AlbumEditor:
                                 ,fill   = 'x'
                                 ,side   = 'left'
                                 ,ipadx  = 150
+                                )
+        self.frm_prs = sg.Frame (parent = self.frm_rht
+                                ,expand = 0
+                                ,side   = 'bottom'
                                 )
         self.frm_img = sg.Frame (parent = self.frm_prm
                                 ,expand = 1
@@ -1293,7 +1330,7 @@ objs = Objects()
 
 if __name__ == '__main__':
     sg.objs.start()
-    icopy = Copy()
-    icopy.show()
+    AlbumEditor().show()
+    #Copy().show()
     #Tracks().show()
     sg.objs.end()

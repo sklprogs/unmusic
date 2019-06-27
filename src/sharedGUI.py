@@ -2667,26 +2667,32 @@ class Label:
                  ,anchor=None,Close=True,width=None
                  ,height=None,justify=None
                  ):
-        self.type    = 'Label'
-        self.parent  = parent
-        self.side    = side
-        self.fill    = fill
-        self.expand  = expand
-        self._text   = text
-        self._font   = font
-        self.ipadx   = ipadx
-        self.ipady   = ipady
-        self.image   = image
-        self.bg      = bg
-        self.fg      = fg
-        self.anchor  = anchor
-        self.width   = width
-        self.height  = height
+        self.type   = 'Label'
+        self.parent = parent
+        self.side   = side
+        self.fill   = fill
+        self.expand = expand
+        self._text  = text
+        self._font  = font
+        self.ipadx  = ipadx
+        self.ipady  = ipady
+        self.image  = image
+        self.bg     = bg
+        self.fg     = fg
+        self.anchor = anchor
+        self.width  = width
+        self.height = height
         # Usually the alignment is done by tuning the parent
         self.justify = justify
         self.gui()
         if Close:
             self.close()
+    
+    def disable(self,event=None):
+        self.widget.config(state='disabled')
+    
+    def enable(self,event=None):
+        self.widget.config(state='normal')
     
     def gui(self):
         self.widget = tk.Label (master = self.parent.widget
@@ -2782,19 +2788,19 @@ class CheckBox:
         self.widget.pack(side=self.side)
         self.obj = self
 
-    def show(self):
+    def show(self,event=None):
         self.parent.show()
 
-    def close(self):
+    def close(self,event=None):
         self.parent.close()
 
     def focus(self,event=None):
         self.widget.focus_set()
 
-    def enable(self):
+    def enable(self,event=None):
         self.widget.select()
 
-    def disable(self):
+    def disable(self,event=None):
         self.widget.deselect()
 
     def get(self,event=None):

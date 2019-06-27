@@ -626,6 +626,36 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.bindings()
     
+    def update_presence(self,event=None):
+        f = '[unmusic] unmusic.AlbumEditor.update_presence'
+        if self.Success:
+            local     = lg.objs.default().ihome.add_share(_('local collection'))
+            external  = lg.objs._default.ihome.add_share(_('external collection'))
+            mobile    = lg.objs._default.ihome.add_share(_('mobile collection'))
+            plocal    = os.path.join(local,str(lg.objs.db().albumid))
+            pexternal = os.path.join(external,str(lg.objs._db.albumid))
+            pmobile   = os.path.join(mobile,str(lg.objs._db.albumid))
+            if os.path.exists(plocal):
+                self.gui.cbx_loc.enable()
+                self.gui.lbl_loc.enable()
+            else:
+                self.gui.cbx_loc.disable()
+                self.gui.lbl_loc.disable()
+            if os.path.exists(pexternal):
+                self.gui.cbx_ext.enable()
+                self.gui.lbl_ext.enable()
+            else:
+                self.gui.cbx_ext.disable()
+                self.gui.lbl_ext.disable()
+            if os.path.exists(pmobile):
+                self.gui.cbx_mob.enable()
+                self.gui.lbl_mob.enable()
+            else:
+                self.gui.cbx_mob.disable()
+                self.gui.lbl_mob.disable()
+        else:
+            sh.com.cancel(f)
+    
     def set_genre(self,genre):
         f = '[unmusic] unmusic.AlbumEditor.set_genre'
         if self.Success:
@@ -731,12 +761,12 @@ class AlbumEditor:
     def decypher(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.decypher'
         if self.Success:
-            artist  = self.gui.ent_art.get()
-            album   = self.gui.ent_alb.get()
-            genre   = self.gui.opt_gnr.choice
-            artist  = lg.objs.caesar().decypher(artist)
-            album   = lg.objs._caesar.decypher(album)
-            genre   = lg.objs._caesar.decypher(genre)
+            artist = self.gui.ent_art.get()
+            album  = self.gui.ent_alb.get()
+            genre  = self.gui.opt_gnr.choice
+            artist = lg.objs.caesar().decypher(artist)
+            album  = lg.objs._caesar.decypher(album)
+            genre  = lg.objs._caesar.decypher(genre)
             self.gui.ent_art.clear_text()
             self.gui.ent_art.insert(artist)
             self.gui.ent_alb.clear_text()
@@ -1259,6 +1289,7 @@ class AlbumEditor:
         if self.Success:
             self.update_meter()
             self.update_album_search()
+            self.update_presence()
         else:
             sh.com.cancel(f)
     
