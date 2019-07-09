@@ -625,6 +625,24 @@ class AlbumEditor:
         self.gui   = gi.AlbumEditor()
         self.logic = lg.AlbumEditor()
         self.bindings()
+        
+    def prev_unrated(self,event=None):
+        f = '[unmusic] unmusic.AlbumEditor.prev_unrated'
+        if self.Success:
+            self.save()
+            self.logic.prev_rated()
+            self.fill()
+        else:
+            sh.com.cancel(f)
+    
+    def next_unrated(self,event=None):
+        f = '[unmusic] unmusic.AlbumEditor.next_unrated'
+        if self.Success:
+            self.save()
+            self.logic.next_rated()
+            self.fill()
+        else:
+            sh.com.cancel(f)
     
     def update_presence(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.update_presence'
@@ -1195,7 +1213,15 @@ class AlbumEditor:
         self.gui.opt_rtg.action = self.set_rating
         self.gui.opt_ply.action = self.play
         sg.bind (obj      = self.gui
-                ,bindings = ['<F5>','<Control-r>']
+                ,bindings = '<Alt-n>'
+                ,action   = self.next_unrated
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = '<Alt-p>'
+                ,action   = self.prev_unrated
+                )
+        sg.bind (obj      = self.gui
+                ,bindings = ('<F5>','<Control-r>')
                 ,action   = self.fill
                 )
         sg.bind (obj      = self.gui.ent_ids

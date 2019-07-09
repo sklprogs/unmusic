@@ -1999,7 +1999,7 @@ class WriteBinary:
         else:
             self.Success = False
             log.append (f,_('WARNING')
-                       ,_('Operation has been canceled.')
+                       ,_('Empty input is not allowed!')
                        )
 
     def _write(self,mode='w+b'):

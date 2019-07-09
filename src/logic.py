@@ -306,6 +306,30 @@ class AlbumEditor:
     def __init__(self):
         self.Success = True
     
+    def prev_rated(self,rating=0):
+        f = '[unmusic] logic.AlbumEditor.prev_rated'
+        if self.Success:
+            result = objs.db().prev_rated(rating)
+            if result:
+                objs.db().albumid = result
+                self.get_no()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def next_rated(self,rating=0):
+        f = '[unmusic] logic.AlbumEditor.next_rated'
+        if self.Success:
+            result = objs.db().next_rated(rating)
+            if result:
+                objs.db().albumid = result
+                self.get_no()
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
+    
     def mean_bitrate(self):
         f = '[unmusic] logic.AlbumEditor.mean_bitrate'
         if self.Success:
@@ -809,6 +833,40 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def prev_rated(self,rating=0):
+        f = '[unmusic] logic.DB.prev_rated'
+        if self.Success:
+            try:
+                self.dbc.execute ('select ALBUMID from TRACKS \
+                                   where ALBUMID < ? and RATING = ? \
+                                   order by ALBUMID desc'
+                                 ,(self.albumid,rating,)
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def next_rated(self,rating=0):
+        f = '[unmusic] logic.DB.next_rated'
+        if self.Success:
+            try:
+                self.dbc.execute ('select ALBUMID from TRACKS \
+                                   where ALBUMID > ? and RATING = ? \
+                                   order by ALBUMID'
+                                 ,(self.albumid,rating,)
+                                 )
+                result = self.dbc.fetchone()
+                if result:
+                    return result[0]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def brief(self,ids):
         f = '[unmusic] logic.DB.brief'

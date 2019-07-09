@@ -70,7 +70,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sg.objs.start()
-    import unmusic
-    unmusic.Copy(limit=100,genre=_('All'),year=2016).run()
+    print(lg.objs.db().next_rated())
     lg.objs.db().close()
     sg.objs.end()
