@@ -182,7 +182,7 @@ class Play:
                         except IndexError:
                             pass
                     errors = [str(error) for error in errors]
-                    mes = _('Tracks %s have not been found in "{}"!')
+                    mes = _('Tracks {} have not been found in "{}"!')
                     mes = mes.format(errors,self.album())
                     sh.objs.mes(f,mes).warning()
                 if len(self._nos) == len(self._titles) == len(self._len):
