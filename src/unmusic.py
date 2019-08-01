@@ -3,13 +3,13 @@
 
 import os
 import time
-import shared    as sh
-import sharedGUI as sg
-import logic     as lg
-import gui       as gi
+import skl_shared.shared as sh
+import logic             as lg
+import gui               as gi
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
+import gettext
+import skl_shared.gettext_windows
+skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
@@ -30,7 +30,7 @@ class Copy:
                 percent = 0
             gi.objs.progress()._item.widget['value'] = percent
             # This is required to fill the progress bar on-the-fly
-            sg.objs.root().widget.update_idletasks()
+            sh.objs.root().idle()
         else:
             sh.com.cancel(f)
     
@@ -39,17 +39,17 @@ class Copy:
         if self.Success:
             if carrier:
                 carrier    = os.path.realpath(carrier)
-                carrier_sh = sh.Text(carrier).shorten (max_len = 25
-                                                      ,Enclose = True
-                                                      ,FromEnd = True
-                                                      )
-                sg.objs.waitbox().reset (func_title = f
-                                        ,message    = _('Waiting for {}').format(carrier_sh)
-                                        )
-                sg.objs._waitbox.show()
+                carrier_sh = sh.lg.Text(carrier).shorten (max_len = 25
+                                                         ,Enclose = True
+                                                         ,FromEnd = True
+                                                         )
+                objs.waitbox().reset (func    = f
+                                     ,message = _('Waiting for {}').format(carrier_sh)
+                                     )
+                objs._waitbox.show()
                 while not os.path.isdir(carrier):
                     time.sleep(1)
-                sg.objs._waitbox.close()    
+                objs._waitbox.close()    
             else:
                 sh.com.empty(f)
         else:
@@ -62,29 +62,28 @@ class Copy:
             if self.gui.opt_yer.choice == _('Not set'):
                 pass
             elif self.gui.opt_yer.choice == '=':
-                self._year = sh.Input (title = f
-                                      ,value = self.gui.ent_yer.get()
-                                      ).integer()
+                self._year = sh.lg.Input (title = f
+                                         ,value = self.gui.ent_yer.get()
+                                         ).integer()
             elif self.gui.opt_yer.choice == '>=':
-                self._syear = sh.Input (title = f
-                                       ,value = self.gui.ent_yer.get()
-                                       ).integer()
+                self._syear = sh.lg.Input (title = f
+                                          ,value = self.gui.ent_yer.get()
+                                          ).integer()
             elif self.gui.opt_yer.choice == '<=':
-                self._eyear = sh.Input (title = f
-                                       ,value = self.gui.ent_yer.get()
-                                       ).integer()
+                self._eyear = sh.lg.Input (title = f
+                                          ,value = self.gui.ent_yer.get()
+                                          ).integer()
             else:
-                sh.objs.mes (f,_('ERROR')
-                            ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
-                            % (str(self.gui.opt_yer.choice)
-                              ,'; '.join(gi.ITEMS_YEAR)
-                              )
-                            )
+                mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
+                mes = mes.format (self.gui.opt_yer.choice
+                                 ,'; '.join(gi.ITEMS_YEAR)
+                                 )
+                sh.objs.mes(f,mes).error()
             self._source = lg.objs.default().ihome.add_share(self.gui.opt_src.choice)
             self._target = lg.objs._default.ihome.add_share(self.gui.opt_trg.choice)
-            self._limit  = sh.Input (title = f
-                                    ,value = self.gui.ent_lim.get()
-                                    ).integer()
+            self._limit  = sh.lg.Input (title = f
+                                       ,value = self.gui.ent_lim.get()
+                                       ).integer()
         else:
             sh.com.cancel(f)
     
@@ -117,13 +116,13 @@ class Copy:
         f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
             total = sum(self._sizes)
-            free  = sh.Path(self._target).free_space()
+            free  = sh.lg.Path(self._target).free_space()
             cond  = total and free and total + self._minfr < free
             if cond:
-                free  = sh.com.human_size (bsize     = free
-                                          ,LargeOnly = True
-                                          )
-                total = sh.com.human_size(total,LargeOnly=1)
+                free  = sh.lg.com.human_size (bsize     = free
+                                             ,LargeOnly = True
+                                             )
+                total = sh.lg.com.human_size(total,LargeOnly=1)
                 message  = _('Selected albums: {}').format(len(self._ids))
                 message += '\n'
                 message += _('Total size: {}').format(total)
@@ -131,29 +130,24 @@ class Copy:
                 message += _('Free space: {}').format(free)
                 message += '\n\n'
                 message += _('Continue?')
-                return sh.objs.mes (f,_('QUESTION')
-                                   ,message
-                                   ).Yes
+                return sh.objs.mes(f,message).question()
             elif not total:
                 # Do not fail here since we may change settings after
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
             else:
-                free = sh.com.human_size (bsize     = free
-                                         ,LargeOnly = True
-                                         )
-                required = sh.com.human_size (bsize     = total + self._minfr
-                                             ,LargeOnly = True
-                                             )
-                message  = _('Not enough free space on "{}"!').format(self._target)
+                free = sh.lg.com.human_size (bsize     = free
+                                            ,LargeOnly = True
+                                            )
+                required = sh.lg.com.human_size (bsize     = total + self._minfr
+                                                ,LargeOnly = True
+                                                )
+                message  = _('Not enough free space on "{}"!')
+                message  = message.format(self._target)
                 message += '\n'
                 message += _('Free space: {}').format(free)
                 message += '\n'
                 message += _('Required: {}').format(required)
-                sh.objs.mes (f,_('WARNING')
-                            ,message
-                            )
+                sh.objs.mes(f,message).warning()
         else:
             sh.com.cancel(f)
     
@@ -161,22 +155,21 @@ class Copy:
         f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
             if self.confirm():
-                sg.Geometry(parent=gi.objs.progress().obj).activate()
-                gi.objs._progress.obj.center()
+                sh.Geometry(gi.objs.progress().obj).activate()
                 gi.objs._progress.add()
                 gi.objs._progress._items[-1].label.text(_('Copy progress'))
-                sg.objs.root().widget.update_idletasks()
+                sh.objs.root().idle()
                 gi.objs._progress.show()
                 for i in range(len(self._ids)):
                     myid      = str(self._ids[i])
                     source    = os.path.join(self._source,myid)
                     target    = os.path.join(self._target,myid)
-                    source_sh = sh.Text(source).shorten (max_len = 30
-                                                        ,FromEnd = True
-                                                        )
-                    target_sh = sh.Text(target).shorten (max_len = 30
-                                                        ,FromEnd = True
-                                                        )
+                    source_sh = sh.lg.Text(source).shorten (max_len = 30
+                                                           ,FromEnd = True
+                                                           )
+                    target_sh = sh.lg.Text(target).shorten (max_len = 30
+                                                           ,FromEnd = True
+                                                           )
                     message = '({}/{}) {} -> {}'.format (i + 1
                                                         ,len(self._ids)
                                                         ,source_sh
@@ -184,18 +177,17 @@ class Copy:
                                                         )
                     gi.objs._progress._items[-1].label.text(message)
                     self.update_progress(i)
-                    idir = sh.Directory (path = source
-                                        ,dest = target
-                                        )
+                    idir = sh.lg.Directory (path = source
+                                           ,dest = target
+                                           )
                     idir.copy()
                     if not idir.Success:
                         self.Success = False
                         break
                 gi.objs._progress.close()
             else:
-                sh.log.append (f,_('INFO')
-                              ,_('Operation has been canceled by the user.')
-                              )
+                mes = _('Operation has been canceled by the user.')
+                sh.objs.mes(f,mes,True).info()
         else:
             sh.com.cancel(f)
     
@@ -204,24 +196,22 @@ class Copy:
         if self.Success:
             self._sizes = []
             if self._ids:
-                sg.objs.waitbox().reset (func_title = f
-                                        ,message    = _('Calculate required space')
-                                        )
-                sg.objs._waitbox.show()
+                objs.waitbox().reset (func    = f
+                                     ,message = _('Calculate required space')
+                                     )
+                objs._waitbox.show()
                 for myid in self._ids:
                     mydir = os.path.join(self._source,str(myid))
-                    idir  = sh.Directory(mydir)
+                    idir  = sh.lg.Directory(mydir)
                     self.Success = idir.Success
                     if self.Success:
                         self._sizes.append(idir.size())
                     else:
                         sh.com.cancel(f)
                         break
-                sg.objs._waitbox.close()
+                objs._waitbox.close()
             else:
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -232,11 +222,12 @@ class Copy:
                 text = lg.objs.db().brief(self._ids)
                 if text:
                     lst  = text.splitlines()
-                    ibox = sg.MultCBoxes (text      = text
-                                         ,SelectAll = True
-                                         ,width     = 1024
-                                         ,height    = 768
-                                         )
+                    ibox = sh.MultCBoxesC (text    = text
+                                          ,MarkAll = True
+                                          ,width   = 1024
+                                          ,height  = 768
+                                          ,icon    = gi.ICON
+                                          )
                     ibox.show()
                     # Always a list
                     selected = ibox.selected()
@@ -246,17 +237,15 @@ class Copy:
                             poses.append(lst.index(item))
                         except ValueError:
                             self.Success = False
-                            sh.objs.mes (f,_('ERROR')
-                                        ,_('Wrong input data!')
-                                        )
+                            mes = _('Wrong input data!')
+                            sh.objs.mes(f,mes).error()
                     ids = []
                     for pos in poses:
                         try:
                             ids.append(self._ids[pos])
                         except IndexError:
-                            sh.objs.mes (f,_('ERROR')
-                                        ,_('Wrong input data!')
-                                        )
+                            mes = _('Wrong input data!')
+                            sh.objs.mes(f,mes).error()
                     ''' Allow an empty list here to cancel copying if no
                         albums are selected.
                     '''
@@ -287,10 +276,9 @@ class Copy:
                     self.Success = False
             except Exception as e:
                 self.Success = False
-                sh.objs.mes (f,_('WARNING')
-                            ,_('Operation has failed!\n\nDetails: %s')\
-                            % str(e)
-                            )
+                mes = _('Operation has failed!\n\nDetails: {}')
+                mes = mes.format(e)
+                sh.objs.mes(f,mes).error()
         else:
             sh.com.cancel(f)
     
@@ -315,10 +303,9 @@ class Copy:
                 else:
                     self.Success = False
                     genres = (_('All'),_('Any'),_('Light'),_('Heavy'))
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
-                                % (str(self._genre),'; '.join(genres))
-                                )
+                    mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
+                    mes = mes.format(self._genre,'; '.join(genres))
+                    sh.objs.mes(f,mes).error()
                 ''' If an exact year is set then only this year should
                     be used; otherwise, a starting-ending years range
                     should be used.
@@ -343,17 +330,13 @@ class Copy:
         if self.Success:
             if self._ids:
                 '''
-                sh.log.append (f,_('DEBUG')
-                              ,'; '.join ([str(albumid) \
-                                           for albumid in self._ids
-                                          ]
-                                         )
-                              )
+                mes = '; '.join([str(albumid) for albumid in self._ids])
+                sh.objs.mes(f,mes,True).debug()
                 '''
                 ids = lg.objs.db().brief(self._ids)
                 ids = ids.splitlines()
                 ids.sort()
-                sg.fast_txt('\n'.join(ids))
+                sh.fast_txt('\n'.join(ids))
             else:
                 sh.com.empty(f)
         else:
@@ -380,6 +363,7 @@ class Tracks:
         self.Active  = False
         self.Success = lg.objs.db().Success
         self.gui     = gi.Tracks(height=400)
+        self.gui.close()
         self.bindings()
     
     def decypher(self,event=None):
@@ -417,9 +401,8 @@ class Tracks:
     
     def _dump_search(self,old,new):
         f = '[unmusic] unmusic.Tracks._dump'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        mes = _('Not implemented yet!')
+        sh.objs.mes(f,mes).info()
         return False
     
     def _dump(self,old,new):
@@ -436,29 +419,25 @@ class Tracks:
                                      ]
                         if old_record != new_record:
                             if new[i][0]:
-                                self.gui.update_info (_('Edit #%d.') \
-                                                      % (i + 1)
-                                                     )
+                                mes = _('Edit #{}.').format(i+1)
+                                self.gui.update_info(mes)
                                 lg.objs.db().update_track (no   = i + 1
                                                           ,data = new_record
                                                           )
                                 # We're in loop - do not use 'return'
                                 Dump = True
                             else:
-                                sh.objs.mes (f,_('WARNING')
-                                            ,_('A track title should be indicated.')
-                                            )
+                                mes = _('A track title should be indicated.')
+                                sh.objs.mes(f,mes).warning()
                     else:
                         self.Success = False
-                        sh.objs.mes (f,_('ERROR')
-                                    ,_('Wrong input data!')
-                                    )
+                        mes = _('Wrong input data!')
+                        sh.objs.mes(f,mes).error()
                 return Dump
             else:
-                sh.objs.mes (f,_('ERROR')
-                            ,_('Condition "%s" is not observed!') \
-                            % '%d == %d' % (len(old),len(new))
-                            )
+                sub = '{} = {}'.format(len(old),len(new))
+                mes = _('Condition "{}" is not observed!').format(sub)
+                sh.objs.mes(f,mes).error()
         else:
             sh.com.empty(f)
     
@@ -476,9 +455,8 @@ class Tracks:
                 else:
                     return self._dump(old,new)
             else:
-                sh.objs.mes (f,_('WARNING')
-                            ,_('Track numbers should be sequential!')
-                            )
+                mes = _('Track numbers should be sequential!')
+                sh.objs.mes(f,mes).warning()
         else:
             sh.com.cancel(f)
     
@@ -501,18 +479,18 @@ class Tracks:
         self.gui.btn_dec.action = self.decode
         self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
-        sg.bind (obj      = self.gui.parent
-                ,bindings = ['<F5>','<Control-r>']
-                ,action   = self.reload
-                )
-        sg.bind (obj      = self.gui.parent
-                ,bindings = ['<F2>','<Control-s>']
-                ,action   = self.save
-                )
-        sg.bind (obj      = self.gui.parent
-                ,bindings = ['<Escape>','<Control-q>','<Control-w>']
-                ,action   = self.close
-                )
+        sh.com.bind (obj      = self.gui.parent
+                    ,bindings = ('<F5>','<Control-r>')
+                    ,action   = self.reload
+                    )
+        sh.com.bind (obj      = self.gui.parent
+                    ,bindings = ('<F2>','<Control-s>')
+                    ,action   = self.save
+                    )
+        sh.com.bind (obj      = self.gui.parent
+                    ,bindings = ('<Escape>','<Control-q>','<Control-w>')
+                    ,action   = self.close
+                    )
     
     def fill_search(self,data):
         f = '[unmusic] unmusic.Tracks.fill_search'
@@ -524,35 +502,33 @@ class Tracks:
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 8:
-                        track.ent_aid.read_only(False)
+                        track.ent_aid.enable()
                         track.ent_aid.clear_text()
                         track.ent_aid.insert(record[0])
-                        track.ent_aid.read_only(True)
-                        track.ent_tno.read_only(False)
+                        track.ent_aid.disable()
+                        track.ent_tno.enable()
                         track.ent_tno.clear_text()
                         track.ent_tno.insert(str(record[2]))
-                        track.ent_tno.read_only(True)
+                        track.ent_tno.disable()
                         track.ent_tit.clear_text()
                         track.ent_tit.insert(record[1])
                         track.ent_lyr.clear_text()
                         track.ent_lyr.insert(record[3])
                         track.ent_com.clear_text()
                         track.ent_com.insert(record[4])
-                        track.ent_bit.read_only(False)
+                        track.ent_bit.enable()
                         track.ent_bit.clear_text()
                         track.ent_bit.insert(str(record[5]//1000)+'k')
-                        track.ent_bit.read_only(True)
-                        track.ent_len.read_only(False)
+                        track.ent_bit.disable()
+                        track.ent_len.enable()
                         track.ent_len.clear_text()
-                        track.ent_len.insert(sh.com.human_time(float(record[6])))
-                        track.ent_len.read_only(True)
+                        track.ent_len.insert(sh.lg.com.human_time(float(record[6])))
+                        track.ent_len.disable()
                         track.opt_rtg.set(record[7])
                     else:
                         self.Success = False
-                        sh.objs.mes (f,_('ERROR')
-                                    ,_('Wrong input data: "%s"!') \
-                                    % str(data)
-                                    )
+                        mes = _('Wrong input data: "{}"!').format(data)
+                        sh.objs.mes(f,mes).error()
                 self.gui.after_add()
             else:
                 sh.com.empty(f)
@@ -571,40 +547,38 @@ class Tracks:
             if data:
                 for i in range(len(data)):
                     self.gui.add()
-                    self.gui.update_info(_('Load #%d.') % (i + 1))
+                    mes = _('Load #{}.').format(i+1)
+                    self.gui.update_info(mes)
                     record = data[i]
                     track  = self.gui._tracks[i]
                     if len(record) == 7:
-                        track.ent_tno.read_only(False)
+                        track.ent_tno.enable()
                         track.ent_tno.clear_text()
                         track.ent_tno.insert(str(record[1]))
-                        track.ent_tno.read_only(True)
+                        track.ent_tno.disable()
                         track.ent_tit.clear_text()
                         track.ent_tit.insert(record[0])
                         track.ent_lyr.clear_text()
                         track.ent_lyr.insert(record[2])
                         track.ent_com.clear_text()
                         track.ent_com.insert(record[3])
-                        track.ent_bit.read_only(False)
+                        track.ent_bit.enable()
                         track.ent_bit.clear_text()
                         track.ent_bit.insert(str(record[4]//1000)+'k')
-                        track.ent_bit.read_only(True)
-                        track.ent_len.read_only(False)
+                        track.ent_bit.disable()
+                        track.ent_len.enable()
                         track.ent_len.clear_text()
-                        track.ent_len.insert(sh.com.human_time(float(record[5])))
-                        track.ent_len.read_only(True)
+                        track.ent_len.insert(sh.lg.com.human_time(float(record[5])))
+                        track.ent_len.disable()
                         track.opt_rtg.set(record[6])
                     else:
                         self.Success = False
-                        sh.objs.mes (f,_('ERROR')
-                                    ,_('Wrong input data: "%s"!') \
-                                    % str(data)
-                                    )
+                        mes = _('Wrong input data: "{}"!').format(data)
+                        sh.objs.mes(f,mes).error()
                 self.gui.after_add()
             else:
-                sh.objs.mes (f,_('INFO')
-                            ,_('No tracks are associated with this album.')
-                            )
+                mes = _('No tracks are associated with this album.')
+                sh.objs.mes(f,mes).info()
         else:
             sh.com.cancel(f)
     
@@ -739,23 +713,18 @@ class AlbumEditor:
                             lg.objs._db.albumid = albumid
                             self.fill()
                         else:
-                            sh.objs.mes (f,_('INFO')
-                                        ,_('No matches!')
-                                        )
+                            mes = _('No matches!')
+                            sh.objs.mes(f,mes).info()
                     else:
-                        sh.objs.mes (f,_('WARNING')
-                                    ,_('Wrong input data: "%s"!') \
-                                    % str(albumid)
-                                    )
+                        mes = _('Wrong input data: "{}"!')
+                        mes = mes.format(albumid)
+                        sh.objs.mes(f,mes).warning()
                 else:
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Wrong input data: "%s"!') \
-                                % str(albumid)
-                                )
+                    mes = _('Wrong input data: "{}"!')
+                    mes = mes.format(albumid)
+                    sh.objs.mes(f,mes).warning()
             else:
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -814,12 +783,11 @@ class AlbumEditor:
     def values(self):
         self._defimg   = None
         self._image    = None
-        self._path_def = sh.objs.pdir().add ('..','resources','cd.png'
-                                            )
+        self._path_def = sh.objs.pdir().add('..','resources','cd.png')
     
     def default_image(self):
         if not self._defimg:
-            self._defimg = sg.Image().open(self._path_def)
+            self._defimg = sh.Image().open(self._path_def)
         return self._defimg
         
     def zoom_image(self,event=None):
@@ -841,11 +809,11 @@ class AlbumEditor:
         if self.Success:
             if image:
                 try:
-                    ipic = sg.Image()
+                    ipic = sh.Image()
                     ipic._bytes = image
                     ipic.loader()
                     self._image = ipic.image()
-                    ipic = sg.Image()
+                    ipic = sh.Image()
                     ipic._bytes = image
                     ipic.loader()
                     ''' These are dimensions of 'self.gui.frm_img' when
@@ -858,10 +826,9 @@ class AlbumEditor:
                         an incorrectly ripped image.
                     '''
                     thumb = None
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Third-party module has failed!\n\nDetails: %s')\
-                                % str(e)
-                                )
+                    mes = _('Third-party module has failed!\n\nDetails: {}')
+                    mes = mes.format(e)
+                    sh.objs.mes(f,mes).warning()
             else:
                 self._image = self.default_image()
                 thumb = self._image
@@ -877,9 +844,7 @@ class AlbumEditor:
             choice  = self.gui.opt_ply.choice
             default = _('Play')
             if choice == default:
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
             elif choice == _('All'):
                 self.gui.opt_ply.set(default)
                 lg.Play().all_tracks()
@@ -890,10 +855,9 @@ class AlbumEditor:
                 self.gui.opt_ply.set(default)
                 lg.Play().good_tracks(9)
             else:
-                sh.objs.mes (f,_('ERROR')
-                            ,_('An unknown mode "%s"!\n\nThe following modes are supported: "%s".')\
-                            % (str(choice),';'.join(gi.PLAY))
-                            )
+                mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
+                mes = mes.format(choice,';'.join(gi.PLAY))
+                sh.objs.mes(f,mes).error()
         else:
             sh.com.cancel(f)
     
@@ -902,15 +866,16 @@ class AlbumEditor:
         if self.Success:
             total = lg.objs.db().get_length()
             if total:
-                mes = _('%s (%d tracks)') % (sh.com.human_time(sum(total))
-                                            ,len(total)
-                                            )
+                mes = _('{} ({} tracks)')
+                mes = mes.format (sh.lg.com.human_time(sum(total))
+                                 ,len(total)
+                                 )
             else:
                 mes = '?'
-            self.gui.ent_len.read_only(False)
+            self.gui.ent_len.enable()
             self.gui.ent_len.clear_text()
             self.gui.ent_len.insert(mes)
-            self.gui.ent_len.read_only(True)
+            self.gui.ent_len.disable()
         else:
             sh.com.cancel(f)
     
@@ -922,10 +887,10 @@ class AlbumEditor:
                 mes = '%dk' % (mean // 1000)
             else:
                 mes = '?'
-            self.gui.ent_bit.read_only(False)
+            self.gui.ent_bit.enable()
             self.gui.ent_bit.clear_text()
             self.gui.ent_bit.insert(mes)
-            self.gui.ent_bit.read_only(True)
+            self.gui.ent_bit.disable()
         else:
             sh.com.cancel(f)
     
@@ -943,17 +908,16 @@ class AlbumEditor:
             elif rating is None:
                 sh.com.empty(f)
             else:
-                sh.objs.mes (f,_('ERROR')
-                            ,_('Wrong input data: "%s"!') % str(rating)
-                            )
+                mes = _('Wrong input data: "{}"!').format(rating)
+                sh.objs.mes(f,mes).error()
         else:
             sh.com.cancel(f)
     
     def _set_rating(self):
         f = '[unmusic] unmusic.AlbumEditor._set_rating'
-        value = sh.Input (title = f
-                         ,value = self.gui.opt_rtg.choice
-                         ).integer()
+        value = sh.lg.Input (title = f
+                            ,value = self.gui.opt_rtg.choice
+                            ).integer()
         lg.objs._db.set_rating(value)
     
     def set_rating(self,event=None):
@@ -961,20 +925,18 @@ class AlbumEditor:
         if self.Success:
             rating = self.logic.mean_rating()
             if isinstance(rating,float):
+                mes = _('Tracks are of a mixed rating. Do you want to assign the same rating to all of them?')
                 if rating == int(rating):
                     self._set_rating()
-                elif sg.Message (f,_('QUESTION')
-                                ,_('Tracks are of a mixed rating. Do you want to assign the same rating to all of them?')
-                                ).Yes:
+                elif sh.objs.mes(f,mes).question():
                     self._set_rating()
                 else:
                     self.get_rating()
             elif rating is None:
                 sh.com.empty(f)
             else:
-                sh.objs.mes (f,_('ERROR')
-                            ,_('Wrong input data: "%s"!') % str(rating)
-                            )
+                mes = _('Wrong input data: "{}"!').format(rating)
+                sh.objs.mes(f,mes).error()
         else:
             sh.com.cancel(f)
     
@@ -991,18 +953,16 @@ class AlbumEditor:
                     old = old[:-1]
                     if [item for item in new if item]:
                         if not new[0]:
-                            sh.objs.mes (f,_('WARNING')
-                                        ,_('An album title should be indicated.')
-                                        )
+                            mes = _('An album title should be indicated.')
+                            sh.objs.mes(f,mes).warning()
                             if old[0]:
                                 new[0] = old[0]
                             else:
                                 # Do not localize (being stored in DB)
                                 new[0] = '?'
                         if not new[1]:
-                            sh.objs.mes (f,_('WARNING')
-                                        ,_('An artist should be indicated.')
-                                        )
+                            mes = _('An artist should be indicated.')
+                            sh.objs.mes(f,mes).warning()
                             if old[1]:
                                 new[1] = old[1]
                             else:
@@ -1010,30 +970,28 @@ class AlbumEditor:
                                 new[1] = '?'
                         # Do not warn if a year is not set
                         if new[2]:
-                            new[2] = sh.Input (title = f
-                                              ,value = new[2]
-                                              ).integer()
+                            new[2] = sh.lg.Input (title = f
+                                                 ,value = new[2]
+                                                 ).integer()
                         else:
                             # We need to return integer anyway
                             new[2] = old[2]
                         if old == new:
-                            sh.log.append (f,_('INFO')
-                                          ,_('No changes!')
-                                          )
+                            mes = _('No changes!')
+                            sh.objs.mes(f,mes,True).info()
                         else:
-                            sh.log.append (f,_('INFO')
-                                          ,_('Some fields have been updated.')
-                                          )
+                            mes = _('Some fields have been updated.')
+                            sh.objs.mes(f,mes,True).info()
                             query = self.logic._compare_albums(old,new)
                             lg.objs._db.updateDB(query)
                             return query
                     else:
                         sh.com.empty(f)
                 else:
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('The condition "%s" is not observed!')\
-                                % ('%d == %d' % (len(old)-1,len(new)))
-                                )
+                    sub = '{} = {}'.format(len(old)-1,len(new))
+                    mes = _('The condition "{}" is not observed!')
+                    mes = mes.format(sub)
+                    sh.objs.mes(f,mes).error()
             else:
                 sh.com.empty(f)
         else:
@@ -1049,13 +1007,10 @@ class AlbumEditor:
                     objs.tracks().fill_search(data=data)
                     objs._tracks.show()
                 else:
-                    sh.objs.mes (f,_('INFO')
-                                ,_('No matches!')
-                                )
+                    mes = _('No matches!')
+                    sh.objs.mes(f,mes).info()
             else:
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -1092,15 +1047,12 @@ class AlbumEditor:
                     self.fill()
                 else:
                     lg.objs._db.albumid = old
-                    sh.objs.mes (f,_('INFO')
-                                ,_('No matches!')
-                                )
+                    mes = _('No matches!')
+                    sh.objs.mes(f,mes).info()
             else:
                 self.gui.btn_spr.inactive()
                 self.gui.btn_snx.inactive()
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -1120,15 +1072,12 @@ class AlbumEditor:
                     self.fill()
                 else:
                     lg.objs._db.albumid = old
-                    sh.objs.mes (f,_('INFO')
-                                ,_('No matches!')
-                                )
+                    mes = _('No matches!')
+                    sh.objs.mes(f,mes).info()
             else:
                 self.gui.btn_spr.inactive()
                 self.gui.btn_snx.inactive()
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -1162,13 +1111,11 @@ class AlbumEditor:
     def delete(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.delete'
         if self.Success:
-            if sg.Message (f,_('QUESTION')
-                          ,_('Are you sure you want to permanently delete record #%d?')\
-                          % lg.objs.db().albumid
-                          ).Yes:
-                self.gui.update_info (text = _('Delete #%d.') \
-                                             % lg.objs._db.albumid
-                                     )
+            mes = _('Are you sure you want to permanently delete record #{}?')
+            mes = mes.format(lg.objs.db().albumid)
+            if sh.objs.mes(f,mes).question():
+                mes = _('Delete #{}.').format(lg.objs._db.albumid)
+                self.gui.update_info(text=mes)
                 lg.objs._db.delete()
                 lg.objs._db.albumid = self.logic.get_max()
                 self.fill()
@@ -1212,62 +1159,62 @@ class AlbumEditor:
         self.gui.btn_trk.action = self.tracks
         self.gui.opt_rtg.action = self.set_rating
         self.gui.opt_ply.action = self.play
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-n>'
-                ,action   = self.next_unrated
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-p>'
-                ,action   = self.prev_unrated
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = ('<F5>','<Control-r>')
-                ,action   = self.fill
-                )
-        sg.bind (obj      = self.gui.ent_ids
-                ,bindings = ['<Return>','<KP_Enter>']
-                ,action   = self.search_id
-                )
-        sg.bind (obj      = self.gui.ent_src
-                ,bindings = ['<Return>','<KP_Enter>']
-                ,action   = self.search_album
-                )
-        sg.bind (obj      = self.gui.ent_sr2
-                ,bindings = ['<Return>','<KP_Enter>']
-                ,action   = self.search_track
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = ['<F2>','<Control-s>']
-                ,action   = self.save
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = ['<F4>','<Control-t>','<Alt-t>']
-                ,action   = self.tracks
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Control-n>'
-                ,action   = self.create
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-Left>'
-                ,action   = self.prev
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-Right>'
-                ,action   = self.next
-                )
-        sg.bind (obj      = self.gui.lbl_img
-                ,bindings = '<ButtonRelease-1>'
-                ,action   = self.zoom_image
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-Home>'
-                ,action   = self.go_start
-                )
-        sg.bind (obj      = self.gui
-                ,bindings = '<Alt-End>'
-                ,action   = self.go_end
-                )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-n>'
+                    ,action   = self.next_unrated
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-p>'
+                    ,action   = self.prev_unrated
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = ('<F5>','<Control-r>')
+                    ,action   = self.fill
+                    )
+        sh.com.bind (obj      = self.gui.ent_ids
+                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,action   = self.search_id
+                    )
+        sh.com.bind (obj      = self.gui.ent_src
+                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,action   = self.search_album
+                    )
+        sh.com.bind (obj      = self.gui.ent_sr2
+                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,action   = self.search_track
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = ('<F2>','<Control-s>')
+                    ,action   = self.save
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = ('<F4>','<Control-t>','<Alt-t>')
+                    ,action   = self.tracks
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Control-n>'
+                    ,action   = self.create
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-Left>'
+                    ,action   = self.prev
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-Right>'
+                    ,action   = self.next
+                    )
+        sh.com.bind (obj      = self.gui.lbl_img
+                    ,bindings = '<ButtonRelease-1>'
+                    ,action   = self.zoom_image
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-Home>'
+                    ,action   = self.go_start
+                    )
+        sh.com.bind (obj      = self.gui
+                    ,bindings = '<Alt-End>'
+                    ,action   = self.go_end
+                    )
     
     def reset(self):
         f = '[unmusic] unmusic.AlbumEditor.reset'
@@ -1295,9 +1242,9 @@ class AlbumEditor:
         f = '[unmusic] unmusic.AlbumEditor.update_meter'
         if self.Success:
             _max = self.logic.get_max()
-            self.gui.lbl_mtr.text ('%d / %d' % (self.logic.get_no()
-                                               ,_max
-                                               )
+            self.gui.lbl_mtr.text ('{} / {}'.format (self.logic.get_no()
+                                                    ,_max
+                                                    )
                                   )
             if lg.objs.db().albumid < _max:
                 self.gui.btn_nxt.active()
@@ -1326,9 +1273,8 @@ class AlbumEditor:
             data = lg.objs.db().get_album()
             if data:
                 if len(data) == 7:
-                    self.gui.update_info (_('Load #%d.') \
-                                          % lg.objs._db.albumid
-                                         )
+                    mes = _('Load #{}.').format(lg.objs._db.albumid)
+                    self.gui.update_info(mes)
                     self.gui.clear_entries()
                     self.gui.ent_alb.insert(data[0])
                     self.gui.ent_art.insert(data[1])
@@ -1345,10 +1291,8 @@ class AlbumEditor:
                     if objs.tracks().Active:
                         objs._tracks.reload()
                 else:
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('Wrong input data: "%s"!') \
-                                % str(data)
-                                )
+                    mes = _('Wrong input data: "{}"!').format(data)
+                    sh.objs.mes(f,mes).error()
             else:
                 sh.com.empty(f)
         else:
@@ -1382,28 +1326,29 @@ class Menu:
             tags to DB only once.
         '''
         f = '[unmusic] unmusic.Menu.collect'
-        folder = sh.Home(app_name='unmusic').add_share(_('not processed'))
+        folder = sh.lg.Home(app_name='unmusic').add_share(_('not processed'))
         Obfuscate = self.gui.cbx_obf.get()
-        if sh.Path(folder).create():
+        if sh.lg.Path(folder).create():
             iwalk = lg.Walker(folder)
             dirs  = iwalk.dirs()
             if dirs:
                 count = 0
-                timer = sh.Timer(f)
+                timer = sh.lg.Timer(f)
                 timer.start()
                 for folder in dirs:
                     if lg.objs.db().Success:
                         count += 1
-                        basename = sh.Path(folder).basename()
-                        itext    = sh.Text(basename)
+                        basename = sh.lg.Path(folder).basename()
+                        itext    = sh.lg.Text(basename)
                         itext.delete_unsupported()
                         itext.shorten(max_len=15)
-                        gi.objs.wait().reset (func_title = f
-                                             ,message    = _('Process "%s" (%d/%d)')\
-                                                           % (itext.text
-                                                             ,count
-                                                             ,len(dirs)
-                                                             )
+                        mes = _('Process "{}" ({}/{})')
+                        mes = mes.format (itext.text
+                                         ,count
+                                         ,len(dirs)
+                                         )
+                        gi.objs.wait().reset (title   = f
+                                             ,message = mes
                                              )
                         gi.objs._wait.show()
                         lg.Directory (path      = folder
@@ -1417,10 +1362,9 @@ class Menu:
                         sh.com.cancel(f)
                 gi.objs.wait().close()
                 delta = timer.end()
-                sh.objs.mes (f,_('INFO')
-                            ,_('Operation has taken %s') \
-                            % sh.com.human_time(delta)
-                            )
+                mes = _('Operation has taken {}')
+                mes = mes.format(sh.lg.com.human_time(delta))
+                sh.objs.mes(f,mes).info()
                 objs.editor().reset()
                 objs._editor.show()
             else:
@@ -1432,9 +1376,8 @@ class Menu:
     
     def prepare(self,event=None):
         f = '[unmusic] unmusic.Menu.prepare'
-        sh.objs.mes (f,_('INFO')
-                    ,_('Not implemented yet!')
-                    )
+        mes = _('Not implemented yet!')
+        sh.objs.mes(f,mes).info()
     
     def bindings(self):
         self.gui._a[0].action = self.album_editor
@@ -1453,7 +1396,12 @@ class Menu:
 class Objects:
     
     def __init__(self):
-        self._editor = self._tracks = self._copy = None
+        self._editor = self._tracks = self._copy = self._waitbox = None
+    
+    def waitbox(self):
+        if self._waitbox is None:
+            self._waitbox = sh.WaitBox(gi.ICON)
+        return self._waitbox
     
     def copy(self):
         if self._copy is None:
@@ -1477,11 +1425,10 @@ objs = Objects()
 
 if __name__ == '__main__':
     f = '[unmusic] unmusic.__main__'
-    sg.objs.start()
+    sh.com.start()
     Menu().show()
     lg.objs.db().save()
     lg.objs._db.close()
-    sh.log.append (f,_('DEBUG')
-                  ,_('Goodbye!')
-                  )
-    sg.objs.end()
+    mes = _('Goodbye!')
+    sh.objs.mes(f,mes,True).debug()
+    sh.com.end()

@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import shared    as sh
-import sharedGUI as sg
-import logic     as lg
-import gui       as gi
+import skl_shared.shared as sh
+import logic             as lg
+import gui               as gi
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
+import gettext
+import skl_shared.gettext_windows
+skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
@@ -42,10 +42,9 @@ class Commands:
                 if titles:
                     titles = [item[0] for item in titles]
             except Exception as e:
-                sh.objs.mes (f,_('WARNING')
-                            ,_('Operation has failed!\n\nDetails: %s')\
-                            % str(e)
-                            )
+                mes = _('Operation has failed!\n\nDetails: {}')
+                mes = mes.format(e)
+                sh.objs.mes(f,mes).warning()
             result = [title for title in titles \
                       if self.camel_case(title)
                      ]
@@ -59,8 +58,8 @@ com = Commands()
 
 
 if __name__ == '__main__':
-    f = 'tests.__main__'
-    sg.objs.start()
+    f = '[unmusic] utils.__main__'
+    sh.com.start()
     com.cyphered()
     lg.objs.db().close()
-    sg.objs.end()
+    sh.com.end()

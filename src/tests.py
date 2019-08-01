@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import shared    as sh
-import sharedGUI as sg
-import logic     as lg
-import gui       as gi
+import skl_shared.shared as sh
+import logic             as lg
+import gui               as gi
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
+import gettext
+import skl_shared.gettext_windows
+skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
@@ -35,12 +35,12 @@ class Commands:
         headers = []
         for i in range(7):
             headers.append('header' + str(i))
-        sh.Table (headers = headers
-                 ,rows    = rows
-                 ,Shorten = 1
-                 ,MaxRow  = 1000
-                 ,MaxRows = 35
-                 ).print()
+        sh.lg.Table (headers = headers
+                    ,rows    = rows
+                    ,Shorten = 1
+                    ,MaxRow  = 1000
+                    ,MaxRows = 35
+                    ).print()
     
     def tracks(self):
         itracks = gi.Tracks()
@@ -69,7 +69,7 @@ com = Commands()
 
 if __name__ == '__main__':
     f = 'tests.__main__'
-    sg.objs.start()
+    sh.com.start()
     print(lg.objs.db().next_rated())
     lg.objs.db().close()
-    sg.objs.end()
+    sh.com.end()

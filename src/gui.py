@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import shared    as sh
-import sharedGUI as sg
+import skl_shared.shared as sh
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
+import gettext
+import skl_shared.gettext_windows
+skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 PLAY = (_('Play')
@@ -15,27 +15,25 @@ PLAY = (_('Play')
        )
 
 ITEMS_YEAR = (_('Not set'),'=','>=','<=')
-ICON_PATH  = sh.objs.pdir().add('..','resources','unmusic.gif')
+ICON = sh.objs.pdir().add('..','resources','unmusic.gif')
 
 
 class Copy:
     
     def __init__(self):
         self._width = 7
-        self.parent = sg.objs.new_top()
+        self.parent = sh.Top()
         self.gui()
     
     def limit(self):
-        self.lbl_lim = sg.Label (parent = self.frm_lim
+        self.lbl_lim = sh.Label (parent = self.frm_lim
                                 ,text   = _('Limit:')
                                 ,side   = 'left'
-                                ,Close  = False
                                 ,width  = self._width
                                 )
-        self.ent_lim = sg.Entry (parent    = self.frm_lim
-                                ,Composite = True
-                                ,side      = 'left'
-                                ,width     = 5
+        self.ent_lim = sh.Entry (parent = self.frm_lim
+                                ,side   = 'left'
+                                ,width  = 5
                                 )
         self.ent_lim.insert(100)
     
@@ -50,17 +48,17 @@ class Copy:
         self.btn_str.focus()
     
     def bindings(self):
-        sg.bind (obj      = self.parent
-                ,bindings = ('<Escape>','<Control-w>','<Control-q>')
-                ,action   = self.close
-                )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = ('<Escape>','<Control-w>','<Control-q>')
+                    ,action   = self.close
+                    )
         self.opt_yer.action = self.ent_yer.focus
     
     def icon(self,path=None):
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon(ICON_PATH)
+            self.parent.icon(ICON)
     
     def title(self,arg=None):
         if not arg:
@@ -68,98 +66,95 @@ class Copy:
         self.parent.title(arg)
     
     def frames(self):
-        self.frm_prm = sg.Frame (parent = self.parent
+        self.frm_prm = sh.Frame (parent = self.parent
                                 ,expand = True
                                 ,fill   = 'both'
                                 )
-        self.frm_gnr = sg.Frame (parent = self.frm_prm
+        self.frm_gnr = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
                                 )
-        self.frm_yer = sg.Frame (parent = self.frm_prm
+        self.frm_yer = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
                                 )
-        self.frm_src = sg.Frame (parent = self.frm_prm
+        self.frm_src = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
                                 )
         
-        self.frm_trg = sg.Frame (parent = self.frm_prm
+        self.frm_trg = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
                                 )
-        self.frm_lim = sg.Frame (parent = self.frm_prm
+        self.frm_lim = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'top'
                                 )
-        self.frm_btn = sg.Frame (parent = self.frm_prm
+        self.frm_btn = sh.Frame (parent = self.frm_prm
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'bottom'
                                 ,pady   = 7
                                 )
-        self.frm_btl = sg.Frame (parent = self.frm_btn
+        self.frm_btl = sh.Frame (parent = self.frm_btn
                                 ,side   = 'left'
                                 )
-        self.frm_btr = sg.Frame (parent = self.frm_btn
+        self.frm_btr = sh.Frame (parent = self.frm_btn
                                 ,side   = 'right'
                                 )
     
     def buttons(self):
-        self.btn_cls = sg.Button (parent = self.frm_btl
+        self.btn_cls = sh.Button (parent = self.frm_btl
                                  ,text   = _('Close')
                                  ,side   = 'left'
                                  ,action = self.close
                                  )
-        self.btn_rst = sg.Button (parent = self.frm_btl
+        self.btn_rst = sh.Button (parent = self.frm_btl
                                  ,text   = _('Reset')
                                  ,side   = 'right'
                                  ,action = self.reset
                                  )
-        self.btn_str = sg.Button (parent    = self.frm_btr
-                                 ,text      = _('Start')
-                                 ,side      = 'right'
-                                 ,TakeFocus = True
+        self.btn_str = sh.Button (parent = self.frm_btr
+                                 ,text   = _('Start')
+                                 ,side   = 'right'
+                                 ,Focus  = True
                                  )
     
     def year(self):
-        self.lbl_yer = sg.Label (parent = self.frm_yer
+        self.lbl_yer = sh.Label (parent = self.frm_yer
                                 ,text   = _('Year:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False
-                                ,Close  = False
                                 ,width  = self._width
                                 )
-        self.opt_yer = sg.OptionMenu (parent  = self.frm_yer
+        self.opt_yer = sh.OptionMenu (parent  = self.frm_yer
                                      ,items   = ITEMS_YEAR
                                      ,side    = 'left'
                                      ,default = _('Not set')
                                      )
-        self.ent_yer = sg.Entry (parent    = self.frm_yer
-                                ,Composite = True
-                                ,side      = 'left'
-                                ,fill      = None
-                                ,expand    = None
-                                ,width     = 4
+        self.ent_yer = sh.Entry (parent = self.frm_yer
+                                ,side   = 'left'
+                                ,fill   = None
+                                ,expand = None
+                                ,width  = 4
                                 )
     
     def genre(self):
-        self.lbl_gnr = sg.Label (parent = self.frm_gnr
+        self.lbl_gnr = sh.Label (parent = self.frm_gnr
                                 ,text   = _('Genres:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False
-                                ,Close  = False
                                 ,width  = self._width
                                 )
-        self.opt_gnr = sg.OptionMenu (parent  = self.frm_gnr
+        self.opt_gnr = sh.OptionMenu (parent  = self.frm_gnr
                                      ,items   = (_('All'),_('Heavy')
                                                 ,_('Light')
                                                 )
@@ -168,15 +163,14 @@ class Copy:
                                      )
     
     def source(self):
-        self.lbl_src = sg.Label (parent = self.frm_src
+        self.lbl_src = sh.Label (parent = self.frm_src
                                 ,text   = _('Read:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False
-                                ,Close  = False
                                 ,width  = self._width
                                 )
-        self.opt_src = sg.OptionMenu (parent  = self.frm_src
+        self.opt_src = sh.OptionMenu (parent  = self.frm_src
                                      ,items   = (_('external collection')
                                                 ,_('local collection')
                                                 )
@@ -185,15 +179,14 @@ class Copy:
                                      )
     
     def target(self):
-        self.lbl_trg = sg.Label (parent = self.frm_trg
+        self.lbl_trg = sh.Label (parent = self.frm_trg
                                 ,text   = _('Write:')
                                 ,side   = 'left'
                                 ,fill   = None
                                 ,expand = False
-                                ,Close  = False
                                 ,width  = self._width
                                 )
-        self.opt_trg = sg.OptionMenu (parent  = self.frm_trg
+        self.opt_trg = sh.OptionMenu (parent  = self.frm_trg
                                      ,items   = (_('mobile collection')
                                                 ,_('local collection')
                                                 )
@@ -233,12 +226,12 @@ class ImageViewer:
         self.parent.close()
     
     def bindings(self):
-        sg.bind (obj      = self.parent
-                ,bindings = ['<Escape>','<Control-w>','<Control-q>'
-                            ,'<ButtonRelease-1>'
-                            ]
-                ,action   = self.close
-                )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = ('<Escape>','<Control-w>','<Control-q>'
+                                ,'<ButtonRelease-1>'
+                                )
+                    ,action   = self.close
+                    )
     
     def title(self,arg=None):
         if not arg:
@@ -249,16 +242,15 @@ class ImageViewer:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon(ICON_PATH)
+            self.parent.icon(ICON)
     
     def gui(self):
-        self.parent = sg.Top(sg.objs.root())
-        self.lbl    = sg.Label (parent = self.parent
-                               ,text   = _('Image:')
-                               ,Close  = False
-                               ,expand = True
-                               ,fill   = 'both'
-                               )
+        self.parent = sh.Top()
+        self.lbl = sh.Label (parent = self.parent
+                            ,text   = _('Image:')
+                            ,expand = True
+                            ,fill   = 'both'
+                            )
         self.title()
         self.icon()
         self.bindings()
@@ -269,35 +261,32 @@ class AlbumEditor:
 
     def __init__(self):
         self.values()
-        self.parent = sg.Top(parent=sg.objs.root())
+        self.parent = sh.Top()
         self.widget = self.parent.widget
-        self.pool   = sh.MessagePool(max_size=4)
+        self.pool   = sh.lg.MessagePool(max_size=4)
         self.gui()
     
     def present(self):
-        self.cbx_loc = sg.CheckBox (parent = self.frm_prs
+        self.cbx_loc = sh.CheckBox (parent = self.frm_prs
                                    ,side   = 'left'
                                    )
-        self.lbl_loc = sg.Label (parent = self.frm_prs
+        self.lbl_loc = sh.Label (parent = self.frm_prs
                                 ,text   = _('local collection')
                                 ,side   = 'left'
-                                ,Close  = False
                                 )
-        self.cbx_ext = sg.CheckBox (parent = self.frm_prs
+        self.cbx_ext = sh.CheckBox (parent = self.frm_prs
                                    ,side   = 'left'
                                    )
-        self.lbl_ext = sg.Label (parent = self.frm_prs
+        self.lbl_ext = sh.Label (parent = self.frm_prs
                                 ,text   = _('external collection')
                                 ,side   = 'left'
-                                ,Close  = False
                                 )
-        self.cbx_mob = sg.CheckBox (parent = self.frm_prs
+        self.cbx_mob = sh.CheckBox (parent = self.frm_prs
                                    ,side   = 'left'
                                    )
-        self.lbl_mob = sg.Label (parent = self.frm_prs
+        self.lbl_mob = sh.Label (parent = self.frm_prs
                                 ,text   = _('mobile collection')
                                 ,side   = 'left'
-                                ,Close  = False
                                 )
         ''' We can call 'cbx_loc.widget.config(state="disabled")'
             but this makes the checkbox indistinguishable.
@@ -323,39 +312,37 @@ class AlbumEditor:
         self.ent_ids.select_all()
     
     def search_ids(self):
-        self.ent_ids = sg.Entry (parent    = self.frm
-                                ,Composite = 1
-                                ,side      = 'left'
-                                ,width     = 5
+        self.ent_ids = sh.Entry (parent = self.frm
+                                ,side   = 'left'
+                                ,width  = 5
                                 )
-        sg.ToolTip (obj      = self.ent_ids
-                   ,text     = _('Search an album by ID')
-                   ,hint_dir = 'bottom'
+        sh.ToolTip (obj  = self.ent_ids
+                   ,text = _('Search an album by ID')
+                   ,hdir = 'bottom'
                    )
     
     def image(self):
-        self.lbl_img = sg.Label (parent = self.frm_img
+        self.lbl_img = sh.Label (parent = self.frm_img
                                 ,text   = _('Image:')
                                 ,side   = 'right'
                                 ,anchor = 'w'
-                                ,Close  = False
                                 ,expand = True
                                 ,fill   = 'both'
                                 )
     
     def bottom(self):
-        self.opt_gnr = sg.OptionMenu (parent = self.frm_rht
+        self.opt_gnr = sh.OptionMenu (parent = self.frm_rht
                                      ,side   = 'left'
                                      )
-        self.btn_rld = sg.Button (parent   = self.frm1
+        self.btn_rld = sh.Button (parent   = self.frm1
                                  ,text     = _('Reload')
                                  ,hint     = _('Reload the present record')
                                  ,side     = 'left'
                                  ,inactive = self._path_rld
                                  ,active   = self._path_rld
-                                 ,bindings = ['<F5>','<Control-r>']
+                                 ,bindings = ('<F5>','<Control-r>')
                                  )
-        self.btn_rec = sg.Button (parent   = self.frm1
+        self.btn_rec = sh.Button (parent   = self.frm1
                                  ,text     = _('Create')
                                  ,hint     = _('Create a new record')
                                  ,side     = 'left'
@@ -363,51 +350,51 @@ class AlbumEditor:
                                  ,active   = self._path_add
                                  ,bindings = '<Control-n>'
                                  )
-        self.btn_del = sg.Button (parent   = self.frm1
+        self.btn_del = sh.Button (parent   = self.frm1
                                  ,text     = _('Delete')
                                  ,hint     = _('Delete the present record')
                                  ,side     = 'left'
                                  ,inactive = self._path_del
                                  ,active   = self._path_del
                                  )
-        self.btn_dez = sg.Button (parent   = self.frm2
+        self.btn_dez = sh.Button (parent   = self.frm2
                                  ,text     = _('Decypher')
                                  ,hint     = _('Decypher text (Caesar algorithm)')
                                  ,side     = 'left'
                                  ,inactive = self._path_dez
                                  ,active   = self._path_dez
                                  )
-        self.btn_cyp = sg.Button (parent   = self.frm2
+        self.btn_cyp = sh.Button (parent   = self.frm2
                                  ,text     = _('Cypher')
                                  ,hint     = _('Cypher text (Caesar algorithm)')
                                  ,side     = 'left'
                                  ,inactive = self._path_cyp
                                  ,active   = self._path_cyp
                                  )
-        self.btn_dec = sg.Button (parent   = self.frm2
+        self.btn_dec = sh.Button (parent   = self.frm2
                                  ,text     = _('Decode')
                                  ,hint     = _('Decode back to cp1251')
                                  ,side     = 'left'
                                  ,inactive = self._path_dec
                                  ,active   = self._path_dec
                                  )
-        self.btn_sav = sg.Button (parent   = self.frm2
+        self.btn_sav = sh.Button (parent   = self.frm2
                                  ,text     = _('Save')
                                  ,hint     = _('Save changes')
                                  ,side     = 'left'
                                  ,inactive = self._path_sav
                                  ,active   = self._path_sav
-                                 ,bindings = ['<F2>','<Control-s>']
+                                 ,bindings = ('<F2>','<Control-s>')
                                  )
-        self.btn_trk = sg.Button (parent   = self.frm2
+        self.btn_trk = sh.Button (parent   = self.frm2
                                  ,text     = _('Tracks')
                                  ,hint     = _('Edit tracks')
                                  ,side     = 'left'
                                  ,inactive = self._path_trk
                                  ,active   = self._path_trk
-                                 ,bindings = ['<F4>','<Control-t>'
+                                 ,bindings = ('<F4>','<Control-t>'
                                              ,'<Alt-t>'
-                                             ]
+                                             )
                                  )
 
     def update_info(self,text):
@@ -415,84 +402,77 @@ class AlbumEditor:
         self.lbl.text(arg=self.pool.get())
     
     def entries(self):
-        self.ent_art = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_art = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_alb = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_alb = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_yer = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,ipady     = 1
-                                ,fill      = 'both'
+        self.ent_yer = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,ipady  = 1
+                                ,fill   = 'both'
                                 )
-        self.ent_cnt = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,ipady     = 1
-                                ,fill      = 'both'
+        self.ent_cnt = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,ipady  = 1
+                                ,fill   = 'both'
                                 )
-        self.ent_com = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_com = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_bit = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_bit = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                               )
-        self.ent_len = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_len = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
     
     def labels(self):
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Artist:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Album:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Year:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Country (2 letters):')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Comment:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Mean bitrate:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Total length:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Genre:')
                  ,ipady  = 2
                  )
         # Bind to 'self.frmb' to avoid bulking and free space
-        self.lbl = sg.Label (parent = self.frmb
+        self.lbl = sh.Label (parent = self.frmb
                             ,text   = ''
                             ,font   = 'Sans 9'
                             )
@@ -521,80 +501,78 @@ class AlbumEditor:
         self.title()
         self.bindings()
         self.ent_art.focus()
-        sg.Geometry(parent=self.parent)
+        sh.Geometry(self.parent)
     
     def search_albums(self):
-        self.btn_spr = sg.Button (parent   = self.frm
+        self.btn_spr = sh.Button (parent   = self.frm
                                  ,hint     = _('Search older records')
                                  ,inactive = self.prev_inactive
                                  ,active   = self.prev_active
                                  ,text     = '←'
-                                 ,hint_dir = 'bottom'
+                                 ,hdir     = 'bottom'
                                  ,side     = 'left'
                                  )
-        self.ent_src = sg.Entry (parent    = self.frm
-                                ,Composite = 1
-                                ,side      = 'left'
+        self.ent_src = sh.Entry (parent = self.frm
+                                ,side   = 'left'
                                 )
-        self.btn_snx = sg.Button (parent   = self.frm
+        self.btn_snx = sh.Button (parent   = self.frm
                                  ,hint     = _('Search newer records')
                                  ,inactive = self.next_inactive
                                  ,active   = self.next_active
                                  ,text     = '→'
-                                 ,hint_dir = 'bottom'
+                                 ,hdir     = 'bottom'
                                  ,side     = 'left'
                                  )
-        sg.ToolTip (obj      = self.ent_src
-                   ,text     = _('Search in albums')
-                   ,hint_dir = 'bottom'
+        sh.ToolTip (obj  = self.ent_src
+                   ,text = _('Search in albums')
+                   ,hdir = 'bottom'
                    )
     
     def search_tracks(self):
-        self.ent_sr2 = sg.Entry (parent    = self.frm
-                                ,Composite = 1
-                                ,side      = 'left'
+        self.ent_sr2 = sh.Entry (parent = self.frm
+                                ,side   = 'left'
                                 )
-        sg.ToolTip (obj      = self.ent_sr2
-                   ,text     = _('Search in tracks')
-                   ,hint_dir = 'bottom'
+        sh.ToolTip (obj  = self.ent_sr2
+                   ,text = _('Search in tracks')
+                   ,hdir = 'bottom'
                    )
     
     def meter(self):
-        self.btn_prv = sg.Button (parent   = self.frm
+        self.btn_prv = sh.Button (parent   = self.frm
                                  ,hint     = _('Go to the preceding record')
                                  ,inactive = self.prev_inactive
                                  ,active   = self.prev_active
                                  ,text     = '←'
-                                 ,hint_dir = 'bottom'
+                                 ,hdir     = 'bottom'
                                  ,side     = 'left'
                                  ,bindings = '<Alt-Left>'
                                  )
         # Show the current record #/total records ratio
-        self.lbl_mtr = sg.Label (parent = self.frm
+        self.lbl_mtr = sh.Label (parent = self.frm
                                 ,text   = '0 / 0'
-                                ,expand = 0
+                                ,expand = False
                                 ,side   = 'left'
                                 )
-        sg.ToolTip (obj      = self.lbl_mtr
-                   ,text     = _('Album ID')
-                   ,hint_dir = 'bottom'
+        sh.ToolTip (obj  = self.lbl_mtr
+                   ,text = _('Album ID')
+                   ,hdir = 'bottom'
                    )
-        self.btn_nxt = sg.Button (parent   = self.frm
+        self.btn_nxt = sh.Button (parent   = self.frm
                                  ,hint     = _('Go to the following record')
                                  ,inactive = self.next_inactive
                                  ,active   = self.next_active
                                  ,text     = '→'
-                                 ,hint_dir = 'bottom'
+                                 ,hdir     = 'bottom'
                                  ,side     = 'left'
                                  ,bindings = '<Alt-Right>'
                                  )
     
     def menus(self):
-        self.opt_rtg = sg.OptionMenu (parent = self.frm
+        self.opt_rtg = sh.OptionMenu (parent = self.frm
                                      ,items  = (0,1,2,3,4,5,6,7,8,9,10)
                                      ,side   = 'left'
                                      )
-        self.opt_ply = sg.OptionMenu (parent = self.frm
+        self.opt_ply = sh.OptionMenu (parent = self.frm
                                      ,items  = PLAY
                                      ,side   = 'left'
                                      )
@@ -603,53 +581,53 @@ class AlbumEditor:
         ''' #todo: Cannot use Delete + smth bindings, e.g.
             '<Control-Delete>' (TextBox reacts to Delete)
         '''
-        sg.bind (obj      = self
-                ,bindings = '<Escape>'
-                ,action   = sg.Geometry(parent=self).minimize
-                )
-        sg.bind (obj      = self
-                ,bindings = '<Control-q>'
-                ,action   = self.close
-                )
-        sg.bind (obj      = self
-                ,bindings = '<F3>'
-                ,action   = self.focus_album_search
-                )
-        sg.bind (obj      = self
-                ,bindings = '<F6>'
-                ,action   = self.focus_ids
-                )
-        sg.bind (obj      = self
-                ,bindings = '<F7>'
-                ,action   = self.focus_track_search
-                )
+        sh.com.bind (obj      = self
+                    ,bindings = '<Escape>'
+                    ,action   = sh.Geometry(self).minimize
+                    )
+        sh.com.bind (obj      = self
+                    ,bindings = '<Control-q>'
+                    ,action   = self.close
+                    )
+        sh.com.bind (obj      = self
+                    ,bindings = '<F3>'
+                    ,action   = self.focus_album_search
+                    )
+        sh.com.bind (obj      = self
+                    ,bindings = '<F6>'
+                    ,action   = self.focus_ids
+                    )
+        sh.com.bind (obj      = self
+                    ,bindings = '<F7>'
+                    ,action   = self.focus_track_search
+                    )
         ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will
             not allow to select all contents
         '''
-        sg.bind (obj      = self.ent_src
-                ,bindings = '<ButtonRelease-1>'
-                ,action   = self.focus_album_search
-                )
-        sg.bind (obj      = self.ent_src
-                ,bindings = '<ButtonRelease-3>'
-                ,action   = self.clear_album_search
-                )
-        sg.bind (obj      = self.ent_sr2
-                ,bindings = '<ButtonRelease-1>'
-                ,action   = self.focus_track_search
-                )
-        sg.bind (obj      = self.ent_sr2
-                ,bindings = '<ButtonRelease-3>'
-                ,action   = self.clear_track_search
-                )
-        sg.bind (obj      = self.ent_ids
-                ,bindings = '<ButtonRelease-1>'
-                ,action   = self.focus_ids
-                )
-        sg.bind (obj      = self.ent_ids
-                ,bindings = '<ButtonRelease-3>'
-                ,action   = self.clear_ids
-                )
+        sh.com.bind (obj      = self.ent_src
+                    ,bindings = '<ButtonRelease-1>'
+                    ,action   = self.focus_album_search
+                    )
+        sh.com.bind (obj      = self.ent_src
+                    ,bindings = '<ButtonRelease-3>'
+                    ,action   = self.clear_album_search
+                    )
+        sh.com.bind (obj      = self.ent_sr2
+                    ,bindings = '<ButtonRelease-1>'
+                    ,action   = self.focus_track_search
+                    )
+        sh.com.bind (obj      = self.ent_sr2
+                    ,bindings = '<ButtonRelease-3>'
+                    ,action   = self.clear_track_search
+                    )
+        sh.com.bind (obj      = self.ent_ids
+                    ,bindings = '<ButtonRelease-1>'
+                    ,action   = self.focus_ids
+                    )
+        sh.com.bind (obj      = self.ent_ids
+                    ,bindings = '<ButtonRelease-3>'
+                    ,action   = self.clear_ids
+                    )
 
     def focus_album_search(self,event=None):
         self.ent_src.focus()
@@ -660,72 +638,72 @@ class AlbumEditor:
         self.ent_sr2.select_all()
         
     def frames(self):
-        self.frm = sg.Frame (parent = self.parent
+        self.frm = sh.Frame (parent = self.parent
                             ,side   = 'top'
-                            ,expand = 0
+                            ,expand = False
                             ,fill   = 'x'
                             )
-        self.frm_prm = sg.Frame (parent = self.parent
-                                ,expand = 1
+        self.frm_prm = sh.Frame (parent = self.parent
+                                ,expand = True
                                 ,fill   = 'both'
                                 ,side   = 'top'
                                 )
-        self.frm_lft = sg.Frame (parent = self.frm_prm
-                                ,expand = 1
+        self.frm_lft = sh.Frame (parent = self.frm_prm
+                                ,expand = True
                                 ,side   = 'left'
                                 )
-        self.frm_rht = sg.Frame (parent = self.frm_prm
-                                ,expand = 1
+        self.frm_rht = sh.Frame (parent = self.frm_prm
+                                ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'left'
                                 ,ipadx  = 150
                                 )
-        self.frm_prs = sg.Frame (parent = self.frm_rht
-                                ,expand = 0
+        self.frm_prs = sh.Frame (parent = self.frm_rht
+                                ,expand = False
                                 ,side   = 'bottom'
                                 )
-        self.frm_img = sg.Frame (parent = self.frm_prm
-                                ,expand = 1
+        self.frm_img = sh.Frame (parent = self.frm_prm
+                                ,expand = True
                                 ,fill   = 'both'
                                 ,side   = 'right'
                                 )
-        self.frm_btn = sg.Frame (parent = self.parent
-                                ,expand = 0
+        self.frm_btn = sh.Frame (parent = self.parent
+                                ,expand = False
                                 ,side   = 'bottom'
                                 )
-        self.frm_btl = sg.Frame (parent = self.frm_btn
-                                ,expand = 0
+        self.frm_btl = sh.Frame (parent = self.frm_btn
+                                ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'left'
                                 )
-        self.frm_btr = sg.Frame (parent = self.frm_btn
-                                ,expand = 0
+        self.frm_btr = sh.Frame (parent = self.frm_btn
+                                ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'right'
                                 )
-        self.frm_btm = sg.Frame (parent = self.parent
-                                ,expand = 0
+        self.frm_btm = sh.Frame (parent = self.parent
+                                ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'bottom'
                                 )
-        self.frmt = sg.Frame (parent = self.frm_btm
-                             ,expand = 0
+        self.frmt = sh.Frame (parent = self.frm_btm
+                             ,expand = False
                              ,fill   = 'x'
                              ,side   = 'top'
                              )
-        self.frmb = sg.Frame (parent = self.frm_btm
-                             ,expand = 0
+        self.frmb = sh.Frame (parent = self.frm_btm
+                             ,expand = False
                              ,fill   = 'x'
                              ,side   = 'bottom'
                              )
-        self.frm1 = sg.Frame (parent = self.frmb
+        self.frm1 = sh.Frame (parent = self.frmb
                              ,side   = 'left'
-                             ,expand = 0
+                             ,expand = False
                              ,fill   = 'x'
                              )
-        self.frm2 = sg.Frame (parent = self.frmb
+        self.frm2 = sh.Frame (parent = self.frmb
                              ,side   = 'right'
-                             ,expand = 0
+                             ,expand = False
                              ,fill   = 'x'
                              )
     
@@ -786,7 +764,7 @@ class AlbumEditor:
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon(ICON_PATH)
+            self.parent.icon(ICON)
 
     def show(self,event=None):
         self.parent.show()
@@ -800,7 +778,7 @@ class Menu:
     
     def __init__(self):
         self._a = []
-        self.parent = sg.Top(sg.objs.root())
+        self.parent = sh.Top()
         self.gui()
     
     def toggle_from_cbx(self,event=None):
@@ -818,73 +796,72 @@ class Menu:
             self._a[2].title(_('Collect tags & Obfuscate'))
     
     def bottom(self):
-        self.frm_btm = sg.Frame (parent = self.parent
+        self.frm_btm = sh.Frame (parent = self.parent
                                 ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'bottom'
                                 )
-        self.cbx_obf = sg.CheckBox (parent = self.frm_btm
+        self.cbx_obf = sh.CheckBox (parent = self.frm_btm
                                    ,Active = True
                                    ,action = self.toggle_from_cbx
                                    ,side   = 'left'
                                    )
-        self.lbl_obf = sg.Label (parent = self.frm_btm
+        self.lbl_obf = sh.Label (parent = self.frm_btm
                                 ,text   = _('Obfuscate')
-                                ,Close  = False
                                 ,side   = 'left'
                                 ,font   = 'Sans 10'
                                 )
     
     def bindings(self):
         self.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
-        sg.bind (obj      = self.parent
-                ,bindings = ('<Control-q>','<Control-w>')
-                ,action   = self.close
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Escape>'
-                ,action   = sg.Geometry(parent=self.parent).minimize
-                )
-        sg.bind (obj      = self.lbl_obf
-                ,bindings = '<ButtonRelease-1>'
-                ,action   = self.toggle_from_lbl
-                )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = ('<Control-q>','<Control-w>')
+                    ,action   = self.close
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Escape>'
+                    ,action   = sh.Geometry(self.parent).minimize
+                    )
+        sh.com.bind (obj      = self.lbl_obf
+                    ,bindings = '<ButtonRelease-1>'
+                    ,action   = self.toggle_from_lbl
+                    )
         if len(self._a) > 0:
             for i in range(len(self._a)):
-                sg.bind (obj      = self._a[i]
-                        ,bindings = '<Home>'
-                        ,action   = self._a[0].focus
-                        )
-                sg.bind (obj      = self._a[i]
-                        ,bindings = '<End>'
-                        ,action   = self._a[-1].focus
-                        )
-                if i > 0:
-                    sg.bind (obj      = self._a[i]
-                            ,bindings = '<Up>'
-                            ,action   = self._a[i-1].focus
-                            )
-                else:
-                    sg.bind (obj      = self._a[i]
-                            ,bindings = '<Up>'
-                            ,action   = self._a[-1].focus
-                            )
-                if i < len(self._a) - 1:
-                    sg.bind (obj      = self._a[i]
-                            ,bindings = '<Down>'
-                            ,action   = self._a[i+1].focus
-                            )
-                else:
-                    sg.bind (obj      = self._a[i]
-                            ,bindings = '<Down>'
+                sh.com.bind (obj      = self._a[i]
+                            ,bindings = '<Home>'
                             ,action   = self._a[0].focus
                             )
+                sh.com.bind (obj      = self._a[i]
+                            ,bindings = '<End>'
+                            ,action   = self._a[-1].focus
+                            )
+                if i > 0:
+                    sh.com.bind (obj      = self._a[i]
+                                ,bindings = '<Up>'
+                                ,action   = self._a[i-1].focus
+                                )
+                else:
+                    sh.com.bind (obj      = self._a[i]
+                                ,bindings = '<Up>'
+                                ,action   = self._a[-1].focus
+                                )
+                if i < len(self._a) - 1:
+                    sh.com.bind (obj      = self._a[i]
+                                ,bindings = '<Down>'
+                                ,action   = self._a[i+1].focus
+                                )
+                else:
+                    sh.com.bind (obj      = self._a[i]
+                                ,bindings = '<Down>'
+                                ,action   = self._a[0].focus
+                                )
     
     def icon(self,path=None):
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon(ICON_PATH)
+            self.parent.icon(ICON)
     
     def title(self,text=''):
         if not text:
@@ -893,32 +870,32 @@ class Menu:
     
     def buttons(self):
         font = 'Serif 11'
-        self._a.append (sg.Button (parent = self.parent
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Album Editor')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
                        )
-        self._a.append (sg.Button (parent = self.parent
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Prepare files')
                                   ,hint   = _('Move sub-folders to a root folder, split large lossless files, etc.')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
                        )
-        self._a.append (sg.Button (parent = self.parent
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Collect tags & Obfuscate')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
                        )
-        self._a.append (sg.Button (parent = self.parent
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Copy music')
                                   ,side   = 'top'
                                   ,font   = font
                                   )
                        )
-        self._a.append (sg.Button (parent = self.parent
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Quit')
                                   ,side   = 'top'
                                   ,font   = font
@@ -947,8 +924,8 @@ class Tracks:
     
     def __init__(self,width=0,height=768):
         self.values()
-        self.pool    = sh.MessagePool(max_size=3)
-        self.parent  = sg.Top(sg.objs.root())
+        self.pool    = sh.lg.MessagePool(max_size=3)
+        self.parent  = sh.Top()
         self.widget  = self.parent.widget
         self._width  = width
         self._height = height
@@ -959,7 +936,7 @@ class Tracks:
             track.opt_rtg.set(0)
     
     def _info(self):
-        self.lbl = sg.Label (parent = self.frm_btn
+        self.lbl = sh.Label (parent = self.frm_btn
                             ,text   = ''
                             ,font   = 'Sans 9'
                             )
@@ -996,15 +973,15 @@ class Tracks:
                                            )
     
     def buttons(self):
-        self.btn_rld = sg.Button (parent   = self.frm_btn
+        self.btn_rld = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Reload')
                                  ,hint     = _('Reload the present record')
                                  ,side     = 'left'
                                  ,inactive = self._path_rld
                                  ,active   = self._path_rld
-                                 ,bindings = ['<F5>','<Control-r>']
+                                 ,bindings = ('<F5>','<Control-r>')
                                  )
-        self.btn_rat = sg.Button (parent   = self.frm_btn
+        self.btn_rat = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Clear rating')
                                  ,hint     = _('Clear rating of all tracks')
                                  ,side     = 'left'
@@ -1012,41 +989,41 @@ class Tracks:
                                  ,active   = self._path_rat
                                  ,action   = self.clear_rating
                                  )
-        self.btn_dez = sg.Button (parent   = self.frm_btn
+        self.btn_dez = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Decypher')
                                  ,hint     = _('Decypher text (Caesar algorithm)')
                                  ,side     = 'left'
                                  ,inactive = self._path_dez
                                  ,active   = self._path_dez
                                  )
-        self.btn_cyp = sg.Button (parent   = self.frm_btn
+        self.btn_cyp = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Cypher')
                                  ,hint     = _('Cypher text (Caesar algorithm)')
                                  ,side     = 'left'
                                  ,inactive = self._path_cyp
                                  ,active   = self._path_cyp
                                  )
-        self.btn_dec = sg.Button (parent   = self.frm_btn
+        self.btn_dec = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Decode')
                                  ,hint     = _('Decode back to cp1251')
                                  ,side     = 'left'
                                  ,inactive = self._path_dec
                                  ,active   = self._path_dec
                                  )
-        self.btn_sav = sg.Button (parent   = self.frm_btn
+        self.btn_sav = sh.Button (parent   = self.frm_btn
                                  ,text     = _('Save')
                                  ,hint     = _('Save changes')
                                  ,side     = 'right'
                                  ,inactive = self._path_sav
                                  ,active   = self._path_sav
-                                 ,bindings = ['<F2>','<Control-s>']
+                                 ,bindings = ('<F2>','<Control-s>')
                                  )
     
     def icon(self,path=None):
         if path:
             self.parent.icon(path)
         else:
-            self.parent.icon(ICON_PATH)
+            self.parent.icon(ICON)
     
     def reset(self):
         for track in self._tracks:
@@ -1054,9 +1031,9 @@ class Tracks:
         self._tracks = []
     
     def after_add(self):
-        sg.objs.root().widget.update_idletasks()
-        max_x = self.label.widget.winfo_reqwidth()
-        max_y = self.label.widget.winfo_reqheight()
+        sh.objs.root().idle()
+        max_x = self.label.reqwidth()
+        max_y = self.label.reqheight()
         self.canvas.region (x        = max_x
                            ,y        = max_y
                            ,x_border = 10
@@ -1064,10 +1041,10 @@ class Tracks:
                            )
         if not self._width:
             self._width = max_x + 40
-        sg.Geometry(parent=self.parent).set ('%dx%d' % (self._width
-                                                       ,self._height
-                                                       )
-                                            )
+        sh.Geometry(self.parent).set ('%dx%d' % (self._width
+                                                ,self._height
+                                                )
+                                     )
         self.canvas.move_top()
         self.canvas.widget.xview_moveto(0)
     
@@ -1083,20 +1060,20 @@ class Tracks:
         self.parent.title(text=text)
     
     def frames(self):
-        self.frm_prm = sg.Frame (parent = self.parent)
-        self.frm_hor = sg.Frame (parent = self.frm_prm
+        self.frm_prm = sh.Frame (parent = self.parent)
+        self.frm_hor = sh.Frame (parent = self.frm_prm
                                 ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'bottom'
                                 )
-        self.frm_ver = sg.Frame (parent = self.frm_prm
+        self.frm_ver = sh.Frame (parent = self.frm_prm
                                 ,expand = False
                                 ,fill   = 'y'
                                 ,side   = 'right'
                                 )
         # This frame must be created after the bottom frame
-        self.frm_sec = sg.Frame (parent = self.frm_prm)
-        self.frm_btn = sg.Frame (parent = self.frm_prm
+        self.frm_sec = sh.Frame (parent = self.frm_prm)
+        self.frm_btn = sh.Frame (parent = self.frm_prm
                                 ,expand = False
                                 ,fill   = 'x'
                                 ,side   = 'bottom'
@@ -1116,55 +1093,55 @@ class Tracks:
             useful to navigate within entries), so we use a modified
             version of 'Canvas.top_bindings' here.
         '''
-        sg.bind (obj      = self.parent
-                ,bindings = '<Down>'
-                ,action   = self.canvas.move_down
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Up>'
-                ,action   = self.canvas.move_up
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Left>'
-                ,action   = self.canvas.move_left
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Right>'
-                ,action   = self.canvas.move_right
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Next>'
-                ,action   = self.canvas.move_page_down
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Prior>'
-                ,action   = self.canvas.move_page_up
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Control-End>'
-                ,action   = self.canvas.move_bottom
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = '<Control-Home>'
-                ,action   = self.canvas.move_top
-                )
-        sg.bind (obj      = self.parent
-                ,bindings = ['<MouseWheel>'
-                            ,'<Button 4>'
-                            ,'<Button 5>'
-                            ]
-                ,action   = self.canvas.mouse_wheel
-                )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Down>'
+                    ,action   = self.canvas.move_down
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Up>'
+                    ,action   = self.canvas.move_up
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Left>'
+                    ,action   = self.canvas.move_left
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Right>'
+                    ,action   = self.canvas.move_right
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Next>'
+                    ,action   = self.canvas.move_page_down
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Prior>'
+                    ,action   = self.canvas.move_page_up
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Control-End>'
+                    ,action   = self.canvas.move_bottom
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = '<Control-Home>'
+                    ,action   = self.canvas.move_top
+                    )
+        sh.com.bind (obj      = self.parent
+                    ,bindings = ('<MouseWheel>'
+                                ,'<Button 4>'
+                                ,'<Button 5>'
+                                )
+                    ,action   = self.canvas.mouse_wheel
+                    )
     
     def widgets(self):
-        self.canvas = sg.Canvas(parent = self.frm_sec)
-        self.label  = sg.Label (parent = self.frm_sec
+        self.canvas = sh.Canvas(parent = self.frm_sec)
+        self.label  = sh.Label (parent = self.frm_sec
                                ,text   = _('Tracks:')
                                ,expand = True
                                ,fill   = 'both'
                                )
         self.canvas.embed(self.label)
-        self.yscroll = sg.Scrollbar (parent = self.frm_ver
+        self.yscroll = sh.Scrollbar (parent = self.frm_ver
                                     ,scroll = self.canvas
                                     )
         self.canvas.focus()
@@ -1192,99 +1169,92 @@ class Track:
         self.parent.show()
     
     def frames(self):
-        self.frm_prm = sg.Frame (parent = self.parent
+        self.frm_prm = sh.Frame (parent = self.parent
                                 ,expand = False
                                 ,fill   = 'x'
                                 )
-        self.frm_lft = sg.Frame (parent = self.frm_prm
+        self.frm_lft = sh.Frame (parent = self.frm_prm
                                 ,side   = 'left'
                                 )
-        self.frm_rht = sg.Frame (parent = self.frm_prm
+        self.frm_rht = sh.Frame (parent = self.frm_prm
                                 ,side   = 'left'
                                 )
     
     def labels(self):
         if self.Extended:
-            sg.Label (parent = self.frm_lft
+            sh.Label (parent = self.frm_lft
                      ,text   = _('Album ID:')
                      ,ipady  = 2
                      )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Track #:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Title:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Lyrics:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Comment:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Bitrate:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Length:')
                  ,ipady  = 2
                  )
-        sg.Label (parent = self.frm_lft
+        sh.Label (parent = self.frm_lft
                  ,text   = _('Rating:')
                  ,ipady  = 2
                  )
     
     def entries(self):
         if self.Extended:
-            self.ent_aid = sg.Entry (parent    = self.frm_rht
-                                    ,Composite = True
-                                    ,expand    = 1
-                                    ,fill      = 'x'
-                                    ,ipady     = 1
+            self.ent_aid = sh.Entry (parent = self.frm_rht
+                                    ,expand = True
+                                    ,fill   = 'x'
+                                    ,ipady  = 1
                                     )
-        self.ent_tno = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_tno = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_tit = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_tit = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_lyr = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_lyr = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_com = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_com = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_bit = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_bit = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
-        self.ent_len = sg.Entry (parent    = self.frm_rht
-                                ,Composite = True
-                                ,expand    = 1
-                                ,fill      = 'x'
-                                ,ipady     = 1
+        self.ent_len = sh.Entry (parent = self.frm_rht
+                                ,expand = True
+                                ,fill   = 'x'
+                                ,ipady  = 1
                                 )
     
     def menus(self):
-        self.opt_rtg = sg.OptionMenu (parent = self.frm_rht
+        self.opt_rtg = sh.OptionMenu (parent = self.frm_rht
                                      ,items  = (0,1,2,3,4,5,6,7,8,9,10)
                                      ,side   = 'left'
                                      )
@@ -1304,11 +1274,11 @@ class Objects:
     
     def progress(self):
         if self._progress is None:
-            self._progress = sg.ProgressBar (height  = 100
+            self._progress = sh.ProgressBar (height  = 100
                                             ,YScroll = False
                                             )
             self._progress.title(_('Copy progress'))
-            self._progress.icon(ICON_PATH)
+            self._progress.icon(ICON)
             # Widget is not created yet, do not 'center' it here!
         return self._progress
     
@@ -1319,7 +1289,7 @@ class Objects:
     
     def wait(self):
         if self._wait is None:
-            self._wait = sg.WaitBox(sg.objs.root())
+            self._wait = sh.WaitBox(icon=ICON)
         return self._wait
 
 
@@ -1329,8 +1299,8 @@ objs = Objects()
 
 
 if __name__ == '__main__':
-    sg.objs.start()
+    sh.com.start()
     AlbumEditor().show()
     #Copy().show()
     #Tracks().show()
-    sg.objs.end()
+    sh.com.end()

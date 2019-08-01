@@ -8,8 +8,7 @@ import re
 import phrydy
 import sqlite3
 
-import shared    as sh
-import sharedGUI as sg
+import skl_shared.shared as sh
 
 VERSION = '1.0'
 # Derived from 'phrydy.mediafile.TYPES'
@@ -42,8 +41,9 @@ HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         ,'Technical Death Metal','Thrash Metal'
         )
 
-import gettext, gettext_windows
-gettext_windows.setup_env()
+import gettext
+import skl_shared.gettext_windows
+skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
@@ -107,7 +107,7 @@ class Play:
         f = '[unmusic] logic.Play.call_player'
         if self.Success:
             if self.playlist():
-                sh.Launch(self._playlist).default()
+                sh.lg.Launch(self._playlist).default()
             else:
                 sh.com.empty(f)
         else:
@@ -182,21 +182,20 @@ class Play:
                         except IndexError:
                             pass
                     errors = [str(error) for error in errors]
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Tracks %s have not been found in "%s"!')\
-                                % (', '.join(errors),self.album())
-                                )
+                    mes = _('Tracks %s have not been found in "{}"!')
+                    mes = mes.format(errors,self.album())
+                    sh.objs.mes(f,mes).warning()
                 if len(self._nos) == len(self._titles) == len(self._len):
                     pass
                 else:
                     self.Success= False
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('Condition "%s" is not observed!') \
-                                % '%d == %d == %d' % (len(self._nos)
-                                                     ,len(self._titles)
-                                                     ,len(self._len)
-                                                     )
-                                )
+                    sub = '{} = {} = {}'.format (len(self._nos)
+                                                ,len(self._titles)
+                                                ,len(self._len)
+                                                )
+                    mes = _('Condition "{}" is not observed!')
+                    mes = mes.format(sub)
+                    sh.objs.mes(f,mes).error()
                 return result
             else:
                 self.Success = False
@@ -257,9 +256,9 @@ class Play:
                 text = self.out.getvalue()
                 self.out.close()
                 if text:
-                    sh.WriteTextFile (file    = self.playlist()
-                                     ,Rewrite = True
-                                     ).write(text)
+                    sh.lg.WriteTextFile (file    = self.playlist()
+                                        ,Rewrite = True
+                                        ).write(text)
                 else:
                     sh.com.empty(f)
             else:
@@ -373,9 +372,9 @@ class AlbumEditor:
     def get_no(self):
         f = '[unmusic] logic.AlbumEditor.get_no'
         if self.Success:
-            objs.db().albumid = sh.Input (title = f
-                                         ,value = objs.db().albumid
-                                         ).integer()
+            objs.db().albumid = sh.lg.Input (title = f
+                                            ,value = objs.db().albumid
+                                            ).integer()
         else:
             sh.com.cancel(f)
         return objs.db().albumid
@@ -383,9 +382,9 @@ class AlbumEditor:
     def get_min(self):
         f = '[unmusic] logic.AlbumEditor.get_min'
         if self.Success:
-            return sh.Input (title = f
-                            ,value = objs.db().min_id()
-                            ).integer()
+            return sh.lg.Input (title = f
+                               ,value = objs.db().min_id()
+                               ).integer()
         else:
             sh.com.cancel(f)
             return 0
@@ -397,9 +396,8 @@ class AlbumEditor:
             if isinstance(_max,int):
                 return _max
             else:
-                sh.objs.mes (f,_('WARNING')
-                            ,_('The database is empty. You need to fill it first.')
-                            )
+                mes = _('The database is empty. You need to fill it first.')
+                sh.objs.mes(f,mes).warning()
                 return 0
         else:
             sh.com.cancel(f)
@@ -437,7 +435,7 @@ class AlbumEditor:
         new[5] = str(new[5]).replace('"','""')
         search = [new[0],new[1],str(new[2]),new[3],new[4],new[5]]
         search = ' '.join(search)
-        search = sh.Text(search).delete_duplicate_spaces()
+        search = sh.lg.Text(search).delete_duplicate_spaces()
         search = search.strip().lower()
         
         add = []
@@ -492,11 +490,11 @@ class Directory:
             for i in range(len(self._audio)):
                 file     = self._audio[i]
                 no       = self._set_no(i,max_len)
-                basename = no + sh.Path(file).extension().lower()
+                basename = no + sh.lg.Path(file).extension().lower()
                 dest     = os.path.join (self._target
                                         ,basename
                                         )
-                success.append(sh.File(file=file,dest=dest).move())
+                success.append(sh.lg.File(file=file,dest=dest).move())
             self.Success = not (False in success or None in success)
         else:
             sh.com.cancel(f)
@@ -505,9 +503,8 @@ class Directory:
         f = '[unmusic] logic.Directory.purge'
         if self.Success:
             if self._tracks:
-                sh.log.append (f,_('INFO')
-                              ,_('Purge tracks')
-                              )
+                mes = _('Purge tracks')
+                sh.objs.mes(f,mes,True).info()
                 for track in self._tracks:
                     track.purge()
                     track.save()
@@ -526,7 +523,7 @@ class Directory:
                 self._target = objs.default().ihome.add_share (_('processed')
                                                               ,str(objs._db.albumid)
                                                               )
-                self.Success = sh.Path(self._target).create()
+                self.Success = sh.lg.Path(self._target).create()
             else:
                 self.Success = False
                 sh.com.empty(f)
@@ -537,7 +534,7 @@ class Directory:
         self.values()
         self._path     = path
         self.Obfuscate = Obfuscate
-        self.idir      = sh.Directory(self._path)
+        self.idir      = sh.lg.Directory(self._path)
         self.Success   = self.idir.Success
         if self.Success and '(decypher)' in self._path:
             self.Decypher = True
@@ -573,22 +570,19 @@ class Directory:
         f = '[unmusic] logic.Directory.decypher_album'
         if self.Success:
             if self.Decypher:
-                basename = sh.Path(self._path).basename()
+                basename = sh.lg.Path(self._path).basename()
                 basename = objs.caesar().decypher(basename)
                 if basename:
                     if basename.count(' - ') == 2:
                         return basename.split(' - ')
                     else:
-                        sh.log.append (f,_('WARNING')
-                                      ,_('Wrong input data: "%s"!') \
-                                      % basename
-                                      )
+                        mes = _('Wrong input data: "{}"!')
+                        mes = mes.format(basename)
+                        sh.objs.mes(f,mes,True).warning()
                 else:
                     sh.com.empty(f)
             else:
-                sh.log.append (f,_('INFO')
-                              ,_('Nothing to do!')
-                              )
+                sh.com.lazy(f)
         else:
             sh.com.cancel(f)
     
@@ -615,10 +609,10 @@ class Directory:
                                 year = int(result[1])
                             album = result[2]
                         else:
-                            sh.objs.mes (f,_('ERROR')
-                                        ,_('Condition "%s" is not observed!')\
-                                         % '%d == %d' % (len(result),3)
-                                        )
+                            sub = '{} = {}'.format(len(result),3)
+                            mes = _('Condition "{}" is not observed!')
+                            mes = mes.format(sub)
+                            sh.objs.mes(f,mes).error()
                     album  = com.sane(album)
                     album  = com.album_trash(album)
                     artist = com.sane(artist)
@@ -685,10 +679,9 @@ class Directory:
                 albumid = objs._db.max_id()
                 if albumid:
                     self._add_tracks_meta(albumid)
-                    sh.log.append (f,_('INFO')
-                                  ,_('Album %d: %d tracks.') \
-                                  % (albumid,len(self._tracks))
-                                  )
+                    mes = _('Album {}: {} tracks.')
+                    mes = mes.format(albumid,len(self._tracks))
+                    sh.objs.mes(f,mes,True).info()
                 else:
                     sh.com.empty(f)
             else:
@@ -715,7 +708,7 @@ class Directory:
                 if self.idir:
                     self._files = self.idir.files()
                     for file in self._files:
-                        if sh.Path(file).extension().lower() \
+                        if sh.lg.Path(file).extension().lower() \
                         in TYPES:
                             self._audio.append(file)
                 else:
@@ -737,10 +730,9 @@ class Directory:
                     count += 1
                     self._tracks[i]._no = nos[i]
             if count:
-                sh.log.append (f,_('WARNING')
-                              ,_('%d/%d tracks have been renumbered.') \
-                              % (count,len(self._tracks))
-                              )
+                mes = _('{}/{} tracks have been renumbered.')
+                mes = mes.format(count,len(self._tracks))
+                sh.objs.mes(f,mes,True).warning()
         else:
             sh.com.cancel(f)
     
@@ -755,10 +747,9 @@ class Directory:
                                                    )
                                             )
                 else:
-                    sh.log.append (f,_('INFO')
-                                  ,_('Folder "%s" has no audio files.')\
-                                  % self._path
-                                  )
+                    mes = _('Folder "{}" has no audio files.')
+                    mes = mes.format(self._path)
+                    sh.objs.mes(f,mes,True).info()
             return self._tracks
         else:
             sh.com.cancel(f)
@@ -769,7 +760,7 @@ class DefaultConfig:
     
     def __init__(self):
         self.values()
-        self.ihome   = sh.Home(app_name='unmusic')
+        self.ihome   = sh.lg.Home(app_name='unmusic')
         self.Success = self.ihome.create_conf()
     
     def run(self):
@@ -784,7 +775,7 @@ class DefaultConfig:
             self._fdb = self.ihome.add_config('unmusic.db')
             if self._fdb:
                 if os.path.exists(self._fdb):
-                    self.Success = sh.File(file=self._fdb).Success
+                    self.Success = sh.lg.File(file=self._fdb).Success
             else:
                 self.Success = False
                 sh.com.empty(f)
@@ -810,9 +801,8 @@ class Objects:
             if self._default.Success:
                 self._db = DB(path=path)
             else:
-                sh.log.append (f,_('WARNING')
-                              ,_('Wrong input data!')
-                              )
+                mes = _('Wrong input data!')
+                sh.objs.mes(f,mes,True).warning()
                 self._db = DB()
         return self._db
     
@@ -998,10 +988,10 @@ class DB:
                     except Exception as e:
                         self.fail(f,e)
                 else:
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('Condition "%s" is not observed!') \
-                                % '%d == %d' % (len(data),4)
-                                )
+                    sub = '{} = {}'.format(len(data),4)
+                    mes = _('Condition "{}" is not observed!')
+                    mes = mes.format(sub)
+                    sh.objs.mes(f,mes).error()
             else:
                 sh.com.empty(f)
         else:
@@ -1115,10 +1105,9 @@ class DB:
                 try:
                     self.dbc.executescript(query)
                 except Exception as e:
-                    sh.objs.mes (f,_('ERROR')
-                                ,_('Unable to execute:\n"%s"\n\nDetails: %s')\
-                                % (str(query).replace(';',';\n'),str(e))
-                                )
+                    mes = _('Unable to execute:\n"{}"\n\nDetails: {}')
+                    mes = mes.format(str(query).replace(';',';\n'),e)
+                    sh.objs.mes(f,mes).error()
             else:
                 sh.com.empty(f)
         else:
@@ -1337,12 +1326,12 @@ class DB:
                 self.dbc.execute('select * from %s' % table)
             headers = [cn[0] for cn in self.dbc.description]
             rows    = self.dbc.fetchall()
-            sh.Table (headers = headers
-                     ,rows    = rows
-                     ,Shorten = Shorten
-                     ,MaxRow  = MaxRow
-                     ,MaxRows = MaxRows
-                     ).print()
+            sh.lg.Table (headers = headers
+                        ,rows    = rows
+                        ,Shorten = Shorten
+                        ,MaxRow  = MaxRow
+                        ,MaxRows = MaxRows
+                        ).print()
         else:
             sh.com.cancel(f)
     
@@ -1425,9 +1414,8 @@ class DB:
     def save(self):
         f = '[unmusic] logic.DB.save'
         if self.Success:
-            sh.log.append (f,_('INFO')
-                          ,_('Save "%s"') % self._path
-                          )
+            mes = _('Save "{}"').format(self._path)
+            sh.objs.mes(f,mes,True).info()
             try:
                 self.db.commit()
             except Exception as e:
@@ -1437,11 +1425,9 @@ class DB:
     
     def fail(self,func,error):
         self.Success = False
-        sh.objs.mes (func
-                    ,_('WARNING')
-                    ,_('Database "%s" has failed!\n\nDetails: %s') \
-                    % (self._path,str(error))
-                    )
+        mes = _('Database "{}" has failed!\n\nDetails: {}')
+        mes = mes.format(self._path,error)
+        sh.objs.mes(func,mes).warning()
         ''' We need to quit as soon as possible, otherwise, folders
             will be obfuscated, but the info about them will not be
             stored in the DB!
@@ -1476,7 +1462,7 @@ class Track:
     def __init__(self,file,Decypher=False):
         self.values()
         self.file     = file
-        self.Success  = sh.File(self.file).Success
+        self.Success  = sh.lg.File(self.file).Success
         self.Decypher = Decypher
         self.load()
         self.info()
@@ -1500,8 +1486,8 @@ class Track:
         f = '[unmusic] logic.Track.unsupported'
         if self.Success:
             # Other fields should be processed before writing to DB
-            self._title  = sh.Text(self._title).delete_unsupported()
-            self._lyrics = sh.Text(self._lyrics).delete_unsupported()
+            self._title  = sh.lg.Text(self._title).delete_unsupported()
+            self._lyrics = sh.lg.Text(self._lyrics).delete_unsupported()
         else:
             sh.com.cancel(f)
     
@@ -1514,10 +1500,9 @@ class Track:
                     self._audio.images = {}
                 except Exception as e:
                     self.Success = False
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Third-party module has failed!\n\nDetails: %s')\
-                                % str(e)
-                                )
+                    mes = _('Third-party module has failed!\n\nDetails: {}')
+                    mes = mes.format(e)
+                    sh.objs.mes(f,mes).warning()
             else:
                 sh.com.empty(f)
         else:
@@ -1534,10 +1519,9 @@ class Track:
                     self._audio.save()
                 except Exception as e:
                     self.Success = False
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Third-party module has failed!\n\nDetails: %s')\
-                                % str(e)
-                                )
+                    mes = _('Third-party module has failed!\n\nDetails: {}')
+                    mes = mes.format(e)
+                    sh.objs.mes(f,mes).warning()
             else:
                 sh.com.empty(f)
         else:
@@ -1558,7 +1542,7 @@ class Track:
         if self.Success:
             search = [self._title,self._lyrics]
             search = ' '.join(search)
-            search = sh.Text(search).delete_duplicate_spaces()
+            search = sh.lg.Text(search).delete_duplicate_spaces()
             search = search.strip().lower()
             return (self._title,self._no,self._lyrics,search
                    ,self._bitrate,self._length
@@ -1583,30 +1567,38 @@ class Track:
     def summary(self):
         f = '[unmusic] logic.Track.summary'
         if self.Success:
-            mes =  _('Artist:')  + ' %s\n' % self._artist
-            mes += _('Album:')   + ' %s\n' % self._album
-            mes += _('Genre:')   + ' %s\n' % self._genre
-            mes += _('Year:')    + ' %d\n' % self._year
-            mes += _('Track #:') + ' %d\n' % self._no
-            mes += _('Title:')   + ' %s\n' % self._title
-            mes += _('Lyrics:')  + ' %s\n' % self._lyrics
+            mes = _('Artist: {}').format(self._artist)
+            mes += '\n'
+            mes += _('Album: {}').format(self._album)
+            mes += '\n'
+            mes += _('Genre: {}').format(self._genre)
+            mes += '\n'
+            mes += _('Year: {}').format(self._year)
+            mes += '\n'
+            mes += _('Track #: {}').format(self._no)
+            mes += '\n'
+            mes += _('Title: {}').format(self._title)
+            mes += '\n'
+            mes += _('Lyrics: {}').format(self._lyrics)
             if self._length:
                 minutes = self._length // 60
                 seconds = self._length - minutes * 60
             else:
                 minutes = seconds = 0
-            mes += _('Length:') + ' %d ' % minutes + _('min') + ' %d ' \
-                   % seconds + _('sec') + '\n'
-            sh.objs.mes (f,_('INFO')
-                        ,mes
-                        )
+            mes += _('Length: {} {} {} {}').format (minutes
+                                                   ,_('min')
+                                                   ,seconds
+                                                   ,_('sec')
+                                                   )
+            mes +=  '\n'
+            sh.objs.mes(f,mes).info()
         else:
             sh.com.cancel(f)
     
     def extract_title(self):
         f = '[unmusic] logic.Track.extract_title'
         if self.Success:
-            title = sh.Path(self.file).filename()
+            title = sh.lg.Path(self.file).filename()
             if title:
                 result = re.sub('^\d+[\.]{0,1}[\s]{0,1}','',title)
                 if result:
@@ -1638,15 +1630,15 @@ class Track:
                     if self._audio.album:
                         self._album = str(self._audio.album)
                     else:
-                        dirname = sh.Path(self.file).dirname()
-                        dirname = sh.Path(dirname).basename()
+                        dirname = sh.lg.Path(self.file).dirname()
+                        dirname = sh.lg.Path(dirname).basename()
                         self._album = '[[' + dirname + ']]'
                     if self._audio.genre:
                         self._genre = str(self._audio.genre)
                     if self._audio.year:
-                        self._year = sh.Input (title = f
-                                              ,value = self._audio.year
-                                              ).integer()
+                        self._year = sh.lg.Input (title = f
+                                                 ,value = self._audio.year
+                                                 ).integer()
                     if self._audio.title:
                         self._title = str(self._audio.title)
                     else:
@@ -1664,10 +1656,9 @@ class Track:
                     if self._audio.images:
                         self._image = self._audio.images[0].data
                 except Exception as e:
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Third-party module has failed!\n\nDetails: %s')\
-                                % str(e)
-                                )
+                    mes = _('Third-party module has failed!\n\nDetails: {}')
+                    mes = mes.format(e)
+                    sh.objs.mes(f,mes).warning()
             else:
                 sh.com.empty(f)
         else:
@@ -1680,10 +1671,9 @@ class Track:
                 try:
                     self._audio = phrydy.MediaFile(self.file)
                 except Exception as e:
-                    sh.objs.mes (f,_('WARNING')
-                                ,_('Third-party module has failed!\n\nDetails: %s')\
-                                % str(e)
-                                )
+                    mes = _('Third-party module has failed!\n\nDetails: {}')
+                    mes = mes.format(e)
+                    sh.objs.mes(f,mes).warning()
             return self._audio
         else:
             sh.com.cancel(f)
@@ -1697,7 +1687,7 @@ class Walker:
             self.reset(path=path)
     
     def delete_empty(self):
-        ''' Delete empty folders. Since 'sh.Directory' instance is
+        ''' Delete empty folders. Since 'sh.lg.Directory' instance is
             recreated each time, we can call this procedure at any time
             without the need to reset 'Walker'.
         '''
@@ -1706,7 +1696,7 @@ class Walker:
         if self.Success:
             if self._dirs:
                 for folder in self._dirs:
-                    sh.Directory(folder).delete_empty()
+                    sh.lg.Directory(folder).delete_empty()
             else:
                 sh.com.empty(f)
         else:
@@ -1715,7 +1705,7 @@ class Walker:
     def reset(self,path):
         self.values()
         self._path   = path
-        self.idir    = sh.Directory(self._path)
+        self.idir    = sh.lg.Directory(self._path)
         self.Success = self.idir.Success
     
     def dirs(self):
@@ -1743,8 +1733,8 @@ class Commands:
         pass
     
     def sane(self,field):
-        field = sh.Text(field).delete_unsupported()
-        field = sh.Text(field).delete_duplicate_spaces()
+        field = sh.lg.Text(field).delete_unsupported()
+        field = sh.lg.Text(field).delete_duplicate_spaces()
         field = field.strip()
         field = self.decode(field)
         if not field:
@@ -1752,7 +1742,11 @@ class Commands:
         return field
     
     def album_trash(self,album):
-        album = album.replace(' (@FLAC)','').replace(' (@VBR)','').replace(' (@vbr)','').replace(', @FLAC','').replace(',@FLAC','').replace(', @VBR','').replace(',@VBR','').replace(', @vbr','').replace(',@vbr','')
+        album = album.replace(' (@FLAC)','').replace(' (@VBR)','')
+        album = album.replace(' (@vbr)','').replace(', @FLAC','')
+        album = album.replace(',@FLAC','').replace(', @VBR','')
+        album = album.replace(',@VBR','').replace(', @vbr','')
+        album = album.replace(',@vbr','')
         album = re.sub(' \(@\d+\)','',album)
         album = re.sub(',[\s]{0,1}@\d+\)','',album)
         return album
@@ -1780,5 +1774,5 @@ com = Commands()
 
 
 if __name__ == '__main__':
-    sh.objs.mes(Silent=1)
+    sh.GUI_MES = False
     objs.db().close()
