@@ -1347,7 +1347,7 @@ class Menu:
                                          ,count
                                          ,len(dirs)
                                          )
-                        gi.objs.wait().reset (title   = f
+                        gi.objs.wait().reset (func    = f
                                              ,message = mes
                                              )
                         gi.objs._wait.show()
