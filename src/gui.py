@@ -656,7 +656,6 @@ class AlbumEditor:
                                 ,expand = True
                                 ,fill   = 'x'
                                 ,side   = 'left'
-                                ,ipadx  = 150
                                 )
         self.frm_prs = sh.Frame (parent = self.frm_rht
                                 ,expand = False
