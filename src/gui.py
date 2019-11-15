@@ -261,7 +261,9 @@ class AlbumEditor:
 
     def __init__(self):
         self.values()
-        self.parent = sh.Top()
+        self.parent = sh.Top (icon  = ICON
+                             ,title = _('Album Editor')
+                             )
         self.widget = self.parent.widget
         self.pool   = sh.lg.MessagePool(max_size=4)
         self.gui()
@@ -497,8 +499,6 @@ class AlbumEditor:
         self.present()
         self.image()
         self.bottom()
-        self.icon()
-        self.title()
         self.bindings()
         self.ent_art.focus()
         sh.Geometry(self.parent)
@@ -777,39 +777,10 @@ class Menu:
     
     def __init__(self):
         self._a = []
-        self.parent = sh.Top()
+        self.parent = sh.Top (icon  = ICON
+                             ,title = 'unmusic'
+                             )
         self.gui()
-    
-    def toggle_from_cbx(self,event=None):
-        if self.cbx_obf.get():
-            self._a[2].title(_('Collect tags & Obfuscate'))
-        else:
-            self._a[2].title(_('Collect tags'))
-    
-    def toggle_from_lbl(self,event=None):
-        if self.cbx_obf.get():
-            self.cbx_obf.disable()
-            self._a[2].title(_('Collect tags'))
-        else:
-            self.cbx_obf.enable()
-            self._a[2].title(_('Collect tags & Obfuscate'))
-    
-    def bottom(self):
-        self.frm_btm = sh.Frame (parent = self.parent
-                                ,expand = False
-                                ,fill   = 'x'
-                                ,side   = 'bottom'
-                                )
-        self.cbx_obf = sh.CheckBox (parent = self.frm_btm
-                                   ,Active = True
-                                   ,action = self.toggle_from_cbx
-                                   ,side   = 'left'
-                                   )
-        self.lbl_obf = sh.Label (parent = self.frm_btm
-                                ,text   = _('Obfuscate')
-                                ,side   = 'left'
-                                ,font   = 'Sans 10'
-                                )
     
     def bindings(self):
         self.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
@@ -820,10 +791,6 @@ class Menu:
         sh.com.bind (obj      = self.parent
                     ,bindings = '<Escape>'
                     ,action   = sh.Geometry(self.parent).minimize
-                    )
-        sh.com.bind (obj      = self.lbl_obf
-                    ,bindings = '<ButtonRelease-1>'
-                    ,action   = self.toggle_from_lbl
                     )
         if len(self._a) > 0:
             for i in range(len(self._a)):
@@ -904,9 +871,6 @@ class Menu:
     
     def gui(self):
         self.buttons()
-        self.bottom()
-        self.icon()
-        self.title()
         self.bindings()
         if len(self._a) > 0:
             self._a[0].focus()

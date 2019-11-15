@@ -1327,7 +1327,6 @@ class Menu:
         '''
         f = '[unmusic] unmusic.Menu.collect'
         folder = sh.lg.Home(app_name='unmusic').add_share(_('not processed'))
-        Obfuscate = self.gui.cbx_obf.get()
         if sh.lg.Path(folder).create():
             iwalk = lg.Walker(folder)
             dirs  = iwalk.dirs()
@@ -1351,11 +1350,10 @@ class Menu:
                                              ,message = mes
                                              )
                         gi.objs._wait.show()
-                        lg.Directory (path      = folder
-                                     ,Obfuscate = Obfuscate
-                                     ).run()
-                        ''' In case something went wrong, we should lose 
-                            only 1 album record, not the entire sequence.
+                        lg.Directory(folder).run()
+                        ''' In case something went wrong, we should
+                            lose only 1 album record, not the entire
+                            sequence.
                         '''
                         lg.objs.db().save()
                     else:

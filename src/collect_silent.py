@@ -33,9 +33,7 @@ if sh.lg.Path(folder).create():
                                                        ,len(dirs)
                                                        )
                 sh.objs.mes(f,mes,True).info()
-                lg.Directory (path      = folder
-                             ,Obfuscate = True
-                             ).run()
+                lg.Directory(folder).run()
                 ''' In case something went wrong, we should lose only
                     1 album record, not the entire sequence.
                 '''

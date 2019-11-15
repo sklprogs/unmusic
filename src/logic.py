@@ -464,12 +464,10 @@ class AlbumEditor:
 
 class Directory:
     
-    def __init__(self,path,Obfuscate=True):
+    def __init__(self,path):
         self.values()
         if path:
-            self.reset (path      = path
-                       ,Obfuscate = Obfuscate
-                       )
+            self.reset(path)
     
     def _set_no(self,i,max_len):
         no = str(i+1)
@@ -530,12 +528,11 @@ class Directory:
         else:
             sh.com.cancel(f)
     
-    def reset(self,path,Obfuscate=True):
+    def reset(self,path):
         self.values()
-        self._path     = path
-        self.Obfuscate = Obfuscate
-        self.idir      = sh.lg.Directory(self._path)
-        self.Success   = self.idir.Success
+        self._path   = path
+        self.idir    = sh.lg.Directory(self._path)
+        self.Success = self.idir.Success
         if self.Success and '(decypher)' in self._path:
             self.Decypher = True
         
@@ -560,10 +557,12 @@ class Directory:
         if self._tracks:
             self.renumber_tracks()
             self.save_meta()
-            if self.Obfuscate:
-                self.create_target()
-                self.purge()
-                self.move_tracks()
+            ''' The following actions should be carried out
+                only if we want to obfuscate tracks.
+            '''
+            self.create_target()
+            self.purge()
+            self.move_tracks()
         return self.Success
     
     def decypher_album(self):
@@ -690,16 +689,15 @@ class Directory:
             sh.com.cancel(f)
     
     def values(self):
-        self.Success   = True
-        self.Decypher  = False
-        self.Obfuscate = False
-        self.idir      = None
-        self._path     = ''
-        self._target   = ''
-        self._rating   = 0
-        self._files    = []
-        self._audio    = []
-        self._tracks   = []
+        self.Success  = True
+        self.Decypher = False
+        self.idir     = None
+        self._path    = ''
+        self._target  = ''
+        self._rating  = 0
+        self._files   = []
+        self._audio   = []
+        self._tracks  = []
     
     def create_list(self):
         f = '[unmusic] logic.Directory.create_list'
