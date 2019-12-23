@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-23 18:47+0300\n"
-"PO-Revision-Date: 2019-12-23 18:49+0300\n"
+"POT-Creation-Date: 2019-12-23 19:51+0300\n"
+"PO-Revision-Date: 2019-12-23 19:54+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -18,19 +18,19 @@ msgstr ""
 "X-Poedit-Basepath: ../src\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: album_editor.py:22 unmusic.py:1457
+#: album_editor.py:22 unmusic.py:1490
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: collect_silent.py:15 unmusic.py:1355
+#: collect_silent.py:15 unmusic.py:1388
 msgid "not processed"
 msgstr "не обработано"
 
-#: collect_silent.py:31 unmusic.py:1370
+#: collect_silent.py:31 unmusic.py:1403
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: collect_silent.py:44 unmusic.py:1389
+#: collect_silent.py:44 unmusic.py:1422
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
 
@@ -59,12 +59,13 @@ msgstr "Не задан"
 msgid "Limit:"
 msgstr "Предел:"
 
-#: gui.py:43 gui.py:174 gui.py:178 gui.py:283 logic.py:88 logic.py:239
-#: unmusic.py:625
+#: gui.py:43 gui.py:174 gui.py:178 gui.py:283 logic.py:69 logic.py:98
+#: logic.py:289 unmusic.py:625
 msgid "external collection"
 msgstr "внешняя коллекция"
 
-#: gui.py:44 gui.py:190 gui.py:194 gui.py:290 logic.py:89 unmusic.py:626
+#: gui.py:44 gui.py:190 gui.py:194 gui.py:290 logic.py:70 logic.py:102
+#: unmusic.py:626
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
@@ -104,7 +105,8 @@ msgstr "Легкие"
 msgid "Read:"
 msgstr "Чтение:"
 
-#: gui.py:175 gui.py:191 gui.py:276 logic.py:87 logic.py:236 unmusic.py:624
+#: gui.py:175 gui.py:191 gui.py:276 logic.py:68 logic.py:94 logic.py:286
+#: unmusic.py:624
 msgid "local collection"
 msgstr "локальная коллекция"
 
@@ -309,71 +311,75 @@ msgid "Copy progress"
 msgstr "Ход копирования"
 
 #: logic.py:71
-msgid "N/A"
-msgstr "Н/Д"
-
-#: logic.py:90
 msgid "Local collection: {}"
 msgstr "Локальная коллекция: {}"
 
-#: logic.py:92
+#: logic.py:73
 msgid "External collection: {}"
 msgstr "Внешняя коллекция: {}"
 
-#: logic.py:94
+#: logic.py:75
 msgid "Mobile collection: {}"
 msgstr "Переносная коллекция: {}"
 
-#: logic.py:132
+#: logic.py:81
+msgid "Empty output is not allowed!"
+msgstr "Пустые выходные данные не допускаются!"
+
+#: logic.py:129 unmusic.py:1348
+msgid "N/A"
+msgstr "Н/Д"
+
+#: logic.py:182
 msgid "Process album ID: {}"
 msgstr "Обработка ИД альбома: {}"
 
-#: logic.py:292
+#: logic.py:342
 msgid "Tracks {} have not been found in \"{}\"!"
 msgstr "Дорожки {} не были найдены в \"{}\"!"
 
-#: logic.py:303 logic.py:719 logic.py:1138 unmusic.py:439
+#: logic.py:353 logic.py:769 logic.py:1188 unmusic.py:439
 msgid "Condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
-#: logic.py:317
+#: logic.py:367
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: logic.py:506
+#: logic.py:556
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: logic.py:611
+#: logic.py:661
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: logic.py:628
+#: logic.py:678
 msgid "processed"
 msgstr "обработано"
 
-#: logic.py:685 unmusic.py:530 unmusic.py:576 unmusic.py:719 unmusic.py:723
+#: logic.py:735 unmusic.py:530 unmusic.py:576 unmusic.py:719 unmusic.py:723
 #: unmusic.py:911 unmusic.py:938 unmusic.py:1294
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
-#: logic.py:788
+#: logic.py:838
 msgid "Album {}: {} tracks."
 msgstr "Альбом {}: {} дорожек."
 
-#: logic.py:838
+#: logic.py:888
 msgid "{}/{} tracks have been renumbered."
 msgstr "{}/{} дорожек перенумеровано."
 
-#: logic.py:855
+#: logic.py:905
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: logic.py:909 unmusic.py:240 unmusic.py:247 unmusic.py:434
+#: logic.py:959 unmusic.py:240 unmusic.py:247 unmusic.py:434
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
-#: logic.py:1254
+#: logic.py:1304
 msgid ""
 "Unable to execute:\n"
 "\"{}\"\n"
@@ -385,11 +391,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: logic.py:1563
+#: logic.py:1613
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: logic.py:1574
+#: logic.py:1624
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -399,7 +405,7 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: logic.py:1649 logic.py:1668 logic.py:1805 logic.py:1820 unmusic.py:829
+#: logic.py:1699 logic.py:1718 logic.py:1855 logic.py:1870 unmusic.py:829
 msgid ""
 "Third-party module has failed!\n"
 "\n"
@@ -409,43 +415,43 @@ msgstr ""
 "\n"
 "Детали: {}"
 
-#: logic.py:1716
+#: logic.py:1766
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
-#: logic.py:1718
+#: logic.py:1768
 msgid "Album: {}"
 msgstr "Альбом: {}"
 
-#: logic.py:1720
+#: logic.py:1770
 msgid "Genre: {}"
 msgstr "Жанр: {}"
 
-#: logic.py:1722
+#: logic.py:1772
 msgid "Year: {}"
 msgstr "Год: {}"
 
-#: logic.py:1724
+#: logic.py:1774
 msgid "Track #: {}"
 msgstr "Номер дорожки: {}"
 
-#: logic.py:1726
+#: logic.py:1776
 msgid "Title: {}"
 msgstr "Заголовок: {}"
 
-#: logic.py:1728
+#: logic.py:1778
 msgid "Lyrics: {}"
 msgstr "Слова: {}"
 
-#: logic.py:1734
+#: logic.py:1784
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: logic.py:1735
+#: logic.py:1785
 msgid "min"
 msgstr "мин"
 
-#: logic.py:1737
+#: logic.py:1787
 msgid "sec"
 msgstr "сек"
 
@@ -492,7 +498,7 @@ msgstr "Недостаточно свободного места на \"{}\"!"
 msgid "Required: {}"
 msgstr "Требуется: {}"
 
-#: unmusic.py:189 unmusic.py:1336
+#: unmusic.py:189 unmusic.py:1364 unmusic.py:1369
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -514,7 +520,7 @@ msgstr ""
 msgid "Any"
 msgstr "Любой"
 
-#: unmusic.py:404 unmusic.py:1403
+#: unmusic.py:404 unmusic.py:1436
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -603,6 +609,26 @@ msgstr ""
 msgid "Calculate sizes"
 msgstr "Подсчет места"
 
+#: unmusic.py:1349
+msgid ""
+"Affected carriers: {}.\n"
+"Space to be freed: {}.\n"
+"Number of albums to delete: {}.\n"
+"The list of directories to be deleted is below. Continue?\n"
+"\n"
+"{}"
+msgstr ""
+"Задействованные носители: {}.\n"
+"Место для освобождения: {}.\n"
+"Число альбомов для удаления: {}.\n"
+"Список каталогов для удаления приведен ниже. Продолжить?\n"
+"\n"
+"{}"
+
+#: unmusic.py:1358
+msgid "Delete albums"
+msgstr "Удаление альбомов"
+
 #~ msgid "Collect tags"
 #~ msgstr "Извлечь тэги"
 
@@ -672,9 +698,6 @@ msgstr "Подсчет места"
 
 #~ msgid "Dictionary \"%s\": Incorrect line #%d: \"%s\"!"
 #~ msgstr "Словарь \"%s\": Неправильная строка №%d: \"%s\"!"
-
-#~ msgid "Empty input is not allowed!"
-#~ msgstr "Пустые входные данные не допускаются!"
 
 #~ msgid "File \"%s\" has not been found!"
 #~ msgstr "Файл \"%s\" не найден!"
