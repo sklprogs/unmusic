@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 20:57+0300\n"
-"PO-Revision-Date: 2019-08-01 20:57+0300\n"
+"POT-Creation-Date: 2019-12-23 17:45+0300\n"
+"PO-Revision-Date: 2019-12-23 17:49+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -13,24 +13,24 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../src\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: album_editor.py:22 unmusic.py:1432
+#: album_editor.py:22 unmusic.py:1452
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: collect_silent.py:15 unmusic.py:1329
+#: collect_silent.py:15 unmusic.py:1350
 msgid "not processed"
 msgstr "не обработано"
 
-#: collect_silent.py:31 unmusic.py:1345
+#: collect_silent.py:31 unmusic.py:1365
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: collect_silent.py:46 unmusic.py:1365
+#: collect_silent.py:44 unmusic.py:1384
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
 
@@ -59,15 +59,15 @@ msgstr "Не задан"
 msgid "Limit:"
 msgstr "Предел:"
 
-#: gui.py:43 gui.py:174 gui.py:178 gui.py:281 logic.py:132 unmusic.py:625
+#: gui.py:43 gui.py:174 gui.py:178 gui.py:283 logic.py:172 unmusic.py:625
 msgid "external collection"
 msgstr "внешняя коллекция"
 
-#: gui.py:44 gui.py:190 gui.py:194 gui.py:288 unmusic.py:626
+#: gui.py:44 gui.py:190 gui.py:194 gui.py:290 unmusic.py:626
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
-#: gui.py:65 gui.py:893
+#: gui.py:65 gui.py:859
 msgid "Copy music"
 msgstr "Копировать музыку"
 
@@ -83,7 +83,7 @@ msgstr "Сброс"
 msgid "Start"
 msgstr "Начать"
 
-#: gui.py:131 gui.py:451
+#: gui.py:131 gui.py:453
 msgid "Year:"
 msgstr "Год:"
 
@@ -103,7 +103,7 @@ msgstr "Легкие"
 msgid "Read:"
 msgstr "Чтение:"
 
-#: gui.py:175 gui.py:191 gui.py:274 logic.py:129 unmusic.py:624
+#: gui.py:175 gui.py:191 gui.py:276 logic.py:169 unmusic.py:624
 msgid "local collection"
 msgstr "локальная коллекция"
 
@@ -111,103 +111,107 @@ msgstr "локальная коллекция"
 msgid "Write:"
 msgstr "Запись:"
 
-#: gui.py:238 gui.py:250 gui.py:326
+#: gui.py:238 gui.py:250 gui.py:328
 msgid "Image:"
 msgstr "Изображение:"
 
-#: gui.py:320
+#: gui.py:265 gui.py:759 gui.py:840
+msgid "Album Editor"
+msgstr "Редактор альбомов"
+
+#: gui.py:322
 msgid "Search an album by ID"
 msgstr "Поиск альбома по ИД"
 
-#: gui.py:338 gui.py:977
+#: gui.py:340 gui.py:946
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: gui.py:339 gui.py:978
+#: gui.py:341 gui.py:947
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: gui.py:346
+#: gui.py:348
 msgid "Create"
 msgstr "Создать"
 
-#: gui.py:347
+#: gui.py:349
 msgid "Create a new record"
 msgstr "Создать новую запись"
 
-#: gui.py:354
+#: gui.py:356
 msgid "Delete"
 msgstr "Удалить"
 
-#: gui.py:355
+#: gui.py:357
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: gui.py:361 gui.py:993
+#: gui.py:363 gui.py:962
 msgid "Decypher"
 msgstr "Расшифровать"
 
-#: gui.py:362 gui.py:994
+#: gui.py:364 gui.py:963
 msgid "Decypher text (Caesar algorithm)"
 msgstr "Расшифровать текст (алгоритм Цезаря)"
 
-#: gui.py:368 gui.py:1000
+#: gui.py:370 gui.py:969
 msgid "Cypher"
 msgstr "Зашифровать"
 
-#: gui.py:369 gui.py:1001
+#: gui.py:371 gui.py:970
 msgid "Cypher text (Caesar algorithm)"
 msgstr "Зашифровать текст (алгоритм Цезаря)"
 
-#: gui.py:375 gui.py:1007
+#: gui.py:377 gui.py:976
 msgid "Decode"
 msgstr "Декодировать"
 
-#: gui.py:376 gui.py:1008
+#: gui.py:378 gui.py:977
 msgid "Decode back to cp1251"
 msgstr "Декодировать обратно в cp1251"
 
-#: gui.py:382 gui.py:1014
+#: gui.py:384 gui.py:983
 msgid "Save"
 msgstr "Сохранить"
 
-#: gui.py:383 gui.py:1015
+#: gui.py:385 gui.py:984
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: gui.py:390
+#: gui.py:392
 msgid "Tracks"
 msgstr "Дорожки"
 
-#: gui.py:391
+#: gui.py:393
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: gui.py:443
+#: gui.py:445
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: gui.py:447
+#: gui.py:449
 msgid "Album:"
 msgstr "Альбом:"
 
-#: gui.py:455
+#: gui.py:457
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: gui.py:459 gui.py:1202
+#: gui.py:461 gui.py:1171
 msgid "Comment:"
 msgstr "Комментарий:"
 
-#: gui.py:463
+#: gui.py:465
 msgid "Mean bitrate:"
 msgstr "Средний битрейт:"
 
-#: gui.py:467
+#: gui.py:469
 msgid "Total length:"
 msgstr "Общая длина:"
 
-#: gui.py:471
+#: gui.py:473
 msgid "Genre:"
 msgstr "Жанр:"
 
@@ -239,124 +243,120 @@ msgstr "ИД альбома"
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: gui.py:760 gui.py:874
-msgid "Album Editor"
-msgstr "Редактор альбомов"
-
-#: gui.py:786 gui.py:796 gui.py:887
-msgid "Collect tags & Obfuscate"
-msgstr "Извлечь тэги и обфусцировать"
-
-#: gui.py:788 gui.py:793
-msgid "Collect tags"
-msgstr "Извлечь тэги"
-
-#: gui.py:810
-msgid "Obfuscate"
-msgstr "Обфусцировать"
-
-#: gui.py:880
+#: gui.py:846
 msgid "Prepare files"
 msgstr "Подготовить файлы"
 
-#: gui.py:881
+#: gui.py:847
 msgid "Move sub-folders to a root folder, split large lossless files, etc."
 msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
 
-#: gui.py:899
+#: gui.py:853
+msgid "Collect tags & Obfuscate"
+msgstr "Извлечь тэги и обфусцировать"
+
+#: gui.py:865
+msgid "Delete low-rated music"
+msgstr "Удалить музыку с низкими оценками"
+
+#: gui.py:871
 msgid "Quit"
 msgstr "Выйти"
 
-#: gui.py:985
+#: gui.py:954
 msgid "Clear rating"
 msgstr "Очистить оценку"
 
-#: gui.py:986
+#: gui.py:955
 msgid "Clear rating of all tracks"
 msgstr "Очистить оценку для всех дорожек"
 
-#: gui.py:1059 gui.py:1139
+#: gui.py:1028 gui.py:1108
 msgid "Tracks:"
 msgstr "Дорожки:"
 
-#: gui.py:1186
+#: gui.py:1155
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: gui.py:1190
+#: gui.py:1159
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: gui.py:1194
+#: gui.py:1163
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: gui.py:1198
+#: gui.py:1167
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: gui.py:1206
+#: gui.py:1175
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: gui.py:1210
+#: gui.py:1179
 msgid "Length:"
 msgstr "Продолжительность:"
 
-#: gui.py:1214
+#: gui.py:1183
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: gui.py:1280 unmusic.py:160
+#: gui.py:1249 unmusic.py:160
 msgid "Copy progress"
 msgstr "Ход копирования"
 
-#: logic.py:185
+#: logic.py:65
+msgid "Process album ID: {}"
+msgstr "Обработка ИД альбома: {}"
+
+#: logic.py:225
 msgid "Tracks {} have not been found in \"{}\"!"
 msgstr "Дорожки {} не были найдены в \"{}\"!"
 
-#: logic.py:196 logic.py:613 logic.py:992 unmusic.py:439
+#: logic.py:236 logic.py:652 logic.py:1071 unmusic.py:439
 msgid "Condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
-#: logic.py:210
+#: logic.py:250
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: logic.py:399
+#: logic.py:439
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: logic.py:506
+#: logic.py:544
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: logic.py:523
+#: logic.py:561
 msgid "processed"
 msgstr "обработано"
 
-#: logic.py:579 unmusic.py:530 unmusic.py:576 unmusic.py:719 unmusic.py:723
+#: logic.py:618 unmusic.py:530 unmusic.py:576 unmusic.py:719 unmusic.py:723
 #: unmusic.py:911 unmusic.py:938 unmusic.py:1294
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
-#: logic.py:682
+#: logic.py:721
 msgid "Album {}: {} tracks."
 msgstr "Альбом {}: {} дорожек."
 
-#: logic.py:733
+#: logic.py:771
 msgid "{}/{} tracks have been renumbered."
 msgstr "{}/{} дорожек перенумеровано."
 
-#: logic.py:750
+#: logic.py:788
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: logic.py:804 unmusic.py:240 unmusic.py:247 unmusic.py:434
+#: logic.py:842 unmusic.py:240 unmusic.py:247 unmusic.py:434
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
-#: logic.py:1108
+#: logic.py:1187
 msgid ""
 "Unable to execute:\n"
 "\"{}\"\n"
@@ -368,11 +368,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: logic.py:1417
+#: logic.py:1496
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: logic.py:1428
+#: logic.py:1507
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -382,7 +382,7 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: logic.py:1503 logic.py:1522 logic.py:1659 logic.py:1674 unmusic.py:829
+#: logic.py:1582 logic.py:1601 logic.py:1738 logic.py:1753 unmusic.py:829
 msgid ""
 "Third-party module has failed!\n"
 "\n"
@@ -392,43 +392,43 @@ msgstr ""
 "\n"
 "Детали: {}"
 
-#: logic.py:1570
+#: logic.py:1649
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
-#: logic.py:1572
+#: logic.py:1651
 msgid "Album: {}"
 msgstr "Альбом: {}"
 
-#: logic.py:1574
+#: logic.py:1653
 msgid "Genre: {}"
 msgstr "Жанр: {}"
 
-#: logic.py:1576
+#: logic.py:1655
 msgid "Year: {}"
 msgstr "Год: {}"
 
-#: logic.py:1578
+#: logic.py:1657
 msgid "Track #: {}"
 msgstr "Номер дорожки: {}"
 
-#: logic.py:1580
+#: logic.py:1659
 msgid "Title: {}"
 msgstr "Заголовок: {}"
 
-#: logic.py:1582
+#: logic.py:1661
 msgid "Lyrics: {}"
 msgstr "Слова: {}"
 
-#: logic.py:1588
+#: logic.py:1667
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: logic.py:1589
+#: logic.py:1668
 msgid "min"
 msgstr "мин"
 
-#: logic.py:1591
+#: logic.py:1670
 msgid "sec"
 msgstr "сек"
 
@@ -497,7 +497,7 @@ msgstr ""
 msgid "Any"
 msgstr "Любой"
 
-#: unmusic.py:404 unmusic.py:1379
+#: unmusic.py:404 unmusic.py:1398
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -567,6 +567,16 @@ msgstr "Вы действительно хотите безвозвратно у
 #: unmusic.py:1117
 msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
+
+#: unmusic.py:1319
+msgid "Calculate ratings"
+msgstr "Подсчет оценок"
+
+#~ msgid "Collect tags"
+#~ msgstr "Извлечь тэги"
+
+#~ msgid "Obfuscate"
+#~ msgstr "Обфусцировать"
 
 #~ msgid "DEBUG"
 #~ msgstr "ОТЛАДКА"
