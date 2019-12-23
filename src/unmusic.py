@@ -1323,13 +1323,18 @@ class Menu:
         data = ibad.rates(1000)
         objs._waitbox.close()
         if data:
-            headers = ('ID','ALBUM','MIN','MAX')
-            mes = sh.FastTable (iterable  = data
-                               ,headers   = headers
-                               ,Transpose = True
-                               ,maxrow    = 70
-                               ).run()
-            sh.com.fast_debug(mes)
+            mes = _('Insert all required media to calculate space to be freed.\n\nContinue?')
+            ques = sh.objs.mes(f,mes).question()
+            if ques:
+                objs.waitbox().reset (func    = f
+                                     ,message = _('Calculate sizes')
+                                     )
+                ibad.sizes()
+                objs._waitbox.close()
+                ibad.report()
+            else:
+                mes = _('Operation has been canceled by the user.')
+                sh.objs.mes(f,mes,True).info()
         else:
             sh.com.empty(f)
         

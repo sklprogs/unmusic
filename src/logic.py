@@ -50,12 +50,79 @@ gettext.install('unmusic','../resources/locale')
 class BadMusic:
     
     def __init__(self):
+        self.values()
         self.Success = objs.db().Success
+    
+    def values(self):
+        self.Success = True
+        self.vrates  = []
+        self.vsizes  = []
+        self.vdelete = []
+    
+    def report(self):
+        f = '[unmusic] logic.BadMusic.report'
+        if self.Success:
+            if self.vrates and self.vsizes:
+                iterable = []
+                for i in range(len(self.vrates)):
+                    if self.vsizes[i]:
+                        size = sh.com.human_size(self.vsizes[i])
+                    else:
+                        size = _('N/A')
+                    iterable.append(self.vrates[i]+[size])
+                headers = ('ID','ALBUM','MIN','MAX','SIZE')
+                mes = sh.FastTable (iterable  = iterable
+                                   ,headers   = headers
+                                   ,Transpose = True
+                                   ,maxrow    = 70
+                                   ).run()
+                sh.com.fast_debug(mes)
+            else:
+                sh.com.empty(f)
+    
+    def sizes(self):
+        f = '[unmusic] logic.BadMusic.sizes'
+        if self.Success:
+            if self.vrates:
+                local_col = objs.default().ihome.add_share(_('local collection'))
+                exter_col = objs._default.ihome.add_share(_('external collection'))
+                mobil_col = objs._default.ihome.add_share(_('mobile collection'))
+                mes = _('Local collection: {}').format(local_col)
+                sh.objs.mes(f,mes,True).debug()
+                mes = _('External collection: {}').format(exter_col)
+                sh.objs.mes(f,mes,True).debug()
+                mes = _('Mobile collection: {}').format(mobil_col)
+                sh.objs.mes(f,mes,True).debug()
+                for item in self.vrates:
+                    albumid = str(item[0])
+                    path1   = os.path.join(local_col,albumid)
+                    path2   = os.path.join(exter_col,albumid)
+                    path3   = os.path.join(mobil_col,albumid)
+                    if os.path.exists(path1):
+                        size1 = sh.Directory(path1).size()
+                        self.vdelete(path1)
+                    else:
+                        size1 = 0
+                    if os.path.exists(path2):
+                        size2 = sh.Directory(path2).size()
+                        self.vdelete(path2)
+                    else:
+                        size2 = 0
+                    if os.path.exists(path3):
+                        size3 = sh.Directory(path3).size()
+                        self.vdelete(path3)
+                    else:
+                        size3 = 0
+                    size = size1 + size2 + size3
+                    self.vsizes.append(size)
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
     
     def rates(self,limit=0,max_rate=4):
         f = '[unmusic] logic.BadMusic.rates'
         if self.Success:
-            data = []
             # ALBUMID (0), ALBUM (1), ARTIST (2), YEAR (3)
             albums = objs.db().albums(limit)
             if albums:
@@ -72,14 +139,14 @@ class BadMusic:
                                           ,str(album[1])
                                           ]
                             album_title = ' - '.join(album_title)
-                            item = (album[0],album_title
+                            item = [album[0],album_title
                                    ,min(rates),max(rates)
-                                   )
-                            data.append(item)
+                                   ]
+                            self.vrates.append(item)
                     else:
                         sh.com.empty(f)
                 objs._db.albumid = old
-                return data
+                return self.vrates
             else:
                 sh.com.cancel(f)
         else:
@@ -1854,4 +1921,7 @@ com = Commands()
 
 if __name__ == '__main__':
     f = '[unmusic] logic.__main__'
+    ibad = BadMusic()
+    ibad.vrates = [[1]]
+    ibad.sizes()
     objs.db().close()
