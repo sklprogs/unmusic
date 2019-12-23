@@ -110,8 +110,14 @@ class BadMusic:
     def delete(self):
         f = '[unmusic] logic.BadMusic.delete'
         if self.Success:
-            import time
-            time.sleep(3)
+            if self.vdelete:
+                for album in self.vdelete:
+                    if not sh.Directory(album).delete():
+                        mes = _('Operation has been canceled.')
+                        sh.objs.mes(f,mes).warning()
+                        break
+            else:
+                sh.com.empty(f)
         else:
             sh.com.cancel(f)
     
@@ -165,6 +171,7 @@ class BadMusic:
                         size3 = 0
                     size = size1 + size2 + size3
                     self.vsizes.append(size)
+                return self.vsizes
             else:
                 sh.com.empty(f)
         else:
@@ -184,7 +191,7 @@ class BadMusic:
                     sh.objs.mes(f,mes,True).debug()
                     rates = objs._db.rates()
                     if rates:
-                        if min(rates) > 0 and max(rates) == max_rate:
+                        if min(rates) > 0 and max(rates) <= max_rate:
                             album_title = [str(album[2]),str(album[3])
                                           ,str(album[1])
                                           ]

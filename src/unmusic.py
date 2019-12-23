@@ -1319,8 +1319,7 @@ class Menu:
                              ,message = _('Calculate ratings')
                              )
         objs._waitbox.show()
-        #TODO: use full range
-        data = ibad.rates(1000)
+        data = ibad.rates()
         objs._waitbox.close()
         if data:
             mes = _('Insert all required media to calculate space to be freed.\n\nContinue?')
@@ -1369,7 +1368,8 @@ class Menu:
                 mes = _('Operation has been canceled by the user.')
                 sh.objs.mes(f,mes,True).info()
         else:
-            sh.com.empty(f)
+            mes = _('Nothing to do!')
+            sh.objs.mes(f,mes).info()
         
     def copy(self,event=None):
         objs.copy().show()
