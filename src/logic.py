@@ -58,6 +58,54 @@ class BadMusic:
         self.vrates  = []
         self.vsizes  = []
         self.vdelete = []
+        self.vlocal  = ''
+        self.vexter  = ''
+        self.vmobil  = ''
+        
+    def all_carriers(self):
+        f = '[unmusic] logic.BadMusic.all_carriers'
+        if self.Success:
+            self.vlocal = objs.default().ihome.add_share(_('local collection'))
+            self.vexter = objs._default.ihome.add_share(_('external collection'))
+            self.vmobil = objs._default.ihome.add_share(_('mobile collection'))
+            mes = _('Local collection: {}').format(self.vlocal)
+            sh.objs.mes(f,mes,True).debug()
+            mes = _('External collection: {}').format(self.vexter)
+            sh.objs.mes(f,mes,True).debug()
+            mes = _('Mobile collection: {}').format(self.vmobil)
+            sh.objs.mes(f,mes,True).debug()
+            if self.vlocal and self.vexter and self.vmobil:
+                return True
+            else:
+                self.Success = False
+                mes = _('Empty output is not allowed!')
+                sh.objs.mes(f,mes).warning()
+        else:
+            sh.com.cancel(f)
+    
+    def affected_carriers(self):
+        f = '[unmusic] logic.BadMusic.affected_carriers'
+        self.all_carriers()
+        if self.Success:
+            if self.vdelete:
+                affected = []
+                for item in self.vdelete:
+                    if self.vlocal in item:
+                        affected.append(_('local collection'))
+                        break
+                for item in self.vdelete:
+                    if self.vexter in item:
+                        affected.append(_('external collection'))
+                        break
+                for item in self.vdelete:
+                    if self.vmobil in item:
+                        affected.append(_('mobile collection'))
+                        break
+                return affected
+            else:
+                sh.com.empty(f)
+        else:
+            sh.com.cancel(f)
     
     def delete(self):
         f = '[unmusic] logic.BadMusic.delete'
@@ -92,22 +140,14 @@ class BadMusic:
     
     def sizes(self):
         f = '[unmusic] logic.BadMusic.sizes'
+        self.all_carriers()
         if self.Success:
             if self.vrates:
-                local_col = objs.default().ihome.add_share(_('local collection'))
-                exter_col = objs._default.ihome.add_share(_('external collection'))
-                mobil_col = objs._default.ihome.add_share(_('mobile collection'))
-                mes = _('Local collection: {}').format(local_col)
-                sh.objs.mes(f,mes,True).debug()
-                mes = _('External collection: {}').format(exter_col)
-                sh.objs.mes(f,mes,True).debug()
-                mes = _('Mobile collection: {}').format(mobil_col)
-                sh.objs.mes(f,mes,True).debug()
                 for item in self.vrates:
                     albumid = str(item[0])
-                    path1   = os.path.join(local_col,albumid)
-                    path2   = os.path.join(exter_col,albumid)
-                    path3   = os.path.join(mobil_col,albumid)
+                    path1   = os.path.join(self.vlocal,albumid)
+                    path2   = os.path.join(self.vexter,albumid)
+                    path3   = os.path.join(self.vmobil,albumid)
                     if os.path.exists(path1):
                         size1 = sh.Directory(path1).size()
                         self.vdelete.append(path1)

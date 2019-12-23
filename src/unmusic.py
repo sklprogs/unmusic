@@ -1338,9 +1338,17 @@ class Menu:
                     total_size = 0
                     for item in sizes:
                         total_size += item
-                    total_size = sh.com.human_size(total_size)
-                    mes = _('Space to be freed: {}.\nNumber of albums to delete: {}.\nThe list of directories to be deleted is below. Continue?\n\n{}')
-                    mes = mes.format (total_size
+                    total_size = sh.com.human_size (bsize     = total_size
+                                                   ,LargeOnly = True
+                                                   )
+                    affected = ibad.affected_carriers()
+                    if affected:
+                        affected = ', '.join(affected)
+                    else:
+                        affected = _('N/A')
+                    mes = _('Affected carriers: {}.\nSpace to be freed: {}.\nNumber of albums to delete: {}.\nThe list of directories to be deleted is below. Continue?\n\n{}')
+                    mes = mes.format (affected
+                                     ,total_size
                                      ,len(ibad.vdelete)
                                      ,'\n'.join(ibad.vdelete)
                                      )
