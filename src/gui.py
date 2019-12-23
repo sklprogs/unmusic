@@ -862,6 +862,12 @@ class Menu:
                                   )
                        )
         self._a.append (sh.Button (parent = self.parent
+                                  ,text   = _('Delete low-rated music')
+                                  ,side   = 'top'
+                                  ,font   = font
+                                  )
+                       )
+        self._a.append (sh.Button (parent = self.parent
                                   ,text   = _('Quit')
                                   ,side   = 'top'
                                   ,font   = font

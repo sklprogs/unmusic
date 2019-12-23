@@ -1311,6 +1311,27 @@ class Menu:
     def __init__(self):
         self.gui = gi.Menu()
         self.bindings()
+    
+    def delete_bad(self,event=None):
+        f = '[unmusic] unmusic.Menu.delete_bad'
+        ibad = lg.BadMusic()
+        objs.waitbox().reset (func    = f
+                             ,message = _('Calculate ratings')
+                             )
+        objs._waitbox.show()
+        #TODO: use full range
+        data = ibad.rates(1000)
+        objs._waitbox.close()
+        if data:
+            headers = ('ID','ALBUM','MIN','MAX')
+            mes = sh.FastTable (iterable  = data
+                               ,headers   = headers
+                               ,Transpose = True
+                               ,maxrow    = 70
+                               ).run()
+            sh.com.fast_debug(mes)
+        else:
+            sh.com.empty(f)
         
     def copy(self,event=None):
         objs.copy().show()
@@ -1382,6 +1403,7 @@ class Menu:
         self.gui._a[1].action = self.prepare
         self.gui._a[2].action = self.collect
         self.gui._a[3].action = self.copy
+        self.gui._a[4].action = self.delete_bad
     
     def show(self,event=None):
         self.gui.show()

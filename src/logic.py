@@ -47,6 +47,46 @@ skl_shared.gettext_windows.setup_env()
 gettext.install('unmusic','../resources/locale')
 
 
+class BadMusic:
+    
+    def __init__(self):
+        self.Success = objs.db().Success
+    
+    def rates(self,limit=0,max_rate=4):
+        f = '[unmusic] logic.BadMusic.rates'
+        if self.Success:
+            data = []
+            # ALBUMID (0), ALBUM (1), ARTIST (2), YEAR (3)
+            albums = objs.db().albums(limit)
+            if albums:
+                old = objs._db.albumid
+                for album in albums:
+                    objs._db.albumid = album[0]
+                    mes = _('Process album ID: {}')
+                    mes = mes.format(objs._db.albumid)
+                    sh.objs.mes(f,mes,True).debug()
+                    rates = objs._db.rates()
+                    if rates:
+                        if min(rates) > 0 and max(rates) == max_rate:
+                            album_title = [str(album[2]),str(album[3])
+                                          ,str(album[1])
+                                          ]
+                            album_title = ' - '.join(album_title)
+                            item = (album[0],album_title
+                                   ,min(rates),max(rates)
+                                   )
+                            data.append(item)
+                    else:
+                        sh.com.empty(f)
+                objs._db.albumid = old
+                return data
+            else:
+                sh.com.cancel(f)
+        else:
+            sh.com.cancel(f)
+
+
+
 class Caesar:
     
     def __init__(self):
@@ -821,6 +861,47 @@ class DB:
         self.connect()
         self.create_albums()
         self.create_tracks()
+    
+    def albums(self,limit=0):
+        f = '[unmusic] logic.DB.albums'
+        if self.Success:
+            try:
+                # limit=0 provides an empty ouput
+                if limit:
+                    self.dbc.execute ('select ALBUMID,ALBUM,ARTIST,YEAR\
+                                       from ALBUMS order by ALBUMID \
+                                       limit ?',(limit,)
+                                     )
+                else:
+                    self.dbc.execute ('select ALBUMID,ALBUM,ARTIST,YEAR\
+                                       from ALBUMS order by ALBUMID'
+                                     )
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
+    
+    def rates(self):
+        ''' When operating on entire albums (e.g., deleting bad music),
+            we need to know minimum and maximum ratings
+            (e.g., 0 < album rate < 5 for ALL tracks of bad albums).
+        '''
+        f = '[unmusic] logic.DB.rates'
+        if self.Success:
+            try:
+                self.dbc.execute ('select RATING from TRACKS \
+                                   where ALBUMID = ? \
+                                   order by NO'
+                                 ,(self.albumid,)
+                                 )
+                result = self.dbc.fetchall()
+                if result:
+                    return [item[0] for item in result]
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def prev_rated(self,rating=0):
         f = '[unmusic] logic.DB.prev_rated'
@@ -1772,5 +1853,5 @@ com = Commands()
 
 
 if __name__ == '__main__':
-    sh.GUI_MES = False
+    f = '[unmusic] logic.__main__'
     objs.db().close()
