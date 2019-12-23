@@ -59,6 +59,14 @@ class BadMusic:
         self.vsizes  = []
         self.vdelete = []
     
+    def delete(self):
+        f = '[unmusic] logic.BadMusic.delete'
+        if self.Success:
+            import time
+            time.sleep(3)
+        else:
+            sh.com.cancel(f)
+    
     def report(self):
         f = '[unmusic] logic.BadMusic.report'
         if self.Success:
@@ -66,7 +74,9 @@ class BadMusic:
                 iterable = []
                 for i in range(len(self.vrates)):
                     if self.vsizes[i]:
-                        size = sh.com.human_size(self.vsizes[i])
+                        size = sh.com.human_size (bsize     = self.vsizes[i]
+                                                 ,LargeOnly = True
+                                                 )
                     else:
                         size = _('N/A')
                     iterable.append(self.vrates[i]+[size])
@@ -100,17 +110,17 @@ class BadMusic:
                     path3   = os.path.join(mobil_col,albumid)
                     if os.path.exists(path1):
                         size1 = sh.Directory(path1).size()
-                        self.vdelete(path1)
+                        self.vdelete.append(path1)
                     else:
                         size1 = 0
                     if os.path.exists(path2):
                         size2 = sh.Directory(path2).size()
-                        self.vdelete(path2)
+                        self.vdelete.append(path2)
                     else:
                         size2 = 0
                     if os.path.exists(path3):
                         size3 = sh.Directory(path3).size()
-                        self.vdelete(path3)
+                        self.vdelete.append(path3)
                     else:
                         size3 = 0
                     size = size1 + size2 + size3

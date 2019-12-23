@@ -1326,12 +1326,37 @@ class Menu:
             mes = _('Insert all required media to calculate space to be freed.\n\nContinue?')
             ques = sh.objs.mes(f,mes).question()
             if ques:
-                objs.waitbox().reset (func    = f
-                                     ,message = _('Calculate sizes')
-                                     )
+                objs._waitbox.reset (func    = f
+                                    ,message = _('Calculate sizes')
+                                    )
+                objs._waitbox.show()
                 ibad.sizes()
                 objs._waitbox.close()
                 ibad.report()
+                if ibad.vsizes:
+                    sizes = [item for item in ibad.vsizes if item]
+                    total_size = 0
+                    for item in sizes:
+                        total_size += item
+                    total_size = sh.com.human_size(total_size)
+                    mes = _('Space to be freed: {}.\nNumber of albums to delete: {}.\nThe list of directories to be deleted is below. Continue?\n\n{}')
+                    mes = mes.format (total_size
+                                     ,len(ibad.vdelete)
+                                     ,'\n'.join(ibad.vdelete)
+                                     )
+                    ques = sh.objs.mes(f,mes).question()
+                    if ques:
+                        objs._waitbox.reset (func    = f
+                                            ,message = _('Delete albums')
+                                            )
+                        objs._waitbox.show()
+                        ibad.delete()
+                        objs._waitbox.close()
+                    else:
+                        mes = _('Operation has been canceled by the user.')
+                        sh.objs.mes(f,mes,True).info()
+                else:
+                    sh.com.empty(f)
             else:
                 mes = _('Operation has been canceled by the user.')
                 sh.objs.mes(f,mes,True).info()
