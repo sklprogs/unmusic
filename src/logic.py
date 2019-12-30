@@ -9,13 +9,14 @@ import phrydy
 import sqlite3
 
 import skl_shared.shared as sh
+from skl_shared.localize import _
 
 VERSION = '1.0'
 # Derived from 'phrydy.mediafile.TYPES'
 TYPES = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
         ,'.mpc','.asf','.aiff','.dsf'
         ]
-#note: Do not localize (being stored in DB)
+#NOTE: Do not localize (being stored in DB)
 GENRES = ('?','Alternative Rock','Ambient','Black Metal','Blues'
          ,'Brutal Death Metal','Chanson','Classical','Death Metal'
          ,'Death Metal/Grindcore','Death/Black Metal'
@@ -40,11 +41,6 @@ HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         ,'Power Metal','Technical Brutal Death Metal'
         ,'Technical Death Metal','Thrash Metal'
         )
-
-import gettext
-import skl_shared.gettext_windows
-skl_shared.gettext_windows.setup_env()
-gettext.install('unmusic','../resources/locale')
 
 
 class BadMusic:

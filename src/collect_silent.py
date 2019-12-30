@@ -3,11 +3,7 @@
 
 import skl_shared.shared as sh
 import logic             as lg
-
-import gettext
-import skl_shared.gettext_windows
-skl_shared.gettext_windows.setup_env()
-gettext.install('unmusic','../resources/locale')
+from skl_shared.localize import _
 
 
 f = '[unmusic] collect_silent.__main__'

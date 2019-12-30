@@ -1,0 +1,1927 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: unmusic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-31 00:01+0300\n"
+"PO-Revision-Date: 2019-12-31 00:04+0300\n"
+"Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
+"Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../src\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: album_editor.py:18 unmusic.py:1486
+msgid "Goodbye!"
+msgstr "До свидания!"
+
+#: collect_silent.py:11 unmusic.py:1384
+msgid "not processed"
+msgstr "не обработано"
+
+#: collect_silent.py:27 unmusic.py:1399
+msgid "Process \"{}\" ({}/{})"
+msgstr "Обработка \"{}\" ({}/{})"
+
+#: collect_silent.py:40 unmusic.py:1418
+msgid "Operation has taken {}"
+msgstr "Операция завершена за {}"
+
+#: del/gui.py:1252 del/logic.py:249 del/logic.py:294 del/logic.py:809
+#: del/logic.py:828 del/logic.py:4825 del/shared.py:4139
+msgid "WARNING"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#: del/gui.py:1259 del/logic.py:288 del/logic.py:809 del/shared.py:4131
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: del/gui.py:1266 del/logic.py:251 del/logic.py:312 del/shared.py:4164
+#: del/shared.py:4368
+msgid "QUESTION"
+msgstr "ВОПРОС"
+
+#: del/gui.py:1273 del/logic.py:247 del/logic.py:272 del/logic.py:300
+#: del/logic.py:799 del/logic.py:834 del/logic.py:4833 del/shared.py:4148
+#: del/shared.py:4156
+msgid "INFO"
+msgstr "ИНФОРМАЦИЯ"
+
+#: del/logic.py:104 del/logic.py:4260
+msgid "Set the max number of rows to {}"
+msgstr "Задать максимальное число столбцов: {}"
+
+#: del/logic.py:117
+msgid "Set the max column width to {} symbols"
+msgstr "Ограничить максимальную ширину столбца {} символами"
+
+#: del/logic.py:153 del/logic.py:948 del/logic.py:967 del/logic.py:2368
+#: del/logic.py:2388 del/logic.py:4484 del/logic.py:4502 del/logic.py:4546
+#: del/shared.py:4403 unmusic.py:988
+msgid "The condition \"{}\" is not observed!"
+msgstr "Условие \"{}\" не выполнено!"
+
+#: del/logic.py:217
+msgid "Only iterable objects are supported!"
+msgstr "Поддерживаются только итерируемые объекты!"
+
+#: del/logic.py:247 del/logic.py:306
+msgid "DEBUG"
+msgstr "ОТЛАДКА"
+
+#: del/logic.py:258
+msgid "File \"{}\" was not found!"
+msgstr "Файл \"{}\" не найден!"
+
+#: del/logic.py:393 del/logic.py:421 del/logic.py:2076 del/logic.py:2543
+#: del/logic.py:3779 del/logic.py:4757 del/logic.py:4939 del/logic.py:5025
+#: del/shared.py:2711 del/shared.py:2747 logic.py:738 unmusic.py:526
+#: unmusic.py:572 unmusic.py:715 unmusic.py:719 unmusic.py:907 unmusic.py:934
+#: unmusic.py:1290
+msgid "Wrong input data: \"{}\"!"
+msgstr "Недопустимые входные данные: \"{}\"!"
+
+#: del/logic.py:491 del/logic.py:494
+msgid "Left mouse button"
+msgstr "Левая кнопка мыши"
+
+#: del/logic.py:497 del/logic.py:500
+msgid "Middle mouse button"
+msgstr "Средняя кнопка мыши"
+
+#: del/logic.py:503 del/logic.py:506
+msgid "Right mouse button"
+msgstr "Правая кнопка мыши"
+
+#: del/logic.py:509
+msgid "Space"
+msgstr "Пробел"
+
+#: del/logic.py:648
+msgid "Custom arguments: \"{}\""
+msgstr "Особые параметры: \"{}\""
+
+#: del/logic.py:657 del/logic.py:3198 del/logic.py:3226
+msgid "Failed to run \"{}\"!"
+msgstr "Не удалось запустить \"{}\"!"
+
+#: del/logic.py:667 del/logic.py:675 del/logic.py:683
+msgid ""
+"Unable to open the file in an external program. You should probably check "
+"the file associations."
+msgstr ""
+"Не удается открыть файл во внешней программе. Возможно, Вам стоит проверить "
+"ассоциации файлов."
+
+#: del/logic.py:740 del/logic.py:771 del/logic.py:786 del/regexp.py:45
+#: del/regexp.py:107
+msgid "Not enough input data!"
+msgstr "Недостаточно входных данных!"
+
+#: del/logic.py:746 del/logic.py:2210
+msgid "Write file \"{}\""
+msgstr "Запись файла \"{}\""
+
+#: del/logic.py:753
+msgid "Unable to write file \"{}\"!"
+msgstr "Не удается записать файл \"{}\"!"
+
+#: del/logic.py:756 del/logic.py:2225 del/shared.py:1405 del/shared.py:2698
+#: del/shared.py:3238 del/shared.py:3624 del/shared.py:3703 unmusic.py:73
+#: unmusic.py:302 unmusic.py:854
+msgid ""
+"An unknown mode \"{}\"!\n"
+"\n"
+"The following modes are supported: \"{}\"."
+msgstr ""
+"Неизвестный режим \"{}\"!\n"
+"\n"
+"Поддерживаются следующие режимы: \"{}\"."
+
+#: del/logic.py:829
+msgid "Cannot print the message!"
+msgstr "Не удаётся показать сообщение!"
+
+#: del/logic.py:866 del/logic.py:2275
+msgid "Entries deleted: {} ({}-{})"
+msgstr "Удалено вхождений: {} ({}-{})"
+
+#: del/logic.py:875 del/logic.py:1016 del/logic.py:2284 del/logic.py:2441
+msgid "File \"{}\" is not sortable!"
+msgstr "Файл \"{}\" не подлежит сортировке!"
+
+#: del/logic.py:890 del/logic.py:1070 del/logic.py:1167 del/logic.py:1837
+#: del/logic.py:2299 del/logic.py:2929 del/logic.py:2996 del/logic.py:3847
+#: del/logic.py:4607 del/shared.py:667 del/shared.py:2479 del/shared.py:3170
+#: del/shared.py:3617 del/shared.py:4448 logic.py:962 unmusic.py:236
+#: unmusic.py:243 unmusic.py:430
+msgid "Wrong input data!"
+msgstr "Недопустимые входные данные!"
+
+#: del/logic.py:913
+msgid "Dictionary \"{}\": Incorrect line #{}: \"{}\"!"
+msgstr "Словарь \"{}\": Неправильная строка №{}: \"{}\"!"
+
+#: del/logic.py:1062 del/logic.py:1899 del/logic.py:5038
+msgid "Empty input is not allowed!"
+msgstr "Пустые входные данные не допускаются!"
+
+#: del/logic.py:1066 del/logic.py:1903 del/shared.py:3336 del/shared.py:4046
+msgid "File \"{}\" has not been found!"
+msgstr "Файл \"{}\" не найден!"
+
+#: del/logic.py:1121 del/logic.py:2485
+msgid "Load file \"{}\""
+msgstr "Загрузка файла \"{}\""
+
+#: del/logic.py:1138
+msgid "Unable to read file \"{}\"!"
+msgstr "Не удается прочитать файл \"{}\"!"
+
+#: del/logic.py:1157
+msgid "Float is required at input, but found \"{}\"! Return 0.0"
+msgstr ""
+"На входе должно быть число с плавающей запятой, но получено \"{}\"! "
+"Возвращаю 0.0"
+
+#: del/logic.py:1179 del/logic.py:1188
+msgid "Convert \"{}\" to an integer"
+msgstr "Конвертация \"{}\" в целое число"
+
+#: del/logic.py:1191
+msgid "Integer is required at input, but found \"{}\"! Return 0"
+msgstr "На входе должно быть целое число, но получено \"{}\"! Возвращаю 0"
+
+#: del/logic.py:1365
+msgid ""
+"Different number of opening and closing brackets: \"{}\": {}; \"{}\": {}!"
+msgstr "Разное число открывающих и закрывающих скобок: \"{}\": {}; \"{}\": {}!"
+
+#: del/logic.py:1512
+msgid ""
+"Commas and/or semicolons or line breaks can be used, but not altogether!"
+msgstr ""
+"Можно использовать запятые и/или точки с запятой или переносы строк, но не "
+"все сразу!"
+
+#: del/logic.py:1536
+msgid "Failed to convert \"{}\" to an integer!"
+msgstr "Не удалось конвертировать \"{}\" в целое число!"
+
+#: del/logic.py:1547
+msgid "Failed to convert \"{}\" to a floating-point number!"
+msgstr "Не удалось конвертировать \"{}\" в число с плавающей точкой!"
+
+#: del/logic.py:1735 del/logic.py:1749 del/logic.py:1780 del/logic.py:1867
+msgid "Set time parameters are incorrect or not supported."
+msgstr "Заданные параметры времени неверны или не поддерживаются."
+
+#: del/logic.py:1764
+msgid ""
+"Set time parameters are incorrect or not supported.\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Заданные параметры времени неверны или не поддерживаются.\n"
+"\n"
+"Подробности: {}"
+
+#: del/logic.py:1813
+msgid "Jan"
+msgstr "янв"
+
+#: del/logic.py:1815
+msgid "Feb"
+msgstr "фев"
+
+#: del/logic.py:1817
+msgid "Mar"
+msgstr "мар"
+
+#: del/logic.py:1819
+msgid "Apr"
+msgstr "апр"
+
+#: del/logic.py:1821
+msgid "May"
+msgstr "май"
+
+#: del/logic.py:1823
+msgid "Jun"
+msgstr "июн"
+
+#: del/logic.py:1825
+msgid "Jul"
+msgstr "июл"
+
+#: del/logic.py:1827
+msgid "Aug"
+msgstr "ав"
+
+#: del/logic.py:1829
+msgid "Sep"
+msgstr "сен"
+
+#: del/logic.py:1831
+msgid "Oct"
+msgstr "окт"
+
+#: del/logic.py:1833
+msgid "Nov"
+msgstr "ноя"
+
+#: del/logic.py:1835
+msgid "Dec"
+msgstr "дек"
+
+#: del/logic.py:1907
+msgid "The object \"{}\" is not a file!"
+msgstr "Объект \"{}\" не является файлом!"
+
+#: del/logic.py:1926 del/logic.py:2072 del/logic.py:2565 del/logic.py:3169
+msgid ""
+"Operation has failed!\n"
+"Details: {}"
+msgstr ""
+"Операция завершилась с ошибкой!\n"
+"Подробности: {}"
+
+#: del/logic.py:1935 del/logic.py:2704
+msgid "Copy \"{}\" to \"{}\""
+msgstr "Копирование \"{}\" в \"{}\""
+
+#: del/logic.py:1941
+msgid "Failed to copy file \"{}\" to \"{}\"!"
+msgstr "Не удалось скопировать файл \"{}\" в \"{}\"!"
+
+#: del/logic.py:1949
+msgid "Move \"{}\" to \"{}\""
+msgstr "Перемещение \"{}\" в \"{}\""
+
+#: del/logic.py:1955
+msgid "Failed to move \"{}\" to \"{}\"!"
+msgstr "Не удалось переместить \"{}\" в \"{}\"!"
+
+#: del/logic.py:1968 del/logic.py:2015
+msgid "Failed to get the date of the file \"{}\"!"
+msgstr "Не удалось определить дату файла \"{}\"!"
+
+#: del/logic.py:1979
+msgid "Unable to copy the file \"{}\" to iself!"
+msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
+
+#: del/logic.py:1987 del/logic.py:2034 del/logic.py:2248 del/shared.py:2297
+#: unmusic.py:185 unmusic.py:1359 unmusic.py:1364
+msgid "Operation has been canceled by the user."
+msgstr "Операция отменена пользователем."
+
+#: del/logic.py:1996 del/logic.py:2616
+msgid "Delete \"{}\""
+msgstr "Удаление \"{}\""
+
+#: del/logic.py:2002
+msgid "Failed to delete file \"{}\"!"
+msgstr "Не удается удалить файл \"{}\"!"
+
+#: del/logic.py:2026
+msgid ""
+"Moving is not necessary, because the source and destination are identical "
+"({})."
+msgstr ""
+"Перемещение не требуется, поскольку на входе и выходе указан один и тот же "
+"объект ({})."
+
+#: del/logic.py:2044
+msgid "Change the time of the file \"{}\" to {}"
+msgstr "Изменение времени файла \"{}\" на {}"
+
+#: del/logic.py:2050
+msgid "Failed to change the time of the file \"{}\" to \"{}\"!"
+msgstr "Не удалось изменить время файла \"{}\" на \"{}\"!"
+
+#: del/logic.py:2100 del/logic.py:2694
+msgid "Directory \"{}\" already exists."
+msgstr "Каталог \"{}\" уже существует."
+
+#: del/logic.py:2105
+msgid "The path \"{}\" is invalid!"
+msgstr "Путь \"{}\" неверен!"
+
+#: del/logic.py:2109
+msgid "Create directory \"{}\""
+msgstr "Создание каталога \"{}\""
+
+#: del/logic.py:2116
+msgid "Failed to create directory \"{}\"!"
+msgstr "Не удается создать каталог \"{}\"!"
+
+#: del/logic.py:2221
+msgid ""
+"Unable to write file \"{}\"!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Не удается записать файл \"{}\"!\n"
+"\n"
+"Подробности: {}"
+
+#: del/logic.py:2334
+msgid "The following lines cannot be parsed:"
+msgstr "Не удается обработать следующие строки:"
+
+#: del/logic.py:2495
+msgid ""
+"Unable to read file \"{}\"!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Не удается прочитать файл \"{}\"!\n"
+"\n"
+"Подробности: {}"
+
+#: del/logic.py:2622
+msgid "Failed to delete directory \"{}\"! Delete it manually."
+msgstr "Не удается удалить каталог \"{}\"! Удалите его вручную."
+
+#: del/logic.py:2691
+msgid "Unable to copy \"{}\" to iself!"
+msgstr "Нельзя скопировать \"{}\" сам в себя!"
+
+#: del/logic.py:2710
+msgid "Failed to copy \"{}\" to \"{}\"!"
+msgstr "Не удалось скопировать \"{}\" в \"{}\"!"
+
+#: del/logic.py:2726
+msgid "The following sections and/or keys are missing:"
+msgstr "ОШИБКА"
+
+#: del/logic.py:2739
+msgid "New value of the key \"{}\" has been loaded."
+msgstr "Загружено новое значение ключа \"{}\"."
+
+#: del/logic.py:2744
+msgid "Keys loaded in total: {}, whereas {} are modified."
+msgstr "Всего загружено ключей: {}, из них измененных: {}"
+
+#: del/logic.py:2769
+msgid "Missing sections: {}"
+msgstr "Отсутствующих разделов: {}"
+
+#: del/logic.py:2771
+msgid "Missing keys: {}"
+msgstr "Отсутствующих ключей: {}"
+
+#: del/logic.py:2773
+msgid "The default configuration has been loaded."
+msgstr "Загружена конфигурация по умолчанию."
+
+#: del/logic.py:2786
+msgid ""
+"Failed to read the configuration file \"{}\". This file must share the same "
+"directory with the program and have UTF-8 encoding (no BOM) and UNIX line "
+"break type."
+msgstr ""
+"Не удается прочитать конфигурационный файл \"{}\". Этот файл должен "
+"находиться в одном каталоге с программой и иметь кодировку UTF-8 (без BOM), "
+"тип разрыва строки - UNIX."
+
+#: del/logic.py:2823
+msgid ""
+"Failed to open URL \"{}\" in a default browser!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Не удалось открыть адрес \"{}\" в браузере по умолчанию!\n"
+"\n"
+"Подробности: {}"
+
+#: del/logic.py:2880
+msgid "Differences:"
+msgstr "Различия:"
+
+#: del/logic.py:2904
+msgid "Texts are identical!"
+msgstr "Различий нет!"
+
+#: del/logic.py:2960
+msgid "Delete the symbolic link \"{}\""
+msgstr "Удаление ярлыка \"{}\""
+
+#: del/logic.py:2965
+msgid "Failed to remove shortcut \"{}\". Remove it manually and press OK."
+msgstr "Не удается удалить ярлык \"{}\". Удалите его вручную и нажмите OK."
+
+#: del/logic.py:2979 del/logic.py:3003
+msgid "Create a symbolic link \"{}\""
+msgstr "Создание ярлыка \"{}\""
+
+#: del/logic.py:2984 del/logic.py:3012
+msgid "Failed to create shortcut \"{}\". Create it manually and press OK."
+msgstr "Не удается создать ярлык \"{}\". Создайте его вручную и нажмите OK."
+
+#: del/logic.py:3134
+msgid "Failed to load an e-mail client."
+msgstr "Не удалось загрузить почтовый клиент."
+
+#: del/logic.py:3172
+msgid "This operation cannot be executed on your operating system."
+msgstr "Эта операция не может быть выполнена на вашей операционной системе."
+
+#: del/logic.py:3517
+msgid "Analyze the text"
+msgstr "Анализ текста"
+
+#: del/logic.py:3803
+msgid "Failed to find words of paragraph #{}!"
+msgstr "Не удалось найти слова абзаца №{}!"
+
+#: del/logic.py:4088 del/logic.py:4089 del/logic.py:4816 del/logic.py:4821
+#: del/logic.py:4822 del/logic.py:4829 del/logic.py:4830
+msgid "Logic error!"
+msgstr "Логическая ошибка!"
+
+#: del/logic.py:4173 del/logic.py:4181
+msgid "The pool is empty!"
+msgstr "Пул пуст!"
+
+#: del/logic.py:4216
+msgid "The operation has taken {} s."
+msgstr "Операция завершена за {} с."
+
+#: del/logic.py:4392
+msgid "Unable to use unverified certificates!"
+msgstr "Не удается использовать неподтвержденные сертификаты!"
+
+#: del/logic.py:4410
+msgid "[OK]: \"{}\""
+msgstr "[Успешно]: \"{}\""
+
+#: del/logic.py:4414
+msgid "[FAILED]: \"{}\". Details: {}"
+msgstr "[ОШИБКА]: \"{}\". Подробности: {}"
+
+#: del/logic.py:4430
+msgid "Unable to decode \"{}\"!"
+msgstr "Не удается изменить кодировку \"{}\"!"
+
+#: del/logic.py:4449
+msgid "Wrong input data: {}!"
+msgstr "Недопустимые входные данные: \"{}\"!"
+
+#: del/logic.py:4514
+msgid "No references have been found!"
+msgstr "Ориентиры не найдены!"
+
+#: del/logic.py:4518
+msgid "No references to the right!"
+msgstr "Справа ориентиров нет!"
+
+#: del/logic.py:4522
+msgid "No references to the left!"
+msgstr "Слева ориентиров нет!"
+
+#: del/logic.py:4599
+msgid "Unexpected end of text!"
+msgstr "Неожиданный конец текста!"
+
+#: del/logic.py:4775
+msgid ","
+msgstr "."
+
+#: del/logic.py:4787 unmusic.py:275 utils.py:41
+msgid ""
+"Operation has failed!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Операция завершилась неудачно!\n"
+"\n"
+"Подробности: {}"
+
+#: del/logic.py:4805
+msgid "Plain text (UTF-8)"
+msgstr "Обычный текст (UTF-8)"
+
+#: del/logic.py:4806 del/logic.py:4807
+msgid "Web-page"
+msgstr "Веб-страница"
+
+#: del/logic.py:4808
+msgid "All files"
+msgstr "Все файлы"
+
+#: del/logic.py:4813
+msgid "Save As:"
+msgstr "Сохранить как:"
+
+#: del/logic.py:4818 unmusic.py:1367
+msgid "Nothing to do!"
+msgstr "Действие не требуется."
+
+#: del/logic.py:4839 del/logic.py:4861
+msgid "B"
+msgstr "Б"
+
+#: del/logic.py:4852
+msgid "TiB"
+msgstr "ТиБ"
+
+#: del/logic.py:4854
+msgid "GiB"
+msgstr "ГиБ"
+
+#: del/logic.py:4856
+msgid "MiB"
+msgstr "МиБ"
+
+#: del/logic.py:4859
+msgid "KiB"
+msgstr "КиБ"
+
+#: del/logic.py:4957
+msgid "ATTENTION: Do yo really want to rewrite file \"{}\"?"
+msgstr "ВНИМАНИЕ: Перезаписать файл \"{}\"?"
+
+#: del/logic.py:4987 del/logic.py:5020 logic.py:1790
+msgid "sec"
+msgstr "сек"
+
+#: del/logic.py:5008
+msgid "yrs"
+msgstr "лет"
+
+#: del/logic.py:5010
+msgid "mths"
+msgstr "мес"
+
+#: del/logic.py:5012
+msgid "wks"
+msgstr "нед"
+
+#: del/logic.py:5014
+msgid "days"
+msgstr "дн"
+
+#: del/logic.py:5016
+msgid "hrs"
+msgstr "ч"
+
+#: del/logic.py:5018 logic.py:1788
+msgid "min"
+msgstr "мин"
+
+#: del/logic.py:5033 logic.py:112
+msgid "Operation has been canceled."
+msgstr "Операция отменена."
+
+#: del/logic.py:5043 unmusic.py:400 unmusic.py:1432
+msgid "Not implemented yet!"
+msgstr "Еще не реализовано!"
+
+#: del/regexp.py:56
+msgid "A syntax error in the regular expression (id: {})!"
+msgstr "Синтаксическая ошибка в регулярном выражении (запись: {})!"
+
+#: del/regexp.py:69
+msgid ""
+"Regular expression {} has failed: we were expecting\n"
+"\"{}\",\n"
+"but received\n"
+"\"{}\"."
+msgstr ""
+"Неудачное вычисление регулярного выражения {}: ожидалось\n"
+"\"{}\",\n"
+"получили\n"
+"\"{}\"."
+
+#: del/shared.py:390
+msgid "Compare texts:"
+msgstr "Сравните тексты:"
+
+#: del/shared.py:574
+msgid "Find:"
+msgstr "Найти:"
+
+#: del/shared.py:621 del/shared.py:720 del/shared.py:743 unmusic.py:712
+#: unmusic.py:1006 unmusic.py:1046 unmusic.py:1071
+msgid "No matches!"
+msgstr "Совпадений нет!"
+
+#: del/shared.py:712 del/shared.py:734
+msgid "Only one match has been found!"
+msgstr "Найдено 1 совпадение!"
+
+#: del/shared.py:716
+msgid "No more matches, continuing from the top!"
+msgstr "Совпадений больше нет, поиск продолжен с начала!"
+
+#: del/shared.py:739
+msgid "No more matches, continuing from the bottom!"
+msgstr "Совпадений больше нет, поиск продолжен с конца!"
+
+#: del/shared.py:1012
+msgid "{} tags to assign"
+msgstr "Создание {} тэгов"
+
+#: del/shared.py:1018
+msgid "Spelling seems to be correct."
+msgstr "Ошибок правописания не обнаружено."
+
+#: del/shared.py:1081 del/shared.py:1153 del/shared.py:1651 del/shared.py:1932
+#: del/shared.py:3036 gui.py:110
+msgid "Close"
+msgstr "Закрыть"
+
+#: del/shared.py:1082 del/shared.py:1933
+msgid "Close this window"
+msgstr "Закрыть это окно"
+
+#: del/shared.py:1154 del/shared.py:1650 del/shared.py:3035 del/shared.py:4246
+msgid "Reject and close"
+msgstr "Отказаться и закрыть"
+
+#: del/shared.py:1162 gui.py:115
+msgid "Reset"
+msgstr "Сброс"
+
+#: del/shared.py:1163
+msgid "Restore the text"
+msgstr "Восстановить текст"
+
+#: del/shared.py:1169 gui.py:380 gui.py:979
+msgid "Save"
+msgstr "Сохранить"
+
+#: del/shared.py:1170 del/shared.py:1664 del/shared.py:3043 del/shared.py:4238
+#: del/shared.py:4252
+msgid "Accept and close"
+msgstr "Принять и закрыть"
+
+#: del/shared.py:1657
+msgid "Clear the field"
+msgstr "Очистить поле"
+
+#: del/shared.py:1658
+msgid "Clear"
+msgstr "Очистить"
+
+#: del/shared.py:1665 del/shared.py:3044
+msgid "Save and close"
+msgstr "Запомнить и выйти"
+
+#: del/shared.py:1926
+msgid "Toggle all"
+msgstr "Переключить все"
+
+#: del/shared.py:1927
+msgid "Mark/unmark all checkboxes"
+msgstr "Добавить/убрать все пометы"
+
+#: del/shared.py:1959
+msgid "Select files:"
+msgstr "Выберите файлы:"
+
+#: del/shared.py:2121
+msgid "Download progress"
+msgstr "Ход загрузок"
+
+#: del/shared.py:2269
+msgid "File: \"{}\"; {}/{} MB; Rate: {} kbps; ETA: {}s"
+msgstr "Файл: \"{}\"; {}/{} Мб; Скорость: {} Кб/с; Осталось: {}с"
+
+#: del/shared.py:2284 logic.py:1702 logic.py:1721 logic.py:1858 logic.py:1873
+#: unmusic.py:825
+msgid ""
+"Third-party module has failed!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Ошибка модуля третьей стороны!\n"
+"\n"
+"Детали: {}"
+
+#: del/shared.py:2552
+msgid "Paste a special symbol"
+msgstr "Вставить специальный символ"
+
+#: del/shared.py:2827
+msgid "Remove item #{}"
+msgstr "Удаление элемента №{}"
+
+#: del/shared.py:2830
+msgid "No item #{}!"
+msgstr "Элемент №{} отсутствует!"
+
+#: del/shared.py:2898
+msgid "Item \"{}\" is not in list!"
+msgstr "Элемент \"{}\" не в списке!"
+
+#: del/shared.py:3244
+msgid "Set the geometry to \"{}x{}+{}+{}\""
+msgstr "Изменение геометрии виджета на \"{}x{}+{}+{}\""
+
+#: del/shared.py:3326 del/shared.py:3369 del/shared.py:3371
+msgid "Please wait..."
+msgstr "Подождите..."
+
+#: del/shared.py:3727
+msgid "Widget 1 geometry: {}x{}+{}+{}"
+msgstr "Геометрия виджета 1: {}x{}+{}+{}"
+
+#: del/shared.py:3733
+msgid "Widget 2 geometry: {}x{}+{}+{}"
+msgstr "Геометрия виджета 2: {}x{}+{}+{}"
+
+#: del/shared.py:3830
+msgid "Wrong font: \"{}\"!"
+msgstr "Неправильный шрифт: \"{}\"!"
+
+#: del/shared.py:3880
+msgid "Save geometry: {}"
+msgstr "Сохранение геометрии: {}"
+
+#: del/shared.py:3889
+msgid "Restore geometry: {}"
+msgstr "Восстановление геометрии: {}"
+
+#: del/shared.py:3893
+msgid "Failed to restore geometry!"
+msgstr "Не удалось восстановить геометрию!"
+
+#: del/shared.py:3911
+msgid "Failed to change window properties!"
+msgstr "Не удалось изменить свойства окна!"
+
+#: del/shared.py:3994
+msgid "Failed to get the window handle!"
+msgstr "Не удалось получить дескриптор окна!"
+
+#: del/shared.py:4105
+msgid "Test:"
+msgstr "Тест:"
+
+#: del/shared.py:4230
+msgid "Yes"
+msgstr "Да"
+
+#: del/shared.py:4231
+msgid "No"
+msgstr "Нет"
+
+#: del/shared.py:4234
+msgid "Cancel"
+msgstr "Отмена"
+
+#: del/shared.py:4399
+msgid "An unknown color \"{}\"!"
+msgstr "Неизвестный цвет \"{}\"!"
+
+#: del/shared.py:4425
+msgid "Failed to select a file!"
+msgstr "Не удалось выбрать файл!"
+
+#: del/shared.py:4441
+msgid "Failed to enable key combination \"{}\"!"
+msgstr "Не удалось задействовать сочетание клавиш \"{}\"!"
+
+#: del/shared.py:4445
+msgid "Wrong input data: \"{}\""
+msgstr "Недопустимые входные данные: \"{}\"!"
+
+#: del/tests.py:20 del/tests.py:37 del/tests.py:57 del/tests.py:76
+msgid "Variant #{}"
+msgstr "Вариант №{}"
+
+#: del/tests.py:23
+msgid "Description: no settings"
+msgstr "Описание: нет настроек"
+
+#: del/tests.py:40
+msgid "Description: headers"
+msgstr "Описание: заголовки"
+
+#: del/tests.py:60
+msgid "Description: transposition"
+msgstr "Описание: транспозиция"
+
+#: del/tests.py:79
+msgid "Description: transposition and headers"
+msgstr "Описание: транспозиция и заголовки"
+
+#: del/tests.py:345
+msgid "Copy something to clipboard"
+msgstr "Скопируйте что-нибудь в буфер обмена"
+
+#: del/tests.py:348 del/tests.py:355
+msgid "Clipboard contents: \"{}\""
+msgstr "Содержание буфера обмена: \"{}\""
+
+#: del/tests.py:351
+msgid "The following will be copied: \"{}\""
+msgstr "Будет скопировано следующее: \"{}\""
+
+#: del/tests.py:387
+msgid "New settings"
+msgstr "Новые настройки"
+
+#: del/tests.py:513
+msgid "The event has been triggered!"
+msgstr "Событие вызвано!"
+
+#: del/tests.py:528
+msgid "Button"
+msgstr "Кнопка"
+
+#: del/tests.py:532
+msgid "Trigger an event"
+msgstr "Вызвать событие"
+
+#: del/tests.py:593
+msgid "Screen resolution: {}x{}"
+msgstr "Разрешение экрана: {}x{}"
+
+#: del/tests.py:599
+msgid "Random coordinates: x: {}; y: {}"
+msgstr "Случайные координаты: x: {}; y: {}"
+
+#: del/tests.py:877 del/tests.py:910
+msgid "Press Return to place widgets randomly"
+msgstr "Нажмите Ввод, чтобы расположить виджеты случайным образом"
+
+#: del/tests.py:881
+msgid ""
+"Anchor: {}\n"
+"Press Return to adjust Widget 2"
+msgstr ""
+"Привязка: {}\n"
+"Нажмите Ввод для подгонки Виджета 2"
+
+#: del/tests.py:933
+msgid "Anchor: {}"
+msgstr "Привязка: {}"
+
+#: gui.py:7 unmusic.py:841
+msgid "Play"
+msgstr "Слушать"
+
+#: gui.py:8 gui.py:37 gui.py:154 gui.py:158 unmusic.py:102 unmusic.py:291
+#: unmusic.py:301 unmusic.py:844
+msgid "All"
+msgstr "Все"
+
+#: gui.py:9 unmusic.py:847
+msgid "Good"
+msgstr "Хорошее"
+
+#: gui.py:10 unmusic.py:850
+msgid "Best"
+msgstr "Лучшее"
+
+#: gui.py:13 gui.py:38 gui.py:136 unmusic.py:58
+msgid "Not set"
+msgstr "Не задан"
+
+#: gui.py:26
+msgid "Limit:"
+msgstr "Предел:"
+
+#: gui.py:39 gui.py:170 gui.py:174 gui.py:279 logic.py:65 logic.py:94
+#: logic.py:292 unmusic.py:621
+msgid "external collection"
+msgstr "внешняя коллекция"
+
+#: gui.py:40 gui.py:186 gui.py:190 gui.py:286 logic.py:66 logic.py:98
+#: unmusic.py:622
+msgid "mobile collection"
+msgstr "переносная коллекция"
+
+#: gui.py:61 gui.py:855
+msgid "Copy music"
+msgstr "Копировать музыку"
+
+#: gui.py:120
+msgid "Start"
+msgstr "Начать"
+
+#: gui.py:127 gui.py:449
+msgid "Year:"
+msgstr "Год:"
+
+#: gui.py:147
+msgid "Genres:"
+msgstr "Жанры:"
+
+#: gui.py:154 unmusic.py:262 unmusic.py:296 unmusic.py:301
+msgid "Heavy"
+msgstr "Тяжелые"
+
+#: gui.py:155 unmusic.py:260 unmusic.py:293 unmusic.py:301
+msgid "Light"
+msgstr "Легкие"
+
+#: gui.py:163
+msgid "Read:"
+msgstr "Чтение:"
+
+#: gui.py:171 gui.py:187 gui.py:272 logic.py:64 logic.py:90 logic.py:289
+#: unmusic.py:620
+msgid "local collection"
+msgstr "локальная коллекция"
+
+#: gui.py:179
+msgid "Write:"
+msgstr "Запись:"
+
+#: gui.py:234 gui.py:246 gui.py:324
+msgid "Image:"
+msgstr "Изображение:"
+
+#: gui.py:261 gui.py:755 gui.py:836
+msgid "Album Editor"
+msgstr "Редактор альбомов"
+
+#: gui.py:318
+msgid "Search an album by ID"
+msgstr "Поиск альбома по ИД"
+
+#: gui.py:336 gui.py:942
+msgid "Reload"
+msgstr "Перезагрузить"
+
+#: gui.py:337 gui.py:943
+msgid "Reload the present record"
+msgstr "Перезагрузить текущую запись"
+
+#: gui.py:344
+msgid "Create"
+msgstr "Создать"
+
+#: gui.py:345
+msgid "Create a new record"
+msgstr "Создать новую запись"
+
+#: gui.py:352
+msgid "Delete"
+msgstr "Удалить"
+
+#: gui.py:353
+msgid "Delete the present record"
+msgstr "Удалить текущую запись"
+
+#: gui.py:359 gui.py:958
+msgid "Decypher"
+msgstr "Расшифровать"
+
+#: gui.py:360 gui.py:959
+msgid "Decypher text (Caesar algorithm)"
+msgstr "Расшифровать текст (алгоритм Цезаря)"
+
+#: gui.py:366 gui.py:965
+msgid "Cypher"
+msgstr "Зашифровать"
+
+#: gui.py:367 gui.py:966
+msgid "Cypher text (Caesar algorithm)"
+msgstr "Зашифровать текст (алгоритм Цезаря)"
+
+#: gui.py:373 gui.py:972
+msgid "Decode"
+msgstr "Декодировать"
+
+#: gui.py:374 gui.py:973
+msgid "Decode back to cp1251"
+msgstr "Декодировать обратно в cp1251"
+
+#: gui.py:381 gui.py:980
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: gui.py:388
+msgid "Tracks"
+msgstr "Дорожки"
+
+#: gui.py:389
+msgid "Edit tracks"
+msgstr "Править дорожки"
+
+#: gui.py:441
+msgid "Artist:"
+msgstr "Исполнитель:"
+
+#: gui.py:445
+msgid "Album:"
+msgstr "Альбом:"
+
+#: gui.py:453
+msgid "Country (2 letters):"
+msgstr "Страна (2 символа):"
+
+#: gui.py:457 gui.py:1167
+msgid "Comment:"
+msgstr "Комментарий:"
+
+#: gui.py:461
+msgid "Mean bitrate:"
+msgstr "Средний битрейт:"
+
+#: gui.py:465
+msgid "Total length:"
+msgstr "Общая длина:"
+
+#: gui.py:469
+msgid "Genre:"
+msgstr "Жанр:"
+
+#: gui.py:504
+msgid "Search older records"
+msgstr "Поиск более старых записей"
+
+#: gui.py:515
+msgid "Search newer records"
+msgstr "Поиск более новых записей"
+
+#: gui.py:523
+msgid "Search in albums"
+msgstr "Поиск по альбомам"
+
+#: gui.py:532
+msgid "Search in tracks"
+msgstr "Поиск по дорожкам"
+
+#: gui.py:538
+msgid "Go to the preceding record"
+msgstr "Перейти к предыдущей записи"
+
+#: gui.py:553
+msgid "Album ID"
+msgstr "ИД альбома"
+
+#: gui.py:557
+msgid "Go to the following record"
+msgstr "Перейти к следующей записи"
+
+#: gui.py:842
+msgid "Prepare files"
+msgstr "Подготовить файлы"
+
+#: gui.py:843
+msgid "Move sub-folders to a root folder, split large lossless files, etc."
+msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
+
+#: gui.py:849
+msgid "Collect tags & Obfuscate"
+msgstr "Извлечь тэги и обфусцировать"
+
+#: gui.py:861
+msgid "Delete low-rated music"
+msgstr "Удалить музыку с низкими оценками"
+
+#: gui.py:867
+msgid "Quit"
+msgstr "Выйти"
+
+#: gui.py:950
+msgid "Clear rating"
+msgstr "Очистить оценку"
+
+#: gui.py:951
+msgid "Clear rating of all tracks"
+msgstr "Очистить оценку для всех дорожек"
+
+#: gui.py:1024 gui.py:1104
+msgid "Tracks:"
+msgstr "Дорожки:"
+
+#: gui.py:1151
+msgid "Album ID:"
+msgstr "ИД альбома:"
+
+#: gui.py:1155
+msgid "Track #:"
+msgstr "Номер дорожки:"
+
+#: gui.py:1159
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: gui.py:1163
+msgid "Lyrics:"
+msgstr "Слова:"
+
+#: gui.py:1171
+msgid "Bitrate:"
+msgstr "Битрейт:"
+
+#: gui.py:1175
+msgid "Length:"
+msgstr "Продолжительность:"
+
+#: gui.py:1179
+msgid "Rating:"
+msgstr "Оценка:"
+
+#: gui.py:1245 unmusic.py:156
+msgid "Copy progress"
+msgstr "Ход копирования"
+
+#: logic.py:67
+msgid "Local collection: {}"
+msgstr "Локальная коллекция: {}"
+
+#: logic.py:69
+msgid "External collection: {}"
+msgstr "Внешняя коллекция: {}"
+
+#: logic.py:71
+msgid "Mobile collection: {}"
+msgstr "Переносная коллекция: {}"
+
+#: logic.py:77
+msgid "Empty output is not allowed!"
+msgstr "Пустые выходные данные не допускаются!"
+
+#: logic.py:131 unmusic.py:1343
+msgid "N/A"
+msgstr "Н/Д"
+
+#: logic.py:185
+msgid "Process album ID: {}"
+msgstr "Обработка ИД альбома: {}"
+
+#: logic.py:345
+msgid "Tracks {} have not been found in \"{}\"!"
+msgstr "Дорожки {} не были найдены в \"{}\"!"
+
+#: logic.py:356 logic.py:772 logic.py:1191 unmusic.py:435
+msgid "Condition \"{}\" is not observed!"
+msgstr "Условие \"{}\" не выполнено!"
+
+#: logic.py:370
+msgid "playlist"
+msgstr "список воспроизведения"
+
+#: logic.py:559
+msgid "The database is empty. You need to fill it first."
+msgstr "База данных пуста. Необходимо сначала внести в нее данные."
+
+#: logic.py:664
+msgid "Purge tracks"
+msgstr "Очистка дорожек"
+
+#: logic.py:681
+msgid "processed"
+msgstr "обработано"
+
+#: logic.py:841
+msgid "Album {}: {} tracks."
+msgstr "Альбом {}: {} дорожек."
+
+#: logic.py:891
+msgid "{}/{} tracks have been renumbered."
+msgstr "{}/{} дорожек перенумеровано."
+
+#: logic.py:908
+msgid "Folder \"{}\" has no audio files."
+msgstr "Каталог \"{}\" не содержит аудиофайлов."
+
+#: logic.py:1307
+msgid ""
+"Unable to execute:\n"
+"\"{}\"\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Не удается выполнить:\n"
+"\"{}\"\n"
+"\n"
+"Подробности: {}"
+
+#: logic.py:1616
+msgid "Save \"{}\""
+msgstr "Сохранение \"{}\""
+
+#: logic.py:1627
+msgid ""
+"Database \"{}\" has failed!\n"
+"\n"
+"Details: {}"
+msgstr ""
+"Ошибка базы данных \"{}\"!\n"
+"\n"
+"Подробности: {}"
+
+#: logic.py:1769
+msgid "Artist: {}"
+msgstr "Исполнитель: {}"
+
+#: logic.py:1771
+msgid "Album: {}"
+msgstr "Альбом: {}"
+
+#: logic.py:1773
+msgid "Genre: {}"
+msgstr "Жанр: {}"
+
+#: logic.py:1775
+msgid "Year: {}"
+msgstr "Год: {}"
+
+#: logic.py:1777
+msgid "Track #: {}"
+msgstr "Номер дорожки: {}"
+
+#: logic.py:1779
+msgid "Title: {}"
+msgstr "Заголовок: {}"
+
+#: logic.py:1781
+msgid "Lyrics: {}"
+msgstr "Слова: {}"
+
+#: logic.py:1787
+msgid "Length: {} {} {} {}"
+msgstr "Длина: {} {} {} {}"
+
+#: tests.py:48
+#, python-format
+msgid "Track #%d"
+msgstr "Дорожка №%d"
+
+#: unmusic.py:43
+msgid "Waiting for {}"
+msgstr "Ожидание {}"
+
+#: unmusic.py:122
+msgid "Selected albums: {}"
+msgstr "Выбрано альбомов: {}"
+
+#: unmusic.py:124
+msgid "Total size: {}"
+msgstr "Общий размер: {}"
+
+#: unmusic.py:126 unmusic.py:143
+msgid "Free space: {}"
+msgstr "Свободное место: {}"
+
+#: unmusic.py:128
+msgid "Continue?"
+msgstr "Продолжить?"
+
+#: unmusic.py:140
+msgid "Not enough free space on \"{}\"!"
+msgstr "Недостаточно свободного места на \"{}\"!"
+
+#: unmusic.py:145
+msgid "Required: {}"
+msgstr "Требуется: {}"
+
+#: unmusic.py:196
+msgid "Calculate required space"
+msgstr "Подсчет требуемого места"
+
+#: unmusic.py:291 unmusic.py:301
+msgid "Any"
+msgstr "Любой"
+
+#: unmusic.py:418
+msgid "Edit #{}."
+msgstr "Правка №{}."
+
+#: unmusic.py:426
+msgid "A track title should be indicated."
+msgstr "Необходимо указать название дорожки."
+
+#: unmusic.py:454
+msgid "Track numbers should be sequential!"
+msgstr "Номера дорожек должны идти последовательно!"
+
+#: unmusic.py:466 unmusic.py:1128
+msgid "Save DB."
+msgstr "Сохранение БД."
+
+#: unmusic.py:546 unmusic.py:1272
+msgid "Load #{}."
+msgstr "Загрузка \"{}\"."
+
+#: unmusic.py:576
+msgid "No tracks are associated with this album."
+msgstr "Для этого альбома дорожки не указаны."
+
+#: unmusic.py:865
+msgid "{} ({} tracks)"
+msgstr "{} ({} дорожек)"
+
+#: unmusic.py:924
+msgid ""
+"Tracks are of a mixed rating. Do you want to assign the same rating to all "
+"of them?"
+msgstr ""
+"Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
+
+#: unmusic.py:952
+msgid "An album title should be indicated."
+msgstr "Необходимо указать название альбома."
+
+#: unmusic.py:960
+msgid "An artist should be indicated."
+msgstr "Необходимо указать исполнителя."
+
+#: unmusic.py:976
+msgid "No changes!"
+msgstr "Изменений не было!"
+
+#: unmusic.py:979
+msgid "Some fields have been updated."
+msgstr "Некоторые поля были обновлены."
+
+#: unmusic.py:1110
+msgid "Are you sure you want to permanently delete record #{}?"
+msgstr "Вы действительно хотите безвозвратно удалить запись №{}?"
+
+#: unmusic.py:1113
+msgid "Delete #{}."
+msgstr "Удаление \"{}\"."
+
+#: unmusic.py:1315
+msgid "Calculate ratings"
+msgstr "Подсчет оценок"
+
+#: unmusic.py:1321
+msgid ""
+"Insert all required media to calculate space to be freed.\n"
+"\n"
+"Continue?"
+msgstr ""
+"Вставьте все нужные носители для подсчета освобождаемого места.\n"
+"\n"
+"Продолжить?"
+
+#: unmusic.py:1325
+msgid "Calculate sizes"
+msgstr "Подсчет места"
+
+#: unmusic.py:1344
+msgid ""
+"Affected carriers: {}.\n"
+"Space to be freed: {}.\n"
+"Number of albums to delete: {}.\n"
+"The list of directories to be deleted is below. Continue?\n"
+"\n"
+"{}"
+msgstr ""
+"Задействованные носители: {}.\n"
+"Место для освобождения: {}.\n"
+"Число альбомов для удаления: {}.\n"
+"Список каталогов для удаления приведен ниже. Продолжить?\n"
+"\n"
+"{}"
+
+#: unmusic.py:1353
+msgid "Delete albums"
+msgstr "Удаление альбомов"
+
+#~ msgid "Collect tags"
+#~ msgstr "Извлечь тэги"
+
+#~ msgid "Obfuscate"
+#~ msgstr "Обфусцировать"
+
+#~ msgid "Custom arguments: \"%s\""
+#~ msgstr "Особые параметры: \"%s\""
+
+#~ msgid "Failed to run \"%s\"!"
+#~ msgstr "Не удалось запустить \"%s\"!"
+
+#~ msgid "Write file \"%s\""
+#~ msgstr "Запись файла \"%s\""
+
+#~ msgid "Unable to write file \"%s\"!"
+#~ msgstr "Не удается записать файл \"%s\"!"
+
+#~ msgid "Entries deleted: %d (%d-%d)"
+#~ msgstr "Удалено вхождений: %d (%d-%d)"
+
+#~ msgid "File \"%s\" is not sortable!"
+#~ msgstr "Файл \"%s\" не подлежит сортировке!"
+
+#~ msgid "Dictionary \"%s\": Incorrect line #%d: \"%s\"!"
+#~ msgstr "Словарь \"%s\": Неправильная строка №%d: \"%s\"!"
+
+#~ msgid "File \"%s\" has not been found!"
+#~ msgstr "Файл \"%s\" не найден!"
+
+#~ msgid "Load file \"%s\""
+#~ msgstr "Загрузка файла \"%s\""
+
+#~ msgid "Unable to read file \"%s\"!"
+#~ msgstr "Не удается прочитать файл \"%s\"!"
+
+#~ msgid "Float is required at input, but found \"%s\"! Return 0.0"
+#~ msgstr ""
+#~ "На входе должно быть число с плавающей запятой, но получено \"%s\"! "
+#~ "Возвращаю 0.0"
+
+#~ msgid "Convert \"%s\" to an integer"
+#~ msgstr "Конвертация \"%s\" в целое число"
+
+#~ msgid "Integer is required at input, but found \"%s\"! Return 0"
+#~ msgstr "На входе должно быть целое число, но получено \"%s\"! Возвращаю 0"
+
+#~ msgid ""
+#~ "Different number of opening and closing brackets: \"%s\": %d; \"%s\": %d!"
+#~ msgstr ""
+#~ "Разное число открывающих и закрывающих скобок: \"%s\": %d; \"%s\": %d!"
+
+#~ msgid "Empty strings are not supported!"
+#~ msgstr "Поддерживаются только непустые строки!"
+
+#~ msgid "Failed to convert \"%s\" to an integer!"
+#~ msgstr "Не удалось конвертировать \"%s\" в целое число!"
+
+#~ msgid "Failed to convert \"%s\" to a floating-point number!"
+#~ msgstr "Не удалось конвертировать \"%s\" в число с плавающей точкой!"
+
+#~ msgid ""
+#~ "Set time parameters are incorrect or not supported.\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Заданные параметры времени неверны или не поддерживаются.\n"
+#~ "\n"
+#~ "Подробности: %s"
+
+#~ msgid "Note: it will be Monday!"
+#~ msgstr "Обратите внимание: указанная дата - понедельник!"
+
+#~ msgid "The object \"%s\" is not a file!"
+#~ msgstr "Объект \"%s\" не является файлом!"
+
+#~ msgid ""
+#~ "Operation has failed!\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Операция завершилась с ошибкой!\n"
+#~ "Подробности: %s"
+
+#~ msgid "Copy \"%s\" to \"%s\""
+#~ msgstr "Копирование \"%s\" в \"%s\""
+
+#~ msgid "Failed to copy file \"%s\" to \"%s\"!"
+#~ msgstr "Не удалось скопировать файл \"%s\" в \"%s\"!"
+
+#~ msgid "Move \"%s\" to \"%s\""
+#~ msgstr "Перемещение \"%s\" в \"%s\""
+
+#~ msgid "Failed to move \"%s\" to \"%s\"!"
+#~ msgstr "Не удалось переместить \"%s\" в \"%s\"!"
+
+#~ msgid "Failed to get the date of the file \"%s\"!"
+#~ msgstr "Не удалось определить дату файла \"%s\"!"
+
+#~ msgid "Unable to copy the file \"%s\" to iself!"
+#~ msgstr "Нельзя скопировать файл \"%s\" сам в себя!"
+
+#~ msgid "Delete \"%s\""
+#~ msgstr "Удаление \"%s\""
+
+#~ msgid "Failed to delete file \"%s\"!"
+#~ msgstr "Не удается удалить файл \"%s\"!"
+
+#~ msgid ""
+#~ "Moving is not necessary, because the source and destination are identical "
+#~ "(%s)."
+#~ msgstr ""
+#~ "Перемещение не требуется, поскольку на входе и выходе указан один и тот "
+#~ "же объект (%s)."
+
+#~ msgid "Change the time of the file \"%s\" to %s"
+#~ msgstr "Изменение времени файла \"%s\" на %s"
+
+#~ msgid "Failed to change the time of the file \"%s\" to \"%s\"!"
+#~ msgstr "Не удалось изменить время файла \"%s\" на \"%s\"!"
+
+#~ msgid "Directory \"%s\" already exists."
+#~ msgstr "Каталог \"%s\" уже существует."
+
+#~ msgid "The path \"%s\" is invalid!"
+#~ msgstr "Путь \"%s\" неверен!"
+
+#~ msgid "Create directory \"%s\""
+#~ msgstr "Создание каталога \"%s\""
+
+#~ msgid "Failed to create directory \"%s\"!"
+#~ msgstr "Не удается создать каталог \"%s\"!"
+
+#~ msgid ""
+#~ "Unable to read file \"%s\"!\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Не удается прочитать файл \"%s\"!\n"
+#~ "\n"
+#~ "Подробности: %s"
+
+#~ msgid "Wrong input data: \"%s\""
+#~ msgstr "Недопустимые входные данные: \"%s\""
+
+#~ msgid "Failed to delete directory \"%s\"! Delete it manually."
+#~ msgstr "Не удается удалить каталог \"%s\"! Удалите его вручную."
+
+#~ msgid "Unable to copy \"%s\" to iself!"
+#~ msgstr "Нельзя скопировать \"%s\" сам в себя!"
+
+#~ msgid "Failed to copy \"%s\" to \"%s\"!"
+#~ msgstr "Не удалось скопировать \"%s\" в \"%s\"!"
+
+#~ msgid "New value of the key \"%s\" has been loaded."
+#~ msgstr "Загружено новое значение ключа \"%s\"."
+
+#~ msgid "Keys loaded in total: %d, whereas %d are modified."
+#~ msgstr "Всего загружено ключей: %d, из них измененных: %d"
+
+#~ msgid "Missing sections: %d"
+#~ msgstr "Отсутствующих разделов: %d"
+
+#~ msgid "Missing keys: %d"
+#~ msgstr "Отсутствующих ключей: %d"
+
+#~ msgid ""
+#~ "Failed to read the configuration file \"%s\". This file must share the "
+#~ "same directory with the program and have UTF-8 encoding (no BOM) and UNIX "
+#~ "line break type."
+#~ msgstr ""
+#~ "Не удается прочитать конфигурационный файл \"%s\". Этот файл должен "
+#~ "находиться в одном каталоге с программой и иметь кодировку utf-8 (без "
+#~ "BOM), тип разрыва строки - UNIX."
+
+#~ msgid ""
+#~ "Failed to open URL \"%s\" in a default browser!\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Не удалось открыть адрес \"%s\" в браузере по умолчанию!\n"
+#~ "\n"
+#~ "Подробности: %s"
+
+#~ msgid "Delete the symbolic link \"%s\""
+#~ msgstr "Удаление ярлыка \"%s\""
+
+#~ msgid "Failed to remove shortcut \"%s\". Remove it manually and press OK."
+#~ msgstr "Не удается удалить ярлык \"%s\". Удалите его вручную и нажмите OK."
+
+#~ msgid "Create a symbolic link \"%s\""
+#~ msgstr "Создание ярлыка \"%s\""
+
+#~ msgid "Failed to create shortcut \"%s\". Create it manually and press OK."
+#~ msgstr "Не удается создать ярлык \"%s\". Создайте его вручную и нажмите OK."
+
+#~ msgid "Nothing to do."
+#~ msgstr "Действие не требуется."
+
+#~ msgid "Failed to find words of paragraph #%d!"
+#~ msgstr "Не удалось найти слова абзаца #%d!"
+
+#~ msgid "The operation has taken %f s."
+#~ msgstr "Операция завершена за %f с."
+
+#~ msgid "Set the max number of rows to %d"
+#~ msgstr "Задать максимальное число столбцов: %d"
+
+#~ msgid "[OK]: \"%s\""
+#~ msgstr "[Успешно]: \"%s\""
+
+#~ msgid "[FAILED]: \"%s\". Details: %s"
+#~ msgstr "[ОШИБКА]: \"%s\". Подробности: %s"
+
+#~ msgid "Unable to decode \"%s\"!"
+#~ msgstr "Не удается изменить кодировку \"%s\"!"
+
+#~ msgid "ATTENTION: Do yo really want to rewrite file \"%s\"?"
+#~ msgstr "ВНИМАНИЕ: Перезаписать файл \"%s\"?"
+
+#~ msgid "Failed to enable key combination \"%s\"!"
+#~ msgstr "Не удалось задействовать сочетание клавиш \"%s\"!"
+
+#~ msgid "An unknown color \"%s\"!"
+#~ msgstr "Неизвестный цвет \"%s\"!"
+
+#~ msgid "Failed to insert the text!"
+#~ msgstr "Не удалось вставить текст!"
+
+#~ msgid "A logic error: unknown object type: \"%s\"!"
+#~ msgstr "Логическая ошибка: неизвестный тип объекта: \"%s\"!"
+
+#~ msgid "Text:"
+#~ msgstr "Текст:"
+
+#~ msgid "The parent has already been destroyed."
+#~ msgstr "Родительский виджет уже был разрушен."
+
+#~ msgid "Failed to remove the tag %s in the widget %s in positions %s-%s!"
+#~ msgstr "Не удалось удалить тэг %s в виджете %s для позиций %s-%s!"
+
+#~ msgid "DEBUG-ERROR"
+#~ msgstr "ОШИБКА ПРИ ОТЛАДКЕ"
+
+#~ msgid "Element \"%s\" has not been found in fragment \"%s\"!"
+#~ msgstr "Элемент \"%s\" не был найден во фрагменте \"%s\"!"
+
+#~ msgid "Failed to add tag \"%s\" for positions %s-%s!"
+#~ msgstr "Не удалось добавить тэг \"%s\" для позиций %s-%s!"
+
+#~ msgid ""
+#~ "Failed to configure tag \"%s\" to have the background of color \"%s\"!"
+#~ msgstr "Не удалось назначить тэгу \"%s\" фон \"%s\"!"
+
+#~ msgid ""
+#~ "Failed to configure tag \"%s\" to have the foreground of color \"%s\"!"
+#~ msgstr "Не удалось назначить тэгу \"%s\" цвет \"%s\"!"
+
+#~ msgid "Failed to configure tag \"%s\" to have the font \"%s\"!"
+#~ msgstr "Не удалось назначить тэгу \"%s\" шрифт \"%s\"!"
+
+#~ msgid "Failed to insert mark \"%s\" in position \"%s\"!"
+#~ msgstr "Не удается вставить метку \"%s\" для позиции \"%s\"!"
+
+#~ msgid "Failed to remove mark \"%s\"!"
+#~ msgstr "Не удалось удалить метку \"%s\"!"
+
+#~ msgid "Failed to shift screen to label \"%s\"!"
+#~ msgstr "Не удалось сдвинуть экран до метки \"%s\"!"
+
+#~ msgid "Got position: \"%s\""
+#~ msgstr "Получена позиция: \"%s\""
+
+#~ msgid "Cannot return a cursor position!"
+#~ msgstr "Не удалось вернуть позицию курсора!"
+
+#~ msgid "%d tags to assign"
+#~ msgstr "Создание %d тэгов"
+
+#~ msgid "Set the geometry to \"%dx%d+%d+%d\""
+#~ msgstr "Изменение геометрии виджета на \"%dx%d+%d+%d\""
+
+#~ msgid "Remove item #%d"
+#~ msgstr "Удаление элемента №%d"
+
+#~ msgid "No item #%d!"
+#~ msgstr "Элемент №%d не существует!"
+
+#~ msgid "Item \"%s\" is not in list!"
+#~ msgstr "Элемент \"%s\" не в списке!"
+
+#~ msgid "Failed to return selection in the Tkinter widget!"
+#~ msgstr "Не удается вернуть диапазон выделения в виджете Tkinter!"
+
+#~ msgid "Save geometry: %s"
+#~ msgstr "Сохранение геометрии: %s"
+
+#~ msgid "Restore geometry: %s"
+#~ msgstr "Восстановление геометрии: %s"
+
+#~ msgid "Wrong font: \"%s\"!"
+#~ msgstr "Неправильный шрифт: \"%s\"!"
+
+#~ msgid "Message"
+#~ msgstr "Сообщение"
+
+#~ msgid "CRITICAL"
+#~ msgstr "КРИТИЧЕСКАЯ ОШИБКА"
+
+#~ msgid "Picture \"%s\" was not found!"
+#~ msgstr "Изображение \"%s\" не найдено!"
+
+#~ msgid "A clipboard error has occurred!"
+#~ msgstr "Ошибка буфера обмена!"
+
+#~ msgid "An unknown error has occurred."
+#~ msgstr "Произошла неизвестная ошибка."
+
+#~ msgid "Failed to paste the clipboard contents!"
+#~ msgstr "Ошибка вставки из буфера обмена."
+
+#~ msgid "Add %s"
+#~ msgstr "Добавить %s"
+
+#~ msgid "Close %d objs"
+#~ msgstr "Закрыть %d объектов"
+
+#~ msgid "Widget \"%s\" does not have a \"close\" action!"
+#~ msgstr "У виджета \"%s\" нет действия \"close\"!"
+
+#~ msgid "File: \"%s\"; %d/%d MB; Rate: %s kbps; ETA: %ss"
+#~ msgstr "Файл: \"%s\"; %d/%d Мб; Скорость: %s Кб/с; Осталось: %sс"
+
+#~ msgid "Widget 1 geometry: %dx%d+%d+%d"
+#~ msgstr "Геометрия виджета 1: %dx%d+%d+%d"
+
+#~ msgid "Widget 2 geometry: %dx%d+%d+%d"
+#~ msgstr "Геометрия виджета 2: %dx%d+%d+%d"
+
+#~ msgid "Selected albums: %d"
+#~ msgstr "Выбрано альбомов: %d"
+
+#~ msgid "Total size: %s"
+#~ msgstr "Общий размер: %s"
+
+#~ msgid "Copy light music"
+#~ msgstr "Копировать легкую музыку"
+
+#~ msgid "Copy heavy music"
+#~ msgstr "Копировать тяжелую музыку"
+
+#~ msgid ""
+#~ "Random unrated music will now be copied to \"%s\".\n"
+#~ "\n"
+#~ "Continue?"
+#~ msgstr ""
+#~ "Сейчас случайная музыка без рейтинга будет скопирована в \"%s\".\n"
+#~ "\n"
+#~ "Продолжить?"
+
+#~ msgid "Source (read-only):"
+#~ msgstr "Источник (только чтение):"
+
+#~ msgid "Target (writable):"
+#~ msgstr "Цель (запись):"
+
+#~ msgid "All, external"
+#~ msgstr "Всё (внешний носитель)"
+
+#~ msgid "All, local"
+#~ msgstr "Всё (этот носитель)"
+
+#~ msgid "Best, external"
+#~ msgstr "Лучшее (внешний носитель)"
+
+#~ msgid "Best, local"
+#~ msgstr "Лучшее (этот носитель)"
+
+#~ msgid "***** Start of log. *****"
+#~ msgstr "***** Начало записи лога. *****"
+
+#~ msgid "Album %d: %d new tracks."
+#~ msgstr "Альбом %d: %d новых дорожек."
+
+#~ msgid "Album %s is already in DB!"
+#~ msgstr "Альбом %s уже занесен в БД!"
+
+#~ msgid ""
+#~ "An unknown mode \"%s\"!n\n"
+#~ "The following modes are supported: \"%s\"."
+#~ msgstr ""
+#~ "Неизвестный режим \"%s\"!\n"
+#~ "\n"
+#~ "Поддерживаются следующие режимы: \"%s\"."
+
+#~ msgid "Process \"%s\""
+#~ msgstr "Обработка \"%s\""
+
+#~ msgid "Clear tags, name folders by ALBUMID, etc."
+#~ msgstr "Очистить тэги, переименовать каталоги по ALBUMID и т.д."
+
+#~ msgid ""
+#~ "Third party module has failed!\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Ошибка модуля третьей стороны!\n"
+#~ "\n"
+#~ "Детали: %s"
+
+#~ msgid "Albums that are not in DB cannot be obfuscated."
+#~ msgstr "Альбомы, не внесенные в БД, не могут быть обфусцированы."
+
+#~ msgid "Country:"
+#~ msgstr "Страна:"
+
+#~ msgid "Search in albums:"
+#~ msgstr "Поиск по альбомам:"
+
+#~ msgid "Artist"
+#~ msgstr "Исполнитель"
+
+#~ msgid "Album"
+#~ msgstr "Альбом"
+
+#~ msgid "Genre"
+#~ msgstr "Жанр"
+
+#~ msgid "Year"
+#~ msgstr "Год"
+
+#~ msgid "Track #"
+#~ msgstr "Дорожка №"
+
+#~ msgid "Title"
+#~ msgstr "Название"
+
+#~ msgid "Lyrics"
+#~ msgstr "Слова"
+
+#~ msgid "Length"
+#~ msgstr "Продолжительность"
+
+#~ msgid "A syntax error in the regular expression (id: %s)!"
+#~ msgstr "Синтаксическая ошибка в регулярном выражении (запись: %s)!"
+
+#~ msgid ""
+#~ "Regular expression %s has failed: we were expecting\n"
+#~ "\"%s\",\n"
+#~ "but received\n"
+#~ "\"%s\"."
+#~ msgstr ""
+#~ "Неудачное вычисление регулярного выражения %s: ожидалось\n"
+#~ "\"%s\",\n"
+#~ "получили\n"
+#~ "\"%s\"."
+
+#~ msgid "Text with instructions:"
+#~ msgstr "Текст с инструкциями:"
+
+#~ msgid "Parent is not supported, using the default one."
+#~ msgstr ""
+#~ "Родительский виджет не поддерживается, будет использован виджет по "
+#~ "умолчанию."
+
+#~ msgid "Delete all text"
+#~ msgstr "Удалить весь текст"
+
+#~ msgid "Manage subscriptions"
+#~ msgstr "Управление подписками"
+
+#~ msgid "Add"
+#~ msgstr "Добавить"
+
+#~ msgid "Remove"
+#~ msgstr "Удалить"
+
+#~ msgid "Enter a channel URL, one URL per a line:"
+#~ msgstr "Введите адрес канала, по одному URL на строку:"
+
+#~ msgid "Patterns: %s"
+#~ msgstr "Примеры: %s"
+
+#~ msgid "Manage blacklist"
+#~ msgstr "Управление черным списком"
+
+#~ msgid "Perform actions"
+#~ msgstr "Выполнение операций"
+
+#~ msgid "Mark \"%s\" has been inserted in position \"%s\"."
+#~ msgstr "Метка \"%s\" вставлена в позиции \"%s\"."
+
+#~ msgid "Mark \"%s\" has been removed."
+#~ msgstr "Метка \"%s\" была удалена."
+
+#~ msgid ""
+#~ "Nothing is selected in window %d, therefore, it is not possible to return "
+#~ "coordinates!"
+#~ msgstr "В окне %d нет выделения, поэтому координаты вернуть нельзя!"
