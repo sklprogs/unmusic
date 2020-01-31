@@ -43,5 +43,8 @@ if sh.lg.Path(folder).create():
     else:
         sh.com.empty(f)
     iwalk.delete_empty()
+    lg.objs.db().close()
+    mes = _('Goodbye!')
+    sh.objs.mes(f,mes,True).debug()
 else:
     sh.com.cancel(f)
