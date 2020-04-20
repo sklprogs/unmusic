@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import skl_shared.shared as sh
+import skl_shared2.shared as sh
 import logic             as lg
 import gui               as gi
-from skl_shared.localize import _
+from skl_shared2.localize import _
 
 
 class Commands:
@@ -12,22 +12,22 @@ class Commands:
     def __init__(self):
         pass
         
-    def query(self):
-        lg.objs.db().updateDB ('begin;select ALBUM from ALBUMS \
-                                where ARTIST="%s";commit;' \
-                               % ("Jean-Sebastien Royer",)
-                              )
-        print(lg.objs._db.dbc.fetchone())
+    def show_query(self):
+        lg.objs.get_db().updateDB ('begin;select ALBUM from ALBUMS \
+                                    where ARTIST="%s";commit;' \
+                                   % ("Jean-Sebastien Royer",)
+                                  )
+        print(lg.objs.db.dbc.fetchone())
     
-    def mixed_rating(self):
-        lg.objs.db().albumid = 7
-        lg.objs._db.dbc.execute ('update TRACKS set RATING = ? \
+    def show_mixed_rating(self):
+        lg.objs.get_db().albumid = 7
+        lg.objs.db.dbc.execute ('update TRACKS set RATING = ? \
                                   where ALBUMID = ? and NO <= ?'
-                                 ,(7,lg.objs._db.albumid,5,)
+                                 ,(7,lg.objs.db.albumid,5,)
                                 )
-        lg.objs._db.save()
-        lg.objs._db.dbc.execute('select * from TRACKS')
-        rows    = lg.objs._db.tracks()
+        lg.objs.db.save()
+        lg.objs.db.dbc.execute('select * from TRACKS')
+        rows    = lg.objs.db.get_tracks()
         headers = []
         for i in range(7):
             headers.append('header' + str(i))
@@ -38,26 +38,26 @@ class Commands:
                     ,MaxRows = 35
                     ).print()
     
-    def tracks(self):
+    def show_tracks(self):
         itracks = gi.Tracks()
         itracks.reset()
         for i in range(20):
             itracks.add()
-        for i in range(len(itracks._tracks)):
-            itracks._tracks[i].ent_tno.insert(i+1)
-            itracks._tracks[i].ent_tit.insert(_('Track #%d') % (i + 1))
-        itracks.after_add()
+        for i in range(len(itracks.tracks)):
+            itracks.tracks[i].ent_tno.insert(i+1)
+            itracks.tracks[i].ent_tit.insert(_('Track #%d') % (i + 1))
+        itracks.add_after()
         itracks.show()
     
     def check_nos(self):
         f = 'tests.Commands.check_nos'
-        albumid = lg.objs.db().max_id()
+        albumid = lg.objs.get_db().get_max_id()
         if albumid:
             for i in range(albumid):
-                lg.objs._db.albumid = i + 1
-                print(lg.objs._db.albumid,':',lg.objs.db().check_nos())
+                lg.objs.db.albumid = i + 1
+                print(lg.objs.db.albumid,':',lg.objs.get_db().check_nos())
         else:
-            sh.com.empty(f)
+            sh.com.rep_empty(f)
     
 
 com = Commands()
@@ -66,6 +66,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    print(lg.objs.db().next_rated())
-    lg.objs.db().close()
+    print(lg.objs.get_db().get_next_rated())
+    lg.objs.get_db().close()
     sh.com.end()
