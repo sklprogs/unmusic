@@ -8,8 +8,8 @@ import re
 import phrydy
 import sqlite3
 
-import skl_shared2.shared as sh
-from skl_shared2.localize import _
+import skl_shared.shared as sh
+from skl_shared.localize import _
 
 VERSION = '1.0'
 # Derived from 'phrydy.mediafile.TYPES'
