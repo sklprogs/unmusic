@@ -40,7 +40,7 @@ class Copy:
         self.ent_yer.reset()
         self.ent_lim.reset()
         self.ent_lim.insert(100)
-        self.btn_str.set_focus()
+        self.btn_str.focus()
     
     def set_bindings(self):
         sh.com.bind (obj      = self.parent
@@ -290,19 +290,19 @@ class AlbumEditor:
         self.cbx_mob.reset(action=self.cbx_mob.toggle)
     
     def clear_ids(self,event=None):
-        self.ent_ids.set_focus()
+        self.ent_ids.focus()
         self.ent_ids.clear_text()
     
     def clear_album_search(self,event=None):
-        self.ent_src.set_focus()
+        self.ent_src.focus()
         self.ent_src.clear_text()
     
     def clear_track_search(self,event=None):
-        self.ent_sr2.set_focus()
+        self.ent_sr2.focus()
         self.ent_sr2.clear_text()
     
     def focus_ids(self,event=None):
-        self.ent_ids.set_focus()
+        self.ent_ids.focus()
         self.ent_ids.select_all()
     
     def search_ids(self):
@@ -477,7 +477,7 @@ class AlbumEditor:
         self.ent_yer.clear_text()
         self.ent_cnt.clear_text()
         self.ent_com.clear_text()
-        self.ent_art.set_focus()
+        self.ent_art.focus()
     
     def set_gui(self):
         self.parent = sh.Top (icon  = ICON
@@ -496,7 +496,7 @@ class AlbumEditor:
         self.set_image()
         self.set_bottom()
         self.set_bindings()
-        self.ent_art.set_focus()
+        self.ent_art.focus()
     
     def search_albums(self):
         self.btn_spr = sh.Button (parent   = self.frm
@@ -625,11 +625,11 @@ class AlbumEditor:
                     )
 
     def focus_album_search(self,event=None):
-        self.ent_src.set_focus()
+        self.ent_src.focus()
         self.ent_src.select_all()
     
     def focus_track_search(self,event=None):
-        self.ent_sr2.set_focus()
+        self.ent_sr2.focus()
         self.ent_sr2.select_all()
         
     def set_frames(self):
@@ -874,7 +874,7 @@ class Menu:
         self.set_buttons()
         self.set_bindings()
         if len(self.a) > 0:
-            self.a[0].set_focus()
+            self.a[0].focus()
     
     def show(self,event=None):
         self.parent.show()
@@ -1108,7 +1108,7 @@ class Tracks:
         self.yscroll = sh.Scrollbar (parent = self.frm_ver
                                     ,scroll = self.canvas
                                     )
-        self.canvas.set_focus()
+        self.canvas.focus()
         
     def add(self,event=None,Extended=False):
         self.tracks.append(Track(self.label,Extended))
