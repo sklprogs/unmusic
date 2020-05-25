@@ -136,7 +136,7 @@ class BadMusic:
                                    ,Transpose = True
                                    ,maxrow    = 70
                                    ).run()
-                sh.com.run_fast_debug(mes)
+                sh.com.run_fast_debug(f,mes)
             else:
                 sh.com.rep_empty(f)
     
