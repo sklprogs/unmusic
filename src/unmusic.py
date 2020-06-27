@@ -4,9 +4,9 @@
 import os
 import time
 import skl_shared.shared as sh
-import logic             as lg
-import gui               as gi
 from skl_shared.localize import _
+import logic as lg
+import gui as gi
 
 
 class Copy:

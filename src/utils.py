@@ -2,9 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 import skl_shared.shared as sh
-import logic             as lg
-import gui               as gi
 from skl_shared.localize import _
+import logic as lg
+import gui as gi
 
 
 class Commands:
