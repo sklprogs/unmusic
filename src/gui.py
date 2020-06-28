@@ -47,7 +47,7 @@ class Copy:
                     ,bindings = ('<Escape>','<Control-w>','<Control-q>')
                     ,action   = self.close
                     )
-        self.opt_yer.action = self.ent_yer.set_focus
+        self.opt_yer.action = self.ent_yer.focus
     
     def set_icon(self,path=None):
         if path:
@@ -788,31 +788,31 @@ class Menu:
             for i in range(len(self.a)):
                 sh.com.bind (obj      = self.a[i]
                             ,bindings = '<Home>'
-                            ,action   = self.a[0].set_focus
+                            ,action   = self.a[0].focus
                             )
                 sh.com.bind (obj      = self.a[i]
                             ,bindings = '<End>'
-                            ,action   = self.a[-1].set_focus
+                            ,action   = self.a[-1].focus
                             )
                 if i > 0:
                     sh.com.bind (obj      = self.a[i]
                                 ,bindings = '<Up>'
-                                ,action   = self.a[i-1].set_focus
+                                ,action   = self.a[i-1].focus
                                 )
                 else:
                     sh.com.bind (obj      = self.a[i]
                                 ,bindings = '<Up>'
-                                ,action   = self.a[-1].set_focus
+                                ,action   = self.a[-1].focus
                                 )
                 if i < len(self.a) - 1:
                     sh.com.bind (obj      = self.a[i]
                                 ,bindings = '<Down>'
-                                ,action   = self.a[i+1].set_focus
+                                ,action   = self.a[i+1].focus
                                 )
                 else:
                     sh.com.bind (obj      = self.a[i]
                                 ,bindings = '<Down>'
-                                ,action   = self.a[0].set_focus
+                                ,action   = self.a[0].focus
                                 )
     
     def set_icon(self,path=None):
@@ -1238,12 +1238,12 @@ class Objects:
     
     def get_progress(self):
         if self.progress is None:
-            self.progress = sh.ProgressBar (height  = 100
-                                           ,YScroll = False
+            self.progress = sh.ProgressBar (icon   = ICON
+                                           ,height = 100
                                            )
-            self.progress.set_title(_('Copy progress'))
-            self.progress.set_icon(ICON)
             # Widget is not created yet, do not 'center' it here!
+            sh.Geometry(self.progress.obj).activate()
+            self.progress.add()
         return self.progress
     
     def get_tracks(self):

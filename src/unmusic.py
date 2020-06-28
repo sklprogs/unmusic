@@ -16,32 +16,19 @@ class Copy:
         self.gui = gi.Copy()
         self.set_bindings()
     
-    def update_progress(self,i):
-        f = '[unmusic] unmusic.Copy.update_progress'
-        if self.Success:
-            # Prevent ZeroDivisionError
-            if self.ids:
-                percent = (100 * (i + 1)) // len(self.ids)
-            else:
-                percent = 0
-            gi.objs.get_progress().item.widget['value'] = percent
-            # This is required to fill the progress bar on-the-fly
-            sh.objs.get_root().update_idle()
-        else:
-            sh.com.cancel(f)
-    
     def wait_carrier(self,carrier,event=None):
         f = '[unmusic] unmusic.Copy.wait_carrier'
         if self.Success:
             if carrier:
-                carrier    = os.path.realpath(carrier)
+                carrier = os.path.realpath(carrier)
                 carrier_sh = sh.lg.Text(carrier).shorten (max_len = 25
                                                          ,Enclose = True
                                                          ,FromEnd = True
                                                          )
+                mes = _('Waiting for {}').format(carrier_sh)
                 objs.get_waitbox().reset (func    = f
-                                     ,message = _('Waiting for {}').format(carrier_sh)
-                                     )
+                                         ,message = mes
+                                         )
                 objs.waitbox.show()
                 while not os.path.isdir(carrier):
                     time.sleep(1)
@@ -152,15 +139,11 @@ class Copy:
         f = '[unmusic] unmusic.Copy.copy'
         if self.Success:
             if self.confirm():
-                sh.Geometry(gi.objs.get_progress().obj).activate()
-                gi.objs.progress.add()
-                gi.objs.progress.items[-1].label.set_text(_('Copy progress'))
-                sh.objs.get_root().update_idle()
                 gi.objs.progress.show()
                 for i in range(len(self.ids)):
-                    myid      = str(self.ids[i])
-                    source    = os.path.join(self.source,myid)
-                    target    = os.path.join(self.target,myid)
+                    myid = str(self.ids[i])
+                    source = os.path.join(self.source,myid)
+                    target = os.path.join(self.target,myid)
                     source_sh = sh.lg.Text(source).shorten (max_len = 30
                                                            ,FromEnd = True
                                                            )
@@ -172,8 +155,8 @@ class Copy:
                                                         ,source_sh
                                                         ,target_sh
                                                         )
-                    gi.objs.progress.items[-1].label.set_text(message)
-                    self.update_progress(i)
+                    gi.objs.progress.set_text(message)
+                    gi.objs.progress.update(i,len(self.ids))
                     idir = sh.lg.Directory (path = source
                                            ,dest = target
                                            )
@@ -193,12 +176,11 @@ class Copy:
         if self.Success:
             self.sizes = []
             if self.ids:
-                objs.get_waitbox().reset (func    = f
-                                         ,message = _('Calculate required space')
-                                         )
-                objs.waitbox.show()
-                for myid in self.ids:
-                    mydir = os.path.join(self.source,str(myid))
+                gi.objs.get_progress().set_text(_('Calculate required space'))
+                gi.objs.progress.show()
+                for i in range(len(self.ids)):
+                    gi.objs.progress.update(i,len(self.ids))
+                    mydir = os.path.join(self.source,str(self.ids[i]))
                     idir  = sh.lg.Directory(mydir)
                     self.Success = idir.Success
                     if self.Success:
@@ -206,7 +188,7 @@ class Copy:
                     else:
                         sh.com.cancel(f)
                         break
-                objs.waitbox.close()
+                gi.objs.progress.close()
             else:
                 sh.com.rep_lazy(f)
         else:

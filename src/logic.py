@@ -1822,7 +1822,7 @@ class Track:
                     if self.audio.album:
                         self.album = str(self.audio.album)
                     else:
-                        dirname = sh.lg.Path(self.file).dirname()
+                        dirname = sh.lg.Path(self.file).get_dirname()
                         dirname = sh.lg.Path(dirname).get_basename()
                         self.album = '[[' + dirname + ']]'
                     if self.audio.genre:
