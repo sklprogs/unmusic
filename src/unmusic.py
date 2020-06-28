@@ -378,12 +378,13 @@ class Tracks:
             sh.com.cancel(f)
     
     def _dump_search(self,old,new):
-        f = '[unmusic] unmusic.Tracks._dump'
+        f = '[unmusic] unmusic.Tracks._dump_search'
         mes = _('Not implemented yet!')
         sh.objs.get_mes(f,mes).show_info()
         return False
     
     def _dump(self,old,new):
+        f = '[unmusic] unmusic.Tracks._dump'
         if old and new:
             if len(old) == len(new):
                 Dump = False
