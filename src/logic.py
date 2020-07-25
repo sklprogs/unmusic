@@ -11,7 +11,7 @@ import sqlite3
 import skl_shared.shared as sh
 from skl_shared.localize import _
 
-VERSION = '1.0'
+VERSION = '1.1'
 # Derived from 'phrydy.mediafile.TYPES'
 TYPES = ['.mp3','.aac','.alac','.ogg','.opus','.flac','.ape','.wv'
         ,'.mpc','.asf','.aiff','.dsf'
