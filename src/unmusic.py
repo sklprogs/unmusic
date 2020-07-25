@@ -401,8 +401,8 @@ class Tracks:
                                 mes = _('Edit #{}.').format(i+1)
                                 self.gui.update_info(mes)
                                 lg.objs.get_db().update_track (no   = i + 1
-                                                          ,data = new_record
-                                                          )
+                                                              ,data = new_record
+                                                              )
                                 # We're in loop - do not use 'return'
                                 Dump = True
                             else:
