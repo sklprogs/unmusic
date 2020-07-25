@@ -43,6 +43,46 @@ HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         )
 
 
+
+class ExportKeys:
+    
+    def run(self):
+        sh.lg.globs['int']['curid'] = objs.get_db().albumid
+
+
+
+class CreateConfig(sh.CreateConfig):
+    
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+
+    def fill_int(self):
+        section = _('Integers')
+        self.add_section(section)
+        section_abbr = self.sections[-1].abbr
+        
+        key = 'curid'
+        comment = _('[Autosave] Album ID to load at startup')
+        self.add_key(section,section_abbr,key,comment)
+
+
+
+class DefaultKeys(sh.DefaultKeys):
+
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.load()
+    
+    def load(self):
+        self._load_int()
+    
+    def _load_int(self):
+        sh.lg.globs['int'].update ({
+            'curid':1
+                                  })
+
+
+
 class BadMusic:
     
     def __init__(self):
@@ -913,14 +953,24 @@ class DefaultConfig:
     
     def __init__(self):
         self.set_values()
-        self.ihome   = sh.lg.Home(app_name='unmusic')
+        self.ihome = sh.lg.Home(app_name='unmusic')
         self.Success = self.ihome.create_conf()
+    
+    def get_config(self):
+        f = '[unmusic] logic.DefaultConfig.get_config'
+        if self.Success:
+            if not self.fconf:
+                self.fconf = self.ihome.add_config('unmusic.cfg')
+            return self.fconf
+        else:
+            sh.com.cancel(f)
     
     def run(self):
         self.get_db()
     
     def set_values(self):
         self.fdb = ''
+        self.fconf = ''
     
     def get_db(self):
         f = '[unmusic] logic.DefaultConfig.get_db'
@@ -940,8 +990,14 @@ class DefaultConfig:
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.caesar = None
+        self.default = self.db = self.caesar = self.config = None
         
+    def get_config(self):
+        if self.config is None:
+            self.config = sh.Config(objs.get_default().get_config())
+            self.config.run()
+        return self.config
+    
     def get_caesar(self):
         if self.caesar is None:
             self.caesar = Caesar()
@@ -1924,6 +1980,25 @@ class Commands:
     def __init__(self):
         pass
     
+    def save_config(self):
+        ExportKeys().run()
+        CreateConfig(objs.get_default().get_config()).run()
+    
+    def restore_id(self):
+        f = '[unmusic] logic.Commands.restore_id'
+        min_ = objs.get_db().get_min_id()
+        max_ = objs.db.get_max_id()
+        if min_ and max_:
+            if min_ <= sh.lg.globs['int']['curid'] <= max_:
+                objs.db.albumid = sh.lg.globs['int']['curid']
+            else:
+                sub = '{} <= {} <= {}'
+                sub = sub.format(min_,sh.lg.globs['int']['curid'],max_)
+                mes = _('Condition "{}" is not observed!').format(sub)
+                sh.objs.get_mes(f,mes).show_warning()
+        else:
+            sh.com.rep_empty(f)
+    
     def sanitize(self,field):
         field = sh.lg.Text(field).delete_unsupported()
         field = sh.lg.Text(field).delete_duplicate_spaces()
@@ -1960,8 +2035,11 @@ class Commands:
 
 
 objs = Objects()
-objs.get_default()
 com = Commands()
+DefaultKeys()
+objs.get_default()
+objs.get_config()
+com.restore_id()
 
 
 

@@ -575,7 +575,7 @@ class AlbumEditor:
     
     def __init__(self):
         self.set_values()
-        self.gui   = gi.AlbumEditor()
+        self.gui = gi.AlbumEditor()
         self.logic = lg.AlbumEditor()
         self.set_bindings()
         
@@ -1194,7 +1194,6 @@ class AlbumEditor:
     def reset(self):
         f = '[unmusic] unmusic.AlbumEditor.reset'
         self.Success = self.logic.Success = lg.objs.get_db().Success
-        lg.objs.db.albumid = self.logic.get_max()
         self.fill()
     
     def update_album_search(self):
@@ -1461,6 +1460,7 @@ if __name__ == '__main__':
     sh.com.start()
     Menu().show()
     lg.objs.get_db().save()
+    lg.com.save_config()
     lg.objs.db.close()
     mes = _('Goodbye!')
     sh.objs.get_mes(f,mes,True).show_debug()

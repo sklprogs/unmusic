@@ -14,6 +14,7 @@ if __name__ == '__main__':
     ct.objs.get_editor().reset()
     ct.objs.editor.show()
     lg.objs.get_db().save()
+    lg.com.save_config()
     lg.objs.db.close()
     mes = _('Goodbye!')
     sh.objs.get_mes(f,mes,True).show_debug()
