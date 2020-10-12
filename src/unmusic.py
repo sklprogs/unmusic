@@ -21,9 +21,9 @@ class Copy:
         if self.Success:
             if carrier:
                 carrier = os.path.realpath(carrier)
-                carrier_sh = sh.lg.Text(carrier).shorten (max_len = 25
-                                                         ,Enclose = True
-                                                         ,FromEnd = True
+                carrier_sh = sh.lg.Text(carrier).shorten (max_len  = 25
+                                                         ,encloser = '"'
+                                                         ,FromEnd  = True
                                                          )
                 mes = _('Waiting for {}').format(carrier_sh)
                 objs.get_waitbox().reset (func    = f
