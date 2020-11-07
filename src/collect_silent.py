@@ -11,7 +11,7 @@ sh.GUI_MES = False
 folder = sh.lg.Home(app_name='unmusic').add_share(_('not processed'))
 if sh.lg.Path(folder).create():
     iwalk = lg.Walker(folder)
-    dirs  = iwalk.get_dirs()
+    dirs = iwalk.get_dirs()
     if dirs:
         count = 0
         timer = sh.lg.Timer(f)

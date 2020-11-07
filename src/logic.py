@@ -91,12 +91,12 @@ class BadMusic:
     
     def set_values(self):
         self.Success = True
-        self.rates  = []
-        self.sizes  = []
+        self.rates = []
+        self.sizes = []
         self.dellst = []
-        self.local  = ''
-        self.exter  = ''
-        self.mobil  = ''
+        self.local = ''
+        self.exter = ''
+        self.mobil = ''
         
     def get_all_carriers(self):
         f = '[unmusic] logic.BadMusic.get_all_carriers'
@@ -164,17 +164,17 @@ class BadMusic:
                 iterable = []
                 for i in range(len(self.rates)):
                     if self.sizes[i]:
-                        size = sh.com.get_human_size (bsize     = self.sizes[i]
+                        size = sh.com.get_human_size (bsize = self.sizes[i]
                                                      ,LargeOnly = True
                                                      )
                     else:
                         size = _('N/A')
                     iterable.append(self.rates[i]+[size])
                 headers = ('ID','ALBUM','MIN','MAX','SIZE')
-                mes = sh.FastTable (iterable  = iterable
-                                   ,headers   = headers
+                mes = sh.FastTable (iterable = iterable
+                                   ,headers = headers
                                    ,Transpose = True
-                                   ,maxrow    = 70
+                                   ,maxrow = 70
                                    ).run()
                 sh.com.run_fast_debug(f,mes)
             else:
@@ -187,9 +187,9 @@ class BadMusic:
             if self.rates:
                 for item in self.rates:
                     albumid = str(item[0])
-                    path1   = os.path.join(self.local,albumid)
-                    path2   = os.path.join(self.exter,albumid)
-                    path3   = os.path.join(self.mobil,albumid)
+                    path1 = os.path.join(self.local,albumid)
+                    path2 = os.path.join(self.exter,albumid)
+                    path3 = os.path.join(self.mobil,albumid)
                     if os.path.exists(path1):
                         size1 = sh.Directory(path1).get_size()
                         self.dellst.append(path1)
@@ -314,13 +314,13 @@ class Play:
             sh.com.cancel(f)
     
     def set_values(self):
-        self.Success  = True
-        self.album    = ''
+        self.Success = True
+        self.album = ''
         self.playlist = ''
-        self.audio    = []
-        self.nos      = []
-        self.titles   = []
-        self.len_     = []
+        self.audio = []
+        self.nos = []
+        self.titles = []
+        self.len_ = []
     
     def get_album(self):
         f = '[unmusic] logic.Play.get_album'
@@ -456,7 +456,7 @@ class Play:
                 text = self.out.getvalue()
                 self.out.close()
                 if text:
-                    sh.lg.WriteTextFile (file    = self.get_playlist()
+                    sh.lg.WriteTextFile (file = self.get_playlist()
                                         ,Rewrite = True
                                         ).write(text)
                 else:
@@ -472,7 +472,7 @@ class Play:
             tracks = objs.get_db().get_tracks()
             if tracks:
                 self.titles = [track[0] for track in tracks]
-                self.len_   = [track[5] for track in tracks]
+                self.len_ = [track[5] for track in tracks]
                 # '-1' since count starts with 1 in DB and we need 0
                 self.nos = [track[1] - 1 for track in tracks]
                 self.gen_list()
@@ -488,7 +488,7 @@ class Play:
             tracks = objs.get_db().get_good_tracks(rating)
             if tracks:
                 self.titles = [track[0] for track in tracks]
-                self.len_   = [track[5] for track in tracks]
+                self.len_ = [track[5] for track in tracks]
                 # '-1' since count starts with 1 in DB and we need 0
                 self.nos = [track[1] - 1 for track in tracks]
                 self.gen_list()
@@ -682,12 +682,10 @@ class Directory:
             max_len = len(self.audio)
             max_len = len(str(max_len))
             for i in range(len(self.audio)):
-                file     = self.audio[i]
-                no       = self._set_no(i,max_len)
+                file = self.audio[i]
+                no = self._set_no(i,max_len)
                 basename = no + sh.lg.Path(file).get_ext().lower()
-                dest     = os.path.join (self.target
-                                        ,basename
-                                        )
+                dest = os.path.join(self.target,basename)
                 success.append(sh.lg.File(file=file,dest=dest).move())
             self.Success = not (False in success or None in success)
         else:
@@ -726,8 +724,8 @@ class Directory:
     
     def reset(self,path):
         self.set_values()
-        self.path   = path
-        self.idir    = sh.lg.Directory(self.path)
+        self.path = path
+        self.idir = sh.lg.Directory(self.path)
         self.Success = self.idir.Success
         if self.Success and '(decypher)' in self.path:
             self.Decypher = True
@@ -791,11 +789,11 @@ class Directory:
                     processed successfully.
                 '''
                 if self.tracks[0].audio:
-                    album  = self.tracks[0].album
+                    album = self.tracks[0].album
                     artist = self.tracks[0].artist
-                    year   = self.tracks[0].year
-                    genre  = self.tracks[0].genre
-                    image  = self.tracks[0].image
+                    year = self.tracks[0].year
+                    genre = self.tracks[0].genre
+                    image = self.tracks[0].image
                     result = self.decypher_album()
                     if result:
                         if len(result) == 3:
@@ -808,8 +806,8 @@ class Directory:
                             mes = _('Condition "{}" is not observed!')
                             mes = mes.format(sub)
                             sh.objs.get_mes(f,mes).show_error()
-                    album  = com.sanitize(album)
-                    album  = com.delete_album_trash(album)
+                    album = com.sanitize(album)
+                    album = com.delete_album_trash(album)
                     artist = com.sanitize(artist)
                     if str(year).isdigit():
                         year = int(year)
@@ -885,15 +883,15 @@ class Directory:
             sh.com.cancel(f)
     
     def set_values(self):
-        self.Success  = True
+        self.Success = True
         self.Decypher = False
-        self.idir     = None
-        self.path     = ''
-        self.target   = ''
-        self.rating   = 0
-        self.files    = []
-        self.audio    = []
-        self.tracks   = []
+        self.idir = None
+        self.path = ''
+        self.target = ''
+        self.rating = 0
+        self.files = []
+        self.audio = []
+        self.tracks = []
     
     def create_list(self):
         f = '[unmusic] logic.Directory.create_list'
@@ -935,7 +933,7 @@ class Directory:
             if not self.tracks:
                 if self.audio:
                     for file in self.audio:
-                        self.tracks.append (Track (file     = file
+                        self.tracks.append (Track (file = file
                                                    ,Decypher = self.Decypher
                                                    )
                                             )
@@ -1028,7 +1026,7 @@ class DB:
     def __init__(self,path):
         self.Success = True
         self.albumid = 1
-        self.path    = path
+        self.path = path
         self.connect()
         self.create_albums()
         self.create_tracks()
@@ -1263,7 +1261,7 @@ class DB:
                 result = self.dbc.fetchall()
                 if result:
                     result = [item[0] for item in result]
-                    nos    = [i + 1 for i in range(len(result))]
+                    nos = [i + 1 for i in range(len(result))]
                     return result == nos
             except Exception as e:
                 self.fail(f,e)
@@ -1573,11 +1571,11 @@ class DB:
             if not Selected:
                 self.dbc.execute('select * from %s' % table)
             headers = [cn[0] for cn in self.dbc.description]
-            rows    = self.dbc.fetchall()
+            rows = self.dbc.fetchall()
             sh.lg.Table (headers = headers
-                        ,rows    = rows
+                        ,rows = rows
                         ,Shorten = Shorten
-                        ,MaxRow  = MaxRow
+                        ,MaxRow = MaxRow
                         ,MaxRows = MaxRows
                         ).print()
         else:
@@ -1696,7 +1694,7 @@ class DB:
         f = '[unmusic] logic.DB.connect'
         if self.Success:
             try:
-                self.db  = sqlite3.connect(self.path)
+                self.db = sqlite3.connect(self.path)
                 self.dbc = self.db.cursor()
             except Exception as e:
                 self.fail(f,e)
@@ -1709,8 +1707,8 @@ class Track:
     
     def __init__(self,file,Decypher=False):
         self.set_values()
-        self.file     = file
-        self.Success  = sh.lg.File(self.file).Success
+        self.file = file
+        self.Success = sh.lg.File(self.file).Success
         self.Decypher = Decypher
         self.load()
         self.set_info()
@@ -1734,7 +1732,7 @@ class Track:
         f = '[unmusic] logic.Track.delete_unsupported'
         if self.Success:
             # Other fields should be processed before writing to DB
-            self.title  = sh.lg.Text(self.title).delete_unsupported()
+            self.title = sh.lg.Text(self.title).delete_unsupported()
             self.lyrics = sh.lg.Text(self.lyrics).delete_unsupported()
         else:
             sh.com.cancel(f)
@@ -1780,7 +1778,7 @@ class Track:
         f = '[unmusic] logic.Track.decode'
         if self.Success:
             # Other fields should be decoded before writing to DB
-            self.title  = com.decode(self.title)
+            self.title = com.decode(self.title)
             self.lyrics = com.decode(self.lyrics)
         else:
             sh.com.cancel(f)
@@ -1799,18 +1797,18 @@ class Track:
             sh.com.cancel(f)
     
     def set_values(self):
-        self.Success  = True
-        self.audio   = None
-        self.image   = None
-        self.artist  = ''
-        self.album   = ''
-        self.title   = ''
-        self.lyrics  = ''
-        self.genre   = ''
-        self.year    = 0
+        self.Success = True
+        self.audio = None
+        self.image = None
+        self.artist = ''
+        self.album = ''
+        self.title = ''
+        self.lyrics = ''
+        self.genre = ''
+        self.year = 0
         self.bitrate = 0
-        self.length  = 0
-        self.no      = 1
+        self.length = 0
+        self.no = 1
     
     def show_summary(self):
         f = '[unmusic] logic.Track.show_summary'
@@ -1952,8 +1950,8 @@ class Walker:
     
     def reset(self,path):
         self.set_values()
-        self.path   = path
-        self.idir    = sh.lg.Directory(self.path)
+        self.path = path
+        self.idir = sh.lg.Directory(self.path)
         self.Success = self.idir.Success
     
     def get_dirs(self):
@@ -1970,8 +1968,8 @@ class Walker:
     
     def set_values(self):
         self.Success = True
-        self.path    = ''
-        self.dirs    = []
+        self.path = ''
+        self.dirs = []
 
 
 

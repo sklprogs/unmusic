@@ -27,14 +27,14 @@ class Commands:
                                 )
         lg.objs.db.save()
         lg.objs.db.dbc.execute('select * from TRACKS')
-        rows    = lg.objs.db.get_tracks()
+        rows = lg.objs.db.get_tracks()
         headers = []
         for i in range(7):
             headers.append('header' + str(i))
         sh.lg.Table (headers = headers
-                    ,rows    = rows
+                    ,rows = rows
                     ,Shorten = 1
-                    ,MaxRow  = 1000
+                    ,MaxRow = 1000
                     ,MaxRows = 35
                     ).print()
     
