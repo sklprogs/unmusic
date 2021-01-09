@@ -9,11 +9,104 @@ import logic as lg
 import gui as gi
 
 
+class Image:
+    
+    def __init__(self):
+        self.dir = sh.Home('unmusic').add_share('thumbs')
+        self.Success = sh.Path(self.dir).create()
+        self.path = ''
+        self.albumid = 0
+        self.bytes = None
+        self.Present = False
+        self.Processed = False
+        self.Skipped = False
+    
+    def save(self):
+        f = '[unmusic] utils.Image.save'
+        if self.Success:
+            if self.path:
+                if os.path.exists(self.path):
+                    mes = _('File "{}" already exists!')
+                    mes = mes.format(self.path)
+                    sh.objs.get_mes(f,mes,True).show_debug()
+                    self.Present = True
+                elif self.bytes:
+                    mes = _('Save "{}"').format(self.path)
+                    sh.objs.get_mes(f,mes,True).show_info()
+                    iimage = sh.Image()
+                    iimage.bytes_ = self.bytes
+                    iimage.get_loader()
+                    self.Processed = iimage.save(self.path,'JPEG')
+                else:
+                    mes = _('Album {} has no cover!')
+                    mes = mes.format(self.albumid)
+                    sh.objs.get_mes(f,mes,True).show_debug()
+                    self.Skipped = True
+            else:
+                sh.com.rep_empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def set_path(self):
+        f = '[unmusic] utils.Image.set_path'
+        if self.Success:
+            name = str(self.albumid)
+            if name:
+                name += '.jpg'
+                self.path = os.path.join(self.dir,name)
+            else:
+                sh.com.rep_empty(f)
+        else:
+            sh.com.cancel(f)
+    
+    def reset(self,albumid,bytes_):
+        self.path = ''
+        self.albumid = albumid
+        self.bytes = bytes_
+        self.Present = False
+        self.Processed = False
+        self.Skipped = False
+    
+    def run(self):
+        self.set_path()
+        self.save()
+
+
+
 class Commands:
     
     def __init__(self):
         self.path = '/home/pete/.config/unmusic/unmusic.db'
         self.clone = '/tmp/unmusic.db'
+    
+    def extract_images(self):
+        f = '[unmusic] utils.Commands.extract_images'
+        idb = DB(self.path,self.clone)
+        idb.connect()
+        data = idb.fetch_images()
+        if data:
+            errors = 0
+            present = 0
+            processed = 0
+            skipped = 0
+            iimage = Image()
+            for row in data:
+                iimage.reset(row[0],row[1])
+                iimage.run()
+                if iimage.Present:
+                    present += 1
+                elif iimage.Skipped:
+                    skipped += 1
+                elif iimage.Processed:
+                    processed += 1
+                else:
+                    errors += 1
+            mes = _('Files in total: {}, processed: {}, already existing: {}, skipped: {}, errors: {}')
+            mes = mes.format(len(data),processed,present,skipped,errors)
+            sh.objs.get_mes(f,mes,True).show_info()
+        else:
+            sh.com.rep_empty(f)
+        idb.close()
     
     def alter(self):
         if os.path.exists(self.clone):
@@ -72,7 +165,21 @@ class DB:
         self.tracks = ()
         self.path = path
         self.clone = clone
-        self.Success = self.clone and sh.File(file=self.path).Success
+        self.Success = self.clone and sh.File(self.path).Success
+    
+    def fetch_images(self):
+        f = '[unmusic] utils.DB.fetch_images'
+        if self.Success:
+            mes = _('Fetch data')
+            sh.objs.get_mes(f,mes,True).show_debug()
+            query = 'select ALBUMID,IMAGE from ALBUMS order by ALBUMID'
+            try:
+                self.dbc.execute(query)
+                return self.dbc.fetchall()
+            except Exception as e:
+                self.fail(f,e)
+        else:
+            sh.com.cancel(f)
     
     def create_tables(self):
         self.create_albums()
@@ -263,6 +370,7 @@ com = Commands()
 if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     sh.com.start()
-    com.alter()
+    com.extract_images()
+    #com.alter()
     #lg.objs.get_db().close()
     sh.com.end()
