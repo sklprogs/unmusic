@@ -13,18 +13,22 @@ class Commands:
         pass
         
     def show_query(self):
-        lg.objs.get_db().updateDB ('begin;select ALBUM from ALBUMS \
-                                    where ARTIST="%s";commit;' \
-                                   % ("Jean-Sebastien Royer",)
-                                  )
-        print(lg.objs.db.dbc.fetchone())
+        f = '[unmusic] tests.Commands.show_query'
+        query = 'begin;select ALBUM from ALBUMS where ARTIST="{}" \
+                ;commit;'.format('Jean-Sebastien Royer')
+        lg.objs.get_db().updateDB(query)
+        result = lg.objs.db.dbc.fetchone()
+        if result:
+            mes = result[0]
+        else:
+            mes = _('Not found!')
+        sh.objs.get_mes(f,mes,True).show_debug()
     
     def show_mixed_rating(self):
         lg.objs.get_db().albumid = 7
-        lg.objs.db.dbc.execute ('update TRACKS set RATING = ? \
-                                  where ALBUMID = ? and NO <= ?'
-                                 ,(7,lg.objs.db.albumid,5,)
-                                )
+        query = 'update TRACKS set RATING = ? where ALBUMID = ? \
+                 and NO <= ?'
+        lg.objs.db.dbc.execute(query,(7,lg.objs.db.albumid,5,))
         lg.objs.db.save()
         lg.objs.db.dbc.execute('select * from TRACKS')
         rows = lg.objs.db.get_tracks()
@@ -45,7 +49,7 @@ class Commands:
             itracks.add()
         for i in range(len(itracks.tracks)):
             itracks.tracks[i].ent_tno.insert(i+1)
-            itracks.tracks[i].ent_tit.insert(_('Track #%d') % (i + 1))
+            itracks.tracks[i].ent_tit.insert(_('Track #{}').format(i+1))
         itracks.add_after()
         itracks.show()
     
@@ -66,6 +70,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    print(lg.objs.get_db().get_next_rated())
+    com.show_query()
     lg.objs.get_db().close()
     sh.com.end()
