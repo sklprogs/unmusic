@@ -25,15 +25,10 @@ class Commands:
         f = '[unmusic] utils.Commands.show_cyphered'
         if lg.objs.get_db().Success:
             titles = []
+            #query = 'select TITLE from TRACKS order by ALBUMID'
+            query = 'select ALBUM from ALBUMS order by ALBUM'
             try:
-                '''
-                lg.objs.db.dbc.execute ('select TITLE from TRACKS \
-                                         order by ALBUMID'
-                                       )
-                '''
-                lg.objs.db.dbc.execute ('select ALBUM from ALBUMS \
-                                         order by ALBUM'
-                                       )
+                lg.objs.db.dbc.execute(query)
                 titles = lg.objs.db.dbc.fetchall()
                 if titles:
                     titles = [item[0] for item in titles]

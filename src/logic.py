@@ -1034,17 +1034,16 @@ class DB:
     def get_albums(self,limit=0):
         f = '[unmusic] logic.DB.get_albums'
         if self.Success:
+            query = 'select ALBUMID,ALBUM,ARTIST,YEAR from ALBUMS \
+                     order by ALBUMID'
+            if limit:
+                query += ' limit ?'
             try:
                 # limit=0 provides an empty ouput
                 if limit:
-                    self.dbc.execute ('select ALBUMID,ALBUM,ARTIST,YEAR\
-                                       from ALBUMS order by ALBUMID \
-                                       limit ?',(limit,)
-                                     )
+                    self.dbc.execute(query,(limit,))
                 else:
-                    self.dbc.execute ('select ALBUMID,ALBUM,ARTIST,YEAR\
-                                       from ALBUMS order by ALBUMID'
-                                     )
+                    self.dbc.execute(query)
                 return self.dbc.fetchall()
             except Exception as e:
                 self.fail(f,e)
@@ -1058,12 +1057,10 @@ class DB:
         '''
         f = '[unmusic] logic.DB.get_rates'
         if self.Success:
+            query = 'select RATING from TRACKS where ALBUMID = ? \
+                     order by NO'
             try:
-                self.dbc.execute ('select RATING from TRACKS \
-                                   where ALBUMID = ? \
-                                   order by NO'
-                                 ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1075,12 +1072,10 @@ class DB:
     def get_prev_rated(self,rating=0):
         f = '[unmusic] logic.DB.get_prev_rated'
         if self.Success:
+            query = 'select ALBUMID from TRACKS where ALBUMID < ? \
+                     and RATING = ? order by ALBUMID desc'
             try:
-                self.dbc.execute ('select ALBUMID from TRACKS \
-                                   where ALBUMID < ? and RATING = ? \
-                                   order by ALBUMID desc'
-                                 ,(self.albumid,rating,)
-                                 )
+                self.dbc.execute(query,(self.albumid,rating,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1092,12 +1087,10 @@ class DB:
     def get_next_rated(self,rating=0):
         f = '[unmusic] logic.DB.get_next_rated'
         if self.Success:
+            query = 'select ALBUMID from TRACKS where ALBUMID > ? \
+                     and RATING = ? order by ALBUMID'
             try:
-                self.dbc.execute ('select ALBUMID from TRACKS \
-                                   where ALBUMID > ? and RATING = ? \
-                                   order by ALBUMID'
-                                 ,(self.albumid,rating,)
-                                 )
+                self.dbc.execute(query,(self.albumid,rating,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1117,10 +1110,10 @@ class DB:
                     'unmusic.Copy.select_albums'. To avoid this, we add
                     ALBUMID.
                 '''
+                query = 'select ALBUMID,ARTIST,YEAR,ALBUM from ALBUMS \
+                         where ALBUMID in ({})'
+                query = query.format(','.join('?'*len(ids)))
                 try:
-                    query = 'select ALBUMID,ARTIST,YEAR,ALBUM \
-                             from ALBUMS where ALBUMID in (%s)' \
-                             % ','.join('?'*len(ids))
                     self.dbc.execute(query,ids)
                     result = self.dbc.fetchall()
                     if result:
@@ -1143,18 +1136,15 @@ class DB:
     def get_unknown_genre(self,limit=0):
         f = '[unmusic] logic.DB.get_unknown_genre'
         if self.Success:
+            query1 = 'select ALBUMID from ALBUMS where GENRE = ? \
+                      limit ? order by ALBUMID'
+            query2 = 'select ALBUMID from ALBUMS where GENRE = ? \
+                      order by ALBUMID'
             try:
                 if limit:
-                    self.dbc.execute ('select ALBUMID from ALBUMS \
-                                       where GENRE = ? limit ? \
-                                       order by ALBUMID'
-                                     ,('?',limit,)
-                                     )
+                    self.dbc.execute(query1,('?',limit,))
                 else:
-                    self.dbc.execute ('select ALBUMID from ALBUMS \
-                                       where GENRE = ? order by ALBUMID'
-                                     ,('?',)
-                                     )
+                    self.dbc.execute(query2,('?',))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1166,17 +1156,15 @@ class DB:
     def get_rated(self,rating=0,limit=0):
         f = '[unmusic] logic.DB.get_unrated'
         if self.Success:
+            query = 'select distinct ALBUMID from TRACKS \
+                     where RATING = ?'
+            if limit:
+                query += ' limit ?'
             try:
                 if limit:
-                    self.dbc.execute ('select distinct ALBUMID \
-                                       from TRACKS where RATING = ? \
-                                       limit ?',(rating,limit,)
-                                     )
+                    self.dbc.execute(query,(rating,limit,))
                 else:
-                    self.dbc.execute ('select distinct ALBUMID \
-                                       from TRACKS where RATING = ?'
-                                     ,(rating,)
-                                     )
+                    self.dbc.execute(query,(rating,))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1188,13 +1176,11 @@ class DB:
     def get_good_tracks(self,rating=8):
         f = '[unmusic] logic.DB.get_good_tracks'
         if self.Success:
+            query = 'select TITLE,NO,LYRICS,COMMENT,BITRATE,LENGTH \
+                    ,RATING from TRACKS where ALBUMID = ? \
+                     and RATING >= ? order by NO'
             try:
-                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
-                                           ,BITRATE,LENGTH,RATING \
-                                   from     TRACKS where ALBUMID = ? \
-                                   and      RATING >= ?\
-                                   order by NO',(self.albumid,rating,)
-                                 )
+                self.dbc.execute(query,(self.albumid,rating,))
                 return self.dbc.fetchall()
             except Exception as e:
                 self.fail(f,e)
@@ -1208,10 +1194,9 @@ class DB:
         '''
         f = '[unmusic] logic.DB.has_id'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS where ALBUMID = ?'
             try:
-                self.dbc.execute ('select ALBUMID from ALBUMS \
-                                   where  ALBUMID = ?',(albumid,)
-                                 )
+                self.dbc.execute(query,(albumid,))
                 return self.dbc.fetchone()
             except Exception as e:
                 self.fail(f,e)
@@ -1223,14 +1208,13 @@ class DB:
         if self.Success:
             if no and data:
                 if len(data) == 4:
+                    query = 'update TRACKS set TITLE = ?,LYRICS = ? \
+                            ,COMMENT = ?,RATING = ? where ALBUMID = ? \
+                             and NO = ?'
                     try:
-                        self.dbc.execute ('update TRACKS set TITLE = ?\
-                                                 ,LYRICS = ?,COMMENT = ?\
-                                                 ,RATING = ? \
-                                           where ALBUMID = ? and NO = ?'
-                                          ,(data[0],data[1],data[2]
-                                           ,data[3],self.albumid,no
-                                           )
+                        self.dbc.execute (query,(data[0],data[1],data[2]
+                                                ,data[3],self.albumid,no
+                                                )
                                          )
                     except Exception as e:
                         self.fail(f,e)
@@ -1253,11 +1237,10 @@ class DB:
         '''
         f = '[unmusic] logic.DB.check_nos'
         if self.Success:
+            query = 'select NO from TRACKS where ALBUMID = ? \
+                     order by NO'
             try:
-                self.dbc.execute ('select NO from TRACKS \
-                                   where ALBUMID = ? order by NO'
-                                  ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchall()
                 if result:
                     result = [item[0] for item in result]
@@ -1271,11 +1254,10 @@ class DB:
     def get_length(self):
         f = '[unmusic] logic.DB.get_length'
         if self.Success:
+            query = 'select LENGTH from TRACKS where ALBUMID = ? \
+                     order by NO'
             try:
-                self.dbc.execute ('select LENGTH from TRACKS \
-                                   where ALBUMID = ? order by NO'
-                                  ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1287,11 +1269,10 @@ class DB:
     def get_bitrate(self):
         f = '[unmusic] logic.DB.get_bitrate'
         if self.Success:
+            query = 'select BITRATE from TRACKS where ALBUMID = ? \
+                     order by NO'
             try:
-                self.dbc.execute ('select BITRATE from TRACKS \
-                                   where ALBUMID = ? order by NO'
-                                  ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1303,13 +1284,11 @@ class DB:
     def delete(self):
         f = '[unmusic] logic.DB.delete'
         if self.Success:
+            query1 = 'delete from ALBUMS where ALBUMID = ?'
+            query2 = 'delete from TRACKS where ALBUMID = ?'
             try:
-                self.dbc.execute ('delete from ALBUMS where ALBUMID = ?'
-                                 ,(self.albumid,)
-                                 )
-                self.dbc.execute ('delete from TRACKS where ALBUMID = ?'
-                                 ,(self.albumid,)
-                                 )
+                self.dbc.execute(query1,(self.albumid,))
+                self.dbc.execute(query2,(self.albumid,))
             except Exception as e:
                 self.fail(f,e)
         else:
@@ -1318,11 +1297,10 @@ class DB:
     def get_rating(self):
         f = '[unmusic] logic.DB.get_rating'
         if self.Success:
+            query = 'select RATING from TRACKS where ALBUMID = ? \
+                     order by NO'
             try:
-                self.dbc.execute ('select RATING from TRACKS \
-                                   where ALBUMID = ? order by NO'
-                                  ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchall()
                 if result:
                     return [item[0] for item in result]
@@ -1334,11 +1312,9 @@ class DB:
     def set_rating(self,value):
         f = '[unmusic] logic.DB.set_rating'
         if self.Success:
+            query = 'update TRACKS set RATING = ? where ALBUMID = ?'
             try:
-                self.dbc.execute ('update TRACKS set RATING = ? \
-                                   where ALBUMID = ?'
-                                 ,(value,self.albumid,)
-                                 )
+                self.dbc.execute(query,(value,self.albumid,))
             except Exception as e:
                 self.fail(f,e)
         else:
@@ -1362,12 +1338,10 @@ class DB:
     def get_tracks(self):
         f = '[unmusic] logic.DB.get_tracks'
         if self.Success:
+            query = 'select TITLE,NO,LYRICS,COMMENT,BITRATE,LENGTH \
+                    ,RATING from TRACKS where ALBUMID = ? order by NO'
             try:
-                self.dbc.execute ('select   TITLE,NO,LYRICS,COMMENT \
-                                           ,BITRATE,LENGTH,RATING \
-                                   from     TRACKS where ALBUMID = ? \
-                                   order by NO',(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 return self.dbc.fetchall()
             except Exception as e:
                 self.fail(f,e)
@@ -1378,15 +1352,12 @@ class DB:
         f = '[unmusic] logic.DB.search_track'
         if self.Success:
             if pattern:
+                query = 'select ALBUMID,TITLE,NO,LYRICS,COMMENT,BITRATE\
+                        ,LENGTH,RATING from TRACKS where SEARCH like ? \
+                         order by ALBUMID,NO limit ?'
                 pattern = '%' + pattern.lower() + '%'
                 try:
-                    self.dbc.execute ('select   ALBUMID,TITLE,NO,LYRICS\
-                                               ,COMMENT,BITRATE,LENGTH\
-                                               ,RATING from TRACKS \
-                                       where    SEARCH like ? \
-                                       order by ALBUMID,NO limit ?'
-                                      ,(pattern,limit,)
-                                     )
+                    self.dbc.execute(query,(pattern,limit,))
                     return self.dbc.fetchall()
                 except Exception as e:
                     self.fail(f,e)
@@ -1399,14 +1370,11 @@ class DB:
         f = '[unmusic] logic.DB.get_next_album'
         if self.Success:
             if search:
+                query = 'select ALBUMID from ALBUMS where ALBUMID > ? \
+                         and SEARCH like ? order by ALBUMID'
                 search = '%' + search.lower() + '%'
                 try:
-                    self.dbc.execute ('select   ALBUMID from ALBUMS \
-                                       where    ALBUMID > ? \
-                                       and      SEARCH like ? \
-                                       order by ALBUMID'
-                                      ,(self.albumid,search,)
-                                     )
+                    self.dbc.execute(query,(self.albumid,search,))
                     result = self.dbc.fetchone()
                     if result:
                         return result[0]
@@ -1421,14 +1389,11 @@ class DB:
         f = '[unmusic] logic.DB.get_prev_album'
         if self.Success:
             if search:
+                query = 'select ALBUMID from ALBUMS where ALBUMID < ? \
+                         and SEARCH like ? order by ALBUMID desc'
                 search = '%' + search.lower() + '%'
                 try:
-                    self.dbc.execute ('select   ALBUMID from ALBUMS \
-                                       where    ALBUMID < ? \
-                                       and      SEARCH like ? \
-                                       order by ALBUMID desc'
-                                      ,(self.albumid,search,)
-                                     )
+                    self.dbc.execute(query,(self.albumid,search,))
                     result = self.dbc.fetchone()
                     if result:
                         return result[0]
@@ -1442,12 +1407,10 @@ class DB:
     def get_prev_id(self):
         f = '[unmusic] logic.DB.get_prev_id'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS where ALBUMID < ? \
+                     order by ALBUMID desc'
             try:
-                self.dbc.execute ('select   ALBUMID from ALBUMS \
-                                   where    ALBUMID < ? \
-                                   order by ALBUMID desc'
-                                 ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1459,11 +1422,10 @@ class DB:
     def get_next_id(self):
         f = '[unmusic] logic.DB.get_next_id'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS where ALBUMID > ? \
+                     order by ALBUMID'
             try:
-                self.dbc.execute ('select ALBUMID from ALBUMS \
-                                   where  ALBUMID > ? order by ALBUMID'
-                                  ,(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1475,12 +1437,10 @@ class DB:
     def get_album(self):
         f = '[unmusic] logic.DB.get_album'
         if self.Success:
+            query = 'select ALBUM,ARTIST,YEAR,GENRE,COUNTRY,COMMENT \
+                    ,IMAGE from ALBUMS where ALBUMID = ?'
             try:
-                self.dbc.execute ('select ALBUM,ARTIST,YEAR,GENRE\
-                                         ,COUNTRY,COMMENT,IMAGE \
-                                   from   ALBUMS \
-                                   where  ALBUMID = ?',(self.albumid,)
-                                 )
+                self.dbc.execute(query,(self.albumid,))
                 return self.dbc.fetchone()
             except Exception as e:
                 self.fail(f,e)
@@ -1490,13 +1450,12 @@ class DB:
     def get_min_id(self):
         f = '[unmusic] logic.DB.get_min_id'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS order by ALBUMID'
             try:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
                     already in DB.
                 '''
-                self.dbc.execute ('select   ALBUMID from ALBUMS \
-                                   order by ALBUMID'
-                                 )
+                self.dbc.execute(query)
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1508,13 +1467,12 @@ class DB:
     def get_max_id(self):
         f = '[unmusic] logic.DB.get_max_id'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS order by ALBUMID desc'
             try:
                 ''' 'self.dbc.lastrowid' returns 'None' if an album is
                     already in DB.
                 '''
-                self.dbc.execute ('select   ALBUMID from ALBUMS \
-                                   order by ALBUMID desc'
-                                 )
+                self.dbc.execute(query)
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1529,12 +1487,10 @@ class DB:
         '''
         f = '[unmusic] logic.DB.has_track'
         if self.Success:
+            query = 'select TITLE from TRACKS where ALBUMID = ? \
+                     and NO = ? and BITRATE = ?'
             try:
-                self.dbc.execute ('select TITLE from TRACKS \
-                                   where  ALBUMID = ? and NO = ? \
-                                   and    BITRATE = ?'
-                                  ,(self.albumid,no,bitrate,)
-                                 )
+                self.dbc.execute(query,(self.albumid,no,bitrate,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1546,12 +1502,10 @@ class DB:
     def has_album(self,artist,year,album):
         f = '[unmusic] logic.DB.has_album'
         if self.Success:
+            query = 'select ALBUMID from ALBUMS where ARTIST = ? \
+                     and YEAR = ? and ALBUM = ?'
             try:
-                self.dbc.execute ('select ALBUMID from ALBUMS \
-                                   where  ARTIST = ? and YEAR = ? \
-                                   and    ALBUM = ?'
-                                   ,(artist,year,album,)
-                                 )
+                self.dbc.execute(query,(artist,year,album,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -1585,10 +1539,9 @@ class DB:
         f = '[unmusic] logic.DB.add_track'
         if self.Success:
             if data:
+                query = 'insert into TRACKS values (?,?,?,?,?,?,?,?,?)'
                 try:
-                    self.dbc.execute ('insert into TRACKS values \
-                                       (?,?,?,?,?,?,?,?,?)',data
-                                     )
+                    self.dbc.execute(query,data)
                 except Exception as e:
                     self.fail(f,e)
             else:
@@ -1600,10 +1553,10 @@ class DB:
         f = '[unmusic] logic.DB.add_album'
         if self.Success:
             if data:
+                query = 'insert into ALBUMS \
+                         values (NULL,?,?,?,?,?,?,?,?)'
                 try:
-                    self.dbc.execute ('insert into ALBUMS values \
-                                       (NULL,?,?,?,?,?,?,?,?)',data
-                                     )
+                    self.dbc.execute(query,data)
                 except Exception as e:
                     self.fail(f,e)
             else:
@@ -1614,21 +1567,20 @@ class DB:
     def create_tracks(self):
         f = '[unmusic] logic.DB.create_tracks'
         if self.Success:
-            try:
-                # 9 columns by now
-                self.dbc.execute (
-                    'create table if not exists TRACKS (\
-                     ALBUMID   integer \
-                    ,TITLE     text    \
-                    ,NO        integer \
-                    ,LYRICS    text    \
-                    ,COMMENT   text    \
-                    ,SEARCH    text    \
-                    ,BITRATE   integer \
-                    ,LENGTH    integer \
-                    ,RATING    integer \
+            # 9 columns by now
+            query = 'create table if not exists TRACKS (\
+                     ALBUMID integer \
+                    ,TITLE   text    \
+                    ,NO      integer \
+                    ,LYRICS  text    \
+                    ,COMMENT text    \
+                    ,SEARCH  text    \
+                    ,BITRATE integer \
+                    ,LENGTH  integer \
+                    ,RATING  integer \
                                                        )'
-                                 )
+            try:
+                self.dbc.execute(query)
             except Exception as e:
                 self.fail(f,e)
         else:
@@ -1637,21 +1589,20 @@ class DB:
     def create_albums(self):
         f = '[unmusic] logic.DB.create_albums'
         if self.Success:
-            try:
-                # 8 columns by now
-                self.dbc.execute (
-                    'create table if not exists ALBUMS (\
-                     ALBUMID   integer primary key autoincrement \
-                    ,ALBUM     text    \
-                    ,ARTIST    text    \
-                    ,YEAR      integer \
-                    ,GENRE     text    \
-                    ,COUNTRY   text    \
-                    ,COMMENT   text    \
-                    ,SEARCH    text    \
-                    ,IMAGE     binary  \
+            # 8 columns by now
+            query = 'create table if not exists ALBUMS (\
+                     ALBUMID integer primary key autoincrement \
+                    ,ALBUM   text    \
+                    ,ARTIST  text    \
+                    ,YEAR    integer \
+                    ,GENRE   text    \
+                    ,COUNTRY text    \
+                    ,COMMENT text    \
+                    ,SEARCH  text    \
+                    ,IMAGE   binary  \
                                                        )'
-                                 )
+            try:
+                self.dbc.execute(query)
             except Exception as e:
                 self.fail(f,e)
         else:
