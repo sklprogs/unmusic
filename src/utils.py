@@ -26,7 +26,7 @@ class Image:
         if self.Success:
             if self.path:
                 if os.path.exists(self.path):
-                    mes = _('File "{}" already exists!')
+                    mes = _('File "{}" already exists.')
                     mes = mes.format(self.path)
                     sh.objs.get_mes(f,mes,True).show_debug()
                     self.Present = True
