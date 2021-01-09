@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 22:59+0300\n"
-"PO-Revision-Date: 2021-01-09 23:01+0300\n"
+"POT-Creation-Date: 2021-01-10 00:15+0300\n"
+"PO-Revision-Date: 2021-01-10 00:15+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -63,8 +63,8 @@ msgstr ""
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: base/bin/unmusic/src/db.py:611 base/bin/unmusic/src/utils.py:194
-#: base/bin/unmusic/src/utils.py:200
+#: base/bin/unmusic/src/db.py:611 base/bin/unmusic/src/utils.py:197
+#: base/bin/unmusic/src/utils.py:203
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -123,7 +123,7 @@ msgstr "Копировать музыку"
 
 #: base/bin/unmusic/src/gui.py:109 bin/skl_shared/src/shared.py:639
 #: bin/skl_shared/src/shared.py:713 bin/skl_shared/src/shared.py:1305
-#: bin/skl_shared/src/shared.py:1586 bin/skl_shared/src/shared.py:2721
+#: bin/skl_shared/src/shared.py:1586 bin/skl_shared/src/shared.py:2771
 msgid "Close"
 msgstr "Закрыть"
 
@@ -394,7 +394,7 @@ msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
 #: base/bin/unmusic/src/logic.py:171 base/bin/unmusic/src/unmusic.py:1321
-#: bin/skl_shared/src/shared.py:4105
+#: bin/skl_shared/src/shared.py:4155
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -430,7 +430,7 @@ msgstr "обработано"
 #: bin/skl_shared/src/logic.py:2306 bin/skl_shared/src/logic.py:2779
 #: bin/skl_shared/src/logic.py:4513 bin/skl_shared/src/logic.py:4673
 #: bin/skl_shared/src/logic.py:4707 bin/skl_shared/src/logic.py:4792
-#: bin/skl_shared/src/shared.py:2444 bin/skl_shared/src/shared.py:5108
+#: bin/skl_shared/src/shared.py:2494 bin/skl_shared/src/shared.py:5158
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
@@ -452,15 +452,15 @@ msgstr "Каталог \"{}\" не содержит аудиофайлов."
 #: bin/skl_shared/src/logic.py:1347 bin/skl_shared/src/logic.py:2067
 #: bin/skl_shared/src/logic.py:2535 bin/skl_shared/src/logic.py:3375
 #: bin/skl_shared/src/logic.py:3707 bin/skl_shared/src/logic.py:4363
-#: bin/skl_shared/src/shared.py:2170 bin/skl_shared/src/shared.py:2855
-#: bin/skl_shared/src/shared.py:3285 bin/skl_shared/src/shared.py:4189
+#: bin/skl_shared/src/shared.py:2220 bin/skl_shared/src/shared.py:2905
+#: bin/skl_shared/src/shared.py:3335 bin/skl_shared/src/shared.py:4239
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
 #: base/bin/unmusic/src/logic.py:1067 base/bin/unmusic/src/logic.py:1086
 #: base/bin/unmusic/src/logic.py:1223 base/bin/unmusic/src/logic.py:1238
 #: base/bin/unmusic/src/unmusic.py:808 bin/skl_shared/src/logic.py:3058
-#: bin/skl_shared/src/logic.py:3162 bin/skl_shared/src/shared.py:1973
+#: bin/skl_shared/src/logic.py:3162 bin/skl_shared/src/shared.py:1989
 msgid ""
 "Third-party module has failed!\n"
 "\n"
@@ -527,9 +527,9 @@ msgstr "Ожидание {}"
 #: base/bin/unmusic/src/unmusic.py:837 bin/skl_shared/src/logic.py:108
 #: bin/skl_shared/src/logic.py:122 bin/skl_shared/src/logic.py:934
 #: bin/skl_shared/src/logic.py:2461 bin/skl_shared/src/shared.py:1023
-#: bin/skl_shared/src/shared.py:2394 bin/skl_shared/src/shared.py:2407
-#: bin/skl_shared/src/shared.py:2923 bin/skl_shared/src/shared.py:3292
-#: bin/skl_shared/src/shared.py:3372
+#: bin/skl_shared/src/shared.py:2444 bin/skl_shared/src/shared.py:2457
+#: bin/skl_shared/src/shared.py:2973 bin/skl_shared/src/shared.py:3342
+#: bin/skl_shared/src/shared.py:3422
 msgid ""
 "An unknown mode \"{}\"!\n"
 "\n"
@@ -566,7 +566,7 @@ msgstr "Требуется: {}"
 #: base/bin/unmusic/src/unmusic.py:169 base/bin/unmusic/src/unmusic.py:1337
 #: base/bin/unmusic/src/unmusic.py:1342 bin/skl_shared/src/logic.py:2217
 #: bin/skl_shared/src/logic.py:2264 bin/skl_shared/src/logic.py:2484
-#: bin/skl_shared/src/shared.py:1987
+#: bin/skl_shared/src/shared.py:2003
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -574,7 +574,7 @@ msgstr "Операция отменена пользователем."
 msgid "Calculate required space"
 msgstr "Подсчет требуемого места"
 
-#: base/bin/unmusic/src/unmusic.py:258 base/bin/unmusic/src/utils.py:148
+#: base/bin/unmusic/src/unmusic.py:258 base/bin/unmusic/src/utils.py:151
 #: bin/skl_shared/src/logic.py:4543 bin/skl_shared/src/shared.py:839
 msgid ""
 "Operation has failed!\n"
@@ -620,7 +620,7 @@ msgstr "Для этого альбома дорожки не указаны."
 
 #: base/bin/unmusic/src/unmusic.py:695 base/bin/unmusic/src/unmusic.py:985
 #: base/bin/unmusic/src/unmusic.py:1025 base/bin/unmusic/src/unmusic.py:1050
-#: bin/skl_shared/src/shared.py:5034 bin/skl_shared/src/shared.py:5061
+#: bin/skl_shared/src/shared.py:5084 bin/skl_shared/src/shared.py:5111
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
@@ -654,7 +654,7 @@ msgstr "Некоторые поля были обновлены."
 #: base/bin/unmusic/src/unmusic.py:967 bin/skl_shared/src/logic.py:331
 #: bin/skl_shared/src/logic.py:1131 bin/skl_shared/src/logic.py:1150
 #: bin/skl_shared/src/logic.py:2604 bin/skl_shared/src/logic.py:2624
-#: bin/skl_shared/src/shared.py:4141
+#: bin/skl_shared/src/shared.py:4191
 msgid "The condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -708,15 +708,19 @@ msgstr "Удаление альбомов"
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
+#: base/bin/unmusic/src/utils.py:15
+msgid "Images"
+msgstr "Изображения"
+
 #: base/bin/unmusic/src/utils.py:29
 msgid "File \"{}\" already exists."
 msgstr "Файл \"{}\" уже существует."
 
-#: base/bin/unmusic/src/utils.py:41
+#: base/bin/unmusic/src/utils.py:43
 msgid "Album {} has no cover!"
 msgstr "У альбома {} нет обложки!"
 
-#: base/bin/unmusic/src/utils.py:104
+#: base/bin/unmusic/src/utils.py:107
 msgid ""
 "Files in total: {}, processed: {}, already existing: {}, skipped: {}, "
 "errors: {}"
@@ -724,41 +728,41 @@ msgstr ""
 "Всего файлов: {}, обработано: {}, уже существуют: {}, пропущено: {}, ошибок: "
 "{}"
 
-#: base/bin/unmusic/src/utils.py:173
+#: base/bin/unmusic/src/utils.py:176
 msgid "Fetch data"
 msgstr "Получение данных"
 
-#: base/bin/unmusic/src/utils.py:239 base/bin/unmusic/src/utils.py:255
+#: base/bin/unmusic/src/utils.py:242 base/bin/unmusic/src/utils.py:258
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
 
-#: base/bin/unmusic/src/utils.py:335 bin/skl_shared/src/logic.py:2165
+#: base/bin/unmusic/src/utils.py:338 bin/skl_shared/src/logic.py:2165
 #: bin/skl_shared/src/logic.py:3011
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
 #: bin/skl_shared/src/gui.py:1252 bin/skl_shared/src/logic.py:428
 #: bin/skl_shared/src/logic.py:475 bin/skl_shared/src/logic.py:998
-#: bin/skl_shared/src/logic.py:4581 bin/skl_shared/src/shared.py:3842
+#: bin/skl_shared/src/logic.py:4581 bin/skl_shared/src/shared.py:3892
 msgid "WARNING"
 msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
 #: bin/skl_shared/src/gui.py:1259 bin/skl_shared/src/logic.py:469
-#: bin/skl_shared/src/logic.py:998 bin/skl_shared/src/shared.py:3834
+#: bin/skl_shared/src/logic.py:998 bin/skl_shared/src/shared.py:3884
 msgid "ERROR"
 msgstr "ОШИБКА"
 
 #: bin/skl_shared/src/gui.py:1266 bin/skl_shared/src/logic.py:430
-#: bin/skl_shared/src/logic.py:493 bin/skl_shared/src/shared.py:3867
-#: bin/skl_shared/src/shared.py:4071
+#: bin/skl_shared/src/logic.py:493 bin/skl_shared/src/shared.py:3917
+#: bin/skl_shared/src/shared.py:4121
 msgid "QUESTION"
 msgstr "ВОПРОС"
 
 #: bin/skl_shared/src/gui.py:1273 bin/skl_shared/src/logic.py:426
 #: bin/skl_shared/src/logic.py:453 bin/skl_shared/src/logic.py:481
 #: bin/skl_shared/src/logic.py:976 bin/skl_shared/src/logic.py:1018
-#: bin/skl_shared/src/logic.py:4589 bin/skl_shared/src/shared.py:3851
-#: bin/skl_shared/src/shared.py:3859
+#: bin/skl_shared/src/logic.py:4589 bin/skl_shared/src/shared.py:3901
+#: bin/skl_shared/src/shared.py:3909
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
@@ -875,7 +879,7 @@ msgid "Empty input is not allowed!"
 msgstr "Пустые входные данные не допускаются!"
 
 #: bin/skl_shared/src/logic.py:1248 bin/skl_shared/src/logic.py:2133
-#: bin/skl_shared/src/shared.py:3021 bin/skl_shared/src/shared.py:3747
+#: bin/skl_shared/src/shared.py:3071 bin/skl_shared/src/shared.py:3797
 msgid "File \"{}\" has not been found!"
 msgstr "Файл \"{}\" не найден!"
 
@@ -1282,7 +1286,7 @@ msgstr ""
 "\"{}\"."
 
 #: bin/skl_shared/src/shared.py:68 bin/skl_shared/src/shared.py:83
-#: bin/skl_shared/src/shared.py:4341 bin/skl_shared/src/shared.py:4359
+#: bin/skl_shared/src/shared.py:4391 bin/skl_shared/src/shared.py:4409
 msgid "Compare texts:"
 msgstr "Сравните тексты:"
 
@@ -1291,7 +1295,7 @@ msgid "Close this window"
 msgstr "Закрыть это окно"
 
 #: bin/skl_shared/src/shared.py:714 bin/skl_shared/src/shared.py:1304
-#: bin/skl_shared/src/shared.py:2720 bin/skl_shared/src/shared.py:3949
+#: bin/skl_shared/src/shared.py:2770 bin/skl_shared/src/shared.py:3999
 msgid "Reject and close"
 msgstr "Отказаться и закрыть"
 
@@ -1300,8 +1304,8 @@ msgid "Restore the text"
 msgstr "Восстановить текст"
 
 #: bin/skl_shared/src/shared.py:730 bin/skl_shared/src/shared.py:1318
-#: bin/skl_shared/src/shared.py:2728 bin/skl_shared/src/shared.py:3941
-#: bin/skl_shared/src/shared.py:3955
+#: bin/skl_shared/src/shared.py:2778 bin/skl_shared/src/shared.py:3991
+#: bin/skl_shared/src/shared.py:4005
 msgid "Accept and close"
 msgstr "Принять и закрыть"
 
@@ -1318,7 +1322,7 @@ msgstr "Очистить поле"
 msgid "Clear"
 msgstr "Очистить"
 
-#: bin/skl_shared/src/shared.py:1319 bin/skl_shared/src/shared.py:2729
+#: bin/skl_shared/src/shared.py:1319 bin/skl_shared/src/shared.py:2779
 msgid "Save and close"
 msgstr "Запомнить и выйти"
 
@@ -1335,8 +1339,8 @@ msgid "Select files:"
 msgstr "Выберите файлы:"
 
 #: bin/skl_shared/src/shared.py:1781 bin/skl_shared/src/shared.py:1796
-#: bin/skl_shared/src/shared.py:1956 bin/skl_shared/src/shared.py:3011
-#: bin/skl_shared/src/shared.py:3054 bin/skl_shared/src/shared.py:3056
+#: bin/skl_shared/src/shared.py:1956 bin/skl_shared/src/shared.py:3061
+#: bin/skl_shared/src/shared.py:3104 bin/skl_shared/src/shared.py:3106
 msgid "Please wait..."
 msgstr "Подождите..."
 
@@ -1345,99 +1349,99 @@ msgstr "Подождите..."
 msgid "The required widget has not been created yet!"
 msgstr "Требуемый виджет еще не был создан!"
 
-#: bin/skl_shared/src/shared.py:2218
+#: bin/skl_shared/src/shared.py:2268
 msgid "Clipboard is empty!"
 msgstr "Буфер обмена пуст!"
 
-#: bin/skl_shared/src/shared.py:2248
+#: bin/skl_shared/src/shared.py:2298
 msgid "Paste a special symbol"
 msgstr "Вставить специальный символ"
 
-#: bin/skl_shared/src/shared.py:2520
+#: bin/skl_shared/src/shared.py:2570
 msgid "Remove item #{}"
 msgstr "Удаление элемента №{}"
 
-#: bin/skl_shared/src/shared.py:2523
+#: bin/skl_shared/src/shared.py:2573
 msgid "No item #{}!"
 msgstr "Элемент №{} отсутствует!"
 
-#: bin/skl_shared/src/shared.py:2591
+#: bin/skl_shared/src/shared.py:2641
 msgid "Item \"{}\" is not in list!"
 msgstr "Элемент \"{}\" не в списке!"
 
-#: bin/skl_shared/src/shared.py:2929
+#: bin/skl_shared/src/shared.py:2979
 msgid "Set the geometry to \"{}x{}+{}+{}\""
 msgstr "Изменение геометрии виджета на \"{}x{}+{}+{}\""
 
-#: bin/skl_shared/src/shared.py:3389
+#: bin/skl_shared/src/shared.py:3439
 msgid "Widget width ({}) should not exceed screen width ({})!"
 msgstr "Ширина виджета ({}) не должна превышать ширины экрана ({})!"
 
-#: bin/skl_shared/src/shared.py:3400
+#: bin/skl_shared/src/shared.py:3450
 msgid "Widget height ({}) should not exceed screen height ({})!"
 msgstr "Высота виджета ({}) не должна превышать высоту экрана ({})!"
 
-#: bin/skl_shared/src/shared.py:3429
+#: bin/skl_shared/src/shared.py:3479
 msgid "Widget 1 geometry: {}x{}+{}+{}"
 msgstr "Геометрия виджета 1: {}x{}+{}+{}"
 
-#: bin/skl_shared/src/shared.py:3435
+#: bin/skl_shared/src/shared.py:3485
 msgid "Widget 2 geometry: {}x{}+{}+{}"
 msgstr "Геометрия виджета 2: {}x{}+{}+{}"
 
-#: bin/skl_shared/src/shared.py:3532
+#: bin/skl_shared/src/shared.py:3582
 msgid "Wrong font: \"{}\"!"
 msgstr "Неправильный шрифт: \"{}\"!"
 
-#: bin/skl_shared/src/shared.py:3582
+#: bin/skl_shared/src/shared.py:3632
 msgid "Save geometry: {}"
 msgstr "Сохранение геометрии: {}"
 
-#: bin/skl_shared/src/shared.py:3591
+#: bin/skl_shared/src/shared.py:3641
 msgid "Restore geometry: {}"
 msgstr "Восстановление геометрии: {}"
 
-#: bin/skl_shared/src/shared.py:3610
+#: bin/skl_shared/src/shared.py:3660
 msgid "Failed to change window properties!"
 msgstr "Не удалось изменить свойства окна!"
 
-#: bin/skl_shared/src/shared.py:3695
+#: bin/skl_shared/src/shared.py:3745
 msgid "Failed to get the window handle!"
 msgstr "Не удалось получить дескриптор окна!"
 
-#: bin/skl_shared/src/shared.py:3806 bin/skl_shared/src/shared.py:4150
+#: bin/skl_shared/src/shared.py:3856 bin/skl_shared/src/shared.py:4200
 msgid "Test:"
 msgstr "Тест:"
 
-#: bin/skl_shared/src/shared.py:3933
+#: bin/skl_shared/src/shared.py:3983
 msgid "Yes"
 msgstr "Да"
 
-#: bin/skl_shared/src/shared.py:3934
+#: bin/skl_shared/src/shared.py:3984
 msgid "No"
 msgstr "Нет"
 
-#: bin/skl_shared/src/shared.py:3937
+#: bin/skl_shared/src/shared.py:3987
 msgid "Cancel"
 msgstr "Отмена"
 
-#: bin/skl_shared/src/shared.py:4117
+#: bin/skl_shared/src/shared.py:4167
 msgid "SECTION"
 msgstr "СЕКЦИЯ"
 
-#: bin/skl_shared/src/shared.py:4117
+#: bin/skl_shared/src/shared.py:4167
 msgid "KEY"
 msgstr "КЛЮЧ"
 
-#: bin/skl_shared/src/shared.py:4117
+#: bin/skl_shared/src/shared.py:4167
 msgid "VALUE"
 msgstr "ЗНАЧЕНИЕ"
 
-#: bin/skl_shared/src/shared.py:4137
+#: bin/skl_shared/src/shared.py:4187
 msgid "An unknown color \"{}\"!"
 msgstr "Неизвестный цвет \"{}\"!"
 
-#: bin/skl_shared/src/shared.py:4165
+#: bin/skl_shared/src/shared.py:4215
 msgid ""
 "The operation has failed!\n"
 "\n"
@@ -1447,63 +1451,63 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: bin/skl_shared/src/shared.py:4182
+#: bin/skl_shared/src/shared.py:4232
 msgid "Failed to enable key combination \"{}\"!"
 msgstr "Не удалось задействовать сочетание клавиш \"{}\"!"
 
-#: bin/skl_shared/src/shared.py:4186
+#: bin/skl_shared/src/shared.py:4236
 msgid "Wrong input data: \"{}\""
 msgstr "Недопустимые входные данные: \"{}\"!"
 
-#: bin/skl_shared/src/shared.py:4547
+#: bin/skl_shared/src/shared.py:4597
 msgid "Search:"
 msgstr "Поиск:"
 
-#: bin/skl_shared/src/shared.py:4550
+#: bin/skl_shared/src/shared.py:4600
 msgid "Enter a string to search:"
 msgstr "Строка для поиска:"
 
-#: bin/skl_shared/src/shared.py:4569
+#: bin/skl_shared/src/shared.py:4619
 msgid "Case-sensitive search"
 msgstr "Поиск с учетом регистра"
 
-#: bin/skl_shared/src/shared.py:4580
+#: bin/skl_shared/src/shared.py:4630
 msgid "Loop"
 msgstr "Зациклить"
 
-#: bin/skl_shared/src/shared.py:5025
+#: bin/skl_shared/src/shared.py:5075
 msgid "No more matches, continuing from the bottom!"
 msgstr "Совпадений больше нет, поиск продолжен с конца!"
 
-#: bin/skl_shared/src/shared.py:5031 bin/skl_shared/src/shared.py:5058
+#: bin/skl_shared/src/shared.py:5081 bin/skl_shared/src/shared.py:5108
 msgid "No more matches!"
 msgstr "Совпадений больше нет!"
 
-#: bin/skl_shared/src/shared.py:5053
+#: bin/skl_shared/src/shared.py:5103
 msgid "No more matches, continuing from the top!"
 msgstr "Совпадений больше нет, поиск продолжен с начала!"
 
-#: bin/skl_shared/src/shared.py:5087
+#: bin/skl_shared/src/shared.py:5137
 msgid "Failed to find reference \"{}\" with index {}!"
 msgstr "Не удалось найти ссылку \"{}\" с индексом {}!"
 
-#: bin/skl_shared/src/shared.py:5103
+#: bin/skl_shared/src/shared.py:5153
 msgid "Pattern: \"{}\"; index: {}"
 msgstr "Образец: \"{}\"; индекс: {}"
 
-#: bin/skl_shared/src/shared.py:5128
+#: bin/skl_shared/src/shared.py:5178
 msgid "No reference has been found!"
 msgstr "Ссылка не найдена!"
 
-#: bin/skl_shared/src/shared.py:5156
+#: bin/skl_shared/src/shared.py:5206
 msgid "The start of the text has been reached!"
 msgstr "Достигнуто начало текста!"
 
-#: bin/skl_shared/src/shared.py:5171 bin/skl_shared/src/shared.py:5203
+#: bin/skl_shared/src/shared.py:5221 bin/skl_shared/src/shared.py:5253
 msgid "Distance: {} symbols"
 msgstr "Расстояние: {} символов"
 
-#: bin/skl_shared/src/shared.py:5188
+#: bin/skl_shared/src/shared.py:5238
 msgid "The end of the text has been reached!"
 msgstr "Достигнут конец текста!"
 

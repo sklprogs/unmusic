@@ -12,7 +12,7 @@ import gui as gi
 class Image:
     
     def __init__(self):
-        self.dir = sh.Home('unmusic').add_share('thumbs')
+        self.dir = sh.Home('unmusic').add_share(_('Images'))
         self.Success = sh.Path(self.dir).create()
         self.path = ''
         self.albumid = 0
@@ -36,7 +36,9 @@ class Image:
                     iimage = sh.Image()
                     iimage.bytes_ = self.bytes
                     iimage.get_loader()
-                    self.Processed = iimage.save(self.path,'JPEG')
+                    iimage.convert2rgb()
+                    iimage.save(self.path,'JPEG')
+                    self.Processed = iimage.Success
                 else:
                     mes = _('Album {} has no cover!')
                     mes = mes.format(self.albumid)
@@ -81,6 +83,7 @@ class Commands:
     
     def extract_images(self):
         f = '[unmusic] utils.Commands.extract_images'
+        sh.GUI_MES = False
         idb = DB(self.path,self.clone)
         idb.connect()
         data = idb.fetch_images()
