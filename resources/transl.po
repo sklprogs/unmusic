@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 20:31+0300\n"
-"PO-Revision-Date: 2021-01-09 20:32+0300\n"
+"POT-Creation-Date: 2021-01-09 21:34+0300\n"
+"PO-Revision-Date: 2021-01-09 21:34+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -63,7 +63,8 @@ msgstr ""
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: base/bin/unmusic/src/db.py:611
+#: base/bin/unmusic/src/db.py:611 base/bin/unmusic/src/utils.py:87
+#: base/bin/unmusic/src/utils.py:93
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -573,7 +574,7 @@ msgstr "Операция отменена пользователем."
 msgid "Calculate required space"
 msgstr "Подсчет требуемого места"
 
-#: base/bin/unmusic/src/unmusic.py:258 base/bin/unmusic/src/utils.py:36
+#: base/bin/unmusic/src/unmusic.py:258 base/bin/unmusic/src/utils.py:55
 #: bin/skl_shared/src/logic.py:4543 bin/skl_shared/src/shared.py:839
 msgid ""
 "Operation has failed!\n"
@@ -706,6 +707,15 @@ msgstr "Удаление альбомов"
 #: base/bin/unmusic/src/unmusic.py:1345 bin/skl_shared/src/logic.py:4574
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
+
+#: base/bin/unmusic/src/utils.py:132 base/bin/unmusic/src/utils.py:148
+msgid "Fetch data from {}"
+msgstr "Получение данных из {}"
+
+#: base/bin/unmusic/src/utils.py:228 bin/skl_shared/src/logic.py:2165
+#: bin/skl_shared/src/logic.py:3011
+msgid "Copy \"{}\" to \"{}\""
+msgstr "Копирование \"{}\" в \"{}\""
 
 #: bin/skl_shared/src/gui.py:1252 bin/skl_shared/src/logic.py:428
 #: bin/skl_shared/src/logic.py:475 bin/skl_shared/src/logic.py:998
@@ -967,10 +977,6 @@ msgid ""
 msgstr ""
 "Операция завершилась с ошибкой!\n"
 "Подробности: {}"
-
-#: bin/skl_shared/src/logic.py:2165 bin/skl_shared/src/logic.py:3011
-msgid "Copy \"{}\" to \"{}\""
-msgstr "Копирование \"{}\" в \"{}\""
 
 #: bin/skl_shared/src/logic.py:2171
 msgid "Failed to copy file \"{}\" to \"{}\"!"
