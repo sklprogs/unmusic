@@ -424,7 +424,7 @@ class DB:
         f = '[unmusic] db.DB.get_album'
         if self.Success:
             query = 'select ALBUM,ARTIST,YEAR,GENRE,COUNTRY,COMMENT \
-                    ,IMAGE from ALBUMS where ALBUMID = ?'
+                     from ALBUMS where ALBUMID = ?'
             try:
                 self.dbc.execute(query,(self.albumid,))
                 return self.dbc.fetchone()
@@ -585,7 +585,6 @@ class DB:
                     ,COUNTRY text    \
                     ,COMMENT text    \
                     ,SEARCH  text    \
-                    ,IMAGE   binary  \
                                                        )'
             try:
                 self.dbc.execute(query)

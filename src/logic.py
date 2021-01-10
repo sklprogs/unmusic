@@ -43,6 +43,39 @@ HEAVY = ('Black Metal','Brutal Death Metal','Death Metal'
         )
 
 
+class Image:
+    
+    def __init__(self):
+        self.dir = sh.Home('unmusic').add_share(_('Images'))
+        self.Success = sh.Path(self.dir).create()
+        self.path = ''
+    
+    def get(self):
+        f = '[unmusic] logic.Image.get'
+        if self.Success:
+            path = self.get_cover()
+            if path and os.path.exists(path):
+                self.path = path
+            else:
+                self.path = sh.objs.get_pdir().add ('..','resources'
+                                                   ,'cd.png'
+                                                   )
+        else:
+            sh.com.cancel(f)
+        return self.path
+    
+    def get_cover(self):
+        f = '[unmusic] logic.Image.get_cover'
+        if self.Success:
+            name = str(objs.get_db().albumid) + '.jpg'
+            return os.path.join(self.dir,name)
+        else:
+            sh.com.cancel(f)
+    
+    def run(self):
+        return self.get()
+
+
 
 class ExportKeys:
     
@@ -988,8 +1021,14 @@ class DefaultConfig:
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.caesar = self.config = None
+        self.default = self.db = self.caesar = self.config = self.image\
+                     = None
         
+    def get_image(self):
+        if self.image is None:
+            self.image = Image()
+        return self.image
+    
     def get_config(self):
         if self.config is None:
             self.config = sh.Config(objs.get_default().get_config())

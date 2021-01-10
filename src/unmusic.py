@@ -574,7 +574,7 @@ class Tracks:
 class AlbumEditor:
     
     def __init__(self):
-        self.set_values()
+        self.image = None
         self.gui = gi.AlbumEditor()
         self.logic = lg.AlbumEditor()
         self.set_bindings()
@@ -758,16 +758,6 @@ class AlbumEditor:
             self.gui.ent_com.insert(comment)
         else:
             sh.com.cancel(f)
-    
-    def set_values(self):
-        self.defimg = None
-        self.image = None
-        self.defpath = sh.objs.get_pdir().add('..','resources','cd.png')
-    
-    def get_default_image(self):
-        if not self.defimg:
-            self.defimg = sh.Image().open(self.defpath)
-        return self.defimg
         
     def zoom_image(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.zoom_image'
@@ -783,23 +773,21 @@ class AlbumEditor:
         else:
             sh.com.cancel(f)
     
-    def set_image(self,image):
+    def set_image(self):
         f = '[unmusic] unmusic.AlbumEditor.set_image'
         if self.Success:
-            if image:
+            path = objs.get_image().run()
+            if path:
                 try:
-                    ipic = sh.Image()
-                    ipic.bytes_ = image
-                    ipic.get_loader()
-                    self.image = ipic.get_image()
-                    ipic = sh.Image()
-                    ipic.bytes_ = image
-                    ipic.get_loader()
+                    iimage = sh.Image()
+                    iimage.open(path)
+                    # Get a large image
+                    self.image = iimage.get_image()
                     ''' These are dimensions of 'self.gui.frm_img' when
                         the default image is loaded.
                     '''
-                    ipic.get_thumbnail(130,212)
-                    thumb = ipic.get_image()
+                    iimage.get_thumbnail(130,212)
+                    thumb = iimage.get_image()
                 except Exception as e:
                     ''' Do not fail 'Success' here - it can just be
                         an incorrectly ripped image.
@@ -808,12 +796,14 @@ class AlbumEditor:
                     mes = _('Third-party module has failed!\n\nDetails: {}')
                     mes = mes.format(e)
                     sh.objs.get_mes(f,mes).show_warning()
+                if thumb:
+                    self.gui.lbl_img.widget.config(image=thumb)
+                    # Prevent the garbage collector from deleting the image
+                    self.gui.lbl_img.widget.image = thumb
+                else:
+                    sh.com.rep_empty(f)
             else:
-                self.image = self.get_default_image()
-                thumb = self.image
-            self.gui.lbl_img.widget.config(image=thumb)
-            # Prevent the garbage collector from deleting the image
-            self.gui.lbl_img.widget.image = thumb
+                sh.com.rep_empty(f)
         else:
             sh.com.cancel(f)
     
@@ -923,11 +913,9 @@ class AlbumEditor:
             old = lg.objs.get_db().get_album()
             if old:
                 new = self.gui.dump()
-                # '-1' since we don't dump IMAGE field
-                if len(old) - 1 == len(new):
+                if len(old) == len(new):
                     old = list(old)
                     new = list(new)
-                    old = old[:-1]
                     if [item for item in new if item]:
                         if not new[0]:
                             mes = _('An album title should be indicated.')
@@ -963,7 +951,7 @@ class AlbumEditor:
                     else:
                         sh.com.rep_empty(f)
                 else:
-                    sub = '{} = {}'.format(len(old)-1,len(new))
+                    sub = '{} == {}'.format(len(old),len(new))
                     mes = _('The condition "{}" is not observed!')
                     mes = mes.format(sub)
                     sh.objs.get_mes(f,mes).show_error()
@@ -1246,7 +1234,10 @@ class AlbumEditor:
             self.logic.get_no()
             data = lg.objs.get_db().get_album()
             if data:
-                if len(data) == 7:
+                ''' #NOTE: Change this value upon a change in a number
+                    of ALBUMS fields.
+                '''
+                if len(data) == 6:
                     mes = _('Load #{}.').format(lg.objs.db.albumid)
                     self.gui.update_info(mes)
                     self.gui.clear_entries()
@@ -1260,7 +1251,7 @@ class AlbumEditor:
                     self.get_rating()
                     self.get_bitrate()
                     self.get_length()
-                    self.set_image(data[6])
+                    self.set_image()
                     self.update()
                     if objs.get_tracks().Active:
                         objs.tracks.reload()
@@ -1425,9 +1416,10 @@ class Menu:
 
 
 
-class Objects:
+class Objects(lg.Objects):
     
-    def __init__(self):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
         self.editor = self.tracks = self.copy_ = self.waitbox = None
     
     def get_waitbox(self):

@@ -373,7 +373,7 @@ com = Commands()
 if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     sh.com.start()
-    com.extract_images()
-    #com.alter()
+    #com.extract_images()
+    com.alter()
     #lg.objs.get_db().close()
     sh.com.end()
