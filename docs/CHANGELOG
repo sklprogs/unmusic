@@ -1,6 +1,9 @@
 (in development)
 * 
 
+1.2
+* Restructure DB in order to keep it small and fast
+
 1.1
 * Add a config file
 
