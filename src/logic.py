@@ -704,6 +704,32 @@ class Directory:
             no = '0' + no
         return no
     
+    def save_image(self):
+        f = '[unmusic] logic.Directory.save_image'
+        if self.Success and objs.get_image().Success:
+            ''' Non-emptiness of 'self.tracks' was already checked
+                in 'self.run'.
+            '''
+            if self.tracks[0].image:
+                name = str(objs.get_db().albumid) + '.jpg'
+                path = os.path.join(objs.image.dir,name)
+                mes = _('Save "{}"').format(path)
+                sh.objs.get_mes(f,mes,True).show_info()
+                if sh.com.rewrite(path):
+                    iimage = sh.Image()
+                    iimage.bytes_ = self.tracks[0].image
+                    iimage.get_loader()
+                    iimage.convert2rgb()
+                    iimage.save(path,'JPEG')
+                    return iimage.Success
+                else:
+                    mes = _('Operation has been canceled by the user.')
+                    sh.objs.get_mes(f,mes,True).show_info()
+            else:
+                sh.com.rep_lazy(f)
+        else:
+            sh.com.cancel(f)
+    
     def move_tracks(self):
         f = '[unmusic] logic.Directory.move_tracks'
         if self.Success:
@@ -790,6 +816,7 @@ class Directory:
             self.create_target()
             self.purge()
             self.move_tracks()
+            self.save_image()
         return self.Success
     
     def decypher_album(self):
@@ -826,7 +853,6 @@ class Directory:
                     artist = self.tracks[0].artist
                     year = self.tracks[0].year
                     genre = self.tracks[0].genre
-                    image = self.tracks[0].image
                     result = self.decypher_album()
                     if result:
                         if len(result) == 3:
@@ -854,7 +880,7 @@ class Directory:
                     search = search.lower()
                     
                     objs.get_db().add_album ([album,artist,year,genre
-                                             ,'','',search,image
+                                             ,'','',search
                                              ]
                                             )
                 else:
@@ -876,10 +902,10 @@ class Directory:
             if track.audio and data:
                 objs.get_db().albumid = albumid
                 objs.db.add_track ([albumid,data[0],data[1],data[2]
-                                    ,'',data[3],data[4],data[5]
-                                    ,self.rating
-                                    ]
-                                   )
+                                   ,'',data[3],data[4],data[5]
+                                   ,self.rating
+                                   ]
+                                  )
             else:
                 sh.com.rep_empty(f)
     

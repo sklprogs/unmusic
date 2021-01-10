@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import sqlite3
+import sys
 
 import skl_shared.shared as sh
 from skl_shared.localize import _
@@ -539,8 +540,7 @@ class DB:
         f = '[unmusic] db.DB.add_album'
         if self.Success:
             if data:
-                query = 'insert into ALBUMS \
-                         values (NULL,?,?,?,?,?,?,?,?)'
+                query = 'insert into ALBUMS values (NULL,?,?,?,?,?,?,?)'
                 try:
                     self.dbc.execute(query,data)
                 except Exception as e:
