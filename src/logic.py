@@ -538,27 +538,59 @@ class AlbumEditor:
     def __init__(self):
         self.Success = True
     
+    def _get_album(self,albumid):
+        local_album = objs.get_default().ihome.add_share (_('local collection')
+                                                         ,str(albumid)
+                                                         )
+        exter_album = objs.default.ihome.add_share (_('external collection')
+                                                   ,str(albumid)
+                                                   )
+        local_exists = os.path.exists(local_album)
+        exter_exists = os.path.exists(exter_album)
+        if local_exists:
+            return local_album
+        elif exter_exists:
+            return exter_album
+    
     def get_prev_rated(self,rating=0):
         f = '[unmusic] logic.AlbumEditor.get_prev_rated'
         if self.Success:
-            result = objs.get_db().get_prev_rated(rating)
+            albumid = objs.get_db().albumid
+            while True:
+                result = objs.db.get_prev_rated(rating,albumid)
+                if result:
+                    albumid = result
+                    if self._get_album(result):
+                        break
+                else:
+                    break
             if result:
-                objs.get_db().albumid = result
+                objs.db.albumid = result
                 self.get_no()
             else:
-                sh.com.rep_empty(f)
+                mes = _('No more matches!')
+                sh.objs.get_mes(f,mes).show_info()
         else:
             sh.com.cancel(f)
     
     def get_next_rated(self,rating=0):
         f = '[unmusic] logic.AlbumEditor.next_rated'
         if self.Success:
-            result = objs.get_db().get_next_rated(rating)
+            albumid = objs.get_db().albumid
+            while True:
+                result = objs.db.get_next_rated(rating,albumid)
+                if result:
+                    albumid = result
+                    if self._get_album(result):
+                        break
+                else:
+                    break
             if result:
-                objs.get_db().albumid = result
+                objs.db.albumid = result
                 self.get_no()
             else:
-                sh.com.rep_empty(f)
+                mes = _('No more matches!')
+                sh.objs.get_mes(f,mes).show_info()
         else:
             sh.com.cancel(f)
     

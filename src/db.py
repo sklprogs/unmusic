@@ -56,13 +56,15 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def get_prev_rated(self,rating=0):
+    def get_prev_rated(self,rating=0,albumid=None):
         f = '[unmusic] db.DB.get_prev_rated'
         if self.Success:
+            if albumid is None:
+                albumid = self.albumid
             query = 'select ALBUMID from TRACKS where ALBUMID < ? \
                      and RATING = ? order by ALBUMID desc'
             try:
-                self.dbc.execute(query,(self.albumid,rating,))
+                self.dbc.execute(query,(albumid,rating,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
@@ -71,13 +73,15 @@ class DB:
         else:
             sh.com.cancel(f)
     
-    def get_next_rated(self,rating=0):
+    def get_next_rated(self,rating=0,albumid=None):
         f = '[unmusic] db.DB.get_next_rated'
         if self.Success:
+            if albumid is None:
+                albumid = self.albumid
             query = 'select ALBUMID from TRACKS where ALBUMID > ? \
                      and RATING = ? order by ALBUMID'
             try:
-                self.dbc.execute(query,(self.albumid,rating,))
+                self.dbc.execute(query,(albumid,rating,))
                 result = self.dbc.fetchone()
                 if result:
                     return result[0]
