@@ -1246,10 +1246,8 @@ class Track:
                 seconds = self.length - minutes * 60
             else:
                 minutes = seconds = 0
-            mes += _('Length: {} {} {} {}').format (minutes
-                                                   ,_('min')
-                                                   ,seconds
-                                                   ,_('sec')
+            mes += _('Length: {} {} {} {}').format (minutes,_('min')
+                                                   ,seconds,_('sec')
                                                    )
             mes +=  '\n'
             sh.objs.get_mes(f,mes).show_info()
@@ -1259,7 +1257,7 @@ class Track:
     def extract_title(self):
         f = '[unmusic] logic.Track.extract_title'
         if self.Success:
-            title = sh.lg.Path(self.file).filename()
+            title = sh.lg.Path(self.file).get_filename()
             if title:
                 result = re.sub('^\d+[\.]{0,1}[\s]{0,1}','',title)
                 if result:
