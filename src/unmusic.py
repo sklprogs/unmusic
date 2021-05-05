@@ -3,8 +3,9 @@
 
 import os
 import time
-import skl_shared.shared as sh
 from skl_shared.localize import _
+import skl_shared.shared as sh
+import skl_shared.image as im
 import logic as lg
 import gui as gi
 
@@ -779,7 +780,7 @@ class AlbumEditor:
             path = objs.get_image().run()
             if path:
                 try:
-                    iimage = sh.Image()
+                    iimage = im.Image()
                     iimage.open(path)
                     # Get a large image
                     self.image = iimage.get_image()

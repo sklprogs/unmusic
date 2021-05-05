@@ -8,8 +8,9 @@ import re
 import phrydy
 import db
 
-import skl_shared.shared as sh
 from skl_shared.localize import _
+import skl_shared.shared as sh
+import skl_shared.image as im
 
 VERSION = '1.1'
 # Derived from 'phrydy.mediafile.TYPES'
@@ -748,7 +749,7 @@ class Directory:
                 mes = _('Save "{}"').format(path)
                 sh.objs.get_mes(f,mes,True).show_info()
                 if sh.com.rewrite(path):
-                    iimage = sh.Image()
+                    iimage = im.Image()
                     iimage.bytes_ = self.tracks[0].image
                     iimage.get_loader()
                     iimage.convert2rgb()

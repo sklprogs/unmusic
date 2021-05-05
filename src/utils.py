@@ -3,8 +3,9 @@
 
 import os
 import sqlite3
-import skl_shared.shared as sh
 from skl_shared.localize import _
+import skl_shared.shared as sh
+import skl_shared.image as im
 import logic as lg
 import gui as gi
 
@@ -33,7 +34,7 @@ class Image:
                 elif self.bytes:
                     mes = _('Save "{}"').format(self.path)
                     sh.objs.get_mes(f,mes,True).show_info()
-                    iimage = sh.Image()
+                    iimage = im.Image()
                     iimage.bytes_ = self.bytes
                     iimage.get_loader()
                     iimage.convert2rgb()
