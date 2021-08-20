@@ -5,7 +5,7 @@ import os
 import sqlite3
 from skl_shared.localize import _
 import skl_shared.shared as sh
-import skl_shared.image as im
+import skl_shared.image.controller as im
 import logic as lg
 import gui as gi
 
