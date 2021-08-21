@@ -43,14 +43,14 @@ class Commands:
                     ).print()
     
     def show_tracks(self):
-        itracks = gi.Tracks()
+        itracks = gi.objs.get_tracks()
         itracks.reset()
         for i in range(20):
             itracks.add()
         for i in range(len(itracks.tracks)):
             itracks.tracks[i].ent_tno.insert(i+1)
             itracks.tracks[i].ent_tit.insert(_('Track #{}').format(i+1))
-        itracks.add_after()
+        itracks.adjust_by_content()
         itracks.show()
     
     def check_nos(self):
@@ -70,6 +70,7 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    com.show_query()
-    lg.objs.get_db().close()
+    #com.show_query()
+    #lg.objs.get_db().close()
+    com.show_tracks()
     sh.com.end()

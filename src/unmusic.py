@@ -341,7 +341,7 @@ class Tracks:
     def __init__(self):
         self.Active = False
         self.Success = lg.objs.get_db().Success
-        self.gui = gi.Tracks(height=400)
+        self.gui = gi.objs.get_tracks()
         self.gui.close()
         self.set_bindings()
     
@@ -509,7 +509,7 @@ class Tracks:
                         self.Success = False
                         mes = _('Wrong input data: "{}"!').format(data)
                         sh.objs.get_mes(f,mes).show_error()
-                self.gui.add_after()
+                self.gui.adjust_by_content()
             else:
                 sh.com.rep_empty(f)
         else:
@@ -555,7 +555,7 @@ class Tracks:
                         self.Success = False
                         mes = _('Wrong input data: "{}"!').format(data)
                         sh.objs.get_mes(f,mes).show_error()
-                self.gui.add_after()
+                self.gui.adjust_by_content()
             else:
                 mes = _('No tracks are associated with this album.')
                 sh.objs.get_mes(f,mes).show_info()

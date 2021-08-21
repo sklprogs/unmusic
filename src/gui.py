@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import skl_shared.shared as sh
 from skl_shared.localize import _
+import skl_shared.shared as sh
+
 
 PLAY = (_('Play')
        ,_('All')
@@ -332,60 +333,60 @@ class AlbumEditor:
                                  ,text = _('Reload')
                                  ,hint = _('Reload the present record')
                                  ,side = 'left'
-                                 ,inactive = self.path_rld
-                                 ,active = self.path_rld
+                                 ,inactive = self.icn_rld
+                                 ,active = self.icn_rld
                                  ,bindings = ('<F5>','<Control-r>')
                                  )
         self.btn_rec = sh.Button (parent = self.frm1
                                  ,text = _('Create')
                                  ,hint = _('Create a new record')
                                  ,side = 'left'
-                                 ,inactive = self.path_add
-                                 ,active = self.path_add
+                                 ,inactive = self.icn_add
+                                 ,active = self.icn_add
                                  ,bindings = '<Control-n>'
                                  )
         self.btn_del = sh.Button (parent = self.frm1
                                  ,text = _('Delete')
                                  ,hint = _('Delete the present record')
                                  ,side = 'left'
-                                 ,inactive = self.path_del
-                                 ,active = self.path_del
+                                 ,inactive = self.icn_del
+                                 ,active = self.icn_del
                                  )
         self.btn_dez = sh.Button (parent = self.frm2
                                  ,text = _('Decypher')
                                  ,hint = _('Decypher text (Caesar algorithm)')
                                  ,side = 'left'
-                                 ,inactive = self.path_dez
-                                 ,active = self.path_dez
+                                 ,inactive = self.icn_dez
+                                 ,active = self.icn_dez
                                  )
         self.btn_cyp = sh.Button (parent = self.frm2
                                  ,text = _('Cypher')
                                  ,hint = _('Cypher text (Caesar algorithm)')
                                  ,side = 'left'
-                                 ,inactive = self.path_cyp
-                                 ,active = self.path_cyp
+                                 ,inactive = self.icn_cyp
+                                 ,active = self.icn_cyp
                                  )
         self.btn_dec = sh.Button (parent = self.frm2
                                  ,text = _('Decode')
                                  ,hint = _('Decode back to cp1251')
                                  ,side = 'left'
-                                 ,inactive = self.path_dec
-                                 ,active = self.path_dec
+                                 ,inactive = self.icn_dec
+                                 ,active = self.icn_dec
                                  )
         self.btn_sav = sh.Button (parent = self.frm2
                                  ,text = _('Save')
                                  ,hint = _('Save changes')
                                  ,side = 'left'
-                                 ,inactive = self.path_sav
-                                 ,active = self.path_sav
+                                 ,inactive = self.icn_sav
+                                 ,active = self.icn_sav
                                  ,bindings = ('<F2>','<Control-s>')
                                  )
         self.btn_trk = sh.Button (parent = self.frm2
                                  ,text = _('Tracks')
                                  ,hint = _('Edit tracks')
                                  ,side = 'left'
-                                 ,inactive = self.path_trk
-                                 ,active = self.path_trk
+                                 ,inactive = self.icn_trk
+                                 ,active = self.icn_trk
                                  ,bindings = ('<F4>','<Control-t>'
                                              ,'<Alt-t>'
                                              )
@@ -718,30 +719,30 @@ class AlbumEditor:
                                             ,'buttons'
                                             ,'icon_36x36_go_forward.gif'
                                             )
-        self.path_add = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_add.gif'
-                                         )
-        self.path_cyp = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_cypher.gif'
-                                         )
-        self.path_dec = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_decode.gif'
-                                         )
-        self.path_dez = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_decypher.gif'
-                                         )
-        self.path_del = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_delete_record.gif'
-                                         )
-        self.path_rld = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_reload.gif'
-                                         )
-        self.path_sav = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_save.gif'
-                                         )
-        self.path_trk = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_tracks.gif'
-                                         )
+        self.icn_add = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_add.gif'
+                                        )
+        self.icn_cyp = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_cypher.gif'
+                                        )
+        self.icn_dec = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_decode.gif'
+                                        )
+        self.icn_dez = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_decypher.gif'
+                                        )
+        self.icn_del = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_delete_record.gif'
+                                        )
+        self.icn_rld = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_reload.gif'
+                                        )
+        self.icn_sav = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_save.gif'
+                                        )
+        self.icn_trk = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_tracks.gif'
+                                        )
     
     def dump(self,event=None):
         return (self.ent_alb.get(),self.ent_art.get()
@@ -884,14 +885,14 @@ class Menu:
 
 
 
-class Tracks:
+class Tracks(sh.ScrollableC):
     
-    def __init__(self,width=0,height=768):
-        self.set_values()
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.tracks = []
         self.pool = sh.lg.MessagePool(max_size=3)
-        self.width = width
-        self.height = height
-        self.set_gui()
+        self.add_paths()
+        self.add_gui()
         
     def clear_rating(self,event=None):
         for track in self.tracks:
@@ -913,205 +914,92 @@ class Tracks:
             new.append(track.dump())
         return new
     
-    def set_values(self):
-        self.tracks = []
-        self.path_cyp = sh.objs.get_pdir().add ('..','resources','buttons'
-                                               ,'icon_36x36_cypher.gif'
-                                               )
-        self.path_dec = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_decode.gif'
-                                         )
-        self.path_dez = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_decypher.gif'
-                                         )
-        self.path_rat = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_clear_rating.gif'
-                                         )
-        self.path_rld = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_reload.gif'
-                                         )
-        self.path_sav = sh.objs.pdir.add ('..','resources','buttons'
-                                         ,'icon_36x36_save.gif'
-                                         )
+    def add_paths(self):
+        self.icn_cyp = sh.objs.get_pdir().add ('..','resources','buttons'
+                                              ,'icon_36x36_cypher.gif'
+                                              )
+        self.icn_dec = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_decode.gif'
+                                        )
+        self.icn_dez = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_decypher.gif'
+                                        )
+        self.icn_rat = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_clear_rating.gif'
+                                        )
+        self.icn_rld = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_reload.gif'
+                                        )
+        self.icn_sav = sh.objs.pdir.add ('..','resources','buttons'
+                                        ,'icon_36x36_save.gif'
+                                        )
     
-    def set_buttons(self):
+    def add_buttons(self):
         self.btn_rld = sh.Button (parent = self.frm_btn
                                  ,text = _('Reload')
                                  ,hint = _('Reload the present record')
                                  ,side = 'left'
-                                 ,inactive = self.path_rld
-                                 ,active = self.path_rld
+                                 ,inactive = self.icn_rld
+                                 ,active = self.icn_rld
                                  ,bindings = ('<F5>','<Control-r>')
                                  )
         self.btn_rat = sh.Button (parent = self.frm_btn
                                  ,text = _('Clear rating')
                                  ,hint = _('Clear rating of all tracks')
                                  ,side = 'left'
-                                 ,inactive = self.path_rat
-                                 ,active = self.path_rat
+                                 ,inactive = self.icn_rat
+                                 ,active = self.icn_rat
                                  ,action = self.clear_rating
                                  )
         self.btn_dez = sh.Button (parent = self.frm_btn
                                  ,text = _('Decypher')
                                  ,hint = _('Decypher text (Caesar algorithm)')
                                  ,side = 'left'
-                                 ,inactive = self.path_dez
-                                 ,active = self.path_dez
+                                 ,inactive = self.icn_dez
+                                 ,active = self.icn_dez
                                  )
         self.btn_cyp = sh.Button (parent = self.frm_btn
                                  ,text = _('Cypher')
                                  ,hint = _('Cypher text (Caesar algorithm)')
                                  ,side = 'left'
-                                 ,inactive = self.path_cyp
-                                 ,active = self.path_cyp
+                                 ,inactive = self.icn_cyp
+                                 ,active = self.icn_cyp
                                  )
         self.btn_dec = sh.Button (parent = self.frm_btn
                                  ,text = _('Decode')
                                  ,hint = _('Decode back to cp1251')
                                  ,side = 'left'
-                                 ,inactive = self.path_dec
-                                 ,active = self.path_dec
+                                 ,inactive = self.icn_dec
+                                 ,active = self.icn_dec
                                  )
         self.btn_sav = sh.Button (parent = self.frm_btn
                                  ,text = _('Save')
                                  ,hint = _('Save changes')
                                  ,side = 'right'
-                                 ,inactive = self.path_sav
-                                 ,active = self.path_sav
+                                 ,inactive = self.icn_sav
+                                 ,active = self.icn_sav
                                  ,bindings = ('<F2>','<Control-s>')
                                  )
-    
-    def set_icon(self,path=None):
-        if path:
-            self.parent.set_icon(path)
-        else:
-            self.parent.set_icon(ICON)
     
     def reset(self):
         for track in self.tracks:
             track.frm_prm.widget.destroy()
         self.tracks = []
     
-    def add_after(self):
-        sh.objs.get_root().update_idle()
-        max_x = self.label.get_reqwidth()
-        max_y = self.label.get_reqheight()
-        self.canvas.set_region (x = max_x
-                               ,y = max_y
-                               ,xborder = 10
-                               ,yborder = 20
-                               )
-        if not self.width:
-            self.width = max_x + 40
-        sh.Geometry(self.parent).set ('%dx%d' % (self.width
-                                                ,self.height
-                                                )
-                                     )
-        self.canvas.move_top()
-        self.canvas.widget.xview_moveto(0)
-    
-    def show(self,event=None):
-        self.parent.show()
-    
-    def close(self,event=None):
-        self.parent.close()
-    
-    def set_title(self,text=None):
-        if not text:
-            text = _('Tracks:')
-        self.parent.set_title(text=text)
-    
-    def set_frames(self):
-        self.frm_prm = sh.Frame (parent = self.parent)
-        self.frm_hor = sh.Frame (parent = self.frm_prm
-                                ,expand = False
-                                ,fill = 'x'
-                                ,side = 'bottom'
-                                )
-        self.frm_ver = sh.Frame (parent = self.frm_prm
-                                ,expand = False
-                                ,fill = 'y'
-                                ,side = 'right'
-                                )
-        # This frame must be created after the bottom frame
-        self.frm_sec = sh.Frame (parent = self.frm_prm)
-        self.frm_btn = sh.Frame (parent = self.frm_prm
+    def add_frames(self):
+        self.frm_btn = sh.Frame (parent = self.parent
                                 ,expand = False
                                 ,fill = 'x'
                                 ,side = 'bottom'
                                 )
     
-    def set_gui(self):
-        self.parent = sh.Top (icon = ICON
-                             ,title = _('Tracks:')
-                             )
-        self.widget = self.parent.widget
-        self.set_frames()
-        self.set_widgets()
+    def add_gui(self):
+        self.add_frames()
         self._set_info()
-        self.set_buttons()
-        self.set_bindings()
+        self.add_buttons()
     
-    def set_bindings(self):
-        ''' We need a special action for '<Home>' and '<End>' (they are
-            useful to navigate within entries), so we use a modified
-            version of 'Canvas.top_bindings' here.
-        '''
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Down>'
-                    ,action = self.canvas.move_down
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Up>'
-                    ,action = self.canvas.move_up
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Left>'
-                    ,action = self.canvas.move_left
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Right>'
-                    ,action = self.canvas.move_right
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Next>'
-                    ,action = self.canvas.move_page_down
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Prior>'
-                    ,action = self.canvas.move_page_up
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Control-End>'
-                    ,action = self.canvas.move_bottom
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = '<Control-Home>'
-                    ,action = self.canvas.move_top
-                    )
-        sh.com.bind (obj = self.parent
-                    ,bindings = ('<MouseWheel>'
-                                ,'<Button 4>'
-                                ,'<Button 5>'
-                                )
-                    ,action = self.canvas.set_mouse_wheel
-                    )
-    
-    def set_widgets(self):
-        self.canvas = sh.Canvas(parent = self.frm_sec)
-        self.label = sh.Label (parent = self.frm_sec
-                               ,text = _('Tracks:')
-                               ,expand = True
-                               ,fill = 'both'
-                               )
-        self.canvas.embed(self.label)
-        self.yscroll = sh.Scrollbar (parent = self.frm_ver
-                                    ,scroll = self.canvas
-                                    )
-        self.canvas.focus()
-        
     def add(self,event=None,Extended=False):
-        self.tracks.append(Track(self.label,Extended))
+        self.tracks.append(Track(self.get_content_frame(),Extended))
         return self.tracks[-1]
 
 
@@ -1248,7 +1136,14 @@ class Objects:
     
     def get_tracks(self):
         if self.tracks is None:
-            self.tracks = Tracks()
+            self.tracks = Tracks (ScrollX = False
+                                 ,title = _('Tracks:')
+                                 ,icon = ICON
+                                 ,width = 420
+                                 ,height = 400
+                                 ,xborder = 10
+                                 ,yborder = 20
+                                 )
         return self.tracks
     
     def get_wait(self):
@@ -1264,7 +1159,7 @@ objs = Objects()
 
 if __name__ == '__main__':
     sh.com.start()
-    AlbumEditor().show()
+    #AlbumEditor().show()
     #Copy().show()
-    #Tracks().show()
+    Objects().get_tracks().show()
     sh.com.end()
