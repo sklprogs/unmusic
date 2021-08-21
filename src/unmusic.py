@@ -339,16 +339,23 @@ class Copy:
 class Tracks:
     
     def __init__(self):
+        self.gui = None
         self.Active = False
         self.Success = lg.objs.get_db().Success
+    
+    def set_gui(self):
         self.gui = gi.objs.get_tracks()
-        self.gui.close()
         self.set_bindings()
+    
+    def get_gui(self):
+        if self.gui is None:
+            self.set_gui()
+        return self.gui
     
     def decypher(self,event=None):
         f = '[unmusic] unmusic.Tracks.decypher'
         if self.Success:
-            for track in self.gui.tracks:
+            for track in self.get_gui().tracks:
                 title = track.ent_tit.get()
                 title = lg.objs.get_caesar().decypher(title)
                 track.ent_tit.clear_text()
@@ -359,7 +366,7 @@ class Tracks:
     def cypher(self,event=None):
         f = '[unmusic] unmusic.Tracks.cypher'
         if self.Success:
-            for track in self.gui.tracks:
+            for track in self.get_gui().tracks:
                 title = track.ent_tit.get()
                 title = lg.objs.get_caesar().cypher(title)
                 track.ent_tit.clear_text()
@@ -370,7 +377,7 @@ class Tracks:
     def decode(self,event=None):
         f = '[unmusic] unmusic.Tracks.decode'
         if self.Success:
-            for track in self.gui.tracks:
+            for track in self.get_gui().tracks:
                 title = track.ent_tit.get()
                 title = lg.com.decode_back(title)
                 track.ent_tit.clear_text()
@@ -400,7 +407,7 @@ class Tracks:
                         if old_record != new_record:
                             if new[i][0]:
                                 mes = _('Edit #{}.').format(i+1)
-                                self.gui.update_info(mes)
+                                self.get_gui().update_info(mes)
                                 lg.objs.get_db().update_track (no = i + 1
                                                               ,data = new_record
                                                               )
@@ -426,7 +433,7 @@ class Tracks:
         if self.Success:
             if lg.objs.get_db().check_nos():
                 Extended = False
-                if self.gui.tracks:
+                if self.get_gui().tracks:
                     Extended = self.gui.tracks[0].Extended
                 old = lg.objs.db.get_tracks()
                 new = self.gui.dump()
@@ -447,12 +454,16 @@ class Tracks:
         f = '[unmusic] unmusic.Tracks.save'
         if self.Success:
             if self.dump():
-                self.gui.update_info(_('Save DB.'))
+                self.get_gui().update_info(_('Save DB.'))
                 lg.objs.get_db().save()
         else:
             sh.com.cancel(f)
     
     def set_bindings(self):
+        f = '[unmusic] unmusic.Tracks.set_bindings'
+        if not self.gui:
+            sh.com.rep_empty(f)
+            return
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
         self.gui.btn_cyp.action = self.cypher
         self.gui.btn_dez.action = self.decypher
@@ -475,7 +486,7 @@ class Tracks:
     def fill_search(self,data):
         f = '[unmusic] unmusic.Tracks.fill_search'
         if self.Success:
-            self.gui.reset()
+            self.get_gui().reset()
             if data:
                 for i in range(len(data)):
                     self.gui.add(Extended=True)
@@ -522,7 +533,7 @@ class Tracks:
     def fill(self,event=None):
         f = '[unmusic] unmusic.Tracks.fill'
         if self.Success:
-            self.gui.reset()
+            self.get_gui().reset()
             data = lg.objs.get_db().get_tracks()
             if data:
                 for i in range(len(data)):
@@ -564,11 +575,11 @@ class Tracks:
     
     def show(self,event=None):
         self.Active = True
-        self.gui.show()
+        self.get_gui().show()
     
     def close(self,event=None):
         self.Active = False
-        self.gui.close()
+        self.get_gui().close()
 
 
 
