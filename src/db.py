@@ -313,18 +313,20 @@ class DB:
     
     def updateDB(self,query):
         f = '[unmusic] db.DB.updateDB'
-        if self.Success:
-            if query:
-                try:
-                    self.dbc.executescript(query)
-                except Exception as e:
-                    mes = _('Unable to execute:\n"{}"\n\nDetails: {}')
-                    mes = mes.format(str(query).replace(';',';\n'),e)
-                    sh.objs.get_mes(f,mes).show_error()
-            else:
-                sh.com.rep_empty(f)
-        else:
+        if not self.Success:
             sh.com.cancel(f)
+            return
+        if not query:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self.dbc.executescript(query)
+        except Exception as e:
+            mes = _('Unable to execute:\n"{}"\n\nDetails: {}')
+            mes = mes.format(str(query).replace(';',';\n'),e)
+            sh.objs.get_mes(f,mes).show_error()
+            return
+        return True
     
     def get_tracks(self):
         f = '[unmusic] db.DB.get_tracks'

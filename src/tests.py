@@ -7,6 +7,139 @@ import logic as lg
 import gui as gi
 
 
+class Album:
+    
+    def __init__(self):
+        self.id = 0
+        self.tracks = []
+        self.Camel = False
+
+
+
+class CamelCase:
+    
+    def __init__(self):
+        self.Success = True
+        self.albums = []
+    
+    def debug(self):
+        f = '[unmusic] tests.CamelCase.debug'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        ids = []
+        camels = []
+        tracks = []
+        for album in self.albums:
+            for track in album.tracks:
+                ids.append(album.id)
+                camels.append(album.Camel)
+                tracks.append(track)
+        headers = (_('ALBUM ID'),_('MIXED CASE'),_('TRACK'))
+        iterable = [ids,camels,tracks]
+        mes = sh.FastTable (headers = headers
+                           ,iterable = iterable
+                           ,maxrow = 100
+                           ,maxrows = 1000
+                           ).run()
+        sh.com.run_fast_debug(f,mes)
+    
+    def _get_tracks(self):
+        query = 'select ALBUMID,TITLE from TRACKS order by ALBUMID'
+        try:
+            lg.objs.get_db().dbc.execute(query)
+            return lg.objs.db.dbc.fetchall()
+        except Exception as e:
+            self.Success = False
+            mes = _('Operation has failed!\nDetails: {}').format(e)
+            sh.objs.get_mes(f,mes).show_warning()
+    
+    def set_albums(self):
+        f = '[unmusic] tests.CamelCase.set_albums'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        result = self._get_tracks()
+        if not result:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        old_id = 0
+        tracks = []
+        album = Album()
+        for row in result:
+            id_, track = row[0], row[1]
+            if id_ == old_id:
+                album.tracks.append(track)
+            else:
+                if album.id > 0:
+                    self.albums.append(album)
+                album = Album()
+                old_id = album.id = id_
+                album.tracks.append(track)
+        self.albums.append(album)
+    
+    def _is_word_camel(self,word):
+        for char in word[1:]:
+            # This already checks if a letter is provided
+            if char.isupper():
+                return True
+    
+    def _is_track_camel(self,track):
+        ''' There can be false-positive results if each track has
+            a translation (e.g., looks like "a title in a foreign
+            language (a translated title)").
+        '''
+        itext = sh.Text(track)
+        itext.delete_punctuation()
+        track = itext.delete_figures()
+        for word in track.split(' '):
+            if self._is_word_camel(word):
+                return True
+    
+    def _is_album_camel(self,tracks):
+        for track in tracks:
+            if not self._is_track_camel(track):
+                return
+        return True
+    
+    def set_camel(self):
+        f = '[unmusic] tests.CamelCase.set_camel'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.albums:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        for album in self.albums:
+            album.Camel = self._is_album_camel(album.tracks)
+    
+    def report(self):
+        f = '[unmusic] tests.CamelCase.report'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        ids = [str(album.id) for album in self.albums in album.Camel]
+        if not ids:
+            sh.com.rep_lazy(f)
+            return
+        mes = []
+        sub = _('Tracks of the following albums are of a mixed case:')
+        mes.append(sub)
+        mes.append('')
+        mes.append(', '.join(ids))
+        sh.com.run_fast_debug(f,'\n'.join(mes))
+    
+    def run(self):
+        self.set_albums()
+        self.set_camel()
+        lg.objs.get_db().close()
+        #self.debug()
+        self.report()
+
+
+
 class Commands:
     
     def __init__(self):
@@ -72,5 +205,6 @@ if __name__ == '__main__':
     sh.com.start()
     #com.show_query()
     #lg.objs.get_db().close()
-    com.show_tracks()
+    #com.show_tracks()
+    CamelCase().run()
     sh.com.end()
