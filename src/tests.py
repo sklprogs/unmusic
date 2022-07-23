@@ -80,19 +80,31 @@ class CamelCase:
         self.albums.append(album)
     
     def _is_word_camel(self,word):
+        ''' - There can be false-positive results if each track has
+              a translation (e.g., looks like "a title in a foreign
+              language (a translated title)"). Moreover, '_' or '-' are
+              not considered as punctuation. To be on a safe side, we
+              remove all non-alphabetic symbols here - this actually
+              should not be slower than adding extra punctuation and
+              then removing it together with digits.
+            - NOTE: Do this when processing words, not tracks, since
+              spaces will be deleted otherwise!
+        '''
+        word = [char for char in word if char.isalpha()]
+        word = ''.join(word)
+        if word == word.upper():
+            return
+        ''' The word may be shortened by the first symbol only here
+            since we are sure now that only letters have left.
+        '''
         for char in word[1:]:
             # This already checks if a letter is provided
             if char.isupper():
                 return True
     
     def _is_track_camel(self,track):
-        ''' There can be false-positive results if each track has
-            a translation (e.g., looks like "a title in a foreign
-            language (a translated title)").
-        '''
-        itext = sh.Text(track)
-        itext.delete_punctuation()
-        track = itext.delete_figures()
+        track = track.replace('_',' ')
+        track = track.replace('-',' ')
         for word in track.split(' '):
             if self._is_word_camel(word):
                 return True
@@ -120,7 +132,7 @@ class CamelCase:
         if not self.Success:
             sh.com.cancel(f)
             return
-        ids = [str(album.id) for album in self.albums in album.Camel]
+        ids = [str(album.id) for album in self.albums if album.Camel]
         if not ids:
             sh.com.rep_lazy(f)
             return
@@ -144,7 +156,7 @@ class Commands:
     
     def __init__(self):
         pass
-        
+    
     def show_query(self):
         f = '[unmusic] tests.Commands.show_query'
         query = 'begin;select ALBUM from ALBUMS where ARTIST="{}" \
@@ -203,8 +215,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    #com.show_query()
     #lg.objs.get_db().close()
-    #com.show_tracks()
     CamelCase().run()
     sh.com.end()
