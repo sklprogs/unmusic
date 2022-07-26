@@ -7,6 +7,41 @@ import logic as lg
 import gui as gi
 
 
+class Rating:
+    
+    def __init__(self):
+        self.Success = lg.objs.get_db().Success
+        self.no = 1000
+    
+    def set_no(self):
+        f = '[unmusic] tests.Rating.set_no'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if self.no < 1:
+            self.Success = False
+            mes = _('Wrong input data: "{}"!').format(self.no)
+            sh.objs.get_mes(f,mes).show_warning()
+            return
+        lg.objs.get_db().albumid = self.no
+    
+    def get(self):
+        f = '[unmusic] tests.Rating.get'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        rates = lg.objs.get_db().get_rating()
+        rating = round(sum(rates)/len(rates))
+        mes = _('Album: {}, average rating: {}').format(self.no,rating)
+        sh.objs.get_mes(f,mes,True).show_debug()
+    
+    def run(self):
+        self.set_no()
+        self.get()
+        lg.objs.get_db().close()
+
+
+
 class Album:
     
     def __init__(self):
@@ -216,5 +251,5 @@ if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
     #lg.objs.get_db().close()
-    CamelCase().run()
+    Rating().run()
     sh.com.end()
