@@ -272,7 +272,7 @@ class DB:
     def create_albums(self):
         f = '[unmusic] utils.DB.create_albums'
         if self.Success:
-            # 8 columns by now
+            # 9 columns by now
             query = 'create table ALBUMS (\
                      ALBUMID integer primary key autoincrement \
                     ,ALBUM   text    \
@@ -282,6 +282,7 @@ class DB:
                     ,COUNTRY text    \
                     ,COMMENT text    \
                     ,SEARCH  text    \
+                    ,RATING  integer \
                                          )'
             self._create_table(f,query)
         else:
@@ -312,10 +313,26 @@ class DB:
         else:
             sh.com.cancel(f)
     
+    def _get_mean(self,ratings):
+        if 0 in ratings:
+            return 0
+        else:
+            return round(sum(ratings)/len(ratings))
+    
     def _fill_albums(self):
         f = '[unmusic] utils.DB._fill_albums'
-        query = 'insert into ALBUMS values (?,?,?,?,?,?,?,?)'
+        query = 'insert into ALBUMS values (?,?,?,?,?,?,?,?,?)'
         for row in self.albums:
+            lg.objs.get_db().albumid = row[0]
+            ratings = lg.objs.db.get_rating()
+            if ratings:
+                rating = self._get_mean(ratings)
+            else:
+                rating = 0
+                sh.com.rep_empty(f)
+            mes = _('Album ID: {}. Rating: {}').format(row[0],rating)
+            sh.objs.get_mes(f,mes,True).show_debug()
+            row += (rating,)
             self._fill_row(f,query,row)
     
     def _fill_tracks(self):

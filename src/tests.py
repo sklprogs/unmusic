@@ -9,9 +9,9 @@ import gui as gi
 
 class Rating:
     
-    def __init__(self):
+    def __init__(self,ids):
         self.Success = lg.objs.get_db().Success
-        self.no = 1000
+        self.ids = ids
     
     def set_no(self):
         f = '[unmusic] tests.Rating.set_no'
@@ -31,13 +31,20 @@ class Rating:
             sh.com.cancel(f)
             return
         rates = lg.objs.get_db().get_rating()
-        rating = round(sum(rates)/len(rates))
+        if 0 in rates:
+            rating = 0
+        else:
+            rating = round(sum(rates)/len(rates))
         mes = _('Album: {}, average rating: {}').format(self.no,rating)
         sh.objs.get_mes(f,mes,True).show_debug()
     
+    def loop(self):
+        for self.no in self.ids:
+            self.set_no()
+            self.get()
+    
     def run(self):
-        self.set_no()
-        self.get()
+        self.loop()
         lg.objs.get_db().close()
 
 
@@ -251,5 +258,6 @@ if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
     #lg.objs.get_db().close()
-    Rating().run()
+    # 1) 4; 2) mixed 7; 3) first 7, remove it
+    Rating([2000,10006,10012]).run()
     sh.com.end()

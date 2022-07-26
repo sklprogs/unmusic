@@ -913,7 +913,7 @@ class Directory:
                     search = search.lower()
                     
                     objs.get_db().add_album ([album,artist,year,genre
-                                             ,'','',search
+                                             ,'','',search,0
                                              ]
                                             )
                 else:

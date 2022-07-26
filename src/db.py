@@ -546,7 +546,7 @@ class DB:
         f = '[unmusic] db.DB.add_album'
         if self.Success:
             if data:
-                query = 'insert into ALBUMS values (NULL,?,?,?,?,?,?,?)'
+                query = 'insert into ALBUMS values (NULL,?,?,?,?,?,?,?,?)'
                 try:
                     self.dbc.execute(query,data)
                 except Exception as e:
@@ -581,7 +581,7 @@ class DB:
     def create_albums(self):
         f = '[unmusic] db.DB.create_albums'
         if self.Success:
-            # 8 columns by now
+            # 9 columns by now
             query = 'create table if not exists ALBUMS (\
                      ALBUMID integer primary key autoincrement \
                     ,ALBUM   text    \
@@ -591,6 +591,7 @@ class DB:
                     ,COUNTRY text    \
                     ,COMMENT text    \
                     ,SEARCH  text    \
+                    ,RATING  integer \
                                                        )'
             try:
                 self.dbc.execute(query)
