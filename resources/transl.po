@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-23 14:38+0300\n"
-"PO-Revision-Date: 2022-07-23 14:40+0300\n"
+"POT-Creation-Date: 2022-07-27 01:45+0300\n"
+"PO-Revision-Date: 2022-07-27 01:46+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -142,7 +142,7 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:4515 skl_shared/src/logic.py:4675
 #: skl_shared/src/logic.py:4709 skl_shared/src/logic.py:4794
 #: skl_shared/src/shared.py:2371 skl_shared/src/shared.py:5052
-#: unmusic/src/logic.py:865 unmusic/src/unmusic.py:521
+#: unmusic/src/logic.py:865 unmusic/src/tests.py:92 unmusic/src/unmusic.py:521
 #: unmusic/src/unmusic.py:567 unmusic/src/unmusic.py:710
 #: unmusic/src/unmusic.py:714 unmusic/src/unmusic.py:892
 #: unmusic/src/unmusic.py:917 unmusic/src/unmusic.py:1271
@@ -239,7 +239,8 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:1301 skl_shared/src/logic.py:2218
 #: skl_shared/src/logic.py:2364 skl_shared/src/logic.py:2889
 #: skl_shared/src/logic.py:2915 skl_shared/src/logic.py:2999
-#: skl_shared/src/logic.py:3641 unmusic/src/tests.py:54
+#: skl_shared/src/logic.py:3641 unmusic/src/tests.py:19
+#: unmusic/src/tests.py:161
 msgid ""
 "Operation has failed!\n"
 "Details: {}"
@@ -352,7 +353,7 @@ msgid "The object \"{}\" is not a file!"
 msgstr "Объект \"{}\" не является файлом!"
 
 #: skl_shared/src/logic.py:2227 skl_shared/src/logic.py:3072
-#: unmusic/src/utils.py:339
+#: unmusic/src/utils.py:356
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
@@ -1178,11 +1179,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: unmusic/src/db.py:605 unmusic/src/logic.py:749 unmusic/src/utils.py:35
+#: unmusic/src/db.py:606 unmusic/src/logic.py:749 unmusic/src/utils.py:35
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: unmusic/src/db.py:616 unmusic/src/utils.py:198 unmusic/src/utils.py:204
+#: unmusic/src/db.py:617 unmusic/src/utils.py:198 unmusic/src/utils.py:204
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -1516,7 +1517,7 @@ msgstr "{}/{} дорожек перенумеровано."
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: unmusic/src/logic.py:1232
+#: unmusic/src/logic.py:1232 unmusic/src/tests.py:63
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
@@ -1548,27 +1549,35 @@ msgstr "Слова: {}"
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: unmusic/src/tests.py:38
+#: unmusic/src/tests.py:66
+msgid "ID: {}, rating: {}"
+msgstr "ИД: {}, рейтинг: {}"
+
+#: unmusic/src/tests.py:102
+msgid "Album: {}, average rating: {}"
+msgstr "Альбом: {}, средний рейтинг: {}"
+
+#: unmusic/src/tests.py:145
 msgid "ALBUM ID"
 msgstr "ИД альбома"
 
-#: unmusic/src/tests.py:38
+#: unmusic/src/tests.py:145
 msgid "MIXED CASE"
 msgstr "СМЕШАННЫЙ РЕГИСТР"
 
-#: unmusic/src/tests.py:38
+#: unmusic/src/tests.py:145
 msgid "TRACK"
 msgstr "ДОРОЖКА"
 
-#: unmusic/src/tests.py:128
+#: unmusic/src/tests.py:247
 msgid "Tracks of the following albums are of a mixed case:"
 msgstr "Дорожки следующих альбомов находятся в смешанном регистре:"
 
-#: unmusic/src/tests.py:157
+#: unmusic/src/tests.py:276
 msgid "Not found!"
 msgstr "Не найдено!"
 
-#: unmusic/src/tests.py:185
+#: unmusic/src/tests.py:304
 msgid "Track #{}"
 msgstr "Дорожка №{}"
 
@@ -1728,6 +1737,10 @@ msgstr "Получение данных"
 #: unmusic/src/utils.py:243 unmusic/src/utils.py:259
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
+
+#: unmusic/src/utils.py:333
+msgid "Album ID: {}. Rating: {}"
+msgstr "ИД альбома: {}. Рейтинг: {}"
 
 #~ msgid "You need to install \"{}\"!"
 #~ msgstr "Необходимо установить \"{}\"!"
