@@ -288,17 +288,17 @@ class DB:
     def get_rating(self):
         f = '[unmusic] db.DB.get_rating'
         if self.Success:
-            query = 'select RATING from TRACKS where ALBUMID = ? \
-                     order by NO'
+            query = 'select RATING from ALBUMS where ALBUMID = ?'
             try:
                 self.dbc.execute(query,(self.albumid,))
-                result = self.dbc.fetchall()
+                result = self.dbc.fetchone()
                 if result:
-                    return [item[0] for item in result]
+                    return result[0]
             except Exception as e:
                 self.fail(f,e)
         else:
             sh.com.cancel(f)
+        return 0
     
     def set_rating(self,value):
         f = '[unmusic] db.DB.set_rating'
