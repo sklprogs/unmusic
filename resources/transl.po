@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 01:45+0300\n"
-"PO-Revision-Date: 2022-07-27 01:46+0300\n"
+"POT-Creation-Date: 2022-07-28 00:01+0300\n"
+"PO-Revision-Date: 2022-07-28 00:02+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -63,7 +63,7 @@ msgstr ""
 #: skl_shared/src/image/controller.py:49 skl_shared/src/logic.py:2279
 #: skl_shared/src/logic.py:2326 skl_shared/src/logic.py:2546
 #: unmusic/src/logic.py:759 unmusic/src/unmusic.py:170
-#: unmusic/src/unmusic.py:1340 unmusic/src/unmusic.py:1345
+#: unmusic/src/unmusic.py:1330 unmusic/src/unmusic.py:1335
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -120,7 +120,7 @@ msgstr "Ограничить максимальную ширину столбц�
 #: skl_shared/src/logic.py:346 skl_shared/src/logic.py:1161
 #: skl_shared/src/logic.py:1180 skl_shared/src/logic.py:2666
 #: skl_shared/src/logic.py:2686 skl_shared/src/shared.py:4106
-#: unmusic/src/unmusic.py:967
+#: unmusic/src/unmusic.py:957
 msgid "The condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -142,10 +142,10 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:4515 skl_shared/src/logic.py:4675
 #: skl_shared/src/logic.py:4709 skl_shared/src/logic.py:4794
 #: skl_shared/src/shared.py:2371 skl_shared/src/shared.py:5052
-#: unmusic/src/logic.py:865 unmusic/src/tests.py:92 unmusic/src/unmusic.py:521
+#: unmusic/src/logic.py:865 unmusic/src/tests.py:200 unmusic/src/unmusic.py:521
 #: unmusic/src/unmusic.py:567 unmusic/src/unmusic.py:710
-#: unmusic/src/unmusic.py:714 unmusic/src/unmusic.py:892
-#: unmusic/src/unmusic.py:917 unmusic/src/unmusic.py:1271
+#: unmusic/src/unmusic.py:714 unmusic/src/unmusic.py:907
+#: unmusic/src/unmusic.py:1261
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
@@ -240,7 +240,7 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:2364 skl_shared/src/logic.py:2889
 #: skl_shared/src/logic.py:2915 skl_shared/src/logic.py:2999
 #: skl_shared/src/logic.py:3641 unmusic/src/tests.py:19
-#: unmusic/src/tests.py:161
+#: unmusic/src/tests.py:104 unmusic/src/tests.py:269
 msgid ""
 "Operation has failed!\n"
 "Details: {}"
@@ -614,7 +614,7 @@ msgstr "Все файлы"
 msgid "Save As:"
 msgstr "Сохранить как:"
 
-#: skl_shared/src/logic.py:4576 unmusic/src/unmusic.py:1348
+#: skl_shared/src/logic.py:4576 unmusic/src/unmusic.py:1338
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
@@ -676,7 +676,7 @@ msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
 #: skl_shared/src/logic.py:4814 unmusic/src/unmusic.py:390
-#: unmusic/src/unmusic.py:1413
+#: unmusic/src/unmusic.py:1403
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -890,7 +890,7 @@ msgid "No"
 msgstr "Нет"
 
 #: skl_shared/src/shared.py:4070 unmusic/src/logic.py:205
-#: unmusic/src/unmusic.py:1324
+#: unmusic/src/unmusic.py:1314
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -944,8 +944,8 @@ msgid "No more matches!"
 msgstr "Совпадений больше нет!"
 
 #: skl_shared/src/shared.py:4978 skl_shared/src/shared.py:5005
-#: unmusic/src/unmusic.py:707 unmusic/src/unmusic.py:985
-#: unmusic/src/unmusic.py:1025 unmusic/src/unmusic.py:1050
+#: unmusic/src/unmusic.py:707 unmusic/src/unmusic.py:975
+#: unmusic/src/unmusic.py:1015 unmusic/src/unmusic.py:1040
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
@@ -1146,19 +1146,19 @@ msgid "Text:"
 msgstr "Текст:"
 
 #: unmusic/src/album_editor.py:19 unmusic/src/collect_silent.py:47
-#: unmusic/src/unmusic.py:1469
+#: unmusic/src/unmusic.py:1459
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: unmusic/src/collect_silent.py:11 unmusic/src/unmusic.py:1365
+#: unmusic/src/collect_silent.py:11 unmusic/src/unmusic.py:1355
 msgid "not processed"
 msgstr "не обработано"
 
-#: unmusic/src/collect_silent.py:27 unmusic/src/unmusic.py:1380
+#: unmusic/src/collect_silent.py:27 unmusic/src/unmusic.py:1370
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: unmusic/src/collect_silent.py:40 unmusic/src/unmusic.py:1399
+#: unmusic/src/collect_silent.py:40 unmusic/src/unmusic.py:1389
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
 
@@ -1517,7 +1517,7 @@ msgstr "{}/{} дорожек перенумеровано."
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: unmusic/src/logic.py:1232 unmusic/src/tests.py:63
+#: unmusic/src/logic.py:1232 unmusic/src/tests.py:78 unmusic/src/tests.py:163
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
@@ -1549,35 +1549,39 @@ msgstr "Слова: {}"
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: unmusic/src/tests.py:66
+#: unmusic/src/tests.py:81 unmusic/src/tests.py:167
 msgid "ID: {}, rating: {}"
 msgstr "ИД: {}, рейтинг: {}"
 
-#: unmusic/src/tests.py:102
+#: unmusic/src/tests.py:174
+msgid "All IDs: {}"
+msgstr "Все ИД: {}"
+
+#: unmusic/src/tests.py:210
 msgid "Album: {}, average rating: {}"
 msgstr "Альбом: {}, средний рейтинг: {}"
 
-#: unmusic/src/tests.py:145
+#: unmusic/src/tests.py:253
 msgid "ALBUM ID"
 msgstr "ИД альбома"
 
-#: unmusic/src/tests.py:145
+#: unmusic/src/tests.py:253
 msgid "MIXED CASE"
 msgstr "СМЕШАННЫЙ РЕГИСТР"
 
-#: unmusic/src/tests.py:145
+#: unmusic/src/tests.py:253
 msgid "TRACK"
 msgstr "ДОРОЖКА"
 
-#: unmusic/src/tests.py:247
+#: unmusic/src/tests.py:355
 msgid "Tracks of the following albums are of a mixed case:"
 msgstr "Дорожки следующих альбомов находятся в смешанном регистре:"
 
-#: unmusic/src/tests.py:276
+#: unmusic/src/tests.py:384
 msgid "Not found!"
 msgstr "Не найдено!"
 
-#: unmusic/src/tests.py:304
+#: unmusic/src/tests.py:412
 msgid "Track #{}"
 msgstr "Дорожка №{}"
 
@@ -1629,11 +1633,11 @@ msgstr "Необходимо указать название дорожки."
 msgid "Track numbers should be sequential!"
 msgstr "Номера дорожек должны идти последовательно!"
 
-#: unmusic/src/unmusic.py:457 unmusic/src/unmusic.py:1107
+#: unmusic/src/unmusic.py:457 unmusic/src/unmusic.py:1097
 msgid "Save DB."
 msgstr "Сохранение БД."
 
-#: unmusic/src/unmusic.py:541 unmusic/src/unmusic.py:1253
+#: unmusic/src/unmusic.py:541 unmusic/src/unmusic.py:1243
 msgid "Load #{}."
 msgstr "Загрузка \"{}\"."
 
@@ -1645,42 +1649,42 @@ msgstr "Для этого альбома дорожки не указаны."
 msgid "{} ({} tracks)"
 msgstr "{} ({} дорожек)"
 
-#: unmusic/src/unmusic.py:907
+#: unmusic/src/unmusic.py:897
 msgid ""
 "Tracks are of a mixed rating. Do you want to assign the same rating to all "
 "of them?"
 msgstr ""
 "Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
 
-#: unmusic/src/unmusic.py:933
+#: unmusic/src/unmusic.py:923
 msgid "An album title should be indicated."
 msgstr "Необходимо указать название альбома."
 
-#: unmusic/src/unmusic.py:941
+#: unmusic/src/unmusic.py:931
 msgid "An artist should be indicated."
 msgstr "Необходимо указать исполнителя."
 
-#: unmusic/src/unmusic.py:955
+#: unmusic/src/unmusic.py:945
 msgid "No changes!"
 msgstr "Изменений не было!"
 
-#: unmusic/src/unmusic.py:958
+#: unmusic/src/unmusic.py:948
 msgid "Some fields have been updated."
 msgstr "Некоторые поля были обновлены."
 
-#: unmusic/src/unmusic.py:1089
+#: unmusic/src/unmusic.py:1079
 msgid "Are you sure you want to permanently delete record #{}?"
 msgstr "Вы действительно хотите безвозвратно удалить запись №{}?"
 
-#: unmusic/src/unmusic.py:1092
+#: unmusic/src/unmusic.py:1082
 msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
 
-#: unmusic/src/unmusic.py:1296
+#: unmusic/src/unmusic.py:1286
 msgid "Calculate ratings"
 msgstr "Подсчет оценок"
 
-#: unmusic/src/unmusic.py:1302
+#: unmusic/src/unmusic.py:1292
 msgid ""
 "Insert all required media to calculate space to be freed.\n"
 "\n"
@@ -1690,11 +1694,11 @@ msgstr ""
 "\n"
 "Продолжить?"
 
-#: unmusic/src/unmusic.py:1306
+#: unmusic/src/unmusic.py:1296
 msgid "Calculate sizes"
 msgstr "Подсчет места"
 
-#: unmusic/src/unmusic.py:1325
+#: unmusic/src/unmusic.py:1315
 msgid ""
 "Affected carriers: {}.\n"
 "Space to be freed: {}.\n"
@@ -1710,7 +1714,7 @@ msgstr ""
 "\n"
 "{}"
 
-#: unmusic/src/unmusic.py:1334
+#: unmusic/src/unmusic.py:1324
 msgid "Delete albums"
 msgstr "Удаление альбомов"
 
