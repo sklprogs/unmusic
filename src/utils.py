@@ -23,10 +23,14 @@ class DeleteBad:
         if not self.Success:
             sh.com.cancel(f)
             return
+        gi.objs.get_progress().set_text(_('Delete folders'))
+        gi.objs.progress.show()
         count = 0
-        for path in self.del_dirs:
-            if sh.Directory(path).delete():
+        for i in range(len(self.del_dirs)):
+            gi.objs.progress.update(i,len(self.del_dirs))
+            if sh.Directory(self.del_dirs[i]).delete():
                 count += 1
+        gi.objs.progress.close()
         mes = _('{}/{} folders have been deleted.')
         mes = mes.format(count,len(self.del_dirs))
         sh.objs.get_mes(f,mes).show_info()
