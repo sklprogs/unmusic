@@ -34,6 +34,8 @@ class DeleteBad:
             mes = _('Delete "{}"').format(shown_path)
             gi.objs.progress.set_text(mes)
             gi.objs.progress.update(i,len(self.del_dirs))
+            # Avoid GUI freezing
+            sh.objs.get_root().update()
             if sh.Directory(self.del_dirs[i]).delete():
                 count += 1
         gi.objs.progress.close()
