@@ -7,6 +7,91 @@ import logic as lg
 import gui as gi
 
 
+class GoodRating:
+    
+    def __init__(self):
+        self.Success = lg.objs.get_db().Success
+        self.data = ()
+        self.memory = {}
+    
+    def fail(self,func,error):
+        self.Success = False
+        mes = _('Operation has failed!\nDetails: {}').format(error)
+        sh.objs.get_mes(func,mes).show_warning()
+    
+    def fetch(self):
+        f = '[unmusic] tests.GoodRating.fetch'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        try:
+            query = 'select ALBUMID,ARTIST,ALBUM,RATING from ALBUMS order by ARTIST'
+            lg.objs.get_db().dbc.execute(query)
+            self.data = lg.objs.db.dbc.fetchall()
+        except Exception as e:
+            self.fail(f,e)
+    
+    def export(self):
+        f = '[unmusic] tests.GoodRating.export'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.data:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        for row in self.data:
+            album_id, artist, album, rating = row[0], row[1], row[2], row[3]
+            if not artist in self.memory:
+                self.memory[artist] = {}
+                self.memory[artist]['Good'] = False
+                self.memory[artist]['albums'] = {}
+            self.memory[artist]['albums'][album_id] = {'album':album
+                                                      ,'rating':rating
+                                                      }
+    
+    def _is_good(self,ids):
+        ratings = [ids[id_]['rating'] for id_ in ids \
+                   if ids[id_]['rating'] > 0
+                  ]
+        if ratings and min(ratings) > 7 and len(ratings) > 1:
+            return True
+    
+    def set_good(self):
+        f = '[unmusic] tests.GoodRating.set_good'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        for artist in self.memory:
+            if self._is_good(self.memory[artist]['albums']):
+                self.memory[artist]['Good'] = True
+    
+    def report(self):
+        # Unlike BadRatings, shows albums without ratings as well
+        f = '[unmusic] tests.GoodRating.report'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        mes = []
+        for artist in self.memory:
+            if self.memory[artist]['Good']:
+                sub = _('Artist: {}').format(artist)
+                mes.append(sub)
+                for album_id in self.memory[artist]['albums']:
+                    sub = _('ID: {}, rating: {}').format(album_id,self.memory[artist]['albums'][album_id]['rating'])
+                    mes.append(sub)
+                mes.append('')
+        sh.com.run_fast_debug(f,'\n'.join(mes))
+    
+    def run(self):
+        self.fetch()
+        self.export()
+        self.set_good()
+        self.report()
+        lg.objs.get_db().close()
+
+
+
 class BadRating:
     
     def __init__(self):
@@ -338,7 +423,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    #lg.objs.get_db().close()
-    # 1) 4; 2) mixed 7; 3) first 7, remove it
-    BadRating().run()
+    #BadRating().run()
+    GoodRating().run()
     sh.com.end()
