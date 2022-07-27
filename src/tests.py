@@ -156,6 +156,7 @@ class BadRating:
         if not self.Success:
             sh.com.cancel(f)
             return
+        ids = []
         mes = []
         for artist in self.memory:
             if self.memory[artist]['Bad']:
@@ -165,7 +166,13 @@ class BadRating:
                     if self.memory[artist]['albums'][album_id]['rating'] > 0:
                         sub = _('ID: {}, rating: {}').format(album_id,self.memory[artist]['albums'][album_id]['rating'])
                         mes.append(sub)
+                        ids.append(album_id)
                 mes.append('')
+        mes.append('')
+        ids = sorted(ids)
+        ids = [str(item) for item in ids]
+        sub = _('All IDs: {}').format(', '.join(ids))
+        mes.append(sub)
         sh.com.run_fast_debug(f,'\n'.join(mes))
     
     def run(self):
@@ -423,6 +430,6 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    #BadRating().run()
-    GoodRating().run()
+    BadRating().run()
+    #GoodRating().run()
     sh.com.end()
