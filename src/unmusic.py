@@ -877,22 +877,12 @@ class AlbumEditor:
     
     def get_rating(self,event=None):
         f = '[unmusic] unmusic.AlbumEditor.get_rating'
-        if self.Success:
-            rating = self.logic.get_mean_rating()
-            if isinstance(rating,float):
-                ''' If an album has more songs with rating X that with
-                    rating Y, we should consider that the album has
-                    an overall rating of X. Thus, we use 'round' instead
-                    of 'int'.
-                '''
-                self.gui.opt_rtg.set(round(rating))
-            elif rating is None:
-                sh.com.rep_empty(f)
-            else:
-                mes = _('Wrong input data: "{}"!').format(rating)
-                sh.objs.get_mes(f,mes).show_error()
-        else:
+        if not self.Success:
             sh.com.cancel(f)
+            return
+        rating = lg.objs.get_db().get_rating()
+        rating = sh.Input(f,rating).get_integer()
+        self.gui.opt_rtg.set(rating)
     
     def _set_rating(self):
         f = '[unmusic] unmusic.AlbumEditor._set_rating'

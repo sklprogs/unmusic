@@ -25,7 +25,7 @@ class BadRating:
             sh.com.cancel(f)
             return
         try:
-            query = 'select ALBUMID,ARTIST,ALBUM,RATING from ALBUMS where RATING > 0 and RATING < 7 order by ARTIST'
+            query = 'select ALBUMID,ARTIST,ALBUM,RATING from ALBUMS order by ARTIST'
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
         except Exception as e:
@@ -44,13 +44,27 @@ class BadRating:
             album_id, artist, album, rating = row[0], row[1], row[2], row[3]
             if not artist in self.memory:
                 self.memory[artist] = {}
-                self.memory[artist]['Bad'] = True
+                self.memory[artist]['Bad'] = False
                 self.memory[artist]['albums'] = {}
             self.memory[artist]['albums'][album_id] = {'album':album
                                                       ,'rating':rating
                                                       }
-            if rating >= 7:
-                self.memory[artist]['Bad'] = False
+    
+    def _is_bad(self,ids):
+        ratings = [ids[id_]['rating'] for id_ in ids \
+                   if ids[id_]['rating'] > 0
+                  ]
+        if ratings and max(ratings) < 7 and len(ratings) > 1:
+            return True
+    
+    def set_bad(self):
+        f = '[unmusic] tests.BadRating.set_bad'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        for artist in self.memory:
+            if self._is_bad(self.memory[artist]['albums']):
+                self.memory[artist]['Bad'] = True
     
     def report(self):
         f = '[unmusic] tests.BadRating.report'
@@ -63,14 +77,16 @@ class BadRating:
                 sub = _('Artist: {}').format(artist)
                 mes.append(sub)
                 for album_id in self.memory[artist]['albums']:
-                    sub = _('ID: {}, rating: {}').format(album_id,self.memory[artist]['albums'][album_id]['rating'])
-                    mes.append(sub)
+                    if self.memory[artist]['albums'][album_id]['rating'] > 0:
+                        sub = _('ID: {}, rating: {}').format(album_id,self.memory[artist]['albums'][album_id]['rating'])
+                        mes.append(sub)
                 mes.append('')
         sh.com.run_fast_debug(f,'\n'.join(mes))
     
     def run(self):
         self.fetch()
         self.export()
+        self.set_bad()
         self.report()
         lg.objs.get_db().close()
 
