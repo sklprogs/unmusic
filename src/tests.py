@@ -73,7 +73,7 @@ class MediocreAlbums:
         try:
             query = 'select ALBUMID,ARTIST,YEAR,ALBUM,RATING \
                      from ALBUMS where RATING > 0 and RATING < 8 \
-                     order by ALBUMID'
+                     order by ARTIST'
             lg.objs.get_db().dbc.execute(query)
             self.albums = lg.objs.db.dbc.fetchall()
         except Exception as e:
