@@ -12,9 +12,25 @@ class MediocreAlbums:
     def __init__(self):
         self.Success = lg.objs.get_db().Success
         self.albums = ()
+        self.good_tracks = []
         self.good_artists = []
         self.report = []
         self.purge = []
+    
+    def set_good_tracks(self):
+        f = '[unmusic] tests.MediocreAlbums.set_good_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        try:
+            query = 'select ALBUMID from TRACKS where RATING > 7 \
+                     order by ALBUMID'
+            lg.objs.get_db().dbc.execute(query)
+            result = lg.objs.db.dbc.fetchall()
+            if result:
+                self.good_tracks = sorted(set([item[0] for item in result]))
+        except Exception as e:
+            self.fail(f,e)
     
     def fail(self,func,error):
         self.Success = False
@@ -54,13 +70,13 @@ class MediocreAlbums:
         if not self.Success:
             sh.com.cancel(f)
             return
-        if not self.albums or not self.good_artists:
+        if not self.albums or not self.good_artists or not self.good_tracks:
             self.Success = False
             sh.com.rep_empty(f)
             return
         for row in self.albums:
             album_id, artist, year, album, rating = row[0], row[1], row[2], row[3], row[4]
-            if artist.lower() in self.good_artists:
+            if album_id in self.good_tracks or artist.lower() in self.good_artists:
                 continue
             sub = '{}: {} - {} - {}: {}'.format(album_id,artist,year,album,rating)
             self.report.append(sub)
@@ -72,20 +88,21 @@ class MediocreAlbums:
             sh.com.cancel(f)
             return
         albums = sh.com.set_figure_commas(len(self.albums))
-        good = len(self.albums) - len(self.purge)
-        good = sh.com.set_figure_commas(good)
+        exclude = len(self.albums) - len(self.purge)
+        exclude = sh.com.set_figure_commas(exclude)
         purge = sh.com.set_figure_commas(len(self.purge))
         self.report.append('')
-        sub = _('Mediocre albums in total: {}, of good artists: {}, to purge: {}')
-        sub = sub.format(albums,good,purge)
+        sub = _('Mediocre albums in total: {}, exclude: {}, purge: {}')
+        sub = sub.format(albums,exclude,purge)
         self.report.append(sub)
         ids = [str(album_id) for album_id in self.purge]
-        sub = _('IDs of albums to purge: {}').format(', '.join(ids))
+        sub = _('IDs of the albums to purge: {}').format(', '.join(ids))
         self.report.append(sub)
         sh.com.run_fast_debug(f,'\n'.join(self.report))
     
     def run(self):
         self.set_good_artists()
+        self.set_good_tracks()
         self.set_albums()
         self.set_to_purge()
         self.show_report()
