@@ -16,6 +16,7 @@ class MediocreAlbums:
         self.good_artists = []
         self.report = []
         self.purge = []
+        self.kept = []
     
     def set_good_tracks(self):
         f = '[unmusic] tests.MediocreAlbums.set_good_tracks'
@@ -76,11 +77,23 @@ class MediocreAlbums:
             return
         for row in self.albums:
             album_id, artist, year, album, rating = row[0], row[1], row[2], row[3], row[4]
-            if album_id in self.good_tracks or artist.lower() in self.good_artists:
-                continue
             sub = '{}: {} - {} - {}: {}'.format(album_id,artist,year,album,rating)
+            if album_id in self.good_tracks or artist.lower() in self.good_artists:
+                self.kept.append(sub)
+                continue
             self.report.append(sub)
             self.purge.append(album_id)
+    
+    def show_kept(self):
+        f = '[unmusic] tests.MediocreAlbums.show_kept'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.kept:
+            sh.com.rep_lazy(f)
+            return
+        mes = [_('Kept albums:')] + self.kept
+        sh.com.run_fast_debug(f,'\n'.join(mes))
     
     def show_report(self):
         f = '[unmusic] tests.MediocreAlbums.show_report'
@@ -105,6 +118,7 @@ class MediocreAlbums:
         self.set_good_tracks()
         self.set_albums()
         self.set_to_purge()
+        #self.show_kept()
         self.show_report()
         lg.objs.get_db().close()
 
