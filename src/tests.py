@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import os
 import skl_shared.shared as sh
 from skl_shared.localize import _
 import logic as lg
@@ -17,6 +18,18 @@ class MediocreAlbums:
         self.report = []
         self.purge = []
         self.kept = []
+        self.local = ''
+        self.external = ''
+    
+    def set_media(self):
+        f = '[unmusic] tests.MediocreAlbums.set_media'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        self.local = lg.objs.get_default().ihome.add_share(_('local collection'))
+        self.local = os.path.realpath(self.local)
+        self.external = lg.objs.default.ihome.add_share(_('external collection'))
+        self.external = os.path.realpath(self.external)
     
     def set_good_tracks(self):
         f = '[unmusic] tests.MediocreAlbums.set_good_tracks'
@@ -81,6 +94,10 @@ class MediocreAlbums:
             if album_id in self.good_tracks or artist.lower() in self.good_artists:
                 self.kept.append(sub)
                 continue
+            path_loc = os.path.join(self.local,str(album_id))
+            path_ext = os.path.join(self.external,str(album_id))
+            if not os.path.exists(path_ext) and not os.path.exists(path_loc):
+                continue
             self.report.append(sub)
             self.purge.append(album_id)
     
@@ -114,6 +131,7 @@ class MediocreAlbums:
         sh.com.run_fast_debug(f,'\n'.join(self.report))
     
     def run(self):
+        self.set_media()
         self.set_good_artists()
         self.set_good_tracks()
         self.set_albums()
