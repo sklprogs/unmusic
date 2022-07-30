@@ -7,6 +7,92 @@ import logic as lg
 import gui as gi
 
 
+class MediocreAlbums:
+    
+    def __init__(self):
+        self.Success = lg.objs.get_db().Success
+        self.albums = ()
+        self.good_artists = []
+        self.report = []
+        self.purge = []
+    
+    def fail(self,func,error):
+        self.Success = False
+        mes = _('Operation has failed!\nDetails: {}').format(error)
+        sh.objs.get_mes(func,mes).show_warning()
+    
+    def set_good_artists(self):
+        f = '[unmusic] tests.MediocreAlbums.set_good_artists'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        query = 'select ARTIST from ALBUMS where RATING > 7'
+        try:
+            lg.objs.get_db().dbc.execute(query)
+            result = lg.objs.db.dbc.fetchall()
+            if result:
+                self.good_artists = sorted(set([item[0].lower() for item in result]))
+        except Exception as e:
+            self.fail(f,e)
+    
+    def set_albums(self):
+        f = '[unmusic] tests.MediocreAlbums.set_albums'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        try:
+            query = 'select ALBUMID,ARTIST,YEAR,ALBUM,RATING \
+                     from ALBUMS where RATING > 0 and RATING < 8 \
+                     order by ALBUMID'
+            lg.objs.get_db().dbc.execute(query)
+            self.albums = lg.objs.db.dbc.fetchall()
+        except Exception as e:
+            self.fail(f,e)
+    
+    def set_to_purge(self):
+        f = '[unmusic] tests.MediocreAlbums.set_to_purge'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.albums or not self.good_artists:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        for row in self.albums:
+            album_id, artist, year, album, rating = row[0], row[1], row[2], row[3], row[4]
+            if artist.lower() in self.good_artists:
+                continue
+            sub = '{}: {} - {} - {}: {}'.format(album_id,artist,year,album,rating)
+            self.report.append(sub)
+            self.purge.append(album_id)
+    
+    def show_report(self):
+        f = '[unmusic] tests.MediocreAlbums.show_report'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        albums = sh.com.set_figure_commas(len(self.albums))
+        good = len(self.albums) - len(self.purge)
+        good = sh.com.set_figure_commas(good)
+        purge = sh.com.set_figure_commas(len(self.purge))
+        self.report.append('')
+        sub = _('Mediocre albums in total: {}, of good artists: {}, to purge: {}')
+        sub = sub.format(albums,good,purge)
+        self.report.append(sub)
+        ids = [str(album_id) for album_id in self.purge]
+        sub = _('IDs of albums to purge: {}').format(', '.join(ids))
+        self.report.append(sub)
+        sh.com.run_fast_debug(f,'\n'.join(self.report))
+    
+    def run(self):
+        self.set_good_artists()
+        self.set_albums()
+        self.set_to_purge()
+        self.show_report()
+        lg.objs.get_db().close()
+
+
+
 class GoodRating:
     
     def __init__(self):
@@ -67,7 +153,7 @@ class GoodRating:
                 self.memory[artist]['Good'] = True
     
     def report(self):
-        # Unlike BadRatings, shows albums without ratings as well
+        # Unlike BadArtistss, shows albums without ratings as well
         f = '[unmusic] tests.GoodRating.report'
         if not self.Success:
             sh.com.cancel(f)
@@ -92,7 +178,7 @@ class GoodRating:
 
 
 
-class BadRating:
+class BadArtists:
     
     def __init__(self):
         self.Success = lg.objs.get_db().Success
@@ -105,7 +191,7 @@ class BadRating:
         sh.objs.get_mes(func,mes).show_warning()
     
     def fetch(self):
-        f = '[unmusic] tests.BadRating.fetch'
+        f = '[unmusic] tests.BadArtists.fetch'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -117,7 +203,7 @@ class BadRating:
             self.fail(f,e)
     
     def export(self):
-        f = '[unmusic] tests.BadRating.export'
+        f = '[unmusic] tests.BadArtists.export'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -143,7 +229,7 @@ class BadRating:
             return True
     
     def set_bad(self):
-        f = '[unmusic] tests.BadRating.set_bad'
+        f = '[unmusic] tests.BadArtists.set_bad'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -152,7 +238,7 @@ class BadRating:
                 self.memory[artist]['Bad'] = True
     
     def report(self):
-        f = '[unmusic] tests.BadRating.report'
+        f = '[unmusic] tests.BadArtists.report'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -184,14 +270,14 @@ class BadRating:
 
 
 
-class Rating:
+class AlbumRating:
     
     def __init__(self,ids):
         self.Success = lg.objs.get_db().Success
         self.ids = ids
     
     def set_no(self):
-        f = '[unmusic] tests.Rating.set_no'
+        f = '[unmusic] tests.AlbumRating.set_no'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -203,7 +289,7 @@ class Rating:
         lg.objs.get_db().albumid = self.no
     
     def get(self):
-        f = '[unmusic] tests.Rating.get'
+        f = '[unmusic] tests.AlbumRating.get'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -430,6 +516,7 @@ com = Commands()
 if __name__ == '__main__':
     f = 'tests.__main__'
     sh.com.start()
-    BadRating().run()
+    #BadArtists().run()
     #GoodRating().run()
+    MediocreAlbums().run()
     sh.com.end()
