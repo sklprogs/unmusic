@@ -1026,9 +1026,9 @@ class Directory:
                 if self.audio:
                     for file in self.audio:
                         self.tracks.append (Track (file = file
-                                                   ,Decypher = self.Decypher
-                                                   )
-                                            )
+                                                  ,Decypher = self.Decypher
+                                                  )
+                                           )
                 else:
                     mes = _('Folder "{}" has no audio files.')
                     mes = mes.format(self.path)
