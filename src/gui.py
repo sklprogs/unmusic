@@ -5,14 +5,10 @@ from skl_shared.localize import _
 import skl_shared.shared as sh
 
 
-PLAY = (_('Play')
-       ,_('All')
-       ,_('Good')
-       ,_('Best')
-       )
+PLAY = (_('Play'), _('All'), _('Good'), _('Best'))
 
-ITEMS_YEAR = (_('Not set'),'=','>=','<=')
-ICON = sh.objs.get_pdir().add('..','resources','unmusic.gif')
+ITEMS_YEAR = (_('Not set'), '=', '>=', '<=')
+ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.gif')
 
 
 class Copy:
@@ -33,7 +29,7 @@ class Copy:
                                 )
         self.ent_lim.insert(100)
     
-    def reset(self,event=None):
+    def reset(self, event=None):
         self.opt_gnr.set(_('All'))
         self.opt_yer.set(_('Not set'))
         self.opt_src.set(_('external collection'))
@@ -45,18 +41,18 @@ class Copy:
     
     def set_bindings(self):
         sh.com.bind (obj = self.parent
-                    ,bindings = ('<Escape>','<Control-w>','<Control-q>')
+                    ,bindings = ('<Escape>', '<Control-w>', '<Control-q>')
                     ,action = self.close
                     )
         self.opt_yer.action = self.ent_yer.focus
     
-    def set_icon(self,path=None):
+    def set_icon(self, path=None):
         if path:
             self.parent.set_icon(path)
         else:
             self.parent.set_icon(ICON)
     
-    def set_title(self,arg=None):
+    def set_title(self, arg=None):
         if not arg:
             arg = _('Copy music')
         self.parent.set_title(arg)
@@ -151,9 +147,7 @@ class Copy:
                                 ,width = self.width
                                 )
         self.opt_gnr = sh.OptionMenu (parent = self.frm_gnr
-                                     ,items = (_('All'),_('Heavy')
-                                                ,_('Light')
-                                                )
+                                     ,items = (_('All'), _('Heavy'), _('Light'))
                                      ,side = 'left'
                                      ,default = _('All')
                                      )
@@ -168,8 +162,8 @@ class Copy:
                                 )
         self.opt_src = sh.OptionMenu (parent = self.frm_src
                                      ,items = (_('external collection')
-                                                ,_('local collection')
-                                                )
+                                              ,_('local collection')
+                                              )
                                      ,side = 'left'
                                      ,default = _('external collection')
                                      )
@@ -184,8 +178,8 @@ class Copy:
                                 )
         self.opt_trg = sh.OptionMenu (parent = self.frm_trg
                                      ,items = (_('mobile collection')
-                                                ,_('local collection')
-                                                )
+                                              ,_('local collection')
+                                              )
                                      ,side = 'left'
                                      ,default = _('mobile collection')
                                      )
@@ -203,10 +197,10 @@ class Copy:
         self.set_buttons()
         self.set_bindings()
     
-    def show(self,event=None):
+    def show(self, event=None):
         self.parent.show()
     
-    def close(self,event=None):
+    def close(self, event=None):
         self.parent.close()
 
 
@@ -216,26 +210,26 @@ class ImageViewer:
     def __init__(self):
         self.set_gui()
     
-    def show(self,event=None):
+    def show(self, event=None):
         self.parent.show()
     
-    def close(self,event=None):
+    def close(self, event=None):
         self.parent.close()
     
     def set_bindings(self):
         sh.com.bind (obj = self.parent
-                    ,bindings = ('<Escape>','<Control-w>','<Control-q>'
+                    ,bindings = ('<Escape>', '<Control-w>', '<Control-q>'
                                 ,'<ButtonRelease-1>'
                                 )
                     ,action = self.close
                     )
     
-    def set_title(self,arg=None):
+    def set_title(self, arg=None):
         if not arg:
             arg = _('Image:')
         self.parent.set_title(arg)
     
-    def set_icon(self,path=None):
+    def set_icon(self, path=None):
         if path:
             self.parent.set_icon(path)
         else:
@@ -283,26 +277,26 @@ class AlbumEditor:
                                 ,text = _('mobile collection')
                                 ,side = 'left'
                                 )
-        ''' We can call 'cbx_loc.widget.config(state="disabled")'
-            but this makes the checkbox indistinguishable.
+        ''' We can call 'cbx_loc.widget.config(state="disabled")' but this
+            makes the checkbox indistinguishable.
         '''
         self.cbx_loc.reset(action=self.cbx_loc.toggle)
         self.cbx_ext.reset(action=self.cbx_ext.toggle)
         self.cbx_mob.reset(action=self.cbx_mob.toggle)
     
-    def clear_ids(self,event=None):
+    def clear_ids(self, event=None):
         self.ent_ids.focus()
         self.ent_ids.clear_text()
     
-    def clear_album_search(self,event=None):
+    def clear_album_search(self, event=None):
         self.ent_src.focus()
         self.ent_src.clear_text()
     
-    def clear_track_search(self,event=None):
+    def clear_track_search(self, event=None):
         self.ent_sr2.focus()
         self.ent_sr2.clear_text()
     
-    def focus_ids(self,event=None):
+    def focus_ids(self, event=None):
         self.ent_ids.focus()
         self.ent_ids.select_all()
     
@@ -565,7 +559,7 @@ class AlbumEditor:
     
     def set_menus(self):
         self.opt_rtg = sh.OptionMenu (parent = self.frm
-                                     ,items = (0,1,2,3,4,5,6,7,8,9,10)
+                                     ,items = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
                                      ,side = 'left'
                                      )
         self.opt_ply = sh.OptionMenu (parent = self.frm
@@ -574,8 +568,8 @@ class AlbumEditor:
                                      )
 
     def set_bindings(self):
-        ''' #TODO: Cannot use Delete + smth bindings, e.g.
-            '<Control-Delete>' (TextBox reacts to Delete)
+        ''' #TODO: Cannot use Delete + smth bindings, e.g. '<Control-Delete>'
+            (TextBox reacts to Delete).
         '''
         sh.com.bind (obj = self
                     ,bindings = '<Escape>'
@@ -625,11 +619,11 @@ class AlbumEditor:
                     ,action = self.clear_ids
                     )
 
-    def focus_album_search(self,event=None):
+    def focus_album_search(self, event=None):
         self.ent_src.focus()
         self.ent_src.select_all()
     
-    def focus_track_search(self,event=None):
+    def focus_track_search(self, event=None):
         self.ent_sr2.focus()
         self.ent_sr2.select_all()
         
@@ -703,68 +697,65 @@ class AlbumEditor:
                              )
     
     def set_values(self):
-        self.prev_inactive = sh.objs.get_pdir().add ('..','resources'
+        self.prev_inactive = sh.objs.get_pdir().add ('..', 'resources'
                                                     ,'buttons'
                                                     ,'icon_36x36_go_back_off.gif'
                                                     )
-        self.prev_active = sh.objs.pdir.add ('..','resources'
-                                            ,'buttons'
+        self.prev_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                             ,'icon_36x36_go_back.gif'
                                             )
-        self.next_inactive = sh.objs.pdir.add ('..','resources'
-                                              ,'buttons'
+        self.next_inactive = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                               ,'icon_36x36_go_forward_off.gif'
                                               )
-        self.next_active = sh.objs.pdir.add ('..','resources'
-                                            ,'buttons'
+        self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                             ,'icon_36x36_go_forward.gif'
                                             )
-        self.icn_add = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_add = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_add.gif'
                                         )
-        self.icn_cyp = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_cyp = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_cypher.gif'
                                         )
-        self.icn_dec = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decode.gif'
                                         )
-        self.icn_dez = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_dez = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decypher.gif'
                                         )
-        self.icn_del = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_del = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_delete_record.gif'
                                         )
-        self.icn_rld = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_rld = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_reload.gif'
                                         )
-        self.icn_sav = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_save.gif'
                                         )
-        self.icn_trk = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_tracks.gif'
                                         )
     
-    def dump(self,event=None):
+    def dump(self, event=None):
         return (self.ent_alb.get(),self.ent_art.get()
                ,self.ent_yer.get(),self.opt_gnr.choice
                ,self.ent_cnt.get(),self.ent_com.get()
                )
     
-    def set_title(self,text=None):
+    def set_title(self, text=None):
         if not text:
             text = _('Album Editor')
         self.parent.set_title(text=text)
 
-    def set_icon(self,path=None):
+    def set_icon(self, path=None):
         if path:
             self.parent.set_icon(path)
         else:
             self.parent.set_icon(ICON)
 
-    def show(self,event=None):
+    def show(self, event=None):
         self.parent.show()
         
-    def close(self,event=None):
+    def close(self, event=None):
         self.parent.close()
 
 
@@ -816,13 +807,13 @@ class Menu:
                                 ,action = self.a[0].focus
                                 )
     
-    def set_icon(self,path=None):
+    def set_icon(self, path=None):
         if path:
             self.parent.set_icon(path)
         else:
             self.parent.set_icon(ICON)
     
-    def set_title(self,text=''):
+    def set_title(self, text=''):
         if not text:
             text = 'unmusic'
         self.parent.set_title(text)
@@ -841,19 +832,19 @@ class Menu:
                                  ,side = 'top'
                                  ,font = font
                                  )
-                       )
+                      )
         self.a.append (sh.Button (parent = self.parent
                                  ,text = _('Collect tags & Obfuscate')
                                  ,side = 'top'
                                  ,font = font
                                  )
-                       )
+                      )
         self.a.append (sh.Button (parent = self.parent
                                  ,text = _('Copy music')
                                  ,side = 'top'
                                  ,font = font
                                  )
-                       )
+                      )
         self.a.append (sh.Button (parent = self.parent
                                  ,text = _('Delete low-rated music')
                                  ,side = 'top'
@@ -877,24 +868,24 @@ class Menu:
         if len(self.a) > 0:
             self.a[0].focus()
     
-    def show(self,event=None):
+    def show(self, event=None):
         self.parent.show()
     
-    def close(self,event=None):
+    def close(self, event=None):
         self.parent.close()
 
 
 
 class Tracks(sh.ScrollableC):
     
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.tracks = []
         self.pool = sh.lg.MessagePool(max_size=3)
         self.add_paths()
         self.add_gui()
         
-    def clear_rating(self,event=None):
+    def clear_rating(self, event=None):
         for track in self.tracks:
             track.opt_rtg.set(0)
     
@@ -904,7 +895,7 @@ class Tracks(sh.ScrollableC):
                             ,font = 'Sans 9'
                             )
 
-    def update_info(self,text):
+    def update_info(self, text):
         self.pool.add(message=text)
         self.lbl.set_text(arg=self.pool.get())
     
@@ -915,22 +906,22 @@ class Tracks(sh.ScrollableC):
         return new
     
     def add_paths(self):
-        self.icn_cyp = sh.objs.get_pdir().add ('..','resources','buttons'
+        self.icn_cyp = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
                                               ,'icon_36x36_cypher.gif'
                                               )
-        self.icn_dec = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decode.gif'
                                         )
-        self.icn_dez = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_dez = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decypher.gif'
                                         )
-        self.icn_rat = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_rat = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_clear_rating.gif'
                                         )
-        self.icn_rld = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_rld = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_reload.gif'
                                         )
-        self.icn_sav = sh.objs.pdir.add ('..','resources','buttons'
+        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_save.gif'
                                         )
     
@@ -998,26 +989,26 @@ class Tracks(sh.ScrollableC):
         self._set_info()
         self.add_buttons()
     
-    def add(self,event=None,Extended=False):
-        self.tracks.append(Track(self.get_content_frame(),Extended))
+    def add(self, event=None, Extended=False):
+        self.tracks.append(Track(self.get_content_frame(), Extended))
         return self.tracks[-1]
 
 
 
 class Track:
     
-    def __init__(self,parent,Extended=False):
+    def __init__(self, parent, Extended=False):
         self.parent = parent
         self.Extended = Extended
         self.set_gui()
     
-    def dump(self,event=None):
-        return (self.ent_tit.get(),self.ent_lyr.get(),self.ent_com.get()
+    def dump(self, event=None):
+        return (self.ent_tit.get(), self.ent_lyr.get(), self.ent_com.get()
                ,int(self.opt_rtg.choice)
                )
     
-    # Useful for debug purposes only
-    def show(self,event=None):
+    def show(self, event=None):
+        # Useful for debug purposes only
         self.parent.show()
     
     def set_frames(self):
@@ -1107,7 +1098,7 @@ class Track:
     
     def set_menus(self):
         self.opt_rtg = sh.OptionMenu (parent = self.frm_rht
-                                     ,items = (0,1,2,3,4,5,6,7,8,9,10)
+                                     ,items = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
                                      ,side = 'left'
                                      )
     
@@ -1125,13 +1116,14 @@ class Objects:
         self.tracks = self.wait = self.progress = None
     
     def get_progress(self):
-        if self.progress is None:
-            self.progress = sh.ProgressBar (icon = ICON
-                                           ,height = 100
-                                           )
-            # Widget is not created yet, do not 'center' it here!
-            sh.Geometry(self.progress.obj).activate()
-            self.progress.add()
+        if self.progress is not None:
+            return self.progress
+        self.progress = sh.ProgressBar (icon = ICON
+                                       ,height = 100
+                                       )
+        # Widget is not created yet, do not 'center' it here!
+        sh.Geometry(self.progress.obj).activate()
+        self.progress.add()
         return self.progress
     
     def get_tracks(self):

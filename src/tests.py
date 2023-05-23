@@ -71,9 +71,8 @@ class MediocreAlbums:
             sh.com.cancel(f)
             return
         try:
-            query = 'select ALBUMID,ARTIST,YEAR,ALBUM,RATING \
-                     from ALBUMS where RATING > 0 and RATING < 8 \
-                     order by ARTIST'
+            query = 'select ALBUMID, ARTIST, YEAR, ALBUM, RATING from ALBUMS \
+                     where RATING > 0 and RATING < 8 order by ARTIST'
             lg.objs.get_db().dbc.execute(query)
             self.albums = lg.objs.db.dbc.fetchall()
         except Exception as e:
@@ -90,7 +89,7 @@ class MediocreAlbums:
             return
         for row in self.albums:
             album_id, artist, year, album, rating = row[0], row[1], row[2], row[3], row[4]
-            sub = '{}: {} - {} - {}: {}'.format(album_id,artist,year,album,rating)
+            sub = f'{album_id}: {artist} - {year} - {album}: {rating}'
             if album_id in self.good_tracks or artist.lower() in self.good_artists:
                 self.kept.append(sub)
                 continue
@@ -149,7 +148,7 @@ class GoodRating:
         self.data = ()
         self.memory = {}
     
-    def fail(self,func,error):
+    def fail(self, func, error):
         self.Success = False
         mes = _('Operation has failed!\nDetails: {}').format(error)
         sh.objs.get_mes(func,mes).show_warning()
@@ -160,7 +159,8 @@ class GoodRating:
             sh.com.cancel(f)
             return
         try:
-            query = 'select ALBUMID,ARTIST,ALBUM,RATING from ALBUMS order by ARTIST'
+            query = 'select ALBUMID, ARTIST, ALBUM, RATING from ALBUMS \
+                     order by ARTIST'
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
         except Exception as e:
@@ -186,9 +186,7 @@ class GoodRating:
                                                       }
     
     def _is_good(self,ids):
-        ratings = [ids[id_]['rating'] for id_ in ids \
-                   if ids[id_]['rating'] > 0
-                  ]
+        ratings = [ids[id_]['rating'] for id_ in ids if ids[id_]['rating'] > 0]
         if ratings and min(ratings) > 7 and len(ratings) > 1:
             return True
     
@@ -245,7 +243,8 @@ class BadArtists:
             sh.com.cancel(f)
             return
         try:
-            query = 'select ALBUMID,ARTIST,ALBUM,RATING from ALBUMS order by ARTIST'
+            query = 'select ALBUMID, ARTIST, ALBUM, RATING from ALBUMS \
+                     order by ARTIST'
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
         except Exception as e:
@@ -271,9 +270,7 @@ class BadArtists:
                                                       }
     
     def _is_bad(self,ids):
-        ratings = [ids[id_]['rating'] for id_ in ids \
-                   if ids[id_]['rating'] > 0
-                  ]
+        ratings = [ids[id_]['rating'] for id_ in ids if ids[id_]['rating'] > 0]
         if ratings and max(ratings) < 7 and len(ratings) > 1:
             return True
     
@@ -415,7 +412,6 @@ class CamelCase:
             sh.com.rep_empty(f)
             return
         old_id = 0
-        tracks = []
         album = Album()
         for row in result:
             id_, track = row[0], row[1]
@@ -429,7 +425,7 @@ class CamelCase:
                 album.tracks.append(track)
         self.albums.append(album)
     
-    def _is_word_camel(self,word):
+    def _is_word_camel(self, word):
         ''' - There can be false-positive results if each track has
               a translation (e.g., looks like "a title in a foreign
               language (a translated title)"). Moreover, '_' or '-' are
@@ -452,7 +448,7 @@ class CamelCase:
             if char.isupper():
                 return True
     
-    def _is_track_camel(self,track):
+    def _is_track_camel(self, track):
         track = track.replace('_',' ')
         track = track.replace('-',' ')
         for word in track.split(' '):
@@ -521,9 +517,8 @@ class Commands:
     
     def show_mixed_rating(self):
         lg.objs.get_db().albumid = 7
-        query = 'update TRACKS set RATING = ? where ALBUMID = ? \
-                 and NO <= ?'
-        lg.objs.db.dbc.execute(query,(7,lg.objs.db.albumid,5,))
+        query = 'update TRACKS set RATING = ? where ALBUMID = ? and NO <= ?'
+        lg.objs.db.dbc.execute(query, (7, lg.objs.db.albumid, 5,))
         lg.objs.db.save()
         lg.objs.db.dbc.execute('select * from TRACKS')
         rows = lg.objs.db.get_tracks()
@@ -551,12 +546,12 @@ class Commands:
     def check_nos(self):
         f = 'tests.Commands.check_nos'
         albumid = lg.objs.get_db().get_max_id()
-        if albumid:
-            for i in range(albumid):
-                lg.objs.db.albumid = i + 1
-                print(lg.objs.db.albumid,':',lg.objs.get_db().check_nos())
-        else:
+        if not albumid:
             sh.com.rep_empty(f)
+            return
+        for i in range(albumid):
+            lg.objs.db.albumid = i + 1
+            print(lg.objs.db.albumid,':',lg.objs.get_db().check_nos())
     
 
 com = Commands()

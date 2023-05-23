@@ -4,7 +4,6 @@
 import skl_shared.shared as sh
 from skl_shared.localize import _
 import logic as lg
-import gui as gi
 import unmusic as ct
 
 
