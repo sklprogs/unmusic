@@ -331,14 +331,6 @@ class AlbumEditor:
                                  ,active = self.icn_rld
                                  ,bindings = ('<F5>','<Control-r>')
                                  )
-        self.btn_rec = sh.Button (parent = self.frm1
-                                 ,text = _('Create')
-                                 ,hint = _('Create a new record')
-                                 ,side = 'left'
-                                 ,inactive = self.icn_add
-                                 ,active = self.icn_add
-                                 ,bindings = '<Control-n>'
-                                 )
         self.btn_del = sh.Button (parent = self.frm1
                                  ,text = _('Delete')
                                  ,hint = _('Delete the present record')
@@ -710,9 +702,6 @@ class AlbumEditor:
         self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                             ,'icon_36x36_go_forward.gif'
                                             )
-        self.icn_add = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'icon_36x36_add.gif'
-                                        )
         self.icn_cyp = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_cypher.gif'
                                         )

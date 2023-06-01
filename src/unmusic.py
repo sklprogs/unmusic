@@ -1089,15 +1089,6 @@ class AlbumEditor:
             self.gui.update_info(_('Save DB.'))
             lg.objs.get_db().save()
     
-    def create(self, event=None):
-        f = '[unmusic] unmusic.AlbumEditor.create'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        lg.objs.get_db().add_album(('?', '?', 2000, '?', '', '', ''))
-        lg.objs.db.albumid = self.logic.get_max()
-        self.fill()
-    
     def set_bindings(self):
         self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
         self.gui.btn_cyp.action = self.cypher
@@ -1106,7 +1097,6 @@ class AlbumEditor:
         self.gui.btn_dez.action = self.decypher
         self.gui.btn_nxt.action = self.go_next
         self.gui.btn_prv.action = self.go_prev
-        self.gui.btn_rec.action = self.create
         self.gui.btn_rld.action = self.fill
         self.gui.btn_sav.action = self.save
         self.gui.btn_snx.action = self.search_next_album
@@ -1145,10 +1135,6 @@ class AlbumEditor:
         sh.com.bind (obj = self.gui
                     ,bindings = ('<F4>','<Control-t>','<Alt-t>')
                     ,action = self.show_tracks
-                    )
-        sh.com.bind (obj = self.gui
-                    ,bindings = '<Control-n>'
-                    ,action = self.create
                     )
         sh.com.bind (obj = self.gui
                     ,bindings = '<Alt-Left>'
