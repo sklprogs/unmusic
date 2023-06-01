@@ -573,7 +573,7 @@ class DB:
                 ,COUNTRY text    \
                 ,COMMENT text    \
                 ,SEARCH  text    \
-                ,RATING  integer \
+                ,RATING  float   \
                                                    )'
         try:
             self.dbc.execute(query)

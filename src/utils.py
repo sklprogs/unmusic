@@ -76,10 +76,10 @@ class DeleteBad:
                 self.del_dirs.append(path)
         gi.objs.progress.close()
         total_size = local_size + external_size + mobile_size
-        total_size = sh.com.get_human_size(total_size,True)
-        local_size = sh.com.get_human_size(local_size,True)
-        external_size = sh.com.get_human_size(external_size,True)
-        mobile_size = sh.com.get_human_size(mobile_size,True)
+        total_size = sh.com.get_human_size(total_size, True)
+        local_size = sh.com.get_human_size(local_size, True)
+        external_size = sh.com.get_human_size(external_size, True)
+        mobile_size = sh.com.get_human_size(mobile_size, True)
         mes = []
         sub = _('Space to be freed:')
         mes.append(sub)
@@ -97,7 +97,7 @@ class DeleteBad:
         self.Success = sh.objs.get_mes(f,'\n'.join(mes)).show_question()
         if not self.Success:
             mes = _('Operation has been canceled by the user.')
-            sh.objs.get_mes(f,mes,True).show_info()
+            sh.objs.get_mes(f, mes, True).show_info()
     
     def run(self):
         self.get_sizes()
@@ -128,11 +128,11 @@ class Image:
         if os.path.exists(self.path):
             mes = _('File "{}" already exists.')
             mes = mes.format(self.path)
-            sh.objs.get_mes(f,mes,True).show_debug()
+            sh.objs.get_mes(f, mes, True).show_debug()
             self.Present = True
         elif self.bytes:
             mes = _('Save "{}"').format(self.path)
-            sh.objs.get_mes(f,mes,True).show_info()
+            sh.objs.get_mes(f, mes, True).show_info()
             iimage = im.Image()
             iimage.bytes_ = self.bytes
             iimage.get_loader()
@@ -142,7 +142,7 @@ class Image:
         else:
             mes = _('Album {} has no cover!')
             mes = mes.format(self.albumid)
-            sh.objs.get_mes(f,mes,True).show_debug()
+            sh.objs.get_mes(f, mes, True).show_debug()
             self.Skipped = True
     
     def set_path(self):
@@ -155,9 +155,9 @@ class Image:
             sh.com.rep_empty(f)
             return
         name += '.jpg'
-        self.path = os.path.join(self.dir,name)
+        self.path = os.path.join(self.dir, name)
     
-    def reset(self,albumid,bytes_):
+    def reset(self, albumid, bytes_):
         self.path = ''
         self.albumid = albumid
         self.bytes = bytes_
@@ -180,7 +180,7 @@ class Commands:
     def extract_images(self):
         f = '[unmusic] utils.Commands.extract_images'
         sh.GUI_MES = False
-        idb = DB(self.path,self.clone)
+        idb = DB(self.path, self.clone)
         idb.connect()
         data = idb.fetch_images()
         if not data:
@@ -193,7 +193,7 @@ class Commands:
         skipped = 0
         iimage = Image()
         for row in data:
-            iimage.reset(row[0],row[1])
+            iimage.reset(row[0], row[1])
             iimage.run()
             if iimage.Present:
                 present += 1
@@ -204,8 +204,8 @@ class Commands:
             else:
                 errors += 1
         mes = _('Files in total: {}, processed: {}, already existing: {}, skipped: {}, errors: {}')
-        mes = mes.format(len(data),processed,present,skipped,errors)
-        sh.objs.get_mes(f,mes,True).show_info()
+        mes = mes.format(len(data), processed, present, skipped, errors)
+        sh.objs.get_mes(f, mes, True).show_info()
         idb.close()
     
     def alter(self):
@@ -224,7 +224,7 @@ class Commands:
         idb.close()
         idb.closew()
         
-    def is_camel_case(self,title):
+    def is_camel_case(self, title):
         words = title.split(' ')
         for word in words:
             if word != word.upper() and len(word) > 1 \
@@ -260,7 +260,7 @@ class Commands:
 
 class DB:
     
-    def __init__(self,path,clone):
+    def __init__(self, path, clone):
         self.albums = ()
         self.tracks = ()
         self.path = path
@@ -273,13 +273,13 @@ class DB:
             sh.com.cancel(f)
             return
         mes = _('Fetch data')
-        sh.objs.get_mes(f,mes,True).show_debug()
+        sh.objs.get_mes(f, mes, True).show_debug()
         query = 'select ALBUMID,IMAGE from ALBUMS order by ALBUMID'
         try:
             self.dbc.execute(query)
             return self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def create_tables(self):
         self.create_albums()
@@ -292,13 +292,13 @@ class DB:
     def fail(self,f,e):
         self.Success = False
         mes = _('Database "{}" has failed!\n\nDetails: {}')
-        mes = mes.format(self.path,e)
+        mes = mes.format(self.path, e)
         sh.objs.get_mes(f,mes).show_warning()
     
-    def fail_clone(self,f,e):
+    def fail_clone(self, f, e):
         self.Success = False
         mes = _('Database "{}" has failed!\n\nDetails: {}')
-        mes = mes.format(self.clone,e)
+        mes = mes.format(self.clone, e)
         sh.objs.get_mes(f,mes).show_warning()
     
     def savew(self):
@@ -309,7 +309,7 @@ class DB:
         try:
             self.dbw.commit()
         except Exception as e:
-            self.fail_clone(f,e)
+            self.fail_clone(f, e)
         
     def connect(self):
         f = '[unmusic] utils.DB.connect'
@@ -320,7 +320,7 @@ class DB:
             self.db = sqlite3.connect(self.path)
             self.dbc = self.db.cursor()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
                           
     def connectw(self):
         f = '[unmusic] utils.DB.connectw'
@@ -331,7 +331,7 @@ class DB:
             self.dbw = sqlite3.connect(self.clone)
             self.dbcw = self.dbw.cursor()
         except Exception as e:
-            self.fail_clone(f,e)
+            self.fail_clone(f, e)
     
     def fetch_albums(self):
         f = '[unmusic] utils.DB.fetch_albums'
@@ -339,7 +339,7 @@ class DB:
             sh.com.cancel(f)
             return
         mes = _('Fetch data from {}').format('ALBUMS')
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         # 8 columns to fetch
         query = 'select ALBUMID, ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT \
                 ,SEARCH from ALBUMS'
@@ -347,7 +347,7 @@ class DB:
             self.dbc.execute(query)
             self.albums = self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def fetch_tracks(self):
         f = '[unmusic] utils.DB.fetch_tracks'
@@ -355,7 +355,7 @@ class DB:
             sh.com.cancel(f)
             return
         mes = _('Fetch data from {}').format('TRACKS')
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         # 9 columns to fetch
         query = 'select ALBUMID, TITLE, NO, LYRICS, COMMENT, SEARCH, BITRATE \
                 ,LENGTH, RATING from TRACKS'
@@ -363,7 +363,7 @@ class DB:
             self.dbc.execute(query)
             self.tracks = self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def create_albums(self):
         f = '[unmusic] utils.DB.create_albums'
@@ -380,15 +380,15 @@ class DB:
                 ,COUNTRY text    \
                 ,COMMENT text    \
                 ,SEARCH  text    \
-                ,RATING  integer \
+                ,RATING  float   \
                                      )'
-        self._create_table(f,query)
+        self._create_table(f, query)
     
-    def _create_table(self,f,query):
+    def _create_table(self, f, query):
         try:
             self.dbcw.execute(query)
         except Exception as e:
-            self.fail_clone(f,e)
+            self.fail_clone(f, e)
     
     def create_tracks(self):
         f = '[unmusic] utils.DB.create_tracks'
@@ -407,17 +407,17 @@ class DB:
                 ,LENGTH  integer \
                 ,RATING  integer \
                                                    )'
-        self._create_table(f,query)
+        self._create_table(f, query)
     
-    def _get_mean(self,ratings):
+    def _get_mean(self, ratings):
         if 0 in ratings:
             return 0
         else:
-            return round(sum(ratings)/len(ratings))
+            return round(sum(ratings) / len(ratings))
     
     def _fill_albums(self):
         f = '[unmusic] utils.DB._fill_albums'
-        query = 'insert into ALBUMS values (?,?,?,?,?,?,?,?,?)'
+        query = 'insert into ALBUMS values (?, ?, ?, ?, ?, ?, ?, ?, ?)'
         for row in self.albums:
             lg.objs.get_db().albumid = row[0]
             ratings = lg.objs.db.get_rating()
@@ -426,23 +426,23 @@ class DB:
             else:
                 rating = 0
                 sh.com.rep_empty(f)
-            mes = _('Album ID: {}. Rating: {}').format(row[0],rating)
-            sh.objs.get_mes(f,mes,True).show_debug()
+            mes = _('Album ID: {}. Rating: {}').format(row[0], rating)
+            sh.objs.get_mes(f, mes, True).show_debug()
             row += (rating,)
-            self._fill_row(f,query,row)
+            self._fill_row(f, query, row)
     
     def _fill_tracks(self):
         f = '[unmusic] utils.DB._fill_tracks'
-        query = 'insert into TRACKS values (?,?,?,?,?,?,?,?,?)'
+        query = 'insert into TRACKS values (?, ?, ?, ?, ?, ?, ?, ?, ?)'
         for row in self.tracks:
-            self._fill_row(f,query,row)
+            self._fill_row(f, query, row)
     
-    def _fill_row(self,f,query,row):
+    def _fill_row(self, f, query, row):
         try:
-            self.dbcw.execute(query,row)
+            self.dbcw.execute(query, row)
         except Exception as e:
             self.Success = False
-            self.fail(f,e)
+            self.fail(f, e)
             return
     
     def fill(self):
@@ -453,10 +453,8 @@ class DB:
         if not self.albums or not self.tracks:
             sh.com.rep_empty(f)
             return
-        mes = _('Copy "{}" to "{}"').format (self.path
-                                            ,self.clone
-                                            )
-        sh.objs.get_mes(f,mes,True).show_info()
+        mes = _('Copy "{}" to "{}"').format(self.path, self.clone)
+        sh.objs.get_mes(f, mes, True).show_info()
         self._fill_albums()
         self._fill_tracks()
                           
@@ -468,7 +466,7 @@ class DB:
         try:
             self.dbc.close()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
                           
     def closew(self):
         f = '[unmusic] utils.DB.closew'
@@ -478,7 +476,7 @@ class DB:
         try:
             self.dbcw.close()
         except Exception as e:
-            self.fail_clone(f,e)
+            self.fail_clone(f, e)
 
 
 com = Commands()
@@ -488,7 +486,7 @@ if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     sh.com.start()
     #com.alter()
-    DeleteBad().run()
+    #DeleteBad().run()
     mes = _('Goodbye!')
-    sh.objs.get_mes(f,mes,True).show_debug()
+    sh.objs.get_mes(f, mes, True).show_debug()
     sh.com.end()
