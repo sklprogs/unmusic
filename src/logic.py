@@ -548,39 +548,25 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = objs.get_db().albumid
-        while True:
-            result = objs.db.get_prev_rated(rating, albumid)
-            if not result:
-                break
-            albumid = result
-            if self._get_album(result):
-                break
-        if not result:
+        albumid = objs.db.get_prev_rated(rating, objs.get_db().albumid)
+        if not albumid:
             mes = _('No more matches!')
-            sh.objs.get_mes(f,mes).show_info()
+            sh.objs.get_mes(f, mes).show_info()
             return
-        objs.db.albumid = result
+        objs.db.albumid = albumid
         self.get_no()
     
     def get_next_rated(self, rating=0):
-        f = '[unmusic] logic.AlbumEditor.next_rated'
+        f = '[unmusic] logic.AlbumEditor.get_next_rated'
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = objs.get_db().albumid
-        while True:
-            result = objs.db.get_next_rated(rating, albumid)
-            if not result:
-                break
-            albumid = result
-            if self._get_album(result):
-                break
-        if not result:
+        albumid = objs.db.get_next_rated(rating, objs.get_db().albumid)
+        if not albumid:
             mes = _('No more matches!')
-            sh.objs.get_mes(f,mes).show_info()
+            sh.objs.get_mes(f, mes).show_info()
             return
-        objs.db.albumid = result
+        objs.db.albumid = albumid
         self.get_no()
     
     def get_mean_bitrate(self):

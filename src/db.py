@@ -30,12 +30,12 @@ class DB:
         try:
             # limit=0 provides an empty ouput
             if limit:
-                self.dbc.execute(query,(limit,))
+                self.dbc.execute(query, (limit,))
             else:
                 self.dbc.execute(query)
             return self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_rates(self):
         ''' When operating on entire albums (e.g., deleting bad music),
@@ -53,7 +53,7 @@ class DB:
             if result:
                 return [item[0] for item in result]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_prev_rated(self, rating=0, albumid=None):
         f = '[unmusic] db.DB.get_prev_rated'
@@ -62,7 +62,7 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from TRACKS where ALBUMID < ? and RATING = ? \
+        query = 'select ALBUMID from ALBUMS where ALBUMID < ? and RATING = ? \
                  order by ALBUMID desc'
         try:
             self.dbc.execute(query, (albumid, rating,))
@@ -70,7 +70,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_next_rated(self, rating=0, albumid=None):
         f = '[unmusic] db.DB.get_next_rated'
@@ -79,7 +79,7 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from TRACKS where ALBUMID > ? and RATING = ? \
+        query = 'select ALBUMID from ALBUMS where ALBUMID > ? and RATING = ? \
                  order by ALBUMID'
         try:
             self.dbc.execute(query, (albumid, rating,))
@@ -87,7 +87,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_brief(self, ids):
         f = '[unmusic] db.DB.get_brief'
@@ -119,7 +119,7 @@ class DB:
                 return '\n'.join(lst)
                 
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_unknown_genre(self, limit=0):
         f = '[unmusic] db.DB.get_unknown_genre'
@@ -138,7 +138,7 @@ class DB:
             if result:
                 return [item[0] for item in result]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_rated(self, rating=0, limit=0):
         f = '[unmusic] db.DB.get_unrated'
@@ -157,7 +157,7 @@ class DB:
             if result:
                 return [item[0] for item in result]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_good_tracks(self, rating=8):
         f = '[unmusic] db.DB.get_good_tracks'
@@ -170,7 +170,7 @@ class DB:
             self.dbc.execute(query, (self.albumid, rating,))
             return self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def has_id(self, albumid):
         ''' A major difference from 'get_album': we do not need
@@ -186,7 +186,7 @@ class DB:
             self.dbc.execute(query, (albumid,))
             return self.dbc.fetchone()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def update_track(self, no, data):
         f = '[unmusic] db.DB.update_track'
@@ -199,7 +199,7 @@ class DB:
         if len(data) != 4:
             sub = f'{len(data)} = 4'
             mes = _('Condition "{}" is not observed!').format(sub)
-            sh.objs.get_mes(f,mes).show_error()
+            sh.objs.get_mes(f, mes).show_error()
             return
         query = 'update TRACKS set TITLE = ?, LYRICS = ?, COMMENT = ?, \
                  RATING = ? where ALBUMID = ? and NO = ?'
@@ -209,7 +209,7 @@ class DB:
                                      )
                              )
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def check_nos(self):
         ''' - We use track NO field instead of an autoincrement, so we must
@@ -231,7 +231,7 @@ class DB:
                 nos = [i + 1 for i in range(len(result))]
                 return result == nos
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_length(self):
         f = '[unmusic] db.DB.get_length'
@@ -245,7 +245,7 @@ class DB:
             if result:
                 return [item[0] for item in result]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_bitrate(self):
         f = '[unmusic] db.DB.get_bitrate'
@@ -259,7 +259,7 @@ class DB:
             if result:
                 return [item[0] for item in result]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def delete(self):
         f = '[unmusic] db.DB.delete'
@@ -272,7 +272,7 @@ class DB:
             self.dbc.execute(query1, (self.albumid,))
             self.dbc.execute(query2, (self.albumid,))
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_rating(self):
         f = '[unmusic] db.DB.get_rating'
@@ -286,7 +286,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
         return 0
     
     def set_rating(self, value):
@@ -298,7 +298,7 @@ class DB:
         try:
             self.dbc.execute(query, (value, self.albumid,))
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def updateDB(self, query):
         f = '[unmusic] db.DB.updateDB'
@@ -313,7 +313,7 @@ class DB:
         except Exception as e:
             mes = _('Unable to execute:\n"{}"\n\nDetails: {}')
             mes = mes.format(str(query).replace(';', ';\n'), e)
-            sh.objs.get_mes(f,mes).show_error()
+            sh.objs.get_mes(f, mes).show_error()
             return
         return True
     
@@ -328,7 +328,7 @@ class DB:
             self.dbc.execute(query, (self.albumid,))
             return self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def search_track(self, pattern, limit=50):
         f = '[unmusic] db.DB.search_track'
@@ -346,7 +346,7 @@ class DB:
             self.dbc.execute(query,(pattern,limit,))
             return self.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_next_album(self, search):
         f = '[unmusic] db.DB.get_next_album'
@@ -365,7 +365,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_prev_album(self, search):
         f = '[unmusic] db.DB.get_prev_album'
@@ -384,7 +384,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_prev_id(self):
         f = '[unmusic] db.DB.get_prev_id'
@@ -399,7 +399,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_next_id(self):
         f = '[unmusic] db.DB.get_next_id'
@@ -413,7 +413,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_album(self):
         f = '[unmusic] db.DB.get_album'
@@ -426,7 +426,7 @@ class DB:
             self.dbc.execute(query, (self.albumid,))
             return self.dbc.fetchone()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_min_id(self):
         f = '[unmusic] db.DB.get_min_id'
@@ -441,7 +441,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def get_max_id(self):
         f = '[unmusic] db.DB.get_max_id'
@@ -456,7 +456,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def has_track(self, no, bitrate):
         ''' Since tags may be missing, we use a track number to identify
@@ -474,7 +474,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def has_album(self, artist, year, album):
         f = '[unmusic] db.DB.has_album'
@@ -489,7 +489,7 @@ class DB:
             if result:
                 return result[0]
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def print(self, Selected=False, Shorten=False, MaxRow=20, MaxRows=20, table='TRACKS'):
         f = '[unmusic] db.DB.print'
@@ -520,7 +520,7 @@ class DB:
         try:
             self.dbc.execute(query, data)
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def add_album(self, data):
         f = '[unmusic] db.DB.add_album'
@@ -534,7 +534,7 @@ class DB:
         try:
             self.dbc.execute(query, data)
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def create_tracks(self):
         f = '[unmusic] db.DB.create_tracks'
@@ -556,7 +556,7 @@ class DB:
         try:
             self.dbc.execute(query)
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def create_albums(self):
         f = '[unmusic] db.DB.create_albums'
@@ -578,7 +578,7 @@ class DB:
         try:
             self.dbc.execute(query)
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def save(self):
         f = '[unmusic] db.DB.save'
@@ -586,11 +586,11 @@ class DB:
             sh.com.cancel(f)
             return
         mes = _('Save "{}"').format(self.path)
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         try:
             self.db.commit()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def fail(self, func, error):
         self.Success = False
@@ -610,7 +610,7 @@ class DB:
         try:
             self.dbc.close()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def connect(self):
         f = '[unmusic] db.DB.connect'
@@ -621,4 +621,4 @@ class DB:
             self.db = sqlite3.connect(self.path)
             self.dbc = self.db.cursor()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
