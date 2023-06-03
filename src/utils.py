@@ -413,21 +413,28 @@ class DB:
         if 0 in ratings:
             return 0
         else:
-            return round(sum(ratings) / len(ratings))
+            return round(sum(ratings) / len(ratings), 1)
     
     def _fill_albums(self):
         f = '[unmusic] utils.DB._fill_albums'
         query = 'insert into ALBUMS values (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        for row in self.albums:
+        for i in range(len(self.albums)):
+            row = self.albums[i]
             lg.objs.get_db().albumid = row[0]
-            ratings = lg.objs.db.get_rating()
+            ratings = lg.objs.db.get_rates()
             if ratings:
                 rating = self._get_mean(ratings)
             else:
                 rating = 0
                 sh.com.rep_empty(f)
-            mes = _('Album ID: {}. Rating: {}').format(row[0], rating)
-            sh.objs.get_mes(f, mes, True).show_debug()
+                mes = _('Tracks of album #{} have no rating!')
+                mes = mes.format(lg.objs.db.albumid)
+                sh.objs.get_mes(f, mes, True).show_warning()
+                self.Success = False
+                return
+            if i % 100 == 0:
+                mes = _('Album ID: {}. Rating: {}').format(row[0], rating)
+                sh.objs.get_mes(f, mes, True).show_debug()
             row += (rating,)
             self._fill_row(f, query, row)
     
@@ -485,7 +492,7 @@ com = Commands()
 if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     sh.com.start()
-    #com.alter()
+    com.alter()
     #DeleteBad().run()
     mes = _('Goodbye!')
     sh.objs.get_mes(f, mes, True).show_debug()

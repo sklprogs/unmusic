@@ -17,7 +17,7 @@ class Copy:
         self.gui = gi.Copy()
         self.set_bindings()
     
-    def wait_carrier(self,carrier,event=None):
+    def wait_carrier(self,carrier, event=None):
         f = '[unmusic] unmusic.Copy.wait_carrier'
         if not self.Success:
             sh.com.cancel()
@@ -39,7 +39,7 @@ class Copy:
             time.sleep(1)
         objs.waitbox.close()
     
-    def get_settings(self,event=None):
+    def get_settings(self, event=None):
         f = '[unmusic] unmusic.Copy.get_settings'
         if not self.Success:
             sh.com.cancel(f)
@@ -71,10 +71,10 @@ class Copy:
                                  ,value = self.gui.ent_lim.get()
                                  ).get_integer()
     
-    def show(self,event=None):
+    def show(self, event=None):
         self.gui.show()
     
-    def close(self,event=None):
+    def close(self, event=None):
         self.gui.close()
     
     def set_bindings(self):
@@ -346,7 +346,7 @@ class Tracks:
             self.set_gui()
         return self.gui
     
-    def decypher(self,event=None):
+    def decypher(self, event=None):
         f = '[unmusic] unmusic.Tracks.decypher'
         if not self.Success:
             sh.com.cancel(f)
@@ -357,7 +357,7 @@ class Tracks:
             track.ent_tit.clear_text()
             track.ent_tit.insert(title)
     
-    def cypher(self,event=None):
+    def cypher(self, event=None):
         f = '[unmusic] unmusic.Tracks.cypher'
         if not self.Success:
             sh.com.cancel(f)
@@ -368,7 +368,7 @@ class Tracks:
             track.ent_tit.clear_text()
             track.ent_tit.insert(title)
     
-    def decode(self,event=None):
+    def decode(self, event=None):
         f = '[unmusic] unmusic.Tracks.decode'
         if not self.Success:
             sh.com.cancel(f)
@@ -517,11 +517,11 @@ class Tracks:
                 sh.objs.get_mes(f,mes).show_error()
         self.gui.adjust_by_content()
     
-    def reload(self,event=None):
+    def reload(self, event=None):
         self.fill()
         self.show()
     
-    def fill(self,event=None):
+    def fill(self, event=None):
         f = '[unmusic] unmusic.Tracks.fill'
         if not self.Success:
             sh.com.cancel(f)
@@ -582,7 +582,7 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.set_bindings()
         
-    def go_prev_unrated(self,event=None):
+    def go_prev_unrated(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.go_prev_unrated'
         if not self.Success:
             sh.com.cancel(f)
@@ -591,7 +591,7 @@ class AlbumEditor:
         self.logic.get_prev_rated()
         self.fill()
     
-    def go_next_unrated(self,event=None):
+    def go_next_unrated(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.go_next_unrated'
         if not self.Success:
             sh.com.cancel(f)
@@ -600,7 +600,7 @@ class AlbumEditor:
         self.logic.get_next_rated()
         self.fill()
     
-    def update_presence(self,event=None):
+    def update_presence(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.update_presence'
         if not self.Success:
             sh.com.cancel(f)
@@ -727,7 +727,7 @@ class AlbumEditor:
         self.gui.ent_alb.insert(album)
         self.set_genre(genre)
     
-    def decypher(self,event=None):
+    def decypher(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.decypher'
         if not self.Success:
             sh.com.cancel(f)
@@ -744,7 +744,7 @@ class AlbumEditor:
         self.gui.ent_alb.insert(album)
         self.set_genre(genre)
     
-    def decode(self,event=None):
+    def decode(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.decode'
         if not self.Success:
             sh.com.cancel(f)
@@ -762,7 +762,7 @@ class AlbumEditor:
         self.gui.ent_com.clear_text()
         self.gui.ent_com.insert(comment)
         
-    def zoom_image(self,event=None):
+    def zoom_image(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.zoom_image'
         if not self.Success:
             sh.com.cancel(f)
@@ -833,7 +833,7 @@ class AlbumEditor:
             mes = mes.format(choice,';'.join(gi.PLAY))
             sh.objs.get_mes(f,mes).show_error()
     
-    def get_length(self,event=None):
+    def get_length(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.get_length'
         if not self.Success:
             sh.com.cancel(f)
@@ -849,7 +849,7 @@ class AlbumEditor:
         self.gui.ent_len.insert(mes)
         self.gui.ent_len.disable()
     
-    def get_bitrate(self,event=None):
+    def get_bitrate(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.get_bitrate'
         if not self.Success:
             sh.com.cancel(f)
@@ -864,21 +864,31 @@ class AlbumEditor:
         self.gui.ent_bit.insert(mes)
         self.gui.ent_bit.disable()
     
-    def get_rating(self,event=None):
+    def get_rating(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.get_rating'
         if not self.Success:
             sh.com.cancel(f)
             return
         rating = lg.objs.get_db().get_rating()
-        rating = sh.Input(f,rating).get_integer()
-        self.gui.opt_rtg.set(rating)
+        if rating is None:
+            sh.com.rep_empty(f)
+            return
+        if int(rating) == rating:
+            ''' Make GUI look better (without ',0' at the end). SQLite
+                automatically converts int to float.
+            '''
+            rating = int(rating)
+        ''' We call GUI directly here since shared checks for fixed values, and
+            we want float here.
+        '''
+        self.gui.opt_rtg.gui.set(rating)
     
     def _set_rating(self):
         f = '[unmusic] unmusic.AlbumEditor._set_rating'
-        value = sh.lg.Input(f,self.gui.opt_rtg.choice).get_integer()
-        lg.objs.db.set_rating(value)
+        value = sh.lg.Input(f, self.gui.opt_rtg.choice).check_float()
+        lg.objs.get_db().set_rating(value)
     
-    def set_rating(self,event=None):
+    def set_rating(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.set_rating'
         if not self.Success:
             sh.com.cancel(f)
@@ -899,7 +909,7 @@ class AlbumEditor:
         else:
             self.get_rating()
     
-    def dump(self,event=None):
+    def dump(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.dump'
         if not self.Success:
             sh.com.cancel(f)
