@@ -420,7 +420,7 @@ class DB:
         if not self.Success:
             sh.com.cancel(f)
             return
-        query = 'select ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT \
+        query = 'select ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT, RATING \
                  from ALBUMS where ALBUMID = ?'
         try:
             self.dbc.execute(query, (self.albumid,))

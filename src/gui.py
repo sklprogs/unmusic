@@ -725,9 +725,9 @@ class AlbumEditor:
                                         )
     
     def dump(self, event=None):
-        return (self.ent_alb.get(), self.ent_art.get()
-               ,self.ent_yer.get(), self.opt_gnr.choice
-               ,self.ent_cnt.get(), self.ent_com.get()
+        return (self.ent_alb.get(), self.ent_art.get(), self.ent_yer.get()
+               ,self.opt_gnr.choice, self.ent_cnt.get(), self.ent_com.get()
+               ,float(self.opt_rtg.choice)
                )
     
     def set_title(self, text=None):

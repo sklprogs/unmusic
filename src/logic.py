@@ -680,6 +680,8 @@ class AlbumEditor:
                     base = 'COUNTRY="%s"'
                 elif i == 5:
                     base = 'COMMENT="%s"'
+                elif i == 6:
+                    base = 'RATING="%f"'
                 add.append(base % new[i])
         if add:
             add.append('SEARCH="%s"' % search)
@@ -691,13 +693,13 @@ class AlbumEditor:
 
 class Directory:
     
-    def __init__(self,path):
+    def __init__(self, path):
         self.set_values()
         if path:
             self.reset(path)
     
-    def _set_no(self,i,max_len):
-        no = str(i+1)
+    def _set_no(self, i, max_len):
+        no = str(i + 1)
         while len(no) < max_len:
             no = '0' + no
         return no
@@ -712,7 +714,7 @@ class Directory:
             sh.com.rep_lazy(f)
             return
         name = str(objs.get_db().albumid) + '.jpg'
-        path = os.path.join(objs.image.dir,name)
+        path = os.path.join(objs.image.dir, name)
         mes = _('Save "{}"').format(path)
         sh.objs.get_mes(f,mes,True).show_info()
         if not sh.com.rewrite(path):
@@ -740,7 +742,7 @@ class Directory:
         max_len = len(str(max_len))
         for i in range(len(self.audio)):
             file = self.audio[i]
-            no = self._set_no(i,max_len)
+            no = self._set_no(i, max_len)
             basename = no + sh.lg.Path(file).get_ext().lower()
             dest = os.path.join(self.target, basename)
             success.append(sh.lg.File(file=file, dest=dest).move())
@@ -755,7 +757,7 @@ class Directory:
             sh.com.rep_empty(f)
             return
         mes = _('Purge tracks')
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         for track in self.tracks:
             track.purge()
             track.save()

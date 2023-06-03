@@ -379,19 +379,19 @@ class Tracks:
             track.ent_tit.clear_text()
             track.ent_tit.insert(title)
     
-    def _dump_search(self,old,new):
+    def _dump_search(self, old, new):
         f = '[unmusic] unmusic.Tracks._dump_search'
         mes = _('Not implemented yet!')
         sh.objs.get_mes(f, mes).show_info()
         return False
     
-    def _dump(self,old,new):
+    def _dump(self, old, new):
         f = '[unmusic] unmusic.Tracks._dump'
         if not old or not new:
             sh.com.rep_empty(f)
             return
         if len(old) != len(new):
-            sub = '{} = {}'.format(len(old),len(new))
+            sub = f'{len(old)} = {len(new)}'
             mes = _('Condition "{}" is not observed!').format(sub)
             sh.objs.get_mes(f, mes).show_error()
             return
@@ -462,15 +462,15 @@ class Tracks:
         self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
         sh.com.bind (obj = self.gui.parent
-                    ,bindings = ('<F5>','<Control-r>')
+                    ,bindings = ('<F5>', '<Control-r>')
                     ,action = self.reload
                     )
         sh.com.bind (obj = self.gui.parent
-                    ,bindings = ('<F2>','<Control-s>')
+                    ,bindings = ('<F2>', '<Control-s>')
                     ,action = self.save
                     )
         sh.com.bind (obj = self.gui.parent
-                    ,bindings = ('<Escape>','<Control-q>','<Control-w>')
+                    ,bindings = ('<Escape>', '<Control-q>', '<Control-w>')
                     ,action = self.close
                     )
     
@@ -913,9 +913,8 @@ class AlbumEditor:
             return
         new = self.gui.dump()
         if len(old) != len(new):
-            sub = '{} == {}'.format(len(old),len(new))
-            mes = _('The condition "{}" is not observed!')
-            mes = mes.format(sub)
+            sub = f'{len(old)} == {len(new)}'
+            mes = _('The condition "{}" is not observed!').format(sub)
             sh.objs.get_mes(f, mes).show_error()
             return
         old = list(old)
@@ -1081,8 +1080,8 @@ class AlbumEditor:
         self.fill()
     
     def save(self, event=None):
-        ''' #NOTE: this should be done before 'albumid' is changed,
-            otherwise, a wrong DB record will be overwritten!
+        ''' #NOTE: this should be done before 'albumid' is changed, otherwise,
+            a wrong DB record will be overwritten!
         '''
         f = '[unmusic] unmusic.AlbumEditor.save'
         if not self.Success:
@@ -1217,7 +1216,7 @@ class AlbumEditor:
             sh.com.rep_empty(f)
             return
         #NOTE: Change this value upon a change in the number of ALBUMS fields
-        if len(data) != 6:
+        if len(data) != 7:
             mes = _('Wrong input data: "{}"!').format(data)
             sh.objs.get_mes(f, mes).show_error()
             return
