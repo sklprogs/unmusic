@@ -875,18 +875,13 @@ class AlbumEditor:
             return
         if int(rating) == rating:
             ''' Make GUI look better (without ',0' at the end). SQLite
-                automatically converts int to float.
+                automatically converts 'int' to 'float'.
             '''
             rating = int(rating)
         ''' We call GUI directly here since shared checks for fixed values, and
             we want float here.
         '''
         self.gui.opt_rtg.gui.set(rating)
-    
-    def _set_rating(self):
-        f = '[unmusic] unmusic.AlbumEditor._set_rating'
-        value = sh.lg.Input(f, self.gui.opt_rtg.choice).check_float()
-        lg.objs.get_db().set_rating(value)
     
     def set_rating(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.set_rating'
@@ -899,13 +894,11 @@ class AlbumEditor:
             return
         if not isinstance(rating, float):
             mes = _('Wrong input data: "{}"!').format(rating)
-            sh.objs.get_mes(f,mes).show_error()
+            sh.objs.get_mes(f, mes).show_error()
             return
         mes = _('Tracks are of a mixed rating. Do you want to assign the same rating to all of them?')
-        if rating == int(rating):
-            self._set_rating()
-        elif sh.objs.get_mes(f,mes).show_question():
-            self._set_rating()
+        if rating == int(rating) or sh.objs.get_mes(f, mes).show_question():
+            lg.objs.get_db().set_rating(self.gui.opt_rtg.choice)
         else:
             self.get_rating()
     

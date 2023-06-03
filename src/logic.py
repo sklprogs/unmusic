@@ -588,11 +588,11 @@ class AlbumEditor:
         f = '[unmusic] logic.AlbumEditor.get_mean_rating'
         if not self.Success:
             sh.com.cancel(f)
-            return
-        mean = objs.get_db().get_rating()
+            return 0.0
+        mean = objs.get_db().get_rates()
         if not mean:
             sh.com.rep_empty(f)
-            return
+            return 0.0
         ''' We should not count tracks with an undefined (0) rating, otherwise,
             if there is a mix of tracks with zero and non-zero rating,
             an overall rating will be lower than a mean rating of the non-zero
