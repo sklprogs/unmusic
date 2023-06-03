@@ -1116,27 +1116,27 @@ class AlbumEditor:
                     ,action = self.go_prev_unrated
                     )
         sh.com.bind (obj = self.gui
-                    ,bindings = ('<F5>','<Control-r>')
+                    ,bindings = ('<F5>', '<Control-r>')
                     ,action = self.fill
                     )
         sh.com.bind (obj = self.gui.ent_ids
-                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,bindings = ('<Return>', '<KP_Enter>')
                     ,action = self.search_id
                     )
         sh.com.bind (obj = self.gui.ent_src
-                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,bindings = ('<Return>', '<KP_Enter>')
                     ,action = self.search_album
                     )
         sh.com.bind (obj = self.gui.ent_sr2
-                    ,bindings = ('<Return>','<KP_Enter>')
+                    ,bindings = ('<Return>', '<KP_Enter>')
                     ,action = self.search_track
                     )
         sh.com.bind (obj = self.gui
-                    ,bindings = ('<F2>','<Control-s>')
+                    ,bindings = ('<F2>', '<Control-s>')
                     ,action = self.save
                     )
         sh.com.bind (obj = self.gui
-                    ,bindings = ('<F4>','<Control-t>','<Alt-t>')
+                    ,bindings = ('<F4>', '<Control-t>', '<Alt-t>')
                     ,action = self.show_tracks
                     )
         sh.com.bind (obj = self.gui
@@ -1187,10 +1187,7 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         max_ = self.logic.get_max()
-        self.gui.lbl_mtr.set_text ('{} / {}'.format (self.logic.get_no()
-                                                    ,max_
-                                                    )
-                                  )
+        self.gui.lbl_mtr.set_text(f'{self.logic.get_no()} / {max_}')
         if lg.objs.get_db().albumid < max_:
             self.gui.btn_nxt.activate()
         else:
