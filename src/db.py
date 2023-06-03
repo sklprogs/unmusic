@@ -343,7 +343,7 @@ class DB:
                  limit ?'
         pattern = '%' + pattern.lower() + '%'
         try:
-            self.dbc.execute(query,(pattern,limit,))
+            self.dbc.execute(query, (pattern, limit,))
             return self.dbc.fetchall()
         except Exception as e:
             self.fail(f, e)
