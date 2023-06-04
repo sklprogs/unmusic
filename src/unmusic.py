@@ -608,9 +608,9 @@ class AlbumEditor:
         local = lg.objs.get_default().ihome.add_share(_('local collection'))
         external = lg.objs.default.ihome.add_share(_('external collection'))
         mobile = lg.objs.default.ihome.add_share(_('mobile collection'))
-        plocal = os.path.join(local,str(lg.objs.get_db().albumid))
-        pexternal = os.path.join(external,str(lg.objs.db.albumid))
-        pmobile = os.path.join(mobile,str(lg.objs.db.albumid))
+        plocal = os.path.join(local, str(lg.objs.get_db().albumid))
+        pexternal = os.path.join(external, str(lg.objs.db.albumid))
+        pmobile = os.path.join(mobile, str(lg.objs.db.albumid))
         if os.path.exists(plocal):
             self.gui.cbx_loc.enable()
             self.gui.lbl_loc.enable()
