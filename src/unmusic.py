@@ -276,9 +276,9 @@ class Copy:
         if self.genre in (_('All'),_('Any')):
             pass
         elif self.genre == _('Light'):
-            self.query += ' and GENRE in (%s)' % ','.join('?'*len(lg.LIGHT))
+            self.query += ' and GENRE in (%s)' % ','.join('?' * len(lg.LIGHT))
         elif self.genre == _('Heavy'):
-            self.query += ' and GENRE in (%s)' % ','.join('?'*len(lg.HEAVY))
+            self.query += ' and GENRE in (%s)' % ','.join('?' * len(lg.HEAVY))
         else:
             self.Success = False
             genres = (_('All'), _('Any'), _('Light'), _('Heavy'))
@@ -455,7 +455,7 @@ class Tracks:
         if not self.gui:
             sh.com.rep_empty(f)
             return
-        self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.widget.protocol("WM_DELETE_WINDOW", self.close)
         self.gui.btn_cyp.action = self.cypher
         self.gui.btn_dez.action = self.decypher
         self.gui.btn_dec.action = self.decode
@@ -474,7 +474,7 @@ class Tracks:
                     ,action = self.close
                     )
     
-    def fill_search(self,data):
+    def fill_search(self, data):
         f = '[unmusic] unmusic.Tracks.fill_search'
         if not self.Success:
             sh.com.cancel(f)
@@ -504,7 +504,7 @@ class Tracks:
                 track.ent_com.insert(record[4])
                 track.ent_bit.enable()
                 track.ent_bit.clear_text()
-                track.ent_bit.insert(str(record[5]//1000)+'k')
+                track.ent_bit.insert(str(record[5] // 1000) + 'k')
                 track.ent_bit.disable()
                 track.ent_len.enable()
                 track.ent_len.clear_text()
@@ -551,7 +551,7 @@ class Tracks:
                 track.ent_com.insert(record[3])
                 track.ent_bit.enable()
                 track.ent_bit.clear_text()
-                track.ent_bit.insert(str(record[4]//1000)+'k')
+                track.ent_bit.insert(str(record[4] // 1000) + 'k')
                 track.ent_bit.disable()
                 track.ent_len.enable()
                 track.ent_len.clear_text()
@@ -1092,7 +1092,7 @@ class AlbumEditor:
             lg.objs.get_db().save()
     
     def set_bindings(self):
-        self.gui.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.gui.widget.protocol("WM_DELETE_WINDOW", self.close)
         self.gui.btn_cyp.action = self.cypher
         self.gui.btn_dec.action = self.decode
         self.gui.btn_del.action = self.delete
