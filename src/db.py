@@ -300,6 +300,17 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
+    def set_album_rating(self, value):
+        f = '[unmusic] db.DB.set_album_rating'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        query = 'update ALBUMS set RATING = ? where ALBUMID = ?'
+        try:
+            self.dbc.execute(query, (value, self.albumid,))
+        except Exception as e:
+            self.fail(f, e)
+    
     def updateDB(self, query):
         f = '[unmusic] db.DB.updateDB'
         if not self.Success:

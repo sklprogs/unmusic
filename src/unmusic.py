@@ -447,6 +447,7 @@ class Tracks:
             sh.com.cancel(f)
             return
         if self.dump():
+            objs.get_editor().update_rating()
             self.get_gui().update_info(_('Save DB.'))
             lg.objs.get_db().save()
     
@@ -571,6 +572,7 @@ class Tracks:
     def close(self, event=None):
         self.Active = False
         self.get_gui().close()
+        self.save()
 
 
 
@@ -864,8 +866,8 @@ class AlbumEditor:
         self.gui.ent_bit.insert(mes)
         self.gui.ent_bit.disable()
     
-    def get_rating(self, event=None):
-        f = '[unmusic] unmusic.AlbumEditor.get_rating'
+    def set_ui_rating(self, event=None):
+        f = '[unmusic] unmusic.AlbumEditor.set_ui_rating'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -882,6 +884,22 @@ class AlbumEditor:
             we want float here.
         '''
         self.gui.opt_rtg.gui.set(rating)
+    
+    def update_rating(self):
+        f = '[unmusic] unmusic.AlbumEditor.update_rating'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        old = lg.objs.get_db().get_rating()
+        new = self.logic.get_mean_rating()
+        if old is None or new is None:
+            sh.com.rep_empty(f)
+            return
+        if old == new:
+            sh.com.rep_lazy(f)
+            return
+        lg.objs.db.set_album_rating(new)
+        self.set_ui_rating()
     
     def set_rating(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.set_rating'
@@ -900,7 +918,7 @@ class AlbumEditor:
         if rating == int(rating) or sh.objs.get_mes(f, mes).show_question():
             lg.objs.get_db().set_rating(self.gui.opt_rtg.choice)
         else:
-            self.get_rating()
+            self.set_ui_rating()
     
     def dump(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.dump'
@@ -1230,7 +1248,7 @@ class AlbumEditor:
         self.set_genre(genre)
         self.gui.ent_cnt.insert(data[4])
         self.gui.ent_com.insert(data[5])
-        self.get_rating()
+        self.set_ui_rating()
         self.get_bitrate()
         self.get_length()
         self.set_image()
