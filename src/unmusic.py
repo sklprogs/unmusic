@@ -884,6 +884,10 @@ class AlbumEditor:
             we want float here.
         '''
         self.gui.opt_rtg.gui.set(rating)
+        ''' This is because we override the shared method. An actual value of
+            the widget is not changed without this.
+        ''' 
+        self.gui.opt_rtg.choice = rating
     
     def update_rating(self):
         f = '[unmusic] unmusic.AlbumEditor.update_rating'
@@ -1222,6 +1226,7 @@ class AlbumEditor:
         self.update_meter()
         self.update_album_search()
         self.update_presence()
+        self.set_ui_rating()
     
     def fill(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.fill'
