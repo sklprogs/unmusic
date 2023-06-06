@@ -919,8 +919,16 @@ class AlbumEditor:
             sh.objs.get_mes(f, mes).show_error()
             return
         mes = _('Tracks are of a mixed rating. Do you want to assign the same rating to all of them?')
+        ui_value = float(self.gui.opt_rtg.choice)
+        if rating == ui_value:
+            ''' Album rating is set to 0 in UI if any track rating is 0 (not
+                rated); thus, we should keep track ratings if 0 is selected in
+                UI as an album rating.
+            '''
+            sh.com.rep_lazy(f)
+            return
         if rating == int(rating) or sh.objs.get_mes(f, mes).show_question():
-            lg.objs.get_db().set_rating(self.gui.opt_rtg.choice)
+            lg.objs.get_db().set_rating(ui_value)
         else:
             self.set_ui_rating()
     

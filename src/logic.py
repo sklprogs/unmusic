@@ -598,8 +598,7 @@ class AlbumEditor:
             an overall rating will be lower than a mean rating of the non-zero
             rating tracks.
         '''
-        mean = [rating for rating in mean if rating]
-        if not mean:
+        if not mean or 0 in mean:
             return 0.0
         ''' This intentionally returns float even if all elements are equal.
             It's better to show at least 2 digits after the dot since, for
