@@ -601,8 +601,12 @@ class AlbumEditor:
         mean = [rating for rating in mean if rating]
         if not mean:
             return 0.0
-        # This (intentionally) returns float even if all elements are equal
-        return sum(mean) / len(mean)
+        ''' This intentionally returns float even if all elements are equal.
+            It's better to show at least 2 digits after the dot since, for
+            example, an album with 30 tracks, where 29 of them have the rating
+            of 8 and 1 - of 9, will have the mean rating of ~8.03.
+        '''
+        return round(sum(mean) / len(mean), 2)
     
     def get_no(self):
         f = '[unmusic] logic.AlbumEditor.get_no'

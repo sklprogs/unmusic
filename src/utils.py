@@ -413,7 +413,7 @@ class DB:
         if 0 in ratings:
             return 0
         else:
-            return round(sum(ratings) / len(ratings), 1)
+            return round(sum(ratings) / len(ratings), 2)
     
     def _fill_albums(self):
         f = '[unmusic] utils.DB._fill_albums'
