@@ -20,7 +20,7 @@ def run(self):
         iwalk.delete_empty()
         lg.objs.get_db().close()
         mes = _('Goodbye!')
-        sh.objs.get_mes(f,mes,True).show_debug()
+        sh.objs.get_mes(f, mes, True).show_debug()
         return
     count = 0
     timer = sh.lg.Timer(f)
@@ -36,7 +36,7 @@ def run(self):
         '''
         basename = sh.lg.Text(basename).delete_unsupported()
         mes = _('Process "{}" ({}/{})').format(basename, count, len(dirs))
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         lg.Directory(folder).run()
         ''' In case something went wrong, we should lose only 1 album record,
             not the entire sequence.
@@ -45,11 +45,11 @@ def run(self):
     delta = timer.end()
     mes = _('Operation has taken {}')
     mes = mes.format(sh.lg.com.get_human_time(delta))
-    sh.objs.get_mes(f,mes,True).show_info()
+    sh.objs.get_mes(f, mes, True).show_info()
     iwalk.delete_empty()
     lg.objs.get_db().close()
     mes = _('Goodbye!')
-    sh.objs.get_mes(f,mes,True).show_debug()
+    sh.objs.get_mes(f, mes, True).show_debug()
 
 
 if __name__ == '__main__':
