@@ -543,8 +543,8 @@ class AlbumEditor:
         elif exter_exists:
             return exter_album
     
-    def get_prev_rated(self, rating=0):
-        f = '[unmusic] logic.AlbumEditor.get_prev_rated'
+    def set_prev_rated(self, rating=0):
+        f = '[unmusic] logic.AlbumEditor.set_prev_rated'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -554,10 +554,10 @@ class AlbumEditor:
             sh.objs.get_mes(f, mes).show_info()
             return
         objs.db.albumid = albumid
-        self.get_no()
+        self.check_no()
     
-    def get_next_rated(self, rating=0):
-        f = '[unmusic] logic.AlbumEditor.get_next_rated'
+    def set_next_rated(self, rating=0):
+        f = '[unmusic] logic.AlbumEditor.set_next_rated'
         if not self.Success:
             sh.com.cancel(f)
             return
@@ -567,7 +567,7 @@ class AlbumEditor:
             sh.objs.get_mes(f, mes).show_info()
             return
         objs.db.albumid = albumid
-        self.get_no()
+        self.check_no()
     
     def get_mean_bitrate(self):
         f = '[unmusic] logic.AlbumEditor.get_mean_bitrate'
@@ -607,10 +607,10 @@ class AlbumEditor:
         '''
         return round(sum(mean) / len(mean), 2)
     
-    def get_no(self):
-        f = '[unmusic] logic.AlbumEditor.get_no'
+    def check_no(self):
+        f = '[unmusic] logic.AlbumEditor.check_no'
         if self.Success:
-            objs.get_db().albumid = sh.lg.Input(f,objs.get_db().albumid).get_integer()
+            objs.get_db().albumid = sh.lg.Input(f, objs.get_db().albumid).get_integer()
         else:
             sh.com.cancel(f)
         return objs.get_db().albumid
@@ -639,22 +639,22 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        if self.get_no() == self.get_max():
+        if self.check_no() == self.get_max():
             objs.get_db().albumid = self.get_min()
         else:
             objs.get_db().albumid = objs.get_db().get_next_id()
-            self.get_no()
+            self.check_no()
     
     def dec(self):
         f = '[unmusic] logic.AlbumEditor.dec'
         if not self.Success:
             sh.com.cancel(f)
             return
-        if self.get_no() == self.get_min():
+        if self.check_no() == self.get_min():
             objs.get_db().albumid = self.get_max()
         else:
             objs.get_db().albumid = objs.get_db().get_prev_id()
-            self.get_no()
+            self.check_no()
 
     def _compare_albums(self, old, new):
         # Quotes in the text will fail the query, so we screen them

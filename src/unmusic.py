@@ -590,7 +590,7 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         self.save()
-        self.logic.get_prev_rated()
+        self.logic.set_prev_rated()
         self.fill()
     
     def go_next_unrated(self, event=None):
@@ -599,7 +599,7 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         self.save()
-        self.logic.get_next_rated()
+        self.logic.set_next_rated()
         self.fill()
     
     def update_presence(self, event=None):
@@ -1216,7 +1216,7 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         max_ = self.logic.get_max()
-        self.gui.lbl_mtr.set_text(f'{self.logic.get_no()} / {max_}')
+        self.gui.lbl_mtr.set_text(f'{self.logic.check_no()} / {max_}')
         if lg.objs.get_db().albumid < max_:
             self.gui.btn_nxt.activate()
         else:
@@ -1241,7 +1241,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        self.logic.get_no()
+        self.logic.check_no()
         data = lg.objs.get_db().get_album()
         if not data:
             sh.com.rep_empty(f)
