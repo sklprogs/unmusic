@@ -1232,6 +1232,7 @@ class Track:
         return result
     
     def _set_info(self):
+        f = '[unmusic] logic.Track._set_info'
         artist = [self.audio.artist, self.audio.albumartist
                  ,self.audio.composer
                  ]

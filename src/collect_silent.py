@@ -6,7 +6,7 @@ from skl_shared.localize import _
 import logic as lg
 
 
-def run(self):
+def run():
     f = '[unmusic] collect_silent.run'
     sh.GUI_MES = False
     folder = sh.lg.Home(app_name='unmusic').add_share(_('not processed'))
