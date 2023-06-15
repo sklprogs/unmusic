@@ -42,6 +42,49 @@ HEAVY = ('Black Metal', 'Brutal Death Metal', 'Death Metal'
         )
 
 
+class Collection:
+    
+    def __init__(self):
+        self.set_paths()
+    
+    def set_paths(self):
+        self.local = objs.get_default().ihome.add_share(_('local collection'))
+        self.external = objs.default.ihome.add_share(_('external collection'))
+        self.mobile = objs.default.ihome.add_share(_('mobile collection'))
+    
+    def get_local_album(self, albumid=None):
+        if albumid is None:
+            return os.path.join(self.local, str(objs.get_db().albumid))
+        else:
+            return os.path.join(self.local, str(albumid))
+    
+    def get_ext_album(self, albumid=None):
+        if albumid is None:
+            return os.path.join(self.external, str(objs.get_db().albumid))
+        else:
+            return os.path.join(self.external, str(albumid))
+    
+    def get_mob_album(self, albumid=None):
+        if albumid is None:
+            return os.path.join(self.mobile, str(objs.get_db().albumid))
+        else:
+            return os.path.join(self.mobile, str(albumid))
+    
+    def has_any_album(self, albumid=None):
+        return self.has_local_album(albumid) or self.has_ext_album(albumid) \
+                                             or self.has_mob_album(albumid)
+    
+    def has_local_album(self, albumid=None):
+        return os.path.exists(self.get_local_album(albumid))
+    
+    def has_ext_album(self, albumid=None):
+        return os.path.exists(self.get_ext_album(albumid))
+    
+    def has_mob_album(self, albumid=None):
+        return os.path.exists(self.get_mob_album(albumid))
+
+
+
 class Image:
     
     def __init__(self):
@@ -543,12 +586,48 @@ class AlbumEditor:
         elif exter_exists:
             return exter_album
     
+    def _has_any_album(self, albumids):
+        for albumid in albumids:
+            if objs.get_collection().has_any_album(albumid):
+                return albumid
+    
+    def set_prev_unrated(self):
+        f = '[unmusic] logic.AlbumEditor.set_prev_unrated'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        albumids = objs.get_db().get_prev_unrated(objs.db.albumid)
+        self._set_unrated(albumids)
+    
+    def set_next_unrated(self):
+        f = '[unmusic] logic.AlbumEditor.set_next_unrated'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        albumids = objs.get_db().get_next_unrated(objs.db.albumid)
+        self._set_unrated(albumids)
+    
+    def _set_unrated(self, albumids):
+        f = '[unmusic] logic.AlbumEditor._set_unrated'
+        if not albumids:
+            mes = _('No more matches!')
+            sh.objs.get_mes(f, mes).show_info()
+            return
+        albumid = self._has_any_album(albumids)
+        if albumid is None:
+            mes = _('No more matches!')
+            sh.objs.get_mes(f, mes).show_info()
+            return
+        objs.db.albumid = albumid
+        self.check_no()
+    
     def set_prev_rated(self, rating=0):
+        # This code is orphaned, but may be useful in the future
         f = '[unmusic] logic.AlbumEditor.set_prev_rated'
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = objs.db.get_prev_rated(rating, objs.get_db().albumid)
+        albumid = objs.get_db().get_prev_rated(rating, objs.db.albumid)
         if not albumid:
             mes = _('No more matches!')
             sh.objs.get_mes(f, mes).show_info()
@@ -557,11 +636,12 @@ class AlbumEditor:
         self.check_no()
     
     def set_next_rated(self, rating=0):
+        # This code is orphaned, but may be useful in the future
         f = '[unmusic] logic.AlbumEditor.set_next_rated'
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = objs.db.get_next_rated(rating, objs.get_db().albumid)
+        albumid = objs.get_db().get_next_rated(rating, objs.db.albumid)
         if not albumid:
             mes = _('No more matches!')
             sh.objs.get_mes(f, mes).show_info()
@@ -1042,8 +1122,14 @@ class DefaultConfig:
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.caesar = self.config = self.image = None
+        self.default = self.db = self.caesar = self.config = self.image \
+                     = self.collection = None
         
+    def get_collection(self):
+        if not self.collection:
+            self.collection = Collection()
+        return self.collection
+    
     def get_image(self):
         if self.image is None:
             self.image = Image()

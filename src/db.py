@@ -55,7 +55,42 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
+    def get_prev_unrated(self, albumid=None):
+        f = '[unmusic] db.DB.get_prev_unrated'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if albumid is None:
+            albumid = self.albumid
+        query = 'select ALBUMID from ALBUMS where ALBUMID < ? and RATING = 0 \
+                 order by ALBUMID desc'
+        try:
+            self.dbc.execute(query, (albumid,))
+            result = self.dbc.fetchall()
+            if result:
+                return [item[0] for item in result]
+        except Exception as e:
+            self.fail(f, e)
+    
+    def get_next_unrated(self, albumid=None):
+        f = '[unmusic] db.DB.get_next_unrated'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if albumid is None:
+            albumid = self.albumid
+        query = 'select ALBUMID from ALBUMS where ALBUMID > ? and RATING = 0 \
+                 order by ALBUMID'
+        try:
+            self.dbc.execute(query, (albumid,))
+            result = self.dbc.fetchall()
+            if result:
+                return [item[0] for item in result]
+        except Exception as e:
+            self.fail(f, e)
+    
     def get_prev_rated(self, rating=0, albumid=None):
+        # This code is orphaned, but may be useful in the future
         f = '[unmusic] db.DB.get_prev_rated'
         if not self.Success:
             sh.com.cancel(f)
@@ -73,6 +108,7 @@ class DB:
             self.fail(f, e)
     
     def get_next_rated(self, rating=0, albumid=None):
+        # This code is orphaned, but may be useful in the future
         f = '[unmusic] db.DB.get_next_rated'
         if not self.Success:
             sh.com.cancel(f)
