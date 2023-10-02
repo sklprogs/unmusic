@@ -1,0 +1,4 @@
+phrydy
+termcolor
+pyperclip
+pillow
