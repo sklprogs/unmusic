@@ -125,7 +125,7 @@ class MediocreAlbums:
             lg.objs.get_db().dbc.execute(query)
             self.albums = lg.objs.db.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def set_to_purge(self):
         f = '[unmusic] tests.MediocreAlbums.set_to_purge'
@@ -142,8 +142,8 @@ class MediocreAlbums:
             if album_id in self.good_tracks or artist.lower() in self.good_artists:
                 self.kept.append(sub)
                 continue
-            path_loc = os.path.join(self.local,str(album_id))
-            path_ext = os.path.join(self.external,str(album_id))
+            path_loc = os.path.join(self.local, str(album_id))
+            path_ext = os.path.join(self.external, str(album_id))
             if not os.path.exists(path_ext) and not os.path.exists(path_loc):
                 continue
             self.report.append(sub)
@@ -158,7 +158,7 @@ class MediocreAlbums:
             sh.com.rep_lazy(f)
             return
         mes = [_('Kept albums:')] + self.kept
-        sh.com.run_fast_debug(f,'\n'.join(mes))
+        sh.com.run_fast_debug(f, '\n'.join(mes))
     
     def show_report(self):
         f = '[unmusic] tests.MediocreAlbums.show_report'
@@ -171,12 +171,12 @@ class MediocreAlbums:
         purge = sh.com.set_figure_commas(len(self.purge))
         self.report.append('')
         sub = _('Mediocre albums in total: {}, exclude: {}, purge: {}')
-        sub = sub.format(albums,exclude,purge)
+        sub = sub.format(albums, exclude, purge)
         self.report.append(sub)
         ids = [str(album_id) for album_id in self.purge]
         sub = _('IDs of the albums to purge: {}').format(', '.join(ids))
         self.report.append(sub)
-        sh.com.run_fast_debug(f,'\n'.join(self.report))
+        sh.com.run_fast_debug(f, '\n'.join(self.report))
     
     def run(self):
         self.set_media()
@@ -213,7 +213,7 @@ class GoodRating:
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
         except Exception as e:
-            self.fail(f,e)
+            self.fail(f, e)
     
     def export(self):
         f = '[unmusic] tests.GoodRating.export'
@@ -260,10 +260,10 @@ class GoodRating:
                 sub = _('Artist: {}').format(artist)
                 mes.append(sub)
                 for album_id in self.memory[artist]['albums']:
-                    sub = _('ID: {}, rating: {}').format(album_id,self.memory[artist]['albums'][album_id]['rating'])
+                    sub = _('ID: {}, rating: {}').format(album_id, self.memory[artist]['albums'][album_id]['rating'])
                     mes.append(sub)
                 mes.append('')
-        sh.com.run_fast_debug(f,'\n'.join(mes))
+        sh.com.run_fast_debug(f, '\n'.join(mes))
     
     def run(self):
         self.fetch()
