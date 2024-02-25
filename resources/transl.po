@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-28 02:08+0300\n"
-"PO-Revision-Date: 2022-07-28 02:08+0300\n"
+"POT-Creation-Date: 2024-02-25 15:31+0300\n"
+"PO-Revision-Date: 2024-02-25 15:38+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-Bookmarks: -1,-1,217,-1,-1,-1,-1,-1,-1,-1\n"
@@ -22,35 +22,35 @@ msgstr ""
 
 #: skl_shared/src/gui.py:1230 skl_shared/src/logic.py:443
 #: skl_shared/src/logic.py:490 skl_shared/src/logic.py:1028
-#: skl_shared/src/logic.py:4583 skl_shared/src/shared.py:3793
+#: skl_shared/src/logic.py:4587 skl_shared/src/shared.py:3800
 msgid "WARNING"
 msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
 #: skl_shared/src/gui.py:1237 skl_shared/src/logic.py:484
-#: skl_shared/src/logic.py:1028 skl_shared/src/shared.py:3785
+#: skl_shared/src/logic.py:1028 skl_shared/src/shared.py:3792
 msgid "ERROR"
 msgstr "ОШИБКА"
 
 #: skl_shared/src/gui.py:1244 skl_shared/src/logic.py:445
-#: skl_shared/src/logic.py:508 skl_shared/src/shared.py:3818
-#: skl_shared/src/shared.py:4023
+#: skl_shared/src/logic.py:508 skl_shared/src/shared.py:3825
+#: skl_shared/src/shared.py:4030
 msgid "QUESTION"
 msgstr "ВОПРОС"
 
 #: skl_shared/src/gui.py:1251 skl_shared/src/logic.py:441
 #: skl_shared/src/logic.py:468 skl_shared/src/logic.py:496
 #: skl_shared/src/logic.py:1006 skl_shared/src/logic.py:1048
-#: skl_shared/src/logic.py:4591 skl_shared/src/shared.py:3802
-#: skl_shared/src/shared.py:3810
+#: skl_shared/src/logic.py:4595 skl_shared/src/shared.py:3809
+#: skl_shared/src/shared.py:3817
 msgid "INFO"
 msgstr "ИНФОРМАЦИЯ"
 
-#: skl_shared/src/image/controller.py:35 skl_shared/src/logic.py:3119
-#: skl_shared/src/logic.py:3246 skl_shared/src/logic.py:3414
-#: skl_shared/src/shared.py:3618 skl_shared/src/shared.py:4051
-#: skl_shared/src/web.py:26 unmusic/src/logic.py:1165 unmusic/src/logic.py:1184
-#: unmusic/src/logic.py:1319 unmusic/src/logic.py:1334
-#: unmusic/src/unmusic.py:808
+#: skl_shared/src/image/controller.py:35 skl_shared/src/logic.py:3123
+#: skl_shared/src/logic.py:3250 skl_shared/src/logic.py:3418
+#: skl_shared/src/shared.py:3625 skl_shared/src/shared.py:4058
+#: skl_shared/src/web.py:26 unmusic/src/logic.py:1217 unmusic/src/logic.py:1236
+#: unmusic/src/logic.py:1374 unmusic/src/logic.py:1388
+#: unmusic/src/unmusic.py:799
 msgid ""
 "Third-party module has failed!\n"
 "\n"
@@ -60,11 +60,11 @@ msgstr ""
 "\n"
 "Детали: {}"
 
-#: skl_shared/src/image/controller.py:49 skl_shared/src/logic.py:2279
-#: skl_shared/src/logic.py:2326 skl_shared/src/logic.py:2546
-#: unmusic/src/logic.py:759 unmusic/src/unmusic.py:170
-#: unmusic/src/unmusic.py:1330 unmusic/src/unmusic.py:1335
-#: unmusic/src/utils.py:91
+#: skl_shared/src/image/controller.py:49 skl_shared/src/logic.py:2283
+#: skl_shared/src/logic.py:2330 skl_shared/src/logic.py:2550
+#: unmusic/src/logic.py:804 unmusic/src/unmusic.py:145
+#: unmusic/src/unmusic.py:1296 unmusic/src/unmusic.py:1327
+#: unmusic/src/utils.py:99
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -77,7 +77,7 @@ msgid "Floatings"
 msgstr "Числа с учетом порядков"
 
 #: skl_shared/src/logic.py:122 skl_shared/src/logic.py:206
-#: unmusic/src/logic.py:94
+#: unmusic/src/logic.py:133
 msgid "Integers"
 msgstr "Целые числа"
 
@@ -87,12 +87,12 @@ msgid "Strings"
 msgstr "Строки"
 
 #: skl_shared/src/logic.py:134 skl_shared/src/logic.py:148
-#: skl_shared/src/logic.py:964 skl_shared/src/logic.py:2523
+#: skl_shared/src/logic.py:964 skl_shared/src/logic.py:2527
 #: skl_shared/src/shared.py:1013 skl_shared/src/shared.py:2321
 #: skl_shared/src/shared.py:2334 skl_shared/src/shared.py:2864
 #: skl_shared/src/shared.py:3251 skl_shared/src/shared.py:3331
-#: skl_shared/src/tests.py:106 unmusic/src/unmusic.py:61
-#: unmusic/src/unmusic.py:286 unmusic/src/unmusic.py:839
+#: skl_shared/src/tests.py:106 unmusic/src/unmusic.py:63
+#: unmusic/src/unmusic.py:285 unmusic/src/unmusic.py:828
 msgid ""
 "An unknown mode \"{}\"!\n"
 "\n"
@@ -119,9 +119,9 @@ msgid "Set the max column width to {} symbols"
 msgstr "Ограничить максимальную ширину столбца {} символами"
 
 #: skl_shared/src/logic.py:346 skl_shared/src/logic.py:1161
-#: skl_shared/src/logic.py:1180 skl_shared/src/logic.py:2666
-#: skl_shared/src/logic.py:2686 skl_shared/src/shared.py:4106
-#: unmusic/src/unmusic.py:957
+#: skl_shared/src/logic.py:1180 skl_shared/src/logic.py:2670
+#: skl_shared/src/logic.py:2690 skl_shared/src/shared.py:4113
+#: unmusic/src/unmusic.py:941
 msgid "The condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -139,14 +139,14 @@ msgid "File \"{}\" was not found!"
 msgstr "Файл \"{}\" не найден!"
 
 #: skl_shared/src/logic.py:594 skl_shared/src/logic.py:622
-#: skl_shared/src/logic.py:2368 skl_shared/src/logic.py:2840
-#: skl_shared/src/logic.py:4515 skl_shared/src/logic.py:4675
-#: skl_shared/src/logic.py:4709 skl_shared/src/logic.py:4794
-#: skl_shared/src/shared.py:2371 skl_shared/src/shared.py:5052
-#: unmusic/src/logic.py:865 unmusic/src/tests.py:200 unmusic/src/unmusic.py:521
-#: unmusic/src/unmusic.py:567 unmusic/src/unmusic.py:710
-#: unmusic/src/unmusic.py:714 unmusic/src/unmusic.py:907
-#: unmusic/src/unmusic.py:1261
+#: skl_shared/src/logic.py:2372 skl_shared/src/logic.py:2844
+#: skl_shared/src/logic.py:4519 skl_shared/src/logic.py:4679
+#: skl_shared/src/logic.py:4713 skl_shared/src/logic.py:4798
+#: skl_shared/src/shared.py:2371 skl_shared/src/shared.py:5059
+#: unmusic/src/logic.py:917 unmusic/src/tests.py:381 unmusic/src/unmusic.py:517
+#: unmusic/src/unmusic.py:564 unmusic/src/unmusic.py:691
+#: unmusic/src/unmusic.py:697 unmusic/src/unmusic.py:912
+#: unmusic/src/unmusic.py:1245
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
@@ -174,8 +174,8 @@ msgstr "Чтение стандартного вывода не поддержи
 msgid "Custom arguments: \"{}\""
 msgstr "Особые параметры: \"{}\""
 
-#: skl_shared/src/logic.py:860 skl_shared/src/logic.py:3670
-#: skl_shared/src/logic.py:3698
+#: skl_shared/src/logic.py:860 skl_shared/src/logic.py:3674
+#: skl_shared/src/logic.py:3702
 msgid "Failed to run \"{}\"!"
 msgstr "Не удалось запустить \"{}\"!"
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Not enough input data!"
 msgstr "Недостаточно входных данных!"
 
-#: skl_shared/src/logic.py:953 skl_shared/src/logic.py:2508
+#: skl_shared/src/logic.py:953 skl_shared/src/logic.py:2512
 msgid "Write file \"{}\""
 msgstr "Запись файла \"{}\""
 
@@ -202,24 +202,24 @@ msgstr "Запись файла \"{}\""
 msgid "Unable to write file \"{}\"!"
 msgstr "Не удается записать файл \"{}\"!"
 
-#: skl_shared/src/logic.py:1079 skl_shared/src/logic.py:2573
+#: skl_shared/src/logic.py:1079 skl_shared/src/logic.py:2577
 msgid "Entries deleted: {} ({}-{})"
 msgstr "Удалено вхождений: {} ({}-{})"
 
 #: skl_shared/src/logic.py:1088 skl_shared/src/logic.py:1228
-#: skl_shared/src/logic.py:2582 skl_shared/src/logic.py:2739
+#: skl_shared/src/logic.py:2586 skl_shared/src/logic.py:2743
 msgid "File \"{}\" is not sortable!"
 msgstr "Файл \"{}\" не подлежит сортировке!"
 
 #: skl_shared/src/logic.py:1103 skl_shared/src/logic.py:1291
-#: skl_shared/src/logic.py:1388 skl_shared/src/logic.py:2131
-#: skl_shared/src/logic.py:2597 skl_shared/src/logic.py:3472
-#: skl_shared/src/logic.py:3804 skl_shared/src/logic.py:4365
+#: skl_shared/src/logic.py:1388 skl_shared/src/logic.py:2135
+#: skl_shared/src/logic.py:2601 skl_shared/src/logic.py:3476
+#: skl_shared/src/logic.py:3808 skl_shared/src/logic.py:4369
 #: skl_shared/src/shared.py:2097 skl_shared/src/shared.py:2792
-#: skl_shared/src/shared.py:3244 skl_shared/src/shared.py:4154
-#: skl_shared/src/tests.py:84 unmusic/src/logic.py:1109
-#: unmusic/src/unmusic.py:220 unmusic/src/unmusic.py:227
-#: unmusic/src/unmusic.py:421
+#: skl_shared/src/shared.py:3244 skl_shared/src/shared.py:4161
+#: skl_shared/src/tests.py:84 unmusic/src/logic.py:1155
+#: unmusic/src/unmusic.py:226 unmusic/src/unmusic.py:233
+#: unmusic/src/unmusic.py:402
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
 
@@ -227,21 +227,22 @@ msgstr "Недопустимые входные данные!"
 msgid "Dictionary \"{}\": Incorrect line #{}: \"{}\"!"
 msgstr "Словарь \"{}\": Неправильная строка №{}: \"{}\"!"
 
-#: skl_shared/src/logic.py:1283 skl_shared/src/logic.py:2191
-#: skl_shared/src/logic.py:4809
+#: skl_shared/src/logic.py:1283 skl_shared/src/logic.py:2195
+#: skl_shared/src/logic.py:4813
 msgid "Empty input is not allowed!"
 msgstr "Пустые входные данные не допускаются!"
 
-#: skl_shared/src/logic.py:1287 skl_shared/src/logic.py:2195
-#: skl_shared/src/shared.py:2975 skl_shared/src/shared.py:3698
+#: skl_shared/src/logic.py:1287 skl_shared/src/logic.py:2199
+#: skl_shared/src/shared.py:2975 skl_shared/src/shared.py:3705
 msgid "File \"{}\" has not been found!"
 msgstr "Файл \"{}\" не найден!"
 
-#: skl_shared/src/logic.py:1301 skl_shared/src/logic.py:2218
-#: skl_shared/src/logic.py:2364 skl_shared/src/logic.py:2889
-#: skl_shared/src/logic.py:2915 skl_shared/src/logic.py:2999
-#: skl_shared/src/logic.py:3641 unmusic/src/tests.py:19
-#: unmusic/src/tests.py:104 unmusic/src/tests.py:269
+#: skl_shared/src/logic.py:1301 skl_shared/src/logic.py:2222
+#: skl_shared/src/logic.py:2368 skl_shared/src/logic.py:2893
+#: skl_shared/src/logic.py:2919 skl_shared/src/logic.py:3003
+#: skl_shared/src/logic.py:3645 unmusic/src/tests.py:19
+#: unmusic/src/tests.py:100 unmusic/src/tests.py:202 unmusic/src/tests.py:286
+#: unmusic/src/tests.py:450
 msgid ""
 "Operation has failed!\n"
 "Details: {}"
@@ -249,7 +250,7 @@ msgstr ""
 "Операция завершилась с ошибкой!\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:1342 skl_shared/src/logic.py:2782
+#: skl_shared/src/logic.py:1342 skl_shared/src/logic.py:2786
 msgid "Load file \"{}\""
 msgstr "Загрузка файла \"{}\""
 
@@ -291,7 +292,7 @@ msgstr "Не удалось конвертировать \"{}\" в целое ч
 msgid "Failed to convert \"{}\" to a floating-point number!"
 msgstr "Не удалось конвертировать \"{}\" в число с плавающей точкой!"
 
-#: skl_shared/src/logic.py:2012
+#: skl_shared/src/logic.py:2016
 msgid ""
 "Set time parameters are incorrect or not supported.\n"
 "\n"
@@ -301,72 +302,72 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:2107
+#: skl_shared/src/logic.py:2111
 msgid "Jan"
 msgstr "янв"
 
-#: skl_shared/src/logic.py:2109
+#: skl_shared/src/logic.py:2113
 msgid "Feb"
 msgstr "фев"
 
-#: skl_shared/src/logic.py:2111
+#: skl_shared/src/logic.py:2115
 msgid "Mar"
 msgstr "мар"
 
-#: skl_shared/src/logic.py:2113
+#: skl_shared/src/logic.py:2117
 msgid "Apr"
 msgstr "апр"
 
-#: skl_shared/src/logic.py:2115
+#: skl_shared/src/logic.py:2119
 msgid "May"
 msgstr "май"
 
-#: skl_shared/src/logic.py:2117
+#: skl_shared/src/logic.py:2121
 msgid "Jun"
 msgstr "июн"
 
-#: skl_shared/src/logic.py:2119
+#: skl_shared/src/logic.py:2123
 msgid "Jul"
 msgstr "июл"
 
-#: skl_shared/src/logic.py:2121
+#: skl_shared/src/logic.py:2125
 msgid "Aug"
 msgstr "ав"
 
-#: skl_shared/src/logic.py:2123
+#: skl_shared/src/logic.py:2127
 msgid "Sep"
 msgstr "сен"
 
-#: skl_shared/src/logic.py:2125
+#: skl_shared/src/logic.py:2129
 msgid "Oct"
 msgstr "окт"
 
-#: skl_shared/src/logic.py:2127
+#: skl_shared/src/logic.py:2131
 msgid "Nov"
 msgstr "ноя"
 
-#: skl_shared/src/logic.py:2129
+#: skl_shared/src/logic.py:2133
 msgid "Dec"
 msgstr "дек"
 
-#: skl_shared/src/logic.py:2199
+#: skl_shared/src/logic.py:2203
 msgid "The object \"{}\" is not a file!"
 msgstr "Объект \"{}\" не является файлом!"
 
-#: skl_shared/src/logic.py:2227 skl_shared/src/logic.py:3072
-#: unmusic/src/utils.py:443
+#: skl_shared/src/logic.py:2231 skl_shared/src/logic.py:3076
+#: unmusic/src/utils.py:463
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
-#: skl_shared/src/logic.py:2233
+#: skl_shared/src/logic.py:2237
 msgid "Failed to copy file \"{}\" to \"{}\"!"
 msgstr "Не удалось скопировать файл \"{}\" в \"{}\"!"
 
-#: skl_shared/src/logic.py:2241 skl_shared/src/logic.py:2846
+#: skl_shared/src/logic.py:2245 skl_shared/src/logic.py:2850
 msgid "Move \"{}\" to \"{}\""
 msgstr "Перемещение \"{}\" в \"{}\""
 
-#: skl_shared/src/logic.py:2247 skl_shared/src/logic.py:2852
+#: skl_shared/src/logic.py:2251 skl_shared/src/logic.py:2856
 msgid ""
 "Failed to move \"{}\" to \"{}\"!\n"
 "\n"
@@ -376,23 +377,24 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:2260 skl_shared/src/logic.py:2307
+#: skl_shared/src/logic.py:2264 skl_shared/src/logic.py:2311
 msgid "Failed to get the date of the file \"{}\"!"
 msgstr "Не удалось определить дату файла \"{}\"!"
 
-#: skl_shared/src/logic.py:2271
+#: skl_shared/src/logic.py:2275
 msgid "Unable to copy the file \"{}\" to iself!"
 msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
-#: skl_shared/src/logic.py:2288 skl_shared/src/logic.py:2967
+#: skl_shared/src/logic.py:2292 skl_shared/src/logic.py:2971
+#: unmusic/src/utils.py:34
 msgid "Delete \"{}\""
 msgstr "Удаление \"{}\""
 
-#: skl_shared/src/logic.py:2294
+#: skl_shared/src/logic.py:2298
 msgid "Failed to delete file \"{}\"!"
 msgstr "Не удается удалить файл \"{}\"!"
 
-#: skl_shared/src/logic.py:2318 skl_shared/src/logic.py:2866
+#: skl_shared/src/logic.py:2322 skl_shared/src/logic.py:2870
 msgid ""
 "Moving is not necessary, because the source and destination are identical "
 "({})."
@@ -400,31 +402,31 @@ msgstr ""
 "Перемещение не требуется, поскольку на входе и выходе указан один и тот же "
 "объект ({})."
 
-#: skl_shared/src/logic.py:2336
+#: skl_shared/src/logic.py:2340
 msgid "Change the time of the file \"{}\" to {}"
 msgstr "Изменение времени файла \"{}\" на {}"
 
-#: skl_shared/src/logic.py:2342
+#: skl_shared/src/logic.py:2346
 msgid "Failed to change the time of the file \"{}\" to \"{}\"!"
 msgstr "Не удалось изменить время файла \"{}\" на \"{}\"!"
 
-#: skl_shared/src/logic.py:2395 skl_shared/src/logic.py:3062
+#: skl_shared/src/logic.py:2399 skl_shared/src/logic.py:3066
 msgid "Directory \"{}\" already exists."
 msgstr "Каталог \"{}\" уже существует."
 
-#: skl_shared/src/logic.py:2400
+#: skl_shared/src/logic.py:2404
 msgid "The path \"{}\" is invalid!"
 msgstr "Путь \"{}\" неверен!"
 
-#: skl_shared/src/logic.py:2404
+#: skl_shared/src/logic.py:2408
 msgid "Create directory \"{}\""
 msgstr "Создание каталога \"{}\""
 
-#: skl_shared/src/logic.py:2411
+#: skl_shared/src/logic.py:2415
 msgid "Failed to create directory \"{}\"!"
 msgstr "Не удается создать каталог \"{}\"!"
 
-#: skl_shared/src/logic.py:2519
+#: skl_shared/src/logic.py:2523
 msgid ""
 "Unable to write file \"{}\"!\n"
 "\n"
@@ -434,11 +436,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:2632
+#: skl_shared/src/logic.py:2636
 msgid "The following lines cannot be parsed:"
 msgstr "Не удается обработать следующие строки:"
 
-#: skl_shared/src/logic.py:2792
+#: skl_shared/src/logic.py:2796
 msgid ""
 "Unable to read file \"{}\"!\n"
 "\n"
@@ -448,55 +450,55 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:2862
+#: skl_shared/src/logic.py:2866
 msgid "Path \"{}\" already exists!"
 msgstr "Путь \"{}\" уже существует!"
 
-#: skl_shared/src/logic.py:2973
+#: skl_shared/src/logic.py:2977
 msgid "Failed to delete directory \"{}\"! Delete it manually."
 msgstr "Не удается удалить каталог \"{}\"! Удалите его вручную."
 
-#: skl_shared/src/logic.py:3058
+#: skl_shared/src/logic.py:3062
 msgid "Unable to copy \"{}\" to iself!"
 msgstr "Нельзя скопировать \"{}\" сам в себя!"
 
-#: skl_shared/src/logic.py:3078
+#: skl_shared/src/logic.py:3082
 msgid "Failed to copy \"{}\" to \"{}\"!"
 msgstr "Не удалось скопировать \"{}\" в \"{}\"!"
 
-#: skl_shared/src/logic.py:3190
+#: skl_shared/src/logic.py:3194
 msgid "Keys loaded in total: {}"
 msgstr "Всего загружено ключей: {}"
 
-#: skl_shared/src/logic.py:3193
+#: skl_shared/src/logic.py:3197
 msgid "Missing sections: {}"
 msgstr "Отсутствующие разделы: {}"
 
-#: skl_shared/src/logic.py:3197
+#: skl_shared/src/logic.py:3201
 msgid "Missing keys: {}"
 msgstr "Отсутствующие ключи: {}"
 
-#: skl_shared/src/logic.py:3201
+#: skl_shared/src/logic.py:3205
 msgid "Modified keys: {}"
 msgstr "Измененные ключи: {}"
 
-#: skl_shared/src/logic.py:3208
+#: skl_shared/src/logic.py:3212
 msgid "Keys loaded in total:"
 msgstr "Всего загружено ключей:"
 
-#: skl_shared/src/logic.py:3211
+#: skl_shared/src/logic.py:3215
 msgid "Missing sections:"
 msgstr "Отсутствующие разделы:"
 
-#: skl_shared/src/logic.py:3214
+#: skl_shared/src/logic.py:3218
 msgid "Missing keys:"
 msgstr "Отсутствующие ключи:"
 
-#: skl_shared/src/logic.py:3217
+#: skl_shared/src/logic.py:3221
 msgid "Modified keys:"
 msgstr "Измененные ключи:"
 
-#: skl_shared/src/logic.py:3283
+#: skl_shared/src/logic.py:3287
 msgid ""
 "Failed to open URL \"{}\" in a default browser!\n"
 "\n"
@@ -506,90 +508,90 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:3340
+#: skl_shared/src/logic.py:3344
 msgid "Differences:"
 msgstr "Различия:"
 
-#: skl_shared/src/logic.py:3365
+#: skl_shared/src/logic.py:3369
 msgid "Texts are identical!"
 msgstr "Различий нет!"
 
-#: skl_shared/src/logic.py:3428
+#: skl_shared/src/logic.py:3432
 msgid "Shortcut \"{}\" refers to \"{}\""
 msgstr "Ссылка \"{}\" указывает на \"{}\""
 
-#: skl_shared/src/logic.py:3436
+#: skl_shared/src/logic.py:3440
 msgid "Delete the symbolic link \"{}\""
 msgstr "Удаление ярлыка \"{}\""
 
-#: skl_shared/src/logic.py:3441
+#: skl_shared/src/logic.py:3445
 msgid "Failed to remove shortcut \"{}\". Remove it manually and press OK."
 msgstr "Не удается удалить ярлык \"{}\". Удалите его вручную и нажмите OK."
 
-#: skl_shared/src/logic.py:3455 skl_shared/src/logic.py:3479
+#: skl_shared/src/logic.py:3459 skl_shared/src/logic.py:3483
 msgid "Create a symbolic link \"{}\""
 msgstr "Создание ярлыка \"{}\""
 
-#: skl_shared/src/logic.py:3460 skl_shared/src/logic.py:3488
+#: skl_shared/src/logic.py:3464 skl_shared/src/logic.py:3492
 msgid "Failed to create shortcut \"{}\". Create it manually and press OK."
 msgstr "Не удается создать ярлык \"{}\". Создайте его вручную и нажмите OK."
 
-#: skl_shared/src/logic.py:3606
+#: skl_shared/src/logic.py:3610
 msgid "Failed to load an e-mail client."
 msgstr "Не удалось загрузить почтовый клиент."
 
-#: skl_shared/src/logic.py:3644
+#: skl_shared/src/logic.py:3648
 msgid "This operation cannot be executed on your operating system."
 msgstr "Эта операция не может быть выполнена на вашей операционной системе."
 
-#: skl_shared/src/logic.py:4060 skl_shared/src/logic.py:4061
-#: skl_shared/src/logic.py:4574 skl_shared/src/logic.py:4579
-#: skl_shared/src/logic.py:4580 skl_shared/src/logic.py:4587
-#: skl_shared/src/logic.py:4588 skl_shared/src/logic.py:4802
-#: skl_shared/src/logic.py:4807 skl_shared/src/logic.py:4812
-#: skl_shared/src/logic.py:4817 skl_shared/src/logic.py:4822
-#: skl_shared/src/logic.py:4829
+#: skl_shared/src/logic.py:4064 skl_shared/src/logic.py:4065
+#: skl_shared/src/logic.py:4578 skl_shared/src/logic.py:4583
+#: skl_shared/src/logic.py:4584 skl_shared/src/logic.py:4591
+#: skl_shared/src/logic.py:4592 skl_shared/src/logic.py:4806
+#: skl_shared/src/logic.py:4811 skl_shared/src/logic.py:4816
+#: skl_shared/src/logic.py:4821 skl_shared/src/logic.py:4826
+#: skl_shared/src/logic.py:4833
 msgid "Logic error!"
 msgstr "Логическая ошибка!"
 
-#: skl_shared/src/logic.py:4121 skl_shared/src/logic.py:4129
+#: skl_shared/src/logic.py:4125 skl_shared/src/logic.py:4133
 msgid "The pool is empty!"
 msgstr "Пул пуст!"
 
-#: skl_shared/src/logic.py:4164
+#: skl_shared/src/logic.py:4168
 msgid "The operation has taken {} s."
 msgstr "Операция завершена за {} с."
 
-#: skl_shared/src/logic.py:4261
+#: skl_shared/src/logic.py:4265
 msgid "Unable to use unverified certificates!"
 msgstr "Не удается использовать неподтвержденные сертификаты!"
 
-#: skl_shared/src/logic.py:4279
+#: skl_shared/src/logic.py:4283
 msgid "[OK]: \"{}\""
 msgstr "[Успешно]: \"{}\""
 
-#: skl_shared/src/logic.py:4283
+#: skl_shared/src/logic.py:4287
 msgid "[FAILED]: \"{}\". Details: {}"
 msgstr "[ОШИБКА]: \"{}\". Подробности: {}"
 
-#: skl_shared/src/logic.py:4299
+#: skl_shared/src/logic.py:4303
 msgid "Unable to decode \"{}\"!"
 msgstr "Не удается изменить кодировку \"{}\"!"
 
-#: skl_shared/src/logic.py:4318
+#: skl_shared/src/logic.py:4322
 msgid "Wrong input data: {}!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
-#: skl_shared/src/logic.py:4357
+#: skl_shared/src/logic.py:4361
 msgid "Unexpected end of text!"
 msgstr "Неожиданный конец текста!"
 
-#: skl_shared/src/logic.py:4533
+#: skl_shared/src/logic.py:4537
 msgid ","
 msgstr "."
 
-#: skl_shared/src/logic.py:4545 skl_shared/src/shared.py:828
-#: unmusic/src/unmusic.py:259 unmusic/src/utils.py:239
+#: skl_shared/src/logic.py:4549 skl_shared/src/shared.py:828
+#: unmusic/src/unmusic.py:259 unmusic/src/utils.py:250
 msgid ""
 "Operation has failed!\n"
 "\n"
@@ -599,97 +601,97 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/logic.py:4563
+#: skl_shared/src/logic.py:4567
 msgid "Plain text (UTF-8)"
 msgstr "Обычный текст (UTF-8)"
 
-#: skl_shared/src/logic.py:4564 skl_shared/src/logic.py:4565
+#: skl_shared/src/logic.py:4568 skl_shared/src/logic.py:4569
 msgid "Web-page"
 msgstr "Веб-страница"
 
-#: skl_shared/src/logic.py:4566
+#: skl_shared/src/logic.py:4570
 msgid "All files"
 msgstr "Все файлы"
 
-#: skl_shared/src/logic.py:4571
+#: skl_shared/src/logic.py:4575
 msgid "Save As:"
 msgstr "Сохранить как:"
 
-#: skl_shared/src/logic.py:4576 unmusic/src/unmusic.py:1338
+#: skl_shared/src/logic.py:4580 unmusic/src/unmusic.py:1290
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
-#: skl_shared/src/logic.py:4597 skl_shared/src/logic.py:4619
+#: skl_shared/src/logic.py:4601 skl_shared/src/logic.py:4623
 msgid "B"
 msgstr "Б"
 
-#: skl_shared/src/logic.py:4610
+#: skl_shared/src/logic.py:4614
 msgid "TiB"
 msgstr "ТиБ"
 
-#: skl_shared/src/logic.py:4612
+#: skl_shared/src/logic.py:4616
 msgid "GiB"
 msgstr "ГиБ"
 
-#: skl_shared/src/logic.py:4614
+#: skl_shared/src/logic.py:4618
 msgid "MiB"
 msgstr "МиБ"
 
-#: skl_shared/src/logic.py:4617
+#: skl_shared/src/logic.py:4621
 msgid "KiB"
 msgstr "КиБ"
 
-#: skl_shared/src/logic.py:4727
+#: skl_shared/src/logic.py:4731
 msgid "ATTENTION: Do yo really want to rewrite file \"{}\"?"
 msgstr "ВНИМАНИЕ: Перезаписать файл \"{}\"?"
 
-#: skl_shared/src/logic.py:4757 skl_shared/src/logic.py:4790
-#: unmusic/src/logic.py:1251
+#: skl_shared/src/logic.py:4761 skl_shared/src/logic.py:4794
+#: unmusic/src/logic.py:1301
 msgid "sec"
 msgstr "сек"
 
-#: skl_shared/src/logic.py:4778
+#: skl_shared/src/logic.py:4782
 msgid "yrs"
 msgstr "лет"
 
-#: skl_shared/src/logic.py:4780
+#: skl_shared/src/logic.py:4784
 msgid "mths"
 msgstr "мес"
 
-#: skl_shared/src/logic.py:4782
+#: skl_shared/src/logic.py:4786
 msgid "wks"
 msgstr "нед"
 
-#: skl_shared/src/logic.py:4784
+#: skl_shared/src/logic.py:4788
 msgid "days"
 msgstr "дн"
 
-#: skl_shared/src/logic.py:4786
+#: skl_shared/src/logic.py:4790
 msgid "hrs"
 msgstr "ч"
 
-#: skl_shared/src/logic.py:4788 unmusic/src/logic.py:1250
+#: skl_shared/src/logic.py:4792 unmusic/src/logic.py:1300
 msgid "min"
 msgstr "мин"
 
-#: skl_shared/src/logic.py:4804 unmusic/src/logic.py:186
+#: skl_shared/src/logic.py:4808 unmusic/src/logic.py:227
 msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
-#: skl_shared/src/logic.py:4814 unmusic/src/unmusic.py:390
-#: unmusic/src/unmusic.py:1403
+#: skl_shared/src/logic.py:4818 unmusic/src/unmusic.py:384
+#: unmusic/src/unmusic.py:1397
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
-#: skl_shared/src/logic.py:4819 unmusic/src/logic.py:151
+#: skl_shared/src/logic.py:4823 unmusic/src/logic.py:190
 msgid "Empty output is not allowed!"
 msgstr "Пустые выходные данные не допускаются!"
 
-#: skl_shared/src/logic.py:4824
+#: skl_shared/src/logic.py:4828
 msgid "{} blocks have been deleted"
 msgstr "{} блоков удалено"
 
-#: skl_shared/src/logic.py:4831
+#: skl_shared/src/logic.py:4835
 msgid "{} matches"
 msgstr "{} совпадений"
 
@@ -705,7 +707,7 @@ msgstr "Учетная запись: \"{}\""
 msgid "Password: \"{}\""
 msgstr "Пароль: \"{}\""
 
-#: skl_shared/src/password/gui.py:34 skl_shared/src/shared.py:3889
+#: skl_shared/src/password/gui.py:34 skl_shared/src/shared.py:3896
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -738,13 +740,13 @@ msgstr ""
 "\"{}\"."
 
 #: skl_shared/src/shared.py:68 skl_shared/src/shared.py:83
-#: skl_shared/src/shared.py:4307 skl_shared/src/shared.py:4325
+#: skl_shared/src/shared.py:4314 skl_shared/src/shared.py:4332
 msgid "Compare texts:"
 msgstr "Сравните тексты:"
 
 #: skl_shared/src/shared.py:628 skl_shared/src/shared.py:702
 #: skl_shared/src/shared.py:1295 skl_shared/src/shared.py:1585
-#: skl_shared/src/shared.py:2658 unmusic/src/gui.py:110
+#: skl_shared/src/shared.py:2658 unmusic/src/gui.py:106
 msgid "Close"
 msgstr "Закрыть"
 
@@ -753,11 +755,11 @@ msgid "Close this window"
 msgstr "Закрыть это окно"
 
 #: skl_shared/src/shared.py:703 skl_shared/src/shared.py:1294
-#: skl_shared/src/shared.py:2657 skl_shared/src/shared.py:3901
+#: skl_shared/src/shared.py:2657 skl_shared/src/shared.py:3908
 msgid "Reject and close"
 msgstr "Отказаться и закрыть"
 
-#: skl_shared/src/shared.py:711 unmusic/src/gui.py:115
+#: skl_shared/src/shared.py:711 unmusic/src/gui.py:111
 msgid "Reset"
 msgstr "Сброс"
 
@@ -765,13 +767,13 @@ msgstr "Сброс"
 msgid "Restore the text"
 msgstr "Восстановить текст"
 
-#: skl_shared/src/shared.py:718 unmusic/src/gui.py:377 unmusic/src/gui.py:976
+#: skl_shared/src/shared.py:718 unmusic/src/gui.py:363 unmusic/src/gui.py:956
 msgid "Save"
 msgstr "Сохранить"
 
 #: skl_shared/src/shared.py:719 skl_shared/src/shared.py:1308
-#: skl_shared/src/shared.py:2665 skl_shared/src/shared.py:3893
-#: skl_shared/src/shared.py:3907
+#: skl_shared/src/shared.py:2665 skl_shared/src/shared.py:3900
+#: skl_shared/src/shared.py:3914
 msgid "Accept and close"
 msgstr "Принять и закрыть"
 
@@ -859,16 +861,16 @@ msgstr "Геометрия виджета 2: {}x{}+{}+{}"
 msgid "Wrong font: \"{}\"!"
 msgstr "Неправильный шрифт: \"{}\"!"
 
-#: skl_shared/src/shared.py:3567
+#: skl_shared/src/shared.py:3571
 msgid "Save geometry: {}"
 msgstr "Сохранение геометрии: {}"
 
-#: skl_shared/src/shared.py:3576
+#: skl_shared/src/shared.py:3581
 msgid "Restore geometry: {}"
 msgstr "Восстановление геометрии: {}"
 
-#: skl_shared/src/shared.py:3661 skl_shared/src/shared.py:3671
-#: skl_shared/src/shared.py:3681 skl_shared/src/shared.py:4130
+#: skl_shared/src/shared.py:3668 skl_shared/src/shared.py:3678
+#: skl_shared/src/shared.py:3688 skl_shared/src/shared.py:4137
 msgid ""
 "The operation has failed!\n"
 "\n"
@@ -878,107 +880,108 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared/src/shared.py:3757 skl_shared/src/shared.py:4115
+#: skl_shared/src/shared.py:3764 skl_shared/src/shared.py:4122
 msgid "Test:"
 msgstr "Тест:"
 
-#: skl_shared/src/shared.py:3885
+#: skl_shared/src/shared.py:3892
 msgid "Yes"
 msgstr "Да"
 
-#: skl_shared/src/shared.py:3886
+#: skl_shared/src/shared.py:3893
 msgid "No"
 msgstr "Нет"
 
-#: skl_shared/src/shared.py:4070 unmusic/src/logic.py:205
-#: unmusic/src/unmusic.py:1314
+#: skl_shared/src/shared.py:4077 unmusic/src/logic.py:246
+#: unmusic/src/unmusic.py:1320
 msgid "N/A"
 msgstr "Н/Д"
 
-#: skl_shared/src/shared.py:4082
+#: skl_shared/src/shared.py:4089
 msgid "SECTION"
 msgstr "СЕКЦИЯ"
 
-#: skl_shared/src/shared.py:4082
+#: skl_shared/src/shared.py:4089
 msgid "KEY"
 msgstr "КЛЮЧ"
 
-#: skl_shared/src/shared.py:4082
+#: skl_shared/src/shared.py:4089
 msgid "VALUE"
 msgstr "ЗНАЧЕНИЕ"
 
-#: skl_shared/src/shared.py:4102
+#: skl_shared/src/shared.py:4109
 msgid "An unknown color \"{}\"!"
 msgstr "Неизвестный цвет \"{}\"!"
 
-#: skl_shared/src/shared.py:4147
+#: skl_shared/src/shared.py:4154
 msgid "Failed to enable key combination \"{}\"!"
 msgstr "Не удалось задействовать сочетание клавиш \"{}\"!"
 
-#: skl_shared/src/shared.py:4151
+#: skl_shared/src/shared.py:4158
 msgid "Wrong input data: \"{}\""
 msgstr "Недопустимые входные данные: \"{}\"!"
 
-#: skl_shared/src/shared.py:4513
+#: skl_shared/src/shared.py:4520
 msgid "Search:"
 msgstr "Поиск:"
 
-#: skl_shared/src/shared.py:4516
+#: skl_shared/src/shared.py:4523
 msgid "Enter a string to search:"
 msgstr "Строка для поиска:"
 
-#: skl_shared/src/shared.py:4535
+#: skl_shared/src/shared.py:4542
 msgid "Case-sensitive search"
 msgstr "Поиск с учетом регистра"
 
-#: skl_shared/src/shared.py:4546
+#: skl_shared/src/shared.py:4553
 msgid "Loop"
 msgstr "Зациклить"
 
-#: skl_shared/src/shared.py:4969
+#: skl_shared/src/shared.py:4976
 msgid "No more matches, continuing from the bottom!"
 msgstr "Совпадений больше нет, поиск продолжен с конца!"
 
-#: skl_shared/src/shared.py:4975 skl_shared/src/shared.py:5002
-#: unmusic/src/logic.py:572 unmusic/src/logic.py:593
+#: skl_shared/src/shared.py:4982 skl_shared/src/shared.py:5009
+#: unmusic/src/logic.py:613 unmusic/src/logic.py:618 unmusic/src/logic.py:632
+#: unmusic/src/logic.py:646
 msgid "No more matches!"
 msgstr "Совпадений больше нет!"
 
-#: skl_shared/src/shared.py:4978 skl_shared/src/shared.py:5005
-#: unmusic/src/unmusic.py:707 unmusic/src/unmusic.py:975
-#: unmusic/src/unmusic.py:1015 unmusic/src/unmusic.py:1040
+#: skl_shared/src/shared.py:4985 skl_shared/src/shared.py:5012
+#: unmusic/src/unmusic.py:703 unmusic/src/unmusic.py:992
+#: unmusic/src/unmusic.py:1033 unmusic/src/unmusic.py:1058
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
-#: skl_shared/src/shared.py:4997
+#: skl_shared/src/shared.py:5004
 msgid "No more matches, continuing from the top!"
 msgstr "Совпадений больше нет, поиск продолжен с начала!"
 
-#: skl_shared/src/shared.py:5031
+#: skl_shared/src/shared.py:5038
 msgid "Failed to find reference \"{}\" with index {}!"
 msgstr "Не удалось найти ссылку \"{}\" с индексом {}!"
 
-#: skl_shared/src/shared.py:5047
+#: skl_shared/src/shared.py:5054
 msgid "Pattern: \"{}\"; index: {}"
 msgstr "Образец: \"{}\"; индекс: {}"
 
-#: skl_shared/src/shared.py:5072
+#: skl_shared/src/shared.py:5079
 msgid "No reference has been found!"
 msgstr "Ссылка не найдена!"
 
-#: skl_shared/src/shared.py:5100
+#: skl_shared/src/shared.py:5107
 msgid "The start of the text has been reached!"
 msgstr "Достигнуто начало текста!"
 
-#: skl_shared/src/shared.py:5115 skl_shared/src/shared.py:5147
+#: skl_shared/src/shared.py:5122 skl_shared/src/shared.py:5154
 msgid "Distance: {} symbols"
 msgstr "Расстояние: {} символов"
 
-#: skl_shared/src/shared.py:5132
+#: skl_shared/src/shared.py:5139
 msgid "The end of the text has been reached!"
 msgstr "Достигнут конец текста!"
 
-#: skl_shared/src/shared.py:5226 skl_shared/src/tests.py:21
+#: skl_shared/src/shared.py:5233 skl_shared/src/tests.py:21
 msgid "Scrollable widget"
 msgstr "Прокручиваемый виджет"
 
@@ -1146,29 +1149,30 @@ msgstr "Привязка: {}"
 msgid "Text:"
 msgstr "Текст:"
 
-#: unmusic/src/album_editor.py:19 unmusic/src/collect_silent.py:47
-#: unmusic/src/unmusic.py:1459 unmusic/src/utils.py:483
+#: unmusic/src/album_editor.py:18 unmusic/src/collect_silent.py:22
+#: unmusic/src/collect_silent.py:51 unmusic/src/unmusic.py:1453
+#: unmusic/src/utils.py:497
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: unmusic/src/collect_silent.py:11 unmusic/src/unmusic.py:1355
+#: unmusic/src/collect_silent.py:12 unmusic/src/unmusic.py:1351
 msgid "not processed"
 msgstr "не обработано"
 
-#: unmusic/src/collect_silent.py:27 unmusic/src/unmusic.py:1370
+#: unmusic/src/collect_silent.py:38 unmusic/src/unmusic.py:1374
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: unmusic/src/collect_silent.py:40 unmusic/src/unmusic.py:1389
+#: unmusic/src/collect_silent.py:46 unmusic/src/unmusic.py:1387
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
 
-#: unmusic/src/db.py:214 unmusic/src/logic.py:430 unmusic/src/logic.py:898
-#: unmusic/src/logic.py:1409 unmusic/src/unmusic.py:426
+#: unmusic/src/db.py:237 unmusic/src/logic.py:469 unmusic/src/logic.py:951
+#: unmusic/src/logic.py:1462 unmusic/src/unmusic.py:395
 msgid "Condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
-#: unmusic/src/db.py:325
+#: unmusic/src/db.py:361
 msgid ""
 "Unable to execute:\n"
 "\"{}\"\n"
@@ -1180,11 +1184,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: unmusic/src/db.py:606 unmusic/src/logic.py:749 unmusic/src/utils.py:122
+#: unmusic/src/db.py:635 unmusic/src/logic.py:801 unmusic/src/utils.py:134
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: unmusic/src/db.py:617 unmusic/src/utils.py:285 unmusic/src/utils.py:291
+#: unmusic/src/db.py:644 unmusic/src/utils.py:294 unmusic/src/utils.py:300
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -1194,499 +1198,508 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: unmusic/src/gui.py:8 unmusic/src/unmusic.py:826
+#: unmusic/src/gui.py:8 unmusic/src/unmusic.py:815
 msgid "Play"
 msgstr "Слушать"
 
-#: unmusic/src/gui.py:9 unmusic/src/gui.py:37 unmusic/src/gui.py:154
-#: unmusic/src/gui.py:158 unmusic/src/unmusic.py:90 unmusic/src/unmusic.py:275
-#: unmusic/src/unmusic.py:285 unmusic/src/unmusic.py:829
+#: unmusic/src/gui.py:8 unmusic/src/gui.py:33 unmusic/src/gui.py:150
+#: unmusic/src/gui.py:152 unmusic/src/unmusic.py:90 unmusic/src/unmusic.py:276
+#: unmusic/src/unmusic.py:284 unmusic/src/unmusic.py:818
 msgid "All"
 msgstr "Все"
 
-#: unmusic/src/gui.py:10 unmusic/src/unmusic.py:832
+#: unmusic/src/gui.py:8 unmusic/src/unmusic.py:821
 msgid "Good"
 msgstr "Хорошее"
 
-#: unmusic/src/gui.py:11 unmusic/src/unmusic.py:835
+#: unmusic/src/gui.py:8 unmusic/src/unmusic.py:824
 msgid "Best"
 msgstr "Лучшее"
 
-#: unmusic/src/gui.py:14 unmusic/src/gui.py:38 unmusic/src/gui.py:136
-#: unmusic/src/unmusic.py:46
+#: unmusic/src/gui.py:10 unmusic/src/gui.py:34 unmusic/src/gui.py:132
+#: unmusic/src/unmusic.py:48
 msgid "Not set"
 msgstr "Не задан"
 
-#: unmusic/src/gui.py:26
+#: unmusic/src/gui.py:22
 msgid "Limit:"
 msgstr "Предел:"
 
-#: unmusic/src/gui.py:39 unmusic/src/gui.py:170 unmusic/src/gui.py:174
-#: unmusic/src/gui.py:276 unmusic/src/logic.py:139 unmusic/src/logic.py:168
-#: unmusic/src/logic.py:366 unmusic/src/logic.py:546 unmusic/src/unmusic.py:616
-#: unmusic/src/utils.py:46
+#: unmusic/src/gui.py:35 unmusic/src/gui.py:164 unmusic/src/gui.py:168
+#: unmusic/src/gui.py:270 unmusic/src/logic.py:52 unmusic/src/logic.py:178
+#: unmusic/src/logic.py:209 unmusic/src/logic.py:403 unmusic/src/logic.py:579
+#: unmusic/src/tests.py:80 unmusic/src/utils.py:53
 msgid "external collection"
 msgstr "внешняя коллекция"
 
-#: unmusic/src/gui.py:40 unmusic/src/gui.py:186 unmusic/src/gui.py:190
-#: unmusic/src/gui.py:283 unmusic/src/logic.py:140 unmusic/src/logic.py:172
-#: unmusic/src/unmusic.py:617 unmusic/src/utils.py:48
+#: unmusic/src/gui.py:36 unmusic/src/gui.py:180 unmusic/src/gui.py:184
+#: unmusic/src/gui.py:277 unmusic/src/logic.py:53 unmusic/src/logic.py:179
+#: unmusic/src/logic.py:213 unmusic/src/utils.py:55
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
-#: unmusic/src/gui.py:61 unmusic/src/gui.py:195 unmusic/src/gui.py:852
+#: unmusic/src/gui.py:57 unmusic/src/gui.py:189 unmusic/src/gui.py:832
 msgid "Copy music"
 msgstr "Копировать музыку"
 
-#: unmusic/src/gui.py:120
+#: unmusic/src/gui.py:116
 msgid "Start"
 msgstr "Начать"
 
-#: unmusic/src/gui.py:127 unmusic/src/gui.py:446
+#: unmusic/src/gui.py:123 unmusic/src/gui.py:432
 msgid "Year:"
 msgstr "Год:"
 
-#: unmusic/src/gui.py:147
+#: unmusic/src/gui.py:143
 msgid "Genres:"
 msgstr "Жанры:"
 
-#: unmusic/src/gui.py:154 unmusic/src/unmusic.py:246 unmusic/src/unmusic.py:280
-#: unmusic/src/unmusic.py:285
+#: unmusic/src/gui.py:150 unmusic/src/unmusic.py:246 unmusic/src/unmusic.py:280
+#: unmusic/src/unmusic.py:284
 msgid "Heavy"
 msgstr "Тяжелые"
 
-#: unmusic/src/gui.py:155 unmusic/src/unmusic.py:244 unmusic/src/unmusic.py:277
-#: unmusic/src/unmusic.py:285
+#: unmusic/src/gui.py:150 unmusic/src/unmusic.py:244 unmusic/src/unmusic.py:278
+#: unmusic/src/unmusic.py:284
 msgid "Light"
 msgstr "Легкие"
 
-#: unmusic/src/gui.py:163
+#: unmusic/src/gui.py:157
 msgid "Read:"
 msgstr "Чтение:"
 
-#: unmusic/src/gui.py:171 unmusic/src/gui.py:187 unmusic/src/gui.py:269
-#: unmusic/src/logic.py:138 unmusic/src/logic.py:164 unmusic/src/logic.py:363
-#: unmusic/src/logic.py:543 unmusic/src/unmusic.py:615 unmusic/src/utils.py:44
+#: unmusic/src/gui.py:165 unmusic/src/gui.py:181 unmusic/src/gui.py:263
+#: unmusic/src/logic.py:51 unmusic/src/logic.py:177 unmusic/src/logic.py:205
+#: unmusic/src/logic.py:400 unmusic/src/logic.py:576 unmusic/src/tests.py:78
+#: unmusic/src/utils.py:51
 msgid "local collection"
 msgstr "локальная коллекция"
 
-#: unmusic/src/gui.py:179
+#: unmusic/src/gui.py:173
 msgid "Write:"
 msgstr "Запись:"
 
-#: unmusic/src/gui.py:235 unmusic/src/gui.py:246 unmusic/src/gui.py:249
-#: unmusic/src/gui.py:321
+#: unmusic/src/gui.py:229 unmusic/src/gui.py:240 unmusic/src/gui.py:243
+#: unmusic/src/gui.py:315
 msgid "Image:"
 msgstr "Изображение:"
 
-#: unmusic/src/gui.py:315
+#: unmusic/src/gui.py:309
 msgid "Search an album by ID"
 msgstr "Поиск альбома по ИД"
 
-#: unmusic/src/gui.py:333 unmusic/src/gui.py:939
+#: unmusic/src/gui.py:327 unmusic/src/gui.py:919
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: unmusic/src/gui.py:334 unmusic/src/gui.py:940
+#: unmusic/src/gui.py:328 unmusic/src/gui.py:920
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: unmusic/src/gui.py:341
-msgid "Create"
-msgstr "Создать"
-
-#: unmusic/src/gui.py:342
-msgid "Create a new record"
-msgstr "Создать новую запись"
-
-#: unmusic/src/gui.py:349
+#: unmusic/src/gui.py:335
 msgid "Delete"
 msgstr "Удалить"
 
-#: unmusic/src/gui.py:350
+#: unmusic/src/gui.py:336
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: unmusic/src/gui.py:356 unmusic/src/gui.py:955
+#: unmusic/src/gui.py:342 unmusic/src/gui.py:935
 msgid "Decypher"
 msgstr "Расшифровать"
 
-#: unmusic/src/gui.py:357 unmusic/src/gui.py:956
+#: unmusic/src/gui.py:343 unmusic/src/gui.py:936
 msgid "Decypher text (Caesar algorithm)"
 msgstr "Расшифровать текст (алгоритм Цезаря)"
 
-#: unmusic/src/gui.py:363 unmusic/src/gui.py:962
+#: unmusic/src/gui.py:349 unmusic/src/gui.py:942
 msgid "Cypher"
 msgstr "Зашифровать"
 
-#: unmusic/src/gui.py:364 unmusic/src/gui.py:963
+#: unmusic/src/gui.py:350 unmusic/src/gui.py:943
 msgid "Cypher text (Caesar algorithm)"
 msgstr "Зашифровать текст (алгоритм Цезаря)"
 
-#: unmusic/src/gui.py:370 unmusic/src/gui.py:969
+#: unmusic/src/gui.py:356 unmusic/src/gui.py:949
 msgid "Decode"
 msgstr "Декодировать"
 
-#: unmusic/src/gui.py:371 unmusic/src/gui.py:970
+#: unmusic/src/gui.py:357 unmusic/src/gui.py:950
 msgid "Decode back to cp1251"
 msgstr "Декодировать обратно в cp1251"
 
-#: unmusic/src/gui.py:378 unmusic/src/gui.py:977
+#: unmusic/src/gui.py:364 unmusic/src/gui.py:957
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: unmusic/src/gui.py:385
+#: unmusic/src/gui.py:371
 msgid "Tracks"
 msgstr "Дорожки"
 
-#: unmusic/src/gui.py:386
+#: unmusic/src/gui.py:372
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: unmusic/src/gui.py:438
+#: unmusic/src/gui.py:424
 msgid "Artist:"
 msgstr "Исполнитель:"
 
-#: unmusic/src/gui.py:442
+#: unmusic/src/gui.py:428
 msgid "Album:"
 msgstr "Альбом:"
 
-#: unmusic/src/gui.py:450
+#: unmusic/src/gui.py:436
 msgid "Country (2 letters):"
 msgstr "Страна (2 символа):"
 
-#: unmusic/src/gui.py:454 unmusic/src/gui.py:1054
+#: unmusic/src/gui.py:440 unmusic/src/gui.py:1034
 msgid "Comment:"
 msgstr "Комментарий:"
 
-#: unmusic/src/gui.py:458
+#: unmusic/src/gui.py:444
 msgid "Mean bitrate:"
 msgstr "Средний битрейт:"
 
-#: unmusic/src/gui.py:462
+#: unmusic/src/gui.py:448
 msgid "Total length:"
 msgstr "Общая длина:"
 
-#: unmusic/src/gui.py:466
+#: unmusic/src/gui.py:452
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: unmusic/src/gui.py:485 unmusic/src/gui.py:755 unmusic/src/gui.py:833
+#: unmusic/src/gui.py:471 unmusic/src/gui.py:735 unmusic/src/gui.py:813
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: unmusic/src/gui.py:504
+#: unmusic/src/gui.py:490
 msgid "Search older records"
 msgstr "Поиск более старых записей"
 
-#: unmusic/src/gui.py:515
+#: unmusic/src/gui.py:501
 msgid "Search newer records"
 msgstr "Поиск более новых записей"
 
-#: unmusic/src/gui.py:523
+#: unmusic/src/gui.py:509
 msgid "Search in albums"
 msgstr "Поиск по альбомам"
 
-#: unmusic/src/gui.py:532
+#: unmusic/src/gui.py:518
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: unmusic/src/gui.py:538
+#: unmusic/src/gui.py:524
 msgid "Go to the preceding record"
 msgstr "Перейти к предыдущей записи"
 
-#: unmusic/src/gui.py:553
+#: unmusic/src/gui.py:539
 msgid "Album ID"
 msgstr "ИД альбома"
 
-#: unmusic/src/gui.py:557
+#: unmusic/src/gui.py:543
 msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
-#: unmusic/src/gui.py:839
+#: unmusic/src/gui.py:819
 msgid "Prepare files"
 msgstr "Подготовить файлы"
 
-#: unmusic/src/gui.py:840
+#: unmusic/src/gui.py:820
 msgid "Move sub-folders to a root folder, split large lossless files, etc."
 msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
 
-#: unmusic/src/gui.py:846
+#: unmusic/src/gui.py:826
 msgid "Collect tags & Obfuscate"
 msgstr "Извлечь тэги и обфусцировать"
 
-#: unmusic/src/gui.py:858
+#: unmusic/src/gui.py:838
 msgid "Delete low-rated music"
 msgstr "Удалить музыку с низкими оценками"
 
-#: unmusic/src/gui.py:864
+#: unmusic/src/gui.py:844
 msgid "Quit"
 msgstr "Выйти"
 
-#: unmusic/src/gui.py:947
+#: unmusic/src/gui.py:927
 msgid "Clear rating"
 msgstr "Очистить оценку"
 
-#: unmusic/src/gui.py:948
+#: unmusic/src/gui.py:928
 msgid "Clear rating of all tracks"
 msgstr "Очистить оценку для всех дорожек"
 
-#: unmusic/src/gui.py:1038
+#: unmusic/src/gui.py:1018
 msgid "Album ID:"
 msgstr "ИД альбома:"
 
-#: unmusic/src/gui.py:1042
+#: unmusic/src/gui.py:1022
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: unmusic/src/gui.py:1046
+#: unmusic/src/gui.py:1026
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: unmusic/src/gui.py:1050
+#: unmusic/src/gui.py:1030
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: unmusic/src/gui.py:1058
+#: unmusic/src/gui.py:1038
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: unmusic/src/gui.py:1062
+#: unmusic/src/gui.py:1042
 msgid "Length:"
 msgstr "Продолжительность:"
 
-#: unmusic/src/gui.py:1066
+#: unmusic/src/gui.py:1046
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: unmusic/src/gui.py:1140
+#: unmusic/src/gui.py:1121
 msgid "Tracks:"
 msgstr "Дорожки:"
 
-#: unmusic/src/logic.py:50 unmusic/src/utils.py:103
+#: unmusic/src/logic.py:91 unmusic/src/utils.py:111
 msgid "Images"
 msgstr "Изображения"
 
-#: unmusic/src/logic.py:99
+#: unmusic/src/logic.py:138
 msgid "[Autosave] Album ID to load at startup"
 msgstr "[Автосохранение] Загружать ИД альбома при запуске"
 
-#: unmusic/src/logic.py:141
+#: unmusic/src/logic.py:180
 msgid "Local collection: {}"
 msgstr "Локальная коллекция: {}"
 
-#: unmusic/src/logic.py:143
+#: unmusic/src/logic.py:182
 msgid "External collection: {}"
 msgstr "Внешняя коллекция: {}"
 
-#: unmusic/src/logic.py:145
+#: unmusic/src/logic.py:184
 msgid "Mobile collection: {}"
 msgstr "Переносная коллекция: {}"
 
-#: unmusic/src/logic.py:259
+#: unmusic/src/logic.py:302
 msgid "Process album ID: {}"
 msgstr "Обработка ИД альбома: {}"
 
-#: unmusic/src/logic.py:419
+#: unmusic/src/logic.py:458
 msgid "Tracks {} have not been found in \"{}\"!"
 msgstr "Дорожки {} не были найдены в \"{}\"!"
 
-#: unmusic/src/logic.py:444
+#: unmusic/src/logic.py:478
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: unmusic/src/logic.py:661
+#: unmusic/src/logic.py:712
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: unmusic/src/logic.py:790
+#: unmusic/src/logic.py:842
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: unmusic/src/logic.py:807
+#: unmusic/src/logic.py:860
 msgid "processed"
 msgstr "обработано"
 
-#: unmusic/src/logic.py:967
+#: unmusic/src/logic.py:1013
 msgid "Album {}: {} tracks."
 msgstr "Альбом {}: {} дорожек."
 
-#: unmusic/src/logic.py:1016
+#: unmusic/src/logic.py:1059
 msgid "{}/{} tracks have been renumbered."
 msgstr "{}/{} дорожек перенумеровано."
 
-#: unmusic/src/logic.py:1033
+#: unmusic/src/logic.py:1071
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: unmusic/src/logic.py:1232 unmusic/src/tests.py:78 unmusic/src/tests.py:163
+#: unmusic/src/logic.py:1282 unmusic/src/tests.py:260 unmusic/src/tests.py:344
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
-#: unmusic/src/logic.py:1234
+#: unmusic/src/logic.py:1284
 msgid "Album: {}"
 msgstr "Альбом: {}"
 
-#: unmusic/src/logic.py:1236
+#: unmusic/src/logic.py:1286
 msgid "Genre: {}"
 msgstr "Жанр: {}"
 
-#: unmusic/src/logic.py:1238
+#: unmusic/src/logic.py:1288
 msgid "Year: {}"
 msgstr "Год: {}"
 
-#: unmusic/src/logic.py:1240
+#: unmusic/src/logic.py:1290
 msgid "Track #: {}"
 msgstr "Номер дорожки: {}"
 
-#: unmusic/src/logic.py:1242
+#: unmusic/src/logic.py:1292
 msgid "Title: {}"
 msgstr "Заголовок: {}"
 
-#: unmusic/src/logic.py:1244
+#: unmusic/src/logic.py:1294
 msgid "Lyrics: {}"
 msgstr "Слова: {}"
 
-#: unmusic/src/logic.py:1250
+#: unmusic/src/logic.py:1300
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: unmusic/src/tests.py:81 unmusic/src/tests.py:167
-msgid "ID: {}, rating: {}"
-msgstr "ИД: {}, рейтинг: {}"
-
-#: unmusic/src/tests.py:174
-msgid "All IDs: {}"
-msgstr "Все ИД: {}"
-
-#: unmusic/src/tests.py:210
-msgid "Album: {}, average rating: {}"
-msgstr "Альбом: {}, средний рейтинг: {}"
-
-#: unmusic/src/tests.py:253
+#: unmusic/src/tests.py:50 unmusic/src/tests.py:434
 msgid "ALBUM ID"
 msgstr "ИД альбома"
 
-#: unmusic/src/tests.py:253
+#: unmusic/src/tests.py:50
+msgid "SONG #"
+msgstr "ПЕСНЯ №"
+
+#: unmusic/src/tests.py:160
+msgid "Kept albums:"
+msgstr "Оставшиеся альбомы:"
+
+#: unmusic/src/tests.py:173
+msgid "Mediocre albums in total: {}, exclude: {}, purge: {}"
+msgstr "Всего средних альбомов: {}, исключено: {}, для удаления: {}"
+
+#: unmusic/src/tests.py:177
+msgid "IDs of the albums to purge: {}"
+msgstr "ИД альбомов для удаления: {}"
+
+#: unmusic/src/tests.py:263 unmusic/src/tests.py:348
+msgid "ID: {}, rating: {}"
+msgstr "ИД: {}, рейтинг: {}"
+
+#: unmusic/src/tests.py:355
+msgid "All IDs: {}"
+msgstr "Все ИД: {}"
+
+#: unmusic/src/tests.py:391
+msgid "Album: {}, average rating: {}"
+msgstr "Альбом: {}, средний рейтинг: {}"
+
+#: unmusic/src/tests.py:434
 msgid "MIXED CASE"
 msgstr "СМЕШАННЫЙ РЕГИСТР"
 
-#: unmusic/src/tests.py:253
+#: unmusic/src/tests.py:434
 msgid "TRACK"
 msgstr "ДОРОЖКА"
 
-#: unmusic/src/tests.py:355
+#: unmusic/src/tests.py:535
 msgid "Tracks of the following albums are of a mixed case:"
 msgstr "Дорожки следующих альбомов находятся в смешанном регистре:"
 
-#: unmusic/src/tests.py:384
+#: unmusic/src/tests.py:564
 msgid "Not found!"
 msgstr "Не найдено!"
 
-#: unmusic/src/tests.py:412
+#: unmusic/src/tests.py:591
 msgid "Track #{}"
 msgstr "Дорожка №{}"
 
-#: unmusic/src/unmusic.py:29
+#: unmusic/src/unmusic.py:33
 msgid "Waiting for {}"
 msgstr "Ожидание {}"
 
-#: unmusic/src/unmusic.py:110
+#: unmusic/src/unmusic.py:112
 msgid "Selected albums: {}"
 msgstr "Выбрано альбомов: {}"
 
-#: unmusic/src/unmusic.py:112
+#: unmusic/src/unmusic.py:114
 msgid "Total size: {}"
 msgstr "Общий размер: {}"
 
-#: unmusic/src/unmusic.py:114 unmusic/src/unmusic.py:132
+#: unmusic/src/unmusic.py:116 unmusic/src/unmusic.py:134
 msgid "Free space: {}"
 msgstr "Свободное место: {}"
 
-#: unmusic/src/unmusic.py:116
+#: unmusic/src/unmusic.py:118
 msgid "Continue?"
 msgstr "Продолжить?"
 
-#: unmusic/src/unmusic.py:129
+#: unmusic/src/unmusic.py:131
 msgid "Not enough free space on \"{}\"!"
 msgstr "Недостаточно свободного места на \"{}\"!"
 
-#: unmusic/src/unmusic.py:134
+#: unmusic/src/unmusic.py:136
 msgid "Required: {}"
 msgstr "Требуется: {}"
 
-#: unmusic/src/unmusic.py:180
+#: unmusic/src/unmusic.py:184
 msgid "Calculate required space"
 msgstr "Подсчет требуемого места"
 
-#: unmusic/src/unmusic.py:275 unmusic/src/unmusic.py:285
+#: unmusic/src/unmusic.py:276 unmusic/src/unmusic.py:284
 msgid "Any"
 msgstr "Любой"
 
-#: unmusic/src/unmusic.py:409
-msgid "Edit #{}."
-msgstr "Правка №{}."
-
-#: unmusic/src/unmusic.py:417
+#: unmusic/src/unmusic.py:410
 msgid "A track title should be indicated."
 msgstr "Необходимо указать название дорожки."
 
-#: unmusic/src/unmusic.py:445
+#: unmusic/src/unmusic.py:414
+msgid "Edit #{}."
+msgstr "Правка №{}."
+
+#: unmusic/src/unmusic.py:428
 msgid "Track numbers should be sequential!"
 msgstr "Номера дорожек должны идти последовательно!"
 
-#: unmusic/src/unmusic.py:457 unmusic/src/unmusic.py:1097
+#: unmusic/src/unmusic.py:451 unmusic/src/unmusic.py:1115
 msgid "Save DB."
 msgstr "Сохранение БД."
 
-#: unmusic/src/unmusic.py:541 unmusic/src/unmusic.py:1243
-msgid "Load #{}."
-msgstr "Загрузка \"{}\"."
-
-#: unmusic/src/unmusic.py:571
+#: unmusic/src/unmusic.py:533
 msgid "No tracks are associated with this album."
 msgstr "Для этого альбома дорожки не указаны."
 
-#: unmusic/src/unmusic.py:850
+#: unmusic/src/unmusic.py:538 unmusic/src/unmusic.py:1248
+msgid "Load #{}."
+msgstr "Загрузка \"{}\"."
+
+#: unmusic/src/unmusic.py:839
 msgid "{} ({} tracks)"
 msgstr "{} ({} дорожек)"
 
-#: unmusic/src/unmusic.py:897
+#: unmusic/src/unmusic.py:915
 msgid ""
 "Tracks are of a mixed rating. Do you want to assign the same rating to all "
 "of them?"
 msgstr ""
 "Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
 
-#: unmusic/src/unmusic.py:923
+#: unmusic/src/unmusic.py:950
 msgid "An album title should be indicated."
 msgstr "Необходимо указать название альбома."
 
-#: unmusic/src/unmusic.py:931
+#: unmusic/src/unmusic.py:958
 msgid "An artist should be indicated."
 msgstr "Необходимо указать исполнителя."
 
-#: unmusic/src/unmusic.py:945
+#: unmusic/src/unmusic.py:972
 msgid "No changes!"
 msgstr "Изменений не было!"
 
-#: unmusic/src/unmusic.py:948
+#: unmusic/src/unmusic.py:975
 msgid "Some fields have been updated."
 msgstr "Некоторые поля были обновлены."
 
-#: unmusic/src/unmusic.py:1079
+#: unmusic/src/unmusic.py:1096
 msgid "Are you sure you want to permanently delete record #{}?"
 msgstr "Вы действительно хотите безвозвратно удалить запись №{}?"
 
-#: unmusic/src/unmusic.py:1082
+#: unmusic/src/unmusic.py:1100
 msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
 
-#: unmusic/src/unmusic.py:1286
+#: unmusic/src/unmusic.py:1284
 msgid "Calculate ratings"
 msgstr "Подсчет оценок"
 
-#: unmusic/src/unmusic.py:1292
+#: unmusic/src/unmusic.py:1293
 msgid ""
 "Insert all required media to calculate space to be freed.\n"
 "\n"
@@ -1696,11 +1709,11 @@ msgstr ""
 "\n"
 "Продолжить?"
 
-#: unmusic/src/unmusic.py:1296
+#: unmusic/src/unmusic.py:1300
 msgid "Calculate sizes"
 msgstr "Подсчет места"
 
-#: unmusic/src/unmusic.py:1315
+#: unmusic/src/unmusic.py:1321
 msgid ""
 "Affected carriers: {}.\n"
 "Space to be freed: {}.\n"
@@ -1716,7 +1729,7 @@ msgstr ""
 "\n"
 "{}"
 
-#: unmusic/src/unmusic.py:1324
+#: unmusic/src/unmusic.py:1331
 msgid "Delete albums"
 msgstr "Удаление альбомов"
 
@@ -1724,47 +1737,47 @@ msgstr "Удаление альбомов"
 msgid "Delete folders"
 msgstr "Удаление каталогов"
 
-#: unmusic/src/utils.py:34
+#: unmusic/src/utils.py:42
 msgid "{}/{} folders have been deleted."
 msgstr "{}/{} каталогов удалено."
 
-#: unmusic/src/utils.py:54
+#: unmusic/src/utils.py:61
 msgid "Calculate space to be freed"
 msgstr "Подсчет высвобождаемого пространства"
 
-#: unmusic/src/utils.py:76
+#: unmusic/src/utils.py:84
 msgid "Space to be freed:"
 msgstr "Высвобождаемое пространство:"
 
-#: unmusic/src/utils.py:78
+#: unmusic/src/utils.py:86
 msgid "in total: {}"
 msgstr "всего: {}"
 
-#: unmusic/src/utils.py:80
+#: unmusic/src/utils.py:88
 msgid "external collection: {}"
 msgstr "внешняя коллекция: {}"
 
-#: unmusic/src/utils.py:82
+#: unmusic/src/utils.py:90
 msgid "local collection: {}"
 msgstr "локальная коллекция: {}"
 
-#: unmusic/src/utils.py:84
+#: unmusic/src/utils.py:92
 msgid "mobile collection: {}"
 msgstr "переносная коллекция: {}"
 
-#: unmusic/src/utils.py:87
+#: unmusic/src/utils.py:95
 msgid "Do you really want to continue?"
 msgstr "Действительно хотите продолжить?"
 
-#: unmusic/src/utils.py:117
+#: unmusic/src/utils.py:129
 msgid "File \"{}\" already exists."
 msgstr "Файл \"{}\" уже существует."
 
-#: unmusic/src/utils.py:131
+#: unmusic/src/utils.py:143
 msgid "Album {} has no cover!"
 msgstr "У альбома {} нет обложки!"
 
-#: unmusic/src/utils.py:195
+#: unmusic/src/utils.py:206
 msgid ""
 "Files in total: {}, processed: {}, already existing: {}, skipped: {}, "
 "errors: {}"
@@ -1772,17 +1785,27 @@ msgstr ""
 "Всего файлов: {}, обработано: {}, уже существуют: {}, пропущено: {}, ошибок: "
 "{}"
 
-#: unmusic/src/utils.py:264
+#: unmusic/src/utils.py:275
 msgid "Fetch data"
 msgstr "Получение данных"
 
-#: unmusic/src/utils.py:330 unmusic/src/utils.py:346
+#: unmusic/src/utils.py:341 unmusic/src/utils.py:357
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
 
-#: unmusic/src/utils.py:420
+#: unmusic/src/utils.py:430
+msgid "Tracks of album #{} have no rating!"
+msgstr "У дорожек альбома №{} нет рейтинга!"
+
+#: unmusic/src/utils.py:436
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
+
+#~ msgid "Create"
+#~ msgstr "Создать"
+
+#~ msgid "Create a new record"
+#~ msgstr "Создать новую запись"
 
 #~ msgid "You need to install \"{}\"!"
 #~ msgstr "Необходимо установить \"{}\"!"
