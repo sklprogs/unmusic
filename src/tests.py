@@ -8,6 +8,55 @@ import logic as lg
 import gui as gi
 
 
+class BestSongs:
+    
+    def __init__(self):
+        self.Success = lg.objs.get_db().Success
+        self.data = {}
+    
+    def fail(self, func, error):
+        self.Success = False
+        mes = _('Operation has failed!\nDetails: {}').format(error)
+        sh.objs.get_mes(func, mes).show_warning()
+    
+    def fetch(self):
+        f = '[unmusic] tests.BestSongs.fetch'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        try:
+            query = 'select NO,ALBUMID from TRACKS where RATING > 9 \
+                     order by ALBUMID,NO'
+            lg.objs.get_db().dbc.execute(query)
+            self.data = lg.objs.db.dbc.fetchall()
+        except Exception as e:
+            self.fail(f, e)
+    
+    def show(self):
+        f = '[unmusic] tests.BestSongs.show'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.data:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        ids = []
+        nos = []
+        for row in self.data:
+            nos.append(row[0])
+            ids.append(row[1])
+        mes = sh.FastTable (iterable = [ids, nos]
+                           ,headers = (_('ALBUM ID'), _('SONG #'))
+                           ).run()
+        sh.com.run_fast_debug(f, mes)
+    
+    def run(self):
+        self.fetch()
+        self.show()
+
+
+
 class MediocreAlbums:
     
     def __init__(self):
@@ -562,5 +611,6 @@ if __name__ == '__main__':
     sh.com.start()
     #BadArtists().run()
     #GoodRating().run()
-    MediocreAlbums().run()
+    #MediocreAlbums().run()
+    BestSongs().run()
     sh.com.end()
