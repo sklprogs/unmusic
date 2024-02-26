@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-25 15:31+0300\n"
-"PO-Revision-Date: 2024-02-25 15:38+0300\n"
+"POT-Creation-Date: 2024-02-26 03:02+0300\n"
+"PO-Revision-Date: 2024-02-26 03:03+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -143,7 +143,7 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:4519 skl_shared/src/logic.py:4679
 #: skl_shared/src/logic.py:4713 skl_shared/src/logic.py:4798
 #: skl_shared/src/shared.py:2371 skl_shared/src/shared.py:5059
-#: unmusic/src/logic.py:917 unmusic/src/tests.py:381 unmusic/src/unmusic.py:517
+#: unmusic/src/logic.py:917 unmusic/src/tests.py:455 unmusic/src/unmusic.py:517
 #: unmusic/src/unmusic.py:564 unmusic/src/unmusic.py:691
 #: unmusic/src/unmusic.py:697 unmusic/src/unmusic.py:912
 #: unmusic/src/unmusic.py:1245
@@ -240,9 +240,9 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared/src/logic.py:1301 skl_shared/src/logic.py:2222
 #: skl_shared/src/logic.py:2368 skl_shared/src/logic.py:2893
 #: skl_shared/src/logic.py:2919 skl_shared/src/logic.py:3003
-#: skl_shared/src/logic.py:3645 unmusic/src/tests.py:19
-#: unmusic/src/tests.py:100 unmusic/src/tests.py:202 unmusic/src/tests.py:286
-#: unmusic/src/tests.py:450
+#: skl_shared/src/logic.py:3645 unmusic/src/tests.py:21
+#: unmusic/src/tests.py:174 unmusic/src/tests.py:276 unmusic/src/tests.py:360
+#: unmusic/src/tests.py:524
 msgid ""
 "Operation has failed!\n"
 "Details: {}"
@@ -1228,7 +1228,7 @@ msgstr "Предел:"
 #: unmusic/src/gui.py:35 unmusic/src/gui.py:164 unmusic/src/gui.py:168
 #: unmusic/src/gui.py:270 unmusic/src/logic.py:52 unmusic/src/logic.py:178
 #: unmusic/src/logic.py:209 unmusic/src/logic.py:403 unmusic/src/logic.py:579
-#: unmusic/src/tests.py:80 unmusic/src/utils.py:53
+#: unmusic/src/tests.py:154 unmusic/src/utils.py:53
 msgid "external collection"
 msgstr "внешняя коллекция"
 
@@ -1270,7 +1270,7 @@ msgstr "Чтение:"
 
 #: unmusic/src/gui.py:165 unmusic/src/gui.py:181 unmusic/src/gui.py:263
 #: unmusic/src/logic.py:51 unmusic/src/logic.py:177 unmusic/src/logic.py:205
-#: unmusic/src/logic.py:400 unmusic/src/logic.py:576 unmusic/src/tests.py:78
+#: unmusic/src/logic.py:400 unmusic/src/logic.py:576 unmusic/src/tests.py:152
 #: unmusic/src/utils.py:51
 msgid "local collection"
 msgstr "локальная коллекция"
@@ -1516,7 +1516,7 @@ msgstr "{}/{} дорожек перенумеровано."
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: unmusic/src/logic.py:1282 unmusic/src/tests.py:260 unmusic/src/tests.py:344
+#: unmusic/src/logic.py:1282 unmusic/src/tests.py:334 unmusic/src/tests.py:418
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
@@ -1548,55 +1548,67 @@ msgstr "Слова: {}"
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: unmusic/src/tests.py:50 unmusic/src/tests.py:434
+#: unmusic/src/tests.py:58
+msgid "ARTIST"
+msgstr "ИСПОЛНИТЕЛЬ"
+
+#: unmusic/src/tests.py:58 unmusic/src/tests.py:508
 msgid "ALBUM ID"
 msgstr "ИД альбома"
 
-#: unmusic/src/tests.py:50
+#: unmusic/src/tests.py:59
+msgid "ALBUM TITLE"
+msgstr "НАЗВАНИЕ АЛЬБОМА"
+
+#: unmusic/src/tests.py:59
 msgid "SONG #"
 msgstr "ПЕСНЯ №"
 
-#: unmusic/src/tests.py:160
+#: unmusic/src/tests.py:60
+msgid "SONG TITLE"
+msgstr "НАЗВАНИЕ ПЕСНИ"
+
+#: unmusic/src/tests.py:234
 msgid "Kept albums:"
 msgstr "Оставшиеся альбомы:"
 
-#: unmusic/src/tests.py:173
+#: unmusic/src/tests.py:247
 msgid "Mediocre albums in total: {}, exclude: {}, purge: {}"
 msgstr "Всего средних альбомов: {}, исключено: {}, для удаления: {}"
 
-#: unmusic/src/tests.py:177
+#: unmusic/src/tests.py:251
 msgid "IDs of the albums to purge: {}"
 msgstr "ИД альбомов для удаления: {}"
 
-#: unmusic/src/tests.py:263 unmusic/src/tests.py:348
+#: unmusic/src/tests.py:337 unmusic/src/tests.py:422
 msgid "ID: {}, rating: {}"
 msgstr "ИД: {}, рейтинг: {}"
 
-#: unmusic/src/tests.py:355
+#: unmusic/src/tests.py:429
 msgid "All IDs: {}"
 msgstr "Все ИД: {}"
 
-#: unmusic/src/tests.py:391
+#: unmusic/src/tests.py:465
 msgid "Album: {}, average rating: {}"
 msgstr "Альбом: {}, средний рейтинг: {}"
 
-#: unmusic/src/tests.py:434
+#: unmusic/src/tests.py:508
 msgid "MIXED CASE"
 msgstr "СМЕШАННЫЙ РЕГИСТР"
 
-#: unmusic/src/tests.py:434
+#: unmusic/src/tests.py:508
 msgid "TRACK"
 msgstr "ДОРОЖКА"
 
-#: unmusic/src/tests.py:535
+#: unmusic/src/tests.py:609
 msgid "Tracks of the following albums are of a mixed case:"
 msgstr "Дорожки следующих альбомов находятся в смешанном регистре:"
 
-#: unmusic/src/tests.py:564
+#: unmusic/src/tests.py:638
 msgid "Not found!"
 msgstr "Не найдено!"
 
-#: unmusic/src/tests.py:591
+#: unmusic/src/tests.py:665
 msgid "Track #{}"
 msgstr "Дорожка №{}"
 
