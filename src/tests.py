@@ -12,20 +12,22 @@ class BestSongs:
     
     def __init__(self):
         self.Success = lg.objs.get_db().Success
-        self.data = {}
+        self.data = ()
+        self.ids = []
+        self.memory = {}
     
     def fail(self, func, error):
         self.Success = False
         mes = _('Operation has failed!\nDetails: {}').format(error)
         sh.objs.get_mes(func, mes).show_warning()
     
-    def fetch(self):
-        f = '[unmusic] tests.BestSongs.fetch'
+    def set_data(self):
+        f = '[unmusic] tests.BestSongs.set_data'
         if not self.Success:
             sh.com.cancel(f)
             return
         try:
-            query = 'select NO,ALBUMID from TRACKS where RATING > 9 \
+            query = 'select ALBUMID,NO,TITLE from TRACKS where RATING > 9 \
                      order by ALBUMID,NO'
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
@@ -37,22 +39,94 @@ class BestSongs:
         if not self.Success:
             sh.com.cancel(f)
             return
+        if not self.memory:
+            self.Success = False
+            sh.com.rep_lazy(f)
+            return
+        artists = []
+        ids = []
+        nos = []
+        albums = []
+        songs = []
+        for record in self.memory.keys():
+            artists.append(self.memory[record]['artist'])
+            ids.append(self.memory[record]['album_id'])
+            nos.append(self.memory[record]['song_no'])
+            songs.append(self.memory[record]['song_title'])
+            albums.append(self.memory[record]['album_title'])
+        mes = sh.FastTable (iterable = [artists, ids, albums, nos, songs]
+                           ,headers = (_('ARTIST'), _('ALBUM ID')
+                                      ,_('ALBUM TITLE'), _('SONG #')
+                                      , _('SONG TITLE')
+                                      )
+                           ).run()
+        sh.com.run_fast_debug(f, mes)
+    
+    def set_memory(self):
+        f = '[unmusic] tests.BestSongs.set_memory'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
         if not self.data:
             self.Success = False
             sh.com.rep_empty(f)
             return
-        ids = []
-        nos = []
-        for row in self.data:
-            nos.append(row[0])
-            ids.append(row[1])
-        mes = sh.FastTable (iterable = [ids, nos]
-                           ,headers = (_('ALBUM ID'), _('SONG #'))
-                           ).run()
-        sh.com.run_fast_debug(f, mes)
+        for i in range(len(self.data)):
+            if not self.data[i][0] in self.ids:
+                self.ids.append(self.data[i][0])
+            # Album ID, song no, song title
+            self.memory[i] = {'album_id': self.data[i][0]
+                             ,'song_no': self.data[i][1]
+                             ,'song_title': self.data[i][2], 'album_title': ''
+                             ,'artist': ''
+                             }
+    
+    def _get_album(self, albumid):
+        f = '[unmusic] tests.BestSongs._get_album'
+        if albumid is None:
+            sh.com.rep_empty(f)
+            return
+        query = 'select ARTIST,ALBUM from ALBUMS where ALBUMID = ?'
+        try:
+            lg.objs.get_db().dbc.execute(query, (albumid,))
+            return lg.objs.db.dbc.fetchone()
+        except Exception as e:
+            self.fail(f, e)
+    
+    def _get_record(self, albumid):
+        for key in self.memory.keys():
+            if self.memory[key]['album_id'] == albumid:
+                return key
+    
+    def set_albums(self):
+        f = '[unmusic] tests.BestSongs.set_albums'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.ids:
+            sh.com.rep_empty(f)
+            return
+        for id_ in self.ids:
+            album = self._get_album(id_)
+            if not album:
+                sh.com.rep_empty(f)
+                continue
+            record = self._get_record(id_)
+            # Can be 0
+            if record is None:
+                sh.com.rep_empty(f)
+                continue
+            self.memory[record]['artist'] = album[0]
+            self.memory[record]['album_title'] = album[1]
     
     def run(self):
-        self.fetch()
+        f = '[unmusic] tests.BestSongs.run'
+        timer = sh.Timer(f)
+        timer.start()
+        self.set_data()
+        self.set_memory()
+        self.set_albums()
+        timer.end()
         self.show()
 
 
