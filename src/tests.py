@@ -27,7 +27,7 @@ class BestSongs:
             sh.com.cancel(f)
             return
         try:
-            query = 'select ALBUMID,NO,TITLE from TRACKS where RATING > 9 \
+            query = 'select ALBUMID,NO,TITLE from TRACKS where RATING > 8 \
                      order by ALBUMID,NO'
             lg.objs.get_db().dbc.execute(query)
             self.data = lg.objs.db.dbc.fetchall()
@@ -59,6 +59,7 @@ class BestSongs:
                                       ,_('ALBUM TITLE'), _('SONG #')
                                       , _('SONG TITLE')
                                       )
+                           ,maxrow = 70
                            ).run()
         sh.com.run_fast_debug(f, mes)
     
