@@ -329,7 +329,7 @@ class AlbumEditor:
                                  ,side = 'left'
                                  ,inactive = self.icn_rld
                                  ,active = self.icn_rld
-                                 ,bindings = ('<F5>','<Control-r>')
+                                 ,bindings = ('<F5>', '<Control-r>')
                                  )
         self.btn_del = sh.Button (parent = self.frm1
                                  ,text = _('Delete')
@@ -351,7 +351,7 @@ class AlbumEditor:
                                  ,side = 'left'
                                  ,inactive = self.icn_sav
                                  ,active = self.icn_sav
-                                 ,bindings = ('<F2>','<Control-s>')
+                                 ,bindings = ('<F2>', '<Control-s>')
                                  )
         self.btn_trk = sh.Button (parent = self.frm2
                                  ,text = _('Tracks')
@@ -359,9 +359,7 @@ class AlbumEditor:
                                  ,side = 'left'
                                  ,inactive = self.icn_trk
                                  ,active = self.icn_trk
-                                 ,bindings = ('<F4>','<Control-t>'
-                                             ,'<Alt-t>'
-                                             )
+                                 ,bindings = ('<F4>', '<Control-t>', '<Alt-t>')
                                  )
 
     def update_info(self,text):
@@ -569,8 +567,8 @@ class AlbumEditor:
                     ,bindings = '<F7>'
                     ,action = self.focus_track_search
                     )
-        ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will
-            not allow to select all contents
+        ''' Binding to '<Button-1>' instead of '<ButtonRelease-1>' will not
+            allow to select all contents.
         '''
         sh.com.bind (obj = self.ent_src
                     ,bindings = '<ButtonRelease-1>'
@@ -736,9 +734,9 @@ class Menu:
         self.set_gui()
     
     def set_bindings(self):
-        self.parent.widget.protocol("WM_DELETE_WINDOW",self.close)
+        self.parent.widget.protocol('WM_DELETE_WINDOW', self.close)
         sh.com.bind (obj = self.parent
-                    ,bindings = ('<Control-q>','<Control-w>')
+                    ,bindings = ('<Control-q>', '<Control-w>')
                     ,action = self.close
                     )
         sh.com.bind (obj = self.parent
@@ -895,7 +893,7 @@ class Tracks(sh.ScrollableC):
                                  ,side = 'left'
                                  ,inactive = self.icn_rld
                                  ,active = self.icn_rld
-                                 ,bindings = ('<F5>','<Control-r>')
+                                 ,bindings = ('<F5>', '<Control-r>')
                                  )
         self.btn_rat = sh.Button (parent = self.frm_btn
                                  ,text = _('Clear rating')
@@ -918,7 +916,7 @@ class Tracks(sh.ScrollableC):
                                  ,side = 'right'
                                  ,inactive = self.icn_sav
                                  ,active = self.icn_sav
-                                 ,bindings = ('<F2>','<Control-s>')
+                                 ,bindings = ('<F2>', '<Control-s>')
                                  )
     
     def reset(self):
