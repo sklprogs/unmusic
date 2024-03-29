@@ -338,20 +338,6 @@ class AlbumEditor:
                                  ,inactive = self.icn_del
                                  ,active = self.icn_del
                                  )
-        self.btn_dez = sh.Button (parent = self.frm2
-                                 ,text = _('Decypher')
-                                 ,hint = _('Decypher text (Caesar algorithm)')
-                                 ,side = 'left'
-                                 ,inactive = self.icn_dez
-                                 ,active = self.icn_dez
-                                 )
-        self.btn_cyp = sh.Button (parent = self.frm2
-                                 ,text = _('Cypher')
-                                 ,hint = _('Cypher text (Caesar algorithm)')
-                                 ,side = 'left'
-                                 ,inactive = self.icn_cyp
-                                 ,active = self.icn_cyp
-                                 )
         self.btn_dec = sh.Button (parent = self.frm2
                                  ,text = _('Decode')
                                  ,hint = _('Decode back to cp1251')
@@ -702,14 +688,8 @@ class AlbumEditor:
         self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                             ,'icon_36x36_go_forward.gif'
                                             )
-        self.icn_cyp = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'icon_36x36_cypher.gif'
-                                        )
         self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decode.gif'
-                                        )
-        self.icn_dez = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'icon_36x36_decypher.gif'
                                         )
         self.icn_del = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_delete_record.gif'
@@ -895,14 +875,8 @@ class Tracks(sh.ScrollableC):
         return new
     
     def add_paths(self):
-        self.icn_cyp = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
-                                              ,'icon_36x36_cypher.gif'
-                                              )
         self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_decode.gif'
-                                        )
-        self.icn_dez = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'icon_36x36_decypher.gif'
                                         )
         self.icn_rat = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_clear_rating.gif'
@@ -930,20 +904,6 @@ class Tracks(sh.ScrollableC):
                                  ,inactive = self.icn_rat
                                  ,active = self.icn_rat
                                  ,action = self.clear_rating
-                                 )
-        self.btn_dez = sh.Button (parent = self.frm_btn
-                                 ,text = _('Decypher')
-                                 ,hint = _('Decypher text (Caesar algorithm)')
-                                 ,side = 'left'
-                                 ,inactive = self.icn_dez
-                                 ,active = self.icn_dez
-                                 )
-        self.btn_cyp = sh.Button (parent = self.frm_btn
-                                 ,text = _('Cypher')
-                                 ,hint = _('Cypher text (Caesar algorithm)')
-                                 ,side = 'left'
-                                 ,inactive = self.icn_cyp
-                                 ,active = self.icn_cyp
                                  )
         self.btn_dec = sh.Button (parent = self.frm_btn
                                  ,text = _('Decode')

@@ -316,56 +316,6 @@ class BadMusic:
 
 
 
-class Caesar:
-    
-    def __init__(self):
-        self.seq1 = ('a','b','c','d','e','f','g','h','i','j','k','l'
-                    ,'m','n','o','p','q','r','s','t','u','v','w','x'
-                    ,'y','z','A','B','C','D','E','F','G','H','I','J'
-                    ,'K','L','M','N','O','P','Q','R','S','T','U','V'
-                    ,'W','X','Y','Z','а','б','в','г','д','е','ё','ж'
-                    ,'з','и','й','к','л','м','н','о','п','р','с','т'
-                    ,'у','ф','х','ц','ч','ш','щ','ь','ъ','ы','э','ю'
-                    ,'я','А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й'
-                    ,'К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х'
-                    ,'Ц','Ч','Ш','Щ','Ь','Ъ','Ы','Э','Ю','Я'
-                    )
-        self.seq2 = ('C','D','f','d','e','i','R','t','n','g','u','b'
-                    ,'B','k','S','N','y','m','j','U','P','J','M','H'
-                    ,'E','V','I','p','v','l','G','s','Q','Z','h','A'
-                    ,'X','a','W','O','K','c','o','w','T','q','z','x'
-                    ,'r','F','L','Y','Н','И','Щ','ю','д','з','к','г'
-                    ,'л','й','б','ж','ё','в','а','Ш','э','Ы','О','Ф'
-                    ,'П','и','У','е','п','ы','В','А','К','н','м','Л'
-                    ,'ъ','у','ф','М','Б','с','Ц','о','я','Ь','Й','Х'
-                    ,'х','Я','Г','Е','Т','С','Р','Ъ','р','Ж','ц','щ'
-                    ,'Ё','Э','т','Ч','ч','ш','ь','Ю','Д','З'
-                    )
-        assert len(self.seq1) == len(self.seq2)
-    
-    def cypher(self,text):
-        lst = list(text)
-        for i in range(len(lst)):
-            try:
-                ind = self.seq1.index(lst[i])
-                lst[i] = self.seq2[ind]
-            except ValueError:
-                pass
-        return ''.join(lst)
-    
-    def decypher(self,text):
-        lst = list(text)
-        for i in range(len(lst)):
-            try:
-                ind = self.seq2.index(lst[i])
-                lst[i] = self.seq1[ind]
-            except ValueError:
-                pass
-        return ''.join(lst)
-        
-
-
-
 class Play:
     
     def __init__(self):
@@ -867,8 +817,6 @@ class Directory:
         self.path = path
         self.idir = sh.lg.Directory(self.path)
         self.Success = self.idir.Success
-        if self.Success and '(decypher)' in self.path:
-            self.Decypher = True
         
     def get_rating(self):
         f = '[unmusic] logic.Directory.get_rating'
@@ -900,26 +848,6 @@ class Directory:
             self.save_image()
         return self.Success
     
-    def decypher_album(self):
-        f = '[unmusic] logic.Directory.decypher_album'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        if not self.Decypher:
-            sh.com.rep_lazy(f)
-            return
-        basename = sh.lg.Path(self.path).get_basename()
-        basename = objs.get_caesar().decypher(basename)
-        if not basename:
-            sh.com.rep_empty(f)
-            return
-        if basename.count(' - ') != 2:
-            mes = _('Wrong input data: "{}"!')
-            mes = mes.format(basename)
-            sh.objs.get_mes(f,mes,True).show_warning()
-            return
-        return basename.split(' - ')
-    
     def add_album_meta(self):
         f = '[unmusic] logic.Directory.add_album_meta'
         if not self.Success:
@@ -939,18 +867,6 @@ class Directory:
         artist = self.tracks[0].artist
         year = self.tracks[0].year
         genre = self.tracks[0].genre
-        result = self.decypher_album()
-        if result:
-            if len(result) == 3:
-                artist = result[0]
-                if str(result[1]).isdigit():
-                    year = int(result[1])
-                album = result[2]
-            else:
-                sub = '{} = {}'.format(len(result),3)
-                mes = _('Condition "{}" is not observed!')
-                mes = mes.format(sub)
-                sh.objs.get_mes(f,mes).show_error()
         album = com.sanitize(album)
         album = com.delete_album_trash(album)
         artist = com.sanitize(artist)
@@ -1016,7 +932,6 @@ class Directory:
     
     def set_values(self):
         self.Success = True
-        self.Decypher = False
         self.idir = None
         self.path = ''
         self.target = ''
@@ -1068,15 +983,11 @@ class Directory:
         if self.tracks:
             return self.tracks
         if not self.audio:
-            mes = _('Folder "{}" has no audio files.')
-            mes = mes.format(self.path)
-            sh.objs.get_mes(f,mes,True).show_info()
+            mes = _('Folder "{}" has no audio files.').format(self.path)
+            sh.objs.get_mes(f, mes, True).show_info()
             return self.tracks
         for file in self.audio:
-            self.tracks.append (Track (file = file
-                                      ,Decypher = self.Decypher
-                                      )
-                               )
+            self.tracks.append(Track(file=file))
         return self.tracks
 
 
@@ -1122,8 +1033,8 @@ class DefaultConfig:
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.caesar = self.config = self.image \
-                     = self.collection = None
+        self.default = self.db = self.config = self.image = self.collection \
+                     = None
         
     def get_collection(self):
         if not self.collection:
@@ -1141,11 +1052,6 @@ class Objects:
             self.config.run()
         return self.config
     
-    def get_caesar(self):
-        if self.caesar is None:
-            self.caesar = Caesar()
-        return self.caesar
-    
     def get_db(self):
         f = '[unmusic] logic.Objects.get_db'
         if self.db is not None:
@@ -1153,7 +1059,7 @@ class Objects:
         path = self.get_default().fdb
         if not self.default.Success:
             mes = _('Wrong input data!')
-            sh.objs.get_mes(f,mes,True).show_warning()
+            sh.objs.get_mes(f, mes, True).show_warning()
             self.db = db.DB()
             return self.db
         self.db = db.DB(path)
@@ -1169,28 +1075,14 @@ class Objects:
 
 class Track:
     
-    def __init__(self, file, Decypher=False):
+    def __init__(self, file):
         self.set_values()
         self.file = file
         self.Success = sh.lg.File(self.file).Success
-        self.Decypher = Decypher
         self.load()
         self.set_info()
         self.decode()
         self.delete_unsupported()
-        self.decypher()
-    
-    def decypher(self):
-        f = '[unmusic] logic.Track.decypher'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        ''' Since we need to create a SEARCH field, for the purpose of solidity
-            we decypher track title right here.
-        '''
-        if self.Decypher:
-            self.title = objs.get_caesar().decypher(self.title)
-            self.genre = objs.caesar.decypher(self.genre)
     
     def delete_unsupported(self):
         f = '[unmusic] logic.Track.delete_unsupported'

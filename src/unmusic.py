@@ -346,28 +346,6 @@ class Tracks:
             self.set_gui()
         return self.gui
     
-    def decypher(self, event=None):
-        f = '[unmusic] unmusic.Tracks.decypher'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        for track in self.get_gui().tracks:
-            title = track.ent_tit.get()
-            title = lg.objs.get_caesar().decypher(title)
-            track.ent_tit.clear_text()
-            track.ent_tit.insert(title)
-    
-    def cypher(self, event=None):
-        f = '[unmusic] unmusic.Tracks.cypher'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        for track in self.get_gui().tracks:
-            title = track.ent_tit.get()
-            title = lg.objs.get_caesar().cypher(title)
-            track.ent_tit.clear_text()
-            track.ent_tit.insert(title)
-    
     def decode(self, event=None):
         f = '[unmusic] unmusic.Tracks.decode'
         if not self.Success:
@@ -457,8 +435,6 @@ class Tracks:
             sh.com.rep_empty(f)
             return
         self.gui.widget.protocol("WM_DELETE_WINDOW", self.close)
-        self.gui.btn_cyp.action = self.cypher
-        self.gui.btn_dez.action = self.decypher
         self.gui.btn_dec.action = self.decode
         self.gui.btn_rld.action = self.reload
         self.gui.btn_sav.action = self.save
@@ -705,40 +681,6 @@ class AlbumEditor:
             return
         lg.objs.db.albumid = albumid
         self.fill()
-    
-    def cypher(self, event=None):
-        f = '[unmusic] unmusic.AlbumEditor.cypher'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        artist = self.gui.ent_art.get()
-        album = self.gui.ent_alb.get()
-        genre = self.gui.opt_gnr.choice
-        artist = lg.objs.get_caesar().cypher(artist)
-        album = lg.objs.caesar.cypher(album)
-        genre = lg.objs.caesar.cypher(genre)
-        self.gui.ent_art.clear_text()
-        self.gui.ent_art.insert(artist)
-        self.gui.ent_alb.clear_text()
-        self.gui.ent_alb.insert(album)
-        self.set_genre(genre)
-    
-    def decypher(self, event=None):
-        f = '[unmusic] unmusic.AlbumEditor.decypher'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        artist = self.gui.ent_art.get()
-        album = self.gui.ent_alb.get()
-        genre = self.gui.opt_gnr.choice
-        artist = lg.objs.get_caesar().decypher(artist)
-        album = lg.objs.caesar.decypher(album)
-        genre = lg.objs.caesar.decypher(genre)
-        self.gui.ent_art.clear_text()
-        self.gui.ent_art.insert(artist)
-        self.gui.ent_alb.clear_text()
-        self.gui.ent_alb.insert(album)
-        self.set_genre(genre)
     
     def decode(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.decode'
@@ -1116,11 +1058,9 @@ class AlbumEditor:
             lg.objs.get_db().save()
     
     def set_bindings(self):
-        self.gui.widget.protocol("WM_DELETE_WINDOW", self.close)
-        self.gui.btn_cyp.action = self.cypher
+        self.gui.widget.protocol('WM_DELETE_WINDOW', self.close)
         self.gui.btn_dec.action = self.decode
         self.gui.btn_del.action = self.delete
-        self.gui.btn_dez.action = self.decypher
         self.gui.btn_nxt.action = self.go_next
         self.gui.btn_prv.action = self.go_prev
         self.gui.btn_rld.action = self.fill

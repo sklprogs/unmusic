@@ -223,38 +223,6 @@ class Commands:
         idb.savew()
         idb.close()
         idb.closew()
-        
-    def is_camel_case(self, title):
-        words = title.split(' ')
-        for word in words:
-            if word != word.upper() and len(word) > 1 \
-            and word[0].isalpha():
-                for sym in word[1:]:
-                    if sym in 'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЪЬЭЮЯ':
-                        return True
-    
-    def show_cyphered(self):
-        f = '[unmusic] utils.Commands.show_cyphered'
-        if not lg.objs.get_db().Success:
-            sh.com.cancel(f)
-            return
-        titles = []
-        #query = 'select TITLE from TRACKS order by ALBUMID'
-        query = 'select ALBUM from ALBUMS order by ALBUM'
-        try:
-            lg.objs.db.dbc.execute(query)
-            titles = lg.objs.db.dbc.fetchall()
-            if titles:
-                titles = [item[0] for item in titles]
-        except Exception as e:
-            mes = _('Operation has failed!\n\nDetails: {}')
-            mes = mes.format(e)
-            sh.objs.get_mes(f,mes).show_warning()
-        result = [title for title in titles \
-                  if self.is_camel_case(title)
-                 ]
-        print('\n'.join(result))
-        print(len(result))
 
 
 
@@ -492,7 +460,7 @@ com = Commands()
 if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     sh.com.start()
-    com.alter()
+    #com.alter()
     #DeleteBad().run()
     mes = _('Goodbye!')
     sh.objs.get_mes(f, mes, True).show_debug()
