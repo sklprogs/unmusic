@@ -6,11 +6,15 @@ import PyQt6
 import PyQt6.QtWidgets
 
 
-class App(PyQt6.QtWidgets.QMainWindow):
+class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_gui()
+    
+    def bind(self, hotkeys, action):
+        for hotkey in hotkeys:
+            PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self).activated.connect(action)
     
     def set_layout(self):
         self.parent = PyQt6.QtWidgets.QWidget()
@@ -57,6 +61,6 @@ class App(PyQt6.QtWidgets.QMainWindow):
 if __name__ == '__main__':
     f = '__main__'
     exe = PyQt6.QtWidgets.QApplication(sys.argv)
-    app = App()
+    app = AlbumEditor()
     app.show()
     sys.exit(exe.exec())
