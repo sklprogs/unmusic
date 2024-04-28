@@ -14,6 +14,15 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         self.set_gui()
     
+    def set_label_font_size(self):
+        self.lbl_art.change_font_size(2)
+        self.lbl_alb.change_font_size(2)
+        self.lbl_yer.change_font_size(2)
+        self.lbl_cnt.change_font_size(2)
+        self.lbl_com.change_font_size(2)
+        self.lbl_bit.change_font_size(2)
+        self.lbl_len.change_font_size(2)
+    
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
             PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self).activated.connect(action)
@@ -24,13 +33,13 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         #self.layout_.setContentsMargins(0, 0, 0, 0)
     
     def set_labels(self):
-        self.lbl_art = PyQt6.QtWidgets.QLabel()
-        self.lbl_alb = PyQt6.QtWidgets.QLabel()
-        self.lbl_yer = PyQt6.QtWidgets.QLabel()
-        self.lbl_cnt = PyQt6.QtWidgets.QLabel()
-        self.lbl_com = PyQt6.QtWidgets.QLabel()
-        self.lbl_bit = PyQt6.QtWidgets.QLabel()
-        self.lbl_len = PyQt6.QtWidgets.QLabel()
+        self.lbl_art = sh.Label(_('Artist:'))
+        self.lbl_alb = sh.Label(_('Album:'))
+        self.lbl_yer = sh.Label(_('Year:'))
+        self.lbl_cnt = sh.Label(_('Country:'))
+        self.lbl_com = sh.Label(_('Comment:'))
+        self.lbl_bit = sh.Label(_('Average bitrate:'))
+        self.lbl_len = sh.Label(_('Total length:'))
     
     def set_entries(self):
         self.ent_art = PyQt6.QtWidgets.QLineEdit()
@@ -44,31 +53,25 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     def set_widgets(self):
         self.set_labels()
         self.set_entries()
-        self.set_text()
     
-    def set_text(self):
-        self.lbl_art.setText(_('Artist:'))
-        self.lbl_alb.setText(_('Album:'))
-        self.lbl_yer.setText(_('Year:'))
-        self.lbl_cnt.setText(_('Country:'))
-        self.lbl_com.setText(_('Comment:'))
-        self.lbl_bit.setText(_('Average bitrate:'))
-        self.lbl_len.setText(_('Total length:'))
+    def configure(self):
+        self.set_label_font_size()
     
     def set_gui(self):
         self.set_layout()
         self.set_widgets()
         self.add_widgets()
         self.setCentralWidget(self.parent)
+        self.configure()
     
     def add_labels(self):
-        self.layout_.addWidget(self.lbl_art, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_alb, 1, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_yer, 2, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_cnt, 3, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_com, 4, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_bit, 5, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.layout_.addWidget(self.lbl_len, 6, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_art.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_alb.widget, 1, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_yer.widget, 2, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_cnt.widget, 3, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_com.widget, 4, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_bit.widget, 5, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.lbl_len.widget, 6, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
     
     def add_entries(self):
         self.layout_.addWidget(self.ent_art, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
