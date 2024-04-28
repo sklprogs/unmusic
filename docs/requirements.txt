@@ -1,0 +1,3 @@
+phrydy
+termcolor
+pillow

@@ -1,0 +1,17 @@
+NOTE: Major versions break DB structure, they do not necessarily bring many
+changes.
+
+(in development)
+* 
+
+3.0
+* Set album rating separately as a float thereby increasing processing speed
+
+2.0
+* Restructure DB in order to keep it small and fast
+
+1.1
+* Add a config file
+
+1.0
+Initial release
