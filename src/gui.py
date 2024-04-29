@@ -34,6 +34,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.lbl_com.change_font_size(2)
         self.lbl_bit.change_font_size(2)
         self.lbl_len.change_font_size(2)
+        self.lbl_gnr.change_font_size(2)
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
@@ -70,6 +71,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.set_labels()
         self.set_entries()
         self.set_options()
+        self.set_collections()
     
     def configure(self):
         self.set_label_font_size()
@@ -103,10 +105,34 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.layout_.addWidget(self.ent_bit, 5, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
         self.layout_.addWidget(self.ent_len, 6, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
     
+    def add_panels(self):
+        self.layout_.addWidget(self.pnl_col, 8, 1, 1, 2, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+    
+    def add_collections(self):
+        self.lay_col.addWidget(self.cbx_loc.widget)
+        self.lay_col.addWidget(self.lbl_loc.widget)
+        self.lay_col.addWidget(self.cbx_ext.widget)
+        self.lay_col.addWidget(self.lbl_ext.widget)
+        self.lay_col.addWidget(self.cbx_mob.widget)
+        self.lay_col.addWidget(self.lbl_mob.widget)
+    
+    def set_collections(self):
+        self.pnl_col = PyQt6.QtWidgets.QWidget()
+        self.lay_col = PyQt6.QtWidgets.QHBoxLayout()
+        self.cbx_loc = sh.CheckBox()
+        self.cbx_ext = sh.CheckBox()
+        self.cbx_mob = sh.CheckBox()
+        self.lbl_loc = sh.Label(_('local collection'))
+        self.lbl_ext = sh.Label(_('external collection'))
+        self.lbl_mob = sh.Label(_('mobile collection'))
+        self.pnl_col.setLayout(self.lay_col)
+    
     def add_widgets(self):
         self.add_labels()
         self.add_entries()
         self.add_options()
+        self.add_collections()
+        self.add_panels()
         self.parent.setLayout(self.layout_)
 
 
