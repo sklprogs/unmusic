@@ -24,8 +24,29 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.set_values()
         self.set_gui()
     
+    def set_values(self):
+        self.icn_rld = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
+                                              ,'reload.png'
+                                              )
+        self.icn_del = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'delete_record.png'
+                                        )
+        self.icn_trs = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'delete_tracks.png'
+                                        )
+        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'decode.png'
+                                        )
+        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'save.png'
+                                        )
+        self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'tracks.png'
+                                        )
+
     def set_label_font_size(self):
         self.lbl_art.change_font_size(2)
         self.lbl_alb.change_font_size(2)
@@ -72,6 +93,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.set_entries()
         self.set_options()
         self.set_collections()
+        self.set_bottom()
     
     def configure(self):
         self.set_label_font_size()
@@ -107,6 +129,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
     def add_panels(self):
         self.layout_.addWidget(self.pnl_col, 8, 1, 1, 2, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.layout_.addWidget(self.pnl_btm, 9, 0, 1, 20)
     
     def add_collections(self):
         self.lay_col.addWidget(self.cbx_loc.widget)
@@ -115,6 +138,45 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.lay_col.addWidget(self.lbl_ext.widget)
         self.lay_col.addWidget(self.cbx_mob.widget)
         self.lay_col.addWidget(self.lbl_mob.widget)
+    
+    def set_bottom(self):
+        self.pnl_btm = PyQt6.QtWidgets.QWidget()
+        self.lay_btm = PyQt6.QtWidgets.QGridLayout()
+        self.btn_rld = sh.Button (hint = _('Reload the present record')
+                                 ,inactive = self.icn_rld
+                                 ,active = self.icn_rld
+                                 )
+        self.btn_del = sh.Button (hint = _('Delete the present record')
+                                 ,inactive = self.icn_del
+                                 ,active = self.icn_del
+                                 )
+        self.btn_trs = sh.Button (hint = _('Delete tracks with rating < 8')
+                                 ,inactive = self.icn_trs
+                                 ,active = self.icn_trs
+                                 )
+        self.lbl_inf = sh.Label(_('Current messages are shown here.'))
+        self.btn_dec = sh.Button (hint = _('Decode back to cp1251')
+                                 ,inactive = self.icn_dec
+                                 ,active = self.icn_dec
+                                 )
+        self.btn_sav = sh.Button (hint = _('Save changes')
+                                 ,inactive = self.icn_sav
+                                 ,active = self.icn_sav
+                                 )
+        self.btn_trk = sh.Button (hint = _('Edit tracks')
+                                 ,inactive = self.icn_trk
+                                 ,active = self.icn_trk
+                                 )
+        self.pnl_btm.setLayout(self.lay_btm)
+    
+    def add_bottom(self):
+        self.lay_btm.addWidget(self.btn_rld.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_del.widget, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_trs.widget, 0, 2, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.lbl_inf.widget, 0, 3, 1, 5)
+        self.lay_btm.addWidget(self.btn_dec.widget, 0, 4, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_sav.widget, 0, 5, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_trk.widget, 0, 6, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
     
     def set_collections(self):
         self.pnl_col = PyQt6.QtWidgets.QWidget()
@@ -133,6 +195,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.add_options()
         self.add_collections()
         self.add_panels()
+        self.add_bottom()
         self.parent.setLayout(self.layout_)
 
 
