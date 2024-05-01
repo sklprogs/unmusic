@@ -120,6 +120,7 @@ class Center:
         self.lbl_loc = sh.Label(_('local collection'))
         self.lbl_ext = sh.Label(_('external collection'))
         self.lbl_mob = sh.Label(_('mobile collection'))
+        self.lay_col.setContentsMargins(0, 0, 0, 0)
         self.pnl_col.setLayout(self.lay_col)
     
     def add_collections(self):
