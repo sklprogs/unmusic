@@ -3,6 +3,7 @@
 
 import PyQt6
 import PyQt6.QtWidgets
+import PyQt6.QtGui
 
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
@@ -98,7 +99,11 @@ class Top:
 class Center:
     
     def __init__(self):
+        self.set_values()
         self.set_gui()
+    
+    def set_values(self):
+        self.image_path = sh.objs.get_pdir().add('..', 'resources', 'cd.png')
     
     def add_widgets(self):
         self.add_labels()
@@ -137,6 +142,7 @@ class Center:
         self.lay_ctr.addWidget(self.lbl_bit.widget, 5, 0, 1, 1)
         self.lay_ctr.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
         self.lay_ctr.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_img.widget, 8, 2, 7, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
     
     def add_entries(self):
         self.lay_ctr.addWidget(self.ent_art, 0, 1, 1, 1)
@@ -161,6 +167,7 @@ class Center:
         self.lbl_bit = sh.Label(_('Average bitrate:'))
         self.lbl_len = sh.Label(_('Total length:'))
         self.lbl_gnr = sh.Label(_('Genre:'))
+        self.lbl_img = sh.Label()
     
     def set_entries(self):
         self.ent_art = PyQt6.QtWidgets.QLineEdit()
@@ -190,9 +197,14 @@ class Center:
         self.set_options()
         self.set_collections()
     
+    def set_image(self):
+        image = PyQt6.QtGui.QPixmap(self.image_path)
+        self.lbl_img.widget.setPixmap(image)
+    
     def set_gui(self):
         self.set_layout()
         self.set_widgets()
+        self.set_image()
         self.set_label_font_size()
         self.add_widgets()
 
