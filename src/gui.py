@@ -129,23 +129,23 @@ class Center:
         self.lay_ctr.addWidget(self.opt_gnr.widget, 7, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
     
     def add_labels(self):
-        self.lay_ctr.addWidget(self.lbl_art.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_alb.widget, 1, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_yer.widget, 2, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_cnt.widget, 3, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_com.widget, 4, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_bit.widget, 5, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_len.widget, 6, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_ctr.addWidget(self.lbl_art.widget, 0, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_alb.widget, 1, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_yer.widget, 2, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_cnt.widget, 3, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_com.widget, 4, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_bit.widget, 5, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
+        self.lay_ctr.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
     
     def add_entries(self):
-        self.lay_ctr.addWidget(self.ent_art, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_alb, 1, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_yer, 2, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_cnt, 3, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_com, 4, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_bit, 5, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_ctr.addWidget(self.ent_len, 6, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_ctr.addWidget(self.ent_art, 0, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_alb, 1, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_yer, 2, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_cnt, 3, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_com, 4, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_bit, 5, 1, 1, 1)
+        self.lay_ctr.addWidget(self.ent_len, 6, 1, 1, 1)
 
     def set_layout(self):
         self.pnl_ctr = PyQt6.QtWidgets.QWidget()
