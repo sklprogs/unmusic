@@ -142,6 +142,7 @@ class Center:
         self.lay_grd.addWidget(self.lbl_bit.widget, 5, 0, 1, 1)
         self.lay_grd.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
         self.lay_grd.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
+        self.lay_grd.addWidget(self.pnl_col, 8, 1, 1, 1)
         self.lay_img.addWidget(self.lbl_img.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
     
     def add_entries(self):
