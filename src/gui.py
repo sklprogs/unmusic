@@ -152,7 +152,7 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
 
     def set_layout(self):
         self.pnl_btm = PyQt6.QtWidgets.QWidget()
-        self.lay_btm = PyQt6.QtWidgets.QGridLayout()
+        self.lay_btm = PyQt6.QtWidgets.QHBoxLayout()
         self.pnl_btm.setLayout(self.lay_btm)
     
     def set_gui(self):
@@ -190,13 +190,13 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
         self.pnl_btm.setLayout(self.lay_btm)
     
     def add_widgets(self):
-        self.lay_btm.addWidget(self.btn_rld.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_del.widget, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_trs.widget, 0, 2, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.lbl_inf.widget, 0, 3, 1, 5)
-        self.lay_btm.addWidget(self.btn_dec.widget, 0, 4, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
-        self.lay_btm.addWidget(self.btn_sav.widget, 0, 5, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
-        self.lay_btm.addWidget(self.btn_trk.widget, 0, 6, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_rld.widget)
+        self.lay_btm.addWidget(self.btn_del.widget)
+        self.lay_btm.addWidget(self.btn_trs.widget)
+        self.lay_btm.addWidget(self.lbl_inf.widget)
+        self.lay_btm.addWidget(self.btn_dec.widget)
+        self.lay_btm.addWidget(self.btn_sav.widget)
+        self.lay_btm.addWidget(self.btn_trk.widget)
 
 
 
