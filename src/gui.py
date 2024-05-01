@@ -8,6 +8,7 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 
+PLAY = (_('Play'), _('All'), _('Good'), _('Best'))
 #NOTE: Do not localize (being stored in DB)
 GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          ,'Brutal Death Metal', 'Chanson', 'Classical', 'Death Metal'
@@ -18,6 +19,82 @@ GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          ,'Relaxation', 'Rock', 'Soundtrack', 'Technical Brutal Death Metal'
          ,'Technical Death Metal', 'Thrash Metal', 'Vocal'
          )
+
+
+
+class Top(PyQt6.QtWidgets.QMainWindow):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.set_values()
+        self.set_gui()
+    
+    def set_values(self):
+        self.prev_inactive = sh.objs.get_pdir().add ('..', 'resources'
+                                                    ,'buttons'
+                                                    ,'go_back_off.png'
+                                                    )
+        self.prev_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                            ,'go_back.png'
+                                            )
+        self.next_inactive = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                              ,'go_next_off.png'
+                                              )
+        self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                            ,'go_next.png'
+                                            )
+    
+    def set_layout(self):
+        self.pnl_top = PyQt6.QtWidgets.QWidget()
+        self.lay_top = PyQt6.QtWidgets.QHBoxLayout()
+        self.pnl_top.setLayout(self.lay_top)
+    
+    def set_gui(self):
+        self.set_layout()
+        self.set_widgets()
+        self.add_widgets()
+        self.configure()
+        self.setCentralWidget(self.pnl_top)
+    
+    def configure(self):
+        self.ent_src.set_text(_('Search in albums'))
+        self.ent_sr2.set_text(_('Search in tracks'))
+    
+    def set_widgets(self):
+        self.btn_spr = sh.Button (hint = _('Search older records')
+                                 ,inactive = self.prev_inactive
+                                 ,active = self.prev_active
+                                 )
+        self.ent_src = sh.Entry()
+        self.btn_snr = sh.Button (hint = _('Search newer records')
+                                 ,inactive = self.next_inactive
+                                 ,active = self.next_active
+                                 )
+        self.btn_prv = sh.Button (hint = _('Go to the preceding record')
+                                 ,inactive = self.prev_inactive
+                                 ,active = self.prev_active
+                                 )
+        # Show the current record #/total records ratio
+        self.lbl_mtr = sh.Label('0 / 0')
+        self.btn_nxt = sh.Button (hint = _('Go to the following record')
+                                 ,inactive = self.next_inactive
+                                 ,active = self.next_active
+                                 )
+        self.ent_sr2 = sh.Entry()
+        self.opt_rtg = sh.OptionMenu((0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+        self.opt_ply = sh.OptionMenu(PLAY)
+    
+    def add_widgets(self):
+        self.lay_top.addWidget(self.btn_spr.widget)
+        self.lay_top.addWidget(self.ent_src.widget)
+        self.lay_top.addWidget(self.btn_snr.widget)
+        self.lay_top.addWidget(self.btn_prv.widget)
+        self.lay_top.addWidget(self.lbl_mtr.widget)
+        self.lay_top.addWidget(self.btn_nxt.widget)
+        self.lay_top.addWidget(self.ent_sr2.widget)
+        self.lay_top.addWidget(self.opt_rtg.widget)
+        self.lay_top.addWidget(self.opt_ply.widget)
+
 
 
 class Center:
@@ -204,29 +281,8 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_values()
         self.set_gui()
     
-    def set_values(self):
-        self.icn_rld = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
-                                              ,'reload.png'
-                                              )
-        self.icn_del = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'delete_record.png'
-                                        )
-        self.icn_trs = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'delete_tracks.png'
-                                        )
-        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'decode.png'
-                                        )
-        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'save.png'
-                                        )
-        self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'tracks.png'
-                                        )
-
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
             PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self).activated.connect(action)
@@ -292,6 +348,7 @@ if __name__ == '__main__':
     import sys
     exe = PyQt6.QtWidgets.QApplication(sys.argv)
     #app = AlbumEditor()
-    app = Bottom()
+    #app = Bottom()
+    app = Top()
     app.show()
     sys.exit(exe.exec())
