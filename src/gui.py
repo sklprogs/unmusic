@@ -131,32 +131,40 @@ class Center:
         self.lay_col.addWidget(self.lbl_mob.widget)
     
     def add_options(self):
-        self.lay_ctr.addWidget(self.opt_gnr.widget, 7, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_grd.addWidget(self.opt_gnr.widget, 7, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
     
     def add_labels(self):
-        self.lay_ctr.addWidget(self.lbl_art.widget, 0, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_alb.widget, 1, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_yer.widget, 2, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_cnt.widget, 3, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_com.widget, 4, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_bit.widget, 5, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
-        self.lay_ctr.addWidget(self.lbl_img.widget, 8, 2, 7, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_grd.addWidget(self.lbl_art.widget, 0, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_alb.widget, 1, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_yer.widget, 2, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_cnt.widget, 3, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_com.widget, 4, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_bit.widget, 5, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
+        self.lay_grd.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
+        self.lay_img.addWidget(self.lbl_img.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
     
     def add_entries(self):
-        self.lay_ctr.addWidget(self.ent_art, 0, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_alb, 1, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_yer, 2, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_cnt, 3, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_com, 4, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_bit, 5, 1, 1, 1)
-        self.lay_ctr.addWidget(self.ent_len, 6, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_art, 0, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_alb, 1, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_yer, 2, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_cnt, 3, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_com, 4, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_bit, 5, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_len, 6, 1, 1, 1)
 
     def set_layout(self):
         self.pnl_ctr = PyQt6.QtWidgets.QWidget()
-        self.lay_ctr = PyQt6.QtWidgets.QGridLayout()
+        self.lay_ctr = PyQt6.QtWidgets.QHBoxLayout()
+        self.pnl_grd = PyQt6.QtWidgets.QWidget()
+        self.pnl_img = PyQt6.QtWidgets.QWidget()
+        self.lay_grd = PyQt6.QtWidgets.QGridLayout()
+        self.lay_img = PyQt6.QtWidgets.QHBoxLayout()
+        self.lay_ctr.addWidget(self.pnl_grd)
+        self.lay_ctr.addWidget(self.pnl_img)
         self.pnl_ctr.setLayout(self.lay_ctr)
+        self.pnl_grd.setLayout(self.lay_grd)
+        self.pnl_img.setLayout(self.lay_img)
     
     def set_labels(self):
         self.lbl_art = sh.Label(_('Artist:'))
