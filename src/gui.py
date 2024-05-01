@@ -47,6 +47,7 @@ class Top:
     def set_layout(self):
         self.pnl_top = PyQt6.QtWidgets.QWidget()
         self.lay_top = PyQt6.QtWidgets.QHBoxLayout()
+        self.lay_top.setContentsMargins(0, 0, 0, 0)
         self.pnl_top.setLayout(self.lay_top)
     
     def set_gui(self):
@@ -164,6 +165,7 @@ class Center:
         self.lay_img = PyQt6.QtWidgets.QHBoxLayout()
         self.lay_ctr.addWidget(self.pnl_grd)
         self.lay_ctr.addWidget(self.pnl_img)
+        self.lay_ctr.setContentsMargins(0, 0, 0, 0)
         self.pnl_ctr.setLayout(self.lay_ctr)
         self.pnl_grd.setLayout(self.lay_grd)
         self.pnl_img.setLayout(self.lay_img)
@@ -250,6 +252,7 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
     def set_layout(self):
         self.pnl_btm = PyQt6.QtWidgets.QWidget()
         self.lay_btm = PyQt6.QtWidgets.QHBoxLayout()
+        self.lay_btm.setContentsMargins(0, 0, 0, 0)
         self.pnl_btm.setLayout(self.lay_btm)
     
     def set_gui(self):
