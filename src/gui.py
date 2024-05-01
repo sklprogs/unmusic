@@ -58,6 +58,8 @@ class Top:
     
     def configure(self):
         self.ent_src.set_text(_('Search in albums'))
+        self.ent_ids.set_text(_('ID'))
+        self.ent_ids.widget.setMaximumWidth(40)
         self.ent_sr2.set_text(_('Search in tracks'))
     
     def set_widgets(self):
@@ -70,6 +72,7 @@ class Top:
                                  ,inactive = self.next_inactive
                                  ,active = self.next_active
                                  )
+        self.ent_ids = sh.Entry()
         self.btn_prv = sh.Button (hint = _('Go to the preceding record')
                                  ,inactive = self.prev_inactive
                                  ,active = self.prev_active
@@ -89,6 +92,7 @@ class Top:
         self.lay_top.addWidget(self.ent_src.widget)
         self.lay_top.addWidget(self.btn_snr.widget)
         self.lay_top.addWidget(self.btn_prv.widget)
+        self.lay_top.addWidget(self.ent_ids.widget)
         self.lay_top.addWidget(self.lbl_mtr.widget)
         self.lay_top.addWidget(self.btn_nxt.widget)
         self.lay_top.addWidget(self.ent_sr2.widget)
