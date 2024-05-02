@@ -14,7 +14,10 @@ class Commands:
 if __name__ == '__main__':
     sh.com.start()
     import gui.tests
+    import gui.tracks
     app = gui.tests.Test()
+    track = gui.tracks.Track()
+    app.set_gui(track.pnl_trk)
     app.show()
     sh.com.end()
 
