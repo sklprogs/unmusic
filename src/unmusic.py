@@ -560,6 +560,13 @@ class AlbumEditor:
         self.logic = lg.AlbumEditor()
         self.set_bindings()
         
+    def delete_tracks(self, event=None):
+        f = '[unmusic] unmusic.AlbumEditor.delete_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        
+    
     def go_prev_unrated(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.go_prev_unrated'
         if not self.Success:
@@ -1061,6 +1068,7 @@ class AlbumEditor:
         self.gui.widget.protocol('WM_DELETE_WINDOW', self.close)
         self.gui.btn_dec.action = self.decode
         self.gui.btn_del.action = self.delete
+        self.gui.btn_trs.action = self.delete_tracks
         self.gui.btn_nxt.action = self.go_next
         self.gui.btn_prv.action = self.go_prev
         self.gui.btn_rld.action = self.fill

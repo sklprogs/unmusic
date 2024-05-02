@@ -338,6 +338,13 @@ class AlbumEditor:
                                  ,inactive = self.icn_del
                                  ,active = self.icn_del
                                  )
+        self.btn_trs = sh.Button (parent = self.frm1
+                                 ,text = _('Delete tracks')
+                                 ,hint = _('Delete tracks with rating < 8')
+                                 ,side = 'left'
+                                 ,inactive = self.icn_trs
+                                 ,active = self.icn_trs
+                                 )
         self.btn_dec = sh.Button (parent = self.frm2
                                  ,text = _('Decode')
                                  ,hint = _('Decode back to cp1251')
@@ -700,6 +707,9 @@ class AlbumEditor:
                                         )
         self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'icon_36x36_tracks.gif'
+                                        )
+        self.icn_trs = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'icon_36x36_delete_tracks.gif'
                                         )
     
     def dump(self, event=None):
