@@ -328,14 +328,3 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.bottom = Bottom()
         self.set_layout()
         self.setCentralWidget(self.pnl_edt)
-
-
-if __name__ == '__main__':
-    f = '__main__'
-    import sys
-    exe = PyQt6.QtWidgets.QApplication(sys.argv)
-    app = AlbumEditor()
-    #app = Bottom()
-    #app = Top()
-    app.show()
-    sys.exit(exe.exec())

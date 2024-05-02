@@ -4,7 +4,7 @@
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
-import gui as gi
+import gui.albums as gi
 
 
 class AlbumEditor:
