@@ -55,16 +55,15 @@ if [ ! -e "$HOME/bin/$product/build/$os/$productlow.desktop" ]; then
     echo "File $HOME/bin/$product/build/$os/$productlow.desktop does not exist!"; exit
 fi
 
-if [ ! -e "$HOME/bin/$product/build/$os/$productlow.png" ]; then
-    echo "File $HOME/bin/$product/build/$os/$productlow.png does not exist!"; exit
+if [ ! -e "$resdir/$productlow.png" ]; then
+    echo "File $resdir/$productlow.png does not exist!"; exit
 fi
 
 # Build with pyinstaller
 rm -rf "$tmpdir"
 mkdir -p "$builddir" "$tmpdir/app/usr/bin" "$tmpdir/app/resources"
 cp -r "$srcdir"/* "$builddir"
-cp -r "$resdir" "$tmpdir/app/usr"
-cp -r "$resdir/locale" "$tmpdir/app/resources/"
+cp -r "$resdir" "$tmpdir/app"
 cd "$builddir"
 pyinstaller "$productlow.py"
 # Create AppImage
@@ -73,7 +72,7 @@ cd "$tmpdir/app"
 cp "$appimagedir/AppRun-$arch" "$tmpdir/app/AppRun"
 cp "$appimagedir/appimagetool-$arch.AppImage" "$tmpdir"
 cp "$HOME/bin/$product/build/$os/$productlow.desktop" "$tmpdir/app"
-cp "$HOME/bin/$product/build/$os/$productlow.png" "$tmpdir/app"
+cp "$resdir/$productlow.png" "$tmpdir/app"
 cd "$tmpdir"
 ./appimagetool-$arch.AppImage app
 read -p "Update the AppImage? (Y/n) " choice
