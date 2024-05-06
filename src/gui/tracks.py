@@ -9,10 +9,20 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 
+sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
+
+
 class Tracks:
     
     def __init__(self):
         self.set_gui()
+    
+    def set_icon(self):
+        # Does not accent None
+        self.pnl_trs.setWindowIcon(sh.gi.objs.get_icon())
+    
+    def set_title(self):
+        self.pnl_trs.setWindowTitle(_('Tracks'))
     
     def set_scroll(self):
         scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
@@ -30,6 +40,8 @@ class Tracks:
     def set_gui(self):
         self.set_layout()
         self.set_scroll()
+        self.set_icon()
+        self.set_title()
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:

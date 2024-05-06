@@ -23,6 +23,9 @@ GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          )
 
 
+sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
+
+
 
 class Top:
     
@@ -323,9 +326,18 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.lay_edt.addWidget(self.bottom.pnl_btm)
         self.pnl_edt.setLayout(self.lay_edt)
     
+    def set_icon(self):
+        # Does not accent None
+        self.setWindowIcon(sh.gi.objs.get_icon())
+    
+    def set_title(self):
+        self.setWindowTitle(_('Album Editor'))
+    
     def set_gui(self):
         self.top = Top()
         self.center = Center()
         self.bottom = Bottom()
         self.set_layout()
         self.setCentralWidget(self.pnl_edt)
+        self.set_icon()
+        self.set_title()
