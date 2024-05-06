@@ -13,6 +13,7 @@ resdir="$HOME/bin/$product/resources"
 tmpdir="/tmp/$product"   # Will be deleted!
 builddir="$tmpdir/build" # Will be deleted!
 venv="$HOME/software/python/3.11.2_unmusic"
+pildir="/usr/lib/python3/dist-packages/PIL"
 
 export "ARCH=$arch"
 
@@ -25,6 +26,10 @@ source "$venv/bin/activate"
 
 if [ "`which pyinstaller`" = "" ]; then
     echo "pyinstaller is not installed!"; exit
+fi
+
+if [ ! -d "$pildir" ]; then
+    echo "Folder $pildir does not exist!"; exit
 fi
 
 if [ ! -d "$binariesdir/$product" ]; then
@@ -61,10 +66,11 @@ fi
 
 # Build with pyinstaller
 rm -rf "$tmpdir"
-mkdir -p "$builddir" "$tmpdir/app/usr/bin" "$tmpdir/app/resources"
+mkdir -p "$builddir" "$tmpdir/app/usr/bin/PIL" "$tmpdir/app/resources"
 cp -r "$srcdir"/* "$builddir"
-cp -r "$resdir" "$tmpdir/app/usr"
+cp -r "$resdir" "$tmpdir/app/usr/bin"
 cp -r "$resdir/locale" "$tmpdir/app/resources/"
+cp -rn "$pildir"/* "$tmpdir/app/usr/bin/PIL/"
 cd "$builddir"
 pyinstaller "$productlow.py"
 # Create AppImage
