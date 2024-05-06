@@ -17,8 +17,9 @@ GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          ,'Death/Thrash Metal', 'Deathcore', 'Electronic', 'Ethnic', 'Game'
          ,'Goregrind', 'Grindcore', 'Heavy Metal', 'Industrial Metal'
          ,'Melodic Death Metal', 'Metal', 'Pop', 'Power Metal', 'Rap'
-         ,'Relaxation', 'Rock', 'Soundtrack', 'Technical Brutal Death Metal'
-         ,'Technical Death Metal', 'Thrash Metal', 'Vocal'
+         ,'Relaxation', 'Rock', 'Slamming Brutal Death Metal', 'Soundtrack'
+         ,'Technical Brutal Death Metal', 'Technical Death Metal'
+         ,'Thrash Metal', 'Vocal'
          )
 
 
