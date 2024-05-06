@@ -63,7 +63,8 @@ fi
 rm -rf "$tmpdir"
 mkdir -p "$builddir" "$tmpdir/app/usr/bin" "$tmpdir/app/resources"
 cp -r "$srcdir"/* "$builddir"
-cp -r "$resdir" "$tmpdir/app"
+cp -r "$resdir" "$tmpdir/app/usr/bin"
+cp -r "$resdir/locale" "$tmpdir/app/resources/"
 cd "$builddir"
 pyinstaller "$productlow.py"
 # Create AppImage
