@@ -9,6 +9,31 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 
+class Tracks:
+    
+    def __init__(self):
+        self.set_gui()
+    
+    def set_gui(self):
+        self.pnl_trs = PyQt6.QtWidgets.QWidget()
+        self.lay_trs = PyQt6.QtWidgets.QVBoxLayout()
+        self.pnl_trs.setLayout(self.lay_trs)
+    
+    def bind(self, hotkeys, action):
+        for hotkey in hotkeys:
+            PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self.pnl_trs).activated.connect(action)
+    
+    def add(self, track):
+        self.lay_trs.addWidget(track.pnl_trk)
+    
+    def show(self):
+        self.pnl_trs.show()
+    
+    def close(self):
+        self.pnl_trs.close()
+
+
+
 class Track:
     
     def __init__(self):
