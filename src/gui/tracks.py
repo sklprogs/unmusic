@@ -14,17 +14,29 @@ class Tracks:
     def __init__(self):
         self.set_gui()
     
-    def set_gui(self):
+    def set_scroll(self):
+        scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
+        scroll_area.setWidgetResizable(True)
+        self.lay_trs.addWidget(scroll_area)
+        self.pnl_scr = PyQt6.QtWidgets.QWidget(scroll_area)
+        self.lay_scr = PyQt6.QtWidgets.QVBoxLayout(self.pnl_scr)
+        scroll_area.setWidget(self.pnl_scr)
+    
+    def set_layout(self):
         self.pnl_trs = PyQt6.QtWidgets.QWidget()
         self.lay_trs = PyQt6.QtWidgets.QVBoxLayout()
         self.pnl_trs.setLayout(self.lay_trs)
+    
+    def set_gui(self):
+        self.set_layout()
+        self.set_scroll()
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
             PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self.pnl_trs).activated.connect(action)
     
     def add(self, track):
-        self.lay_trs.addWidget(track.pnl_trk)
+        self.lay_scr.addWidget(track.pnl_trk)
     
     def show(self):
         self.pnl_trs.show()
