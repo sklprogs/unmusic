@@ -314,6 +314,17 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         self.set_gui()
     
+    def clear_entries(self):
+        self.center.ent_art.clear_text()
+        self.center.ent_alb.clear_text()
+        self.center.ent_yer.clear_text()
+        self.center.ent_cnt.clear_text()
+        self.center.ent_com.clear_text()
+        self.center.ent_art.focus()
+    
+    def minimize(self):
+        self.showMinimized()
+    
     def centralize(self):
         ''' Do this only after showing the widget; otherwise, it will have
             bogus dimensions of 640×480.
