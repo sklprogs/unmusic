@@ -314,6 +314,9 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         self.set_gui()
     
+    def centralize(self):
+        self.move(sh.objs.get_root().primaryScreen().geometry().center() - self.rect().center())
+    
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
             PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self).activated.connect(action)
@@ -339,5 +342,6 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.bottom = Bottom()
         self.set_layout()
         self.setCentralWidget(self.pnl_edt)
+        self.centralize()
         self.set_icon()
         self.set_title()

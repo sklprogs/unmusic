@@ -17,6 +17,9 @@ class Tracks:
     def __init__(self):
         self.set_gui()
     
+    def centralize(self):
+        self.pnl_trs.move(sh.objs.get_root().primaryScreen().geometry().center() - self.pnl_trs.rect().center())
+    
     def set_icon(self):
         # Does not accent None
         self.pnl_trs.setWindowIcon(sh.gi.objs.get_icon())
@@ -40,6 +43,7 @@ class Tracks:
     def set_gui(self):
         self.set_layout()
         self.set_scroll()
+        self.centralize()
         self.set_icon()
         self.set_title()
     
