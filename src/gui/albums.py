@@ -315,6 +315,9 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.set_gui()
     
     def centralize(self):
+        ''' Do this only after showing the widget; otherwise, it will have
+            bogus dimensions of 640×480.
+        '''
         self.move(sh.objs.get_root().primaryScreen().geometry().center() - self.rect().center())
     
     def bind(self, hotkeys, action):
@@ -342,6 +345,5 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.bottom = Bottom()
         self.set_layout()
         self.setCentralWidget(self.pnl_edt)
-        self.centralize()
         self.set_icon()
         self.set_title()

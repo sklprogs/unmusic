@@ -21,6 +21,7 @@ class AlbumEditor:
     
     def show(self):
         self.gui.show()
+        self.gui.centralize()
     
     def close(self):
         self.gui.close()
@@ -45,6 +46,7 @@ class Tracks:
     
     def show(self):
         self.gui.show()
+        self.gui.centralize()
     
     def close(self):
         self.gui.close()
