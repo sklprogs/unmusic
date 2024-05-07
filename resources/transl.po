@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 01:30+0300\n"
-"PO-Revision-Date: 2024-05-08 01:34+0300\n"
+"PO-Revision-Date: 2024-05-08 01:36+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -651,7 +651,7 @@ msgstr "Поиск по альбомам"
 
 #: unmusic/src/gui/albums.py:65
 msgid "ID"
-msgstr "ИД:"
+msgstr "ИД"
 
 #: unmusic/src/gui/albums.py:67
 msgid "Search in tracks"
