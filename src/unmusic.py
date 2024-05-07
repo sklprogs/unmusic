@@ -17,8 +17,18 @@ class AlbumEditor:
     
     def __init__(self):
         self.Success = True
+        self.pool = lg.MessagePool(max_size=4)
+        self.logic = lg.AlbumEditor()
         self.gui = ga.AlbumEditor()
         self.set_bindings()
+    
+    def update_info(self, text):
+        self.pool.add(message=text)
+        self.gui.bottom.lbl_inf.set_text(self.pool.get())
+    
+    def minimize(self):
+        #ok
+        self.gui.minimize()
     
     def reset(self):
         self.Success = self.logic.Success = lg.objs.get_db().Success
@@ -29,17 +39,17 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        pattern = self.gui.ent_src.get()
-        self.gui.btn_spr.inactivate()
-        self.gui.btn_snx.inactivate()
+        pattern = self.gui.top.ent_src.get()
+        self.gui.top.btn_spr.inactivate()
+        self.gui.top.btn_snr.inactivate()
         if not pattern:
             return
         albumid = lg.objs.db.get_next_album(pattern)
         if albumid:
-            self.gui.btn_snx.activate()
+            self.gui.top.btn_snr.activate()
         albumid = lg.objs.db.get_prev_album(pattern)
         if albumid:
-            self.gui.btn_spr.activate()
+            self.gui.top.btn_spr.activate()
     
     def update_meter(self):
         f = '[unmusic] unmusic.AlbumEditor.update_meter'
@@ -47,15 +57,15 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         max_ = self.logic.get_max()
-        self.gui.lbl_mtr.set_text(f'{self.logic.check_no()} / {max_}')
+        self.gui.top.lbl_mtr.set_text(f'{self.logic.check_no()} / {max_}')
         if lg.objs.get_db().albumid < max_:
-            self.gui.btn_nxt.activate()
+            self.gui.top.btn_nxt.activate()
         else:
-            self.gui.btn_nxt.inactivate()
+            self.gui.top.btn_nxt.inactivate()
         if lg.objs.db.albumid == self.logic.get_min():
-            self.gui.btn_prv.inactivate()
+            self.gui.top.btn_prv.inactivate()
         else:
-            self.gui.btn_prv.activate()
+            self.gui.top.btn_prv.activate()
     
     def update(self):
         f = '[unmusic] unmusic.AlbumEditor.update'
@@ -83,15 +93,15 @@ class AlbumEditor:
             sh.objs.get_mes(f, mes).show_error()
             return
         mes = _('Load #{}.').format(lg.objs.db.albumid)
-        self.gui.update_info(mes)
+        self.update_info(mes)
         self.gui.clear_entries()
-        self.gui.ent_alb.insert(data[0])
-        self.gui.ent_art.insert(data[1])
-        self.gui.ent_yer.insert(data[2])
+        self.gui.center.ent_alb.insert(data[0])
+        self.gui.center.ent_art.insert(data[1])
+        self.gui.center.ent_yer.insert(data[2])
         genre = data[3]
         self.set_genre(genre)
-        self.gui.ent_cnt.insert(data[4])
-        self.gui.ent_com.insert(data[5])
+        self.gui.center.ent_cnt.insert(data[4])
+        self.gui.center.ent_com.insert(data[5])
         self.set_ui_rating()
         self.get_bitrate()
         self.get_length()
@@ -131,23 +141,17 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         if lg.objs.get_collection().has_local_album():
-            self.gui.cbx_loc.enable()
-            self.gui.lbl_loc.enable()
+            self.gui.center.cbx_loc.enable()
         else:
-            self.gui.cbx_loc.disable()
-            self.gui.lbl_loc.disable()
+            self.gui.center.cbx_loc.disable()
         if lg.objs.collection.has_ext_album():
-            self.gui.cbx_ext.enable()
-            self.gui.lbl_ext.enable()
+            self.gui.center.cbx_ext.enable()
         else:
-            self.gui.cbx_ext.disable()
-            self.gui.lbl_ext.disable()
+            self.gui.center.cbx_ext.disable()
         if lg.objs.collection.has_mob_album():
-            self.gui.cbx_mob.enable()
-            self.gui.lbl_mob.enable()
+            self.gui.center.cbx_mob.enable()
         else:
-            self.gui.cbx_mob.disable()
-            self.gui.lbl_mob.disable()
+            self.gui.center.cbx_mob.disable()
     
     def set_genre(self, genre):
         f = '[unmusic] unmusic.AlbumEditor.set_genre'
@@ -161,9 +165,7 @@ class AlbumEditor:
         items = list(lg.GENRES)
         if not genre in items:
             items.append(genre)
-        self.gui.opt_gnr.reset (items = items
-                               ,default = genre
-                               )
+        self.gui.center.opt_gnr.reset(items, genre)
     
     def go_end(self):
         f = '[unmusic] unmusic.AlbumEditor.go_end'
@@ -271,15 +273,9 @@ class AlbumEditor:
             sh.com.rep_empty(f)
             return
         try:
-            iimage = im.Image()
-            iimage.open(path)
-            # Get a large image
-            self.image = iimage.get_image()
-            ''' These are dimensions of 'self.gui.frm_img' when
-                the default image is loaded.
-            '''
-            iimage.get_thumbnail(130,212)
-            thumb = iimage.get_image()
+            #TODO: load image
+            #self.image = iimage.get_image()
+            thumb = None
         except Exception as e:
             ''' Do not fail 'Success' here - it can just be
                 an incorrectly ripped image.
@@ -329,10 +325,10 @@ class AlbumEditor:
             mes = mes.format(sh.lg.com.get_human_time(sum(total)), len(total))
         else:
             mes = '?'
-        self.gui.ent_len.enable()
-        self.gui.ent_len.clear_text()
-        self.gui.ent_len.insert(mes)
-        self.gui.ent_len.disable()
+        self.gui.center.ent_len.enable()
+        self.gui.center.ent_len.clear()
+        self.gui.center.ent_len.insert(mes)
+        self.gui.center.ent_len.disable()
     
     def get_bitrate(self):
         f = '[unmusic] unmusic.AlbumEditor.get_bitrate'
@@ -344,10 +340,10 @@ class AlbumEditor:
             mes = '%dk' % (mean // 1000)
         else:
             mes = '?'
-        self.gui.ent_bit.enable()
-        self.gui.ent_bit.clear_text()
-        self.gui.ent_bit.insert(mes)
-        self.gui.ent_bit.disable()
+        self.gui.center.ent_bit.enable()
+        self.gui.center.ent_bit.clear()
+        self.gui.center.ent_bit.insert(mes)
+        self.gui.center.ent_bit.disable()
     
     def set_ui_rating(self):
         f = '[unmusic] unmusic.AlbumEditor.set_ui_rating'
@@ -366,11 +362,7 @@ class AlbumEditor:
         ''' We call GUI directly here since shared checks for fixed values, and
             we want float here.
         '''
-        self.gui.opt_rtg.gui.set(rating)
-        ''' This is because we override the shared method. An actual value of
-            the widget is not changed without this.
-        ''' 
-        self.gui.opt_rtg.choice = rating
+        self.gui.top.opt_rtg.set(rating)
     
     def update_rating(self):
         f = '[unmusic] unmusic.AlbumEditor.update_rating'
@@ -613,12 +605,12 @@ class AlbumEditor:
         self.gui.top.btn_snr.set_action(self.search_next_album)
         self.gui.top.btn_spr.set_action(self.search_prev_album)
         self.gui.top.opt_rtg.set_action(self.set_rating)
-        self.gui.top.opt_ply.action.set_action(self.play)
+        self.gui.top.opt_ply.set_action(self.play)
         self.gui.bottom.btn_dec.set_action(self.decode)
         self.gui.bottom.btn_del.set_action(self.delete)
         self.gui.bottom.btn_trs.set_action(self.delete_tracks)
         self.gui.bottom.btn_rld.set_action(self.fill)
-        self.gui.bottom.btn_sav.action.set_action(self.save)
+        self.gui.bottom.btn_sav.set_action(self.save)
         self.gui.bottom.btn_trk.set_action(self.show_tracks)
     
     def show(self):
@@ -633,8 +625,9 @@ class AlbumEditor:
 class Tracks:
     
     def __init__(self):
-        self.gui = gt.Tracks()
         self.tracks = []
+        self.Active = False
+        self.gui = gt.Tracks()
         self.set_bindings()
     
     def decode(self):

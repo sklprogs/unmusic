@@ -156,13 +156,13 @@ class Center:
         self.lay_img.addWidget(self.lbl_img.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
     
     def add_entries(self):
-        self.lay_grd.addWidget(self.ent_art, 0, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_alb, 1, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_yer, 2, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_cnt, 3, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_com, 4, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_bit, 5, 1, 1, 1)
-        self.lay_grd.addWidget(self.ent_len, 6, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_art.widget, 0, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_alb.widget, 1, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_yer.widget, 2, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_cnt.widget, 3, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_com.widget, 4, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_bit.widget, 5, 1, 1, 1)
+        self.lay_grd.addWidget(self.ent_len.widget, 6, 1, 1, 1)
 
     def set_layout(self):
         self.pnl_ctr = PyQt6.QtWidgets.QWidget()
@@ -190,13 +190,13 @@ class Center:
         self.lbl_img = sh.Label()
     
     def set_entries(self):
-        self.ent_art = PyQt6.QtWidgets.QLineEdit()
-        self.ent_alb = PyQt6.QtWidgets.QLineEdit()
-        self.ent_yer = PyQt6.QtWidgets.QLineEdit()
-        self.ent_cnt = PyQt6.QtWidgets.QLineEdit()
-        self.ent_com = PyQt6.QtWidgets.QLineEdit()
-        self.ent_bit = PyQt6.QtWidgets.QLineEdit()
-        self.ent_len = PyQt6.QtWidgets.QLineEdit()
+        self.ent_art = sh.Entry()
+        self.ent_alb = sh.Entry()
+        self.ent_yer = sh.Entry()
+        self.ent_cnt = sh.Entry()
+        self.ent_com = sh.Entry()
+        self.ent_bit = sh.Entry()
+        self.ent_len = sh.Entry()
     
     def set_options(self):
         self.opt_gnr = sh.OptionMenu(GENRES)
@@ -315,11 +315,11 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.set_gui()
     
     def clear_entries(self):
-        self.center.ent_art.clear_text()
-        self.center.ent_alb.clear_text()
-        self.center.ent_yer.clear_text()
-        self.center.ent_cnt.clear_text()
-        self.center.ent_com.clear_text()
+        self.center.ent_art.clear()
+        self.center.ent_alb.clear()
+        self.center.ent_yer.clear()
+        self.center.ent_cnt.clear()
+        self.center.ent_com.clear()
         self.center.ent_art.focus()
     
     def minimize(self):
