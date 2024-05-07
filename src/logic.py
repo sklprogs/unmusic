@@ -37,9 +37,52 @@ HEAVY = ('Black Metal', 'Brutal Death Metal', 'Death Metal'
         ,'Death Metal/Grindcore', 'Death/Black Metal', 'Death/Thrash Metal'
         ,'Deathcore', 'Goregrind', 'Grindcore', 'Heavy Metal'
         ,'Industrial Metal', 'Melodic Death Metal', 'Metal', 'Power Metal'
-        ,'Technical Brutal Death Metal', 'Technical Death Metal'
-        ,'Thrash Metal'
+        ,'Slamming Brutal Death Metal', 'Technical Brutal Death Metal'
+        ,'Technical Death Metal', 'Thrash Metal'
         )
+
+
+
+class MessagePool:
+
+    def __init__(self, max_size=5):
+        self.max_size = max_size
+        self.pool = []
+
+    def free(self):
+        if len(self.pool) == self.max_size:
+            self.delete_first()
+
+    def add(self,message):
+        f = '[unmusic] logic.MessagePool.add'
+        if not message:
+            sh.com.rep_empty(f)
+            return
+        self.free()
+        self.pool.append(message)
+
+    def delete_first(self):
+        f = '[unmusic] logic.MessagePool.delete_first'
+        if not self.pool:
+            mes = _('The pool is empty!')
+            sh.objs.get_mes(f, mes, True).show_warning()
+            return
+        del self.pool[0]
+
+    def delete_last(self):
+        f = '[unmusic] logic.MessagePool.delete_last'
+        if not self.pool:
+            mes = _('The pool is empty!')
+            sh.objs.get_mes(f, mes, True).show_warning()
+            return
+        del self.pool[-1]
+
+    def clear(self):
+        self.pool = []
+
+    def get(self):
+        return sh.List(lst1=self.pool).space_items()
+
 
 
 class Collection:
