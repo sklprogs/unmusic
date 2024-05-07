@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import os
+import time
+
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
+#import skl_shared.image.controller as im
 
+import logic as lg
 import gui.albums as ga
 import gui.tracks as gt
 
