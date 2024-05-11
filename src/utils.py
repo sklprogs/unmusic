@@ -3,9 +3,9 @@
 
 import os
 import sqlite3
-from skl_shared.localize import _
-import skl_shared.shared as sh
-import skl_shared.image.controller as im
+from skl_shared_qt.localize import _
+import skl_shared_qt.shared as sh
+#import skl_shared_qt.image.controller as im
 import logic as lg
 import gui as gi
 
