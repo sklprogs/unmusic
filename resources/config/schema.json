@@ -1,0 +1,6 @@
+{"cur_id": {"type": "integer"}
+,"config":
+    {"type": "object"
+    ,"properties": {"min_version": {"type": "integer"}}
+    }
+}

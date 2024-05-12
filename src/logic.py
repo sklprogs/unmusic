@@ -7,6 +7,8 @@ import re
 import phrydy
 import db
 
+import config as cf
+
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 #import skl_shared_qt.image.controller as im
@@ -144,7 +146,7 @@ class Image:
         if path and os.path.exists(path):
             self.path = path
         else:
-            self.path = sh.objs.get_pdir().add('..','resources','cd.png')
+            self.path = sh.objs.get_pdir().add('..', 'resources', 'cd.png')
         return self.path
     
     def get_cover(self):
@@ -153,47 +155,10 @@ class Image:
             sh.com.cancel(f)
             return
         name = str(objs.get_db().albumid) + '.jpg'
-        return os.path.join(self.dir,name)
+        return os.path.join(self.dir, name)
     
     def run(self):
         return self.get()
-
-
-
-class ExportKeys:
-    
-    def run(self):
-        sh.lg.globs['int']['curid'] = objs.get_db().albumid
-
-
-
-class CreateConfig(sh.CreateConfig):
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def fill_int(self):
-        section = _('Integers')
-        self.add_section(section)
-        section_abbr = self.sections[-1].abbr
-        
-        key = 'curid'
-        comment = _('[Autosave] Album ID to load at startup')
-        self.add_key(section, section_abbr, key, comment)
-
-
-
-class DefaultKeys(sh.DefaultKeys):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.load()
-    
-    def load(self):
-        self._load_int()
-    
-    def _load_int(self):
-        sh.lg.globs['int'].update({'curid':1})
 
 
 
@@ -1035,48 +1000,10 @@ class Directory:
 
 
 
-class DefaultConfig:
-    
-    def __init__(self):
-        self.set_values()
-        self.ihome = sh.lg.Home(app_name='unmusic')
-        self.Success = self.ihome.create_conf()
-    
-    def get_config(self):
-        f = '[unmusic] logic.DefaultConfig.get_config'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        if not self.fconf:
-            self.fconf = self.ihome.add_config('unmusic.cfg')
-        return self.fconf
-    
-    def run(self):
-        self.get_db()
-    
-    def set_values(self):
-        self.fdb = ''
-        self.fconf = ''
-    
-    def get_db(self):
-        f = '[unmusic] logic.DefaultConfig.get_db'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        self.fdb = self.ihome.add_config('unmusic.db')
-        if not self.fdb:
-            self.Success = False
-            sh.com.rep_empty(f)
-            return
-        if os.path.exists(self.fdb):
-            self.Success = sh.lg.File(file=self.fdb).Success
-
-
-
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.config = self.image = self.collection \
+        self.default = self.db = self.image = self.collection \
                      = None
         
     def get_collection(self):
@@ -1088,12 +1015,6 @@ class Objects:
         if self.image is None:
             self.image = Image()
         return self.image
-    
-    def get_config(self):
-        if self.config is None:
-            self.config = sh.Config(objs.get_default().get_config())
-            self.config.run()
-        return self.config
     
     def get_db(self):
         f = '[unmusic] logic.Objects.get_db'
