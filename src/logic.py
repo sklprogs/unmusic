@@ -1016,20 +1016,8 @@ class Objects:
         f = '[unmusic] logic.Objects.get_db'
         if self.db is not None:
             return self.db
-        path = self.get_default().fdb
-        if not self.default.Success:
-            mes = _('Wrong input data!')
-            sh.objs.get_mes(f, mes, True).show_warning()
-            self.db = db.DB()
-            return self.db
-        self.db = db.DB(path)
+        self.db = db.DB(cf.objs.get_paths().get_db())
         return self.db
-    
-    def get_default(self):
-        if self.default is None:
-            self.default = DefaultConfig()
-            self.default.run()
-        return self.default
 
 
 
@@ -1303,10 +1291,10 @@ class Commands:
         if not min_ or not max_:
             sh.com.rep_empty(f)
             return
-        if min_ <= sh.lg.globs['int']['curid'] <= max_:
-            objs.db.albumid = sh.lg.globs['int']['curid']
+        if min_ <= cf.objs.get_config().new['cur_id'] <= max_:
+            objs.db.albumid = cf.objs.config.new['cur_id']
         else:
-            sub = f"{min_} <= {sh.lg.globs['int']['curid']} <= {max_}"
+            sub = f"{min_} <= {cf.objs.config.new['cur_id']} <= {max_}"
             mes = _('Condition "{}" is not observed!').format(sub)
             sh.objs.get_mes(f, mes).show_warning()
     
@@ -1347,9 +1335,6 @@ class Commands:
 
 objs = Objects()
 com = Commands()
-DefaultKeys()
-objs.get_default()
-objs.get_config()
 com.restore_id()
 
 

@@ -28,9 +28,11 @@ class Paths:
     def get_local(self):
         return self.ihome.add_config(PRODUCT_LOW + '.json')
     
+    def get_db(self):
+        return self.ihome.add_config(PRODUCT_LOW + '.db')
+    
     def run(self):
         self.check()
-        self.set_dics()
 
 
 

@@ -8,6 +8,7 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 #import skl_shared.image.controller as im
 
+import config as cf
 import logic as lg
 import gui.albums as ga
 import gui.tracks as gt
@@ -1318,6 +1319,13 @@ objs = Objects()
 if __name__ == '__main__':
     f = '__main__'
     sh.com.start()
-    editor = AlbumEditor()
-    editor.show()
+    if cf.objs.get_config().Success:
+        editor = AlbumEditor()
+        editor.show()
+    else:
+        mes = _('Invalid configuration!')
+        #FIX: quit app normally after common dialog
+        #sh.objs.get_mes(f, mes).show_error()
+        idebug = sh.Debug(f, mes)
+        idebug.show()
     sh.com.end()
