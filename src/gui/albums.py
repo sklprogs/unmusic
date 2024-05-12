@@ -310,9 +310,15 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
 
 class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
+    sig_close = PyQt6.QtCore.pyqtSignal()
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_gui()
+    
+    def closeEvent(self, event):
+        self.sig_close.emit()
+        return super().closeEvent(event)
     
     def clear_entries(self):
         self.center.ent_art.clear()

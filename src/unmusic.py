@@ -23,6 +23,15 @@ class AlbumEditor:
         self.gui = ga.AlbumEditor()
         self.set_bindings()
     
+    def quit(self):
+        f = '[unmusic] unmusic.AlbumEditor.quit'
+        cf.objs.get_config().quit()
+        ''' For this code to be executed last, it's not enough to put it in 
+            '__main__' right before 'sh.com.end'.
+        '''
+        mes = _('Goodbye!')
+        sh.objs.get_mes(f, mes, True).show_debug()
+    
     def update_info(self, text):
         self.pool.add(message=text)
         self.gui.bottom.lbl_inf.set_text(self.pool.get())
@@ -598,9 +607,10 @@ class AlbumEditor:
             lg.objs.get_db().save()
     
     def set_bindings(self):
+        self.gui.sig_close.connect(self.close)
+        self.gui.sig_close.connect(self.quit)
         self.gui.bind(('Ctrl+Q',), self.close)
         self.gui.bind(('Esc',), self.minimize)
-        #self.gui.widget.protocol('WM_DELETE_WINDOW', self.close)
         self.gui.top.btn_nxt.set_action(self.go_next)
         self.gui.top.btn_prv.set_action(self.go_prev)
         self.gui.top.btn_snr.set_action(self.search_next_album)
