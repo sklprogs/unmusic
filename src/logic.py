@@ -55,7 +55,7 @@ class MessagePool:
         if len(self.pool) == self.max_size:
             self.delete_first()
 
-    def add(self,message):
+    def add(self, message):
         f = '[unmusic] logic.MessagePool.add'
         if not message:
             sh.com.rep_empty(f)
@@ -186,17 +186,17 @@ class BadMusic:
         self.exter = objs.default.ihome.add_share(_('external collection'))
         self.mobil = objs.default.ihome.add_share(_('mobile collection'))
         mes = _('Local collection: {}').format(self.local)
-        sh.objs.get_mes(f,mes,True).show_debug()
+        sh.objs.get_mes(f, mes, True).show_debug()
         mes = _('External collection: {}').format(self.exter)
-        sh.objs.get_mes(f,mes,True).show_debug()
+        sh.objs.get_mes(f, mes, True).show_debug()
         mes = _('Mobile collection: {}').format(self.mobil)
-        sh.objs.get_mes(f,mes,True).show_debug()
+        sh.objs.get_mes(f, mes, True).show_debug()
         if self.local and self.exter and self.mobil:
             return True
         else:
             self.Success = False
             mes = _('Empty output is not allowed!')
-            sh.objs.get_mes(f,mes).show_warning()
+            sh.objs.get_mes(f, mes).show_warning()
     
     def get_affected_carriers(self):
         f = '[unmusic] logic.BadMusic.get_affected_carriers'
@@ -233,7 +233,7 @@ class BadMusic:
         for album in self.dellst:
             if not sh.Directory(album).delete():
                 mes = _('Operation has been canceled.')
-                sh.objs.get_mes(f,mes).show_warning()
+                sh.objs.get_mes(f, mes).show_warning()
                 break
     
     def report(self):
@@ -252,14 +252,14 @@ class BadMusic:
                                              )
             else:
                 size = _('N/A')
-            iterable.append(self.rates[i]+[size])
+            iterable.append(self.rates[i] + [size])
         headers = ('ID','ALBUM','MIN','MAX','SIZE')
         mes = sh.FastTable (iterable = iterable
                            ,headers = headers
                            ,Transpose = True
                            ,maxrow = 70
                            ).run()
-        sh.com.run_fast_debug(f,mes)
+        sh.com.run_fast_debug(f, mes)
     
     def get_sizes(self):
         f = '[unmusic] logic.BadMusic.get_sizes'
@@ -309,7 +309,7 @@ class BadMusic:
             objs.db.albumid = album[0]
             mes = _('Process album ID: {}')
             mes = mes.format(objs.db.albumid)
-            sh.objs.get_mes(f,mes,True).show_debug()
+            sh.objs.get_mes(f, mes, True).show_debug()
             rates = objs.db.get_rates()
             if not rates:
                 sh.com.rep_empty(f)
@@ -414,29 +414,25 @@ class Play:
                     pass
             errors = [str(error) for error in errors]
             mes = _('Tracks {} have not been found in "{}"!')
-            mes = mes.format(errors,self.get_album())
-            sh.objs.get_mes(f,mes).show_warning()
+            mes = mes.format(errors, self.get_album())
+            sh.objs.get_mes(f, mes).show_warning()
         if len(self.nos) == len(self.titles) == len(self.len_):
             pass
         else:
             self.Success = False
-            sub = '{} = {} = {}'.format (len(self.nos)
-                                        ,len(self.titles)
-                                        ,len(self.len_)
-                                        )
-            mes = _('Condition "{}" is not observed!')
-            mes = mes.format(sub)
-            sh.objs.get_mes(f,mes).show_error()
+            sub = f'{len(self.nos)} = {len(self.titles)} = {len(self.len_)}'
+            mes = _('Condition "{}" is not observed!').format(sub)
+            sh.objs.get_mes(f, mes).show_error()
         return result
     
     def get_playlist(self):
         f = '[unmusic] logic.Play.get_playlist'
-        if self.Success:
-            if not self.playlist:
-                self.playlist = _('playlist') + '.m3u8'
-                self.playlist = objs.get_default().ihome.add_share(self.playlist)
-        else:
+        if not self.Success:
             sh.com.cancel(f)
+            return self.playlist
+        if not self.playlist:
+            self.playlist = _('playlist') + '.m3u8'
+            self.playlist = objs.get_default().ihome.add_share(self.playlist)
         return self.playlist
     
     def gen_list(self):
@@ -668,7 +664,7 @@ class AlbumEditor:
         _max = objs.get_db().get_max_id()
         if not isinstance(_max, int):
             mes = _('The database is empty. You need to fill it first.')
-            sh.objs.get_mes(f,mes).show_warning()
+            sh.objs.get_mes(f, mes).show_warning()
             return 0
         return _max
     
@@ -757,10 +753,10 @@ class Directory:
         name = str(objs.get_db().albumid) + '.jpg'
         path = os.path.join(objs.image.dir, name)
         mes = _('Save "{}"').format(path)
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
         if not sh.com.rewrite(path):
             mes = _('Operation has been canceled by the user.')
-            sh.objs.get_mes(f,mes,True).show_info()
+            sh.objs.get_mes(f, mes, True).show_info()
             return
         iimage = im.Image()
         iimage.bytes_ = self.tracks[0].image
@@ -936,7 +932,7 @@ class Directory:
         self._add_tracks_meta(albumid)
         mes = _('Album {}: {} tracks.')
         mes = mes.format(albumid, len(self.tracks))
-        sh.objs.get_mes(f,mes,True).show_info()
+        sh.objs.get_mes(f, mes, True).show_info()
     
     def set_values(self):
         self.Success = True
@@ -981,7 +977,7 @@ class Directory:
         if count:
             mes = _('{}/{} tracks have been renumbered.')
             mes = mes.format(count, len(self.tracks))
-            sh.objs.get_mes(f,mes,True).show_warning()
+            sh.objs.get_mes(f, mes, True).show_warning()
     
     def get_tracks(self):
         f = '[unmusic] logic.Directory.get_tracks'
@@ -1070,9 +1066,8 @@ class Track:
             self.audio.images = {}
         except Exception as e:
             self.Success = False
-            mes = _('Third-party module has failed!\n\nDetails: {}')
-            mes = mes.format(e)
-            sh.objs.get_mes(f,mes).show_warning()
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
     
     def save(self):
         ''' This is only needed if the file was changed by means of 'phrydy',
@@ -1089,9 +1084,8 @@ class Track:
             self.audio.save()
         except Exception as e:
             self.Success = False
-            mes = _('Third-party module has failed!\n\nDetails: {}')
-            mes = mes.format(e)
-            sh.objs.get_mes(f,mes).show_warning()
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
     
     def decode(self):
         # Fix Cyrillic tags
@@ -1157,7 +1151,7 @@ class Track:
                                                ,_('sec')
                                                )
         mes +=  '\n'
-        sh.objs.get_mes(f,mes).show_info()
+        sh.objs.get_mes(f, mes).show_info()
     
     def extract_title(self):
         f = '[unmusic] logic.Track.extract_title'
@@ -1227,9 +1221,8 @@ class Track:
         try:
             self._set_info()
         except Exception as e:
-            mes = _('Third-party module has failed!\n\nDetails: {}')
-            mes = mes.format(e)
-            sh.objs.get_mes(f,mes).show_warning()
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
     
     def load(self):
         f = '[unmusic] logic.Track.load'
@@ -1241,23 +1234,22 @@ class Track:
         try:
             self.audio = phrydy.MediaFile(self.file)
         except Exception as e:
-            mes = _('Third-party module has failed!\n\nDetails: {}')
-            mes = mes.format(e)
-            sh.objs.get_mes(f,mes).show_warning()
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
         return self.audio
 
 
 
 class Walker:
     
-    def __init__(self,path=''):
+    def __init__(self, path=''):
         if path:
             self.reset(path=path)
     
     def delete_empty(self):
-        ''' Delete empty folders. Since 'sh.lg.Directory' instance is
-            recreated each time, we can call this procedure at any time
-            without the need to reset 'Walker'.
+        ''' Delete empty folders. Since 'sh.lg.Directory' instance is recreated
+            each time, we can call this procedure at any time without the need
+            to reset 'Walker'.
         '''
         f = '[unmusic] logic.Walker.delete_empty'
         self.get_dirs()
@@ -1270,7 +1262,7 @@ class Walker:
         for folder in self.dirs:
             sh.lg.Directory(folder).delete_empty()
     
-    def reset(self,path):
+    def reset(self, path):
         self.set_values()
         self.path = path
         self.idir = sh.lg.Directory(self.path)
@@ -1316,7 +1308,7 @@ class Commands:
         else:
             sub = f"{min_} <= {sh.lg.globs['int']['curid']} <= {max_}"
             mes = _('Condition "{}" is not observed!').format(sub)
-            sh.objs.get_mes(f,mes).show_warning()
+            sh.objs.get_mes(f, mes).show_warning()
     
     def sanitize(self, field):
         field = sh.lg.Text(field).delete_unsupported()
@@ -1337,7 +1329,7 @@ class Commands:
         album = re.sub(',[\s]{0,1}@\d+\)', '', album)
         return album
     
-    def decode(self,text):
+    def decode(self, text):
         try:
             byted = bytes(text, 'iso-8859-1')
             return byted.decode('cp1251')
