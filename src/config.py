@@ -19,17 +19,26 @@ class Paths:
         self.ihome = sh.Home(PRODUCT_LOW)
         self.Success = self.ihome.create_conf()
     
-    def get_default(self):
+    def get_default_config(self):
         return sh.objs.get_pdir().add('..', 'resources', 'config', 'default.json')
     
     def get_schema(self):
         return sh.objs.get_pdir().add('..', 'resources', 'config', 'schema.json')
     
-    def get_local(self):
+    def get_local_config(self):
         return self.ihome.add_config(PRODUCT_LOW + '.json')
     
     def get_db(self):
         return self.ihome.add_config(PRODUCT_LOW + '.db')
+    
+    def get_local_collection(self):
+        return self.ihome.add_share(_('local collection'))
+    
+    def get_external_collection(self):
+        return self.ihome.add_share(_('external collection'))
+    
+    def get_mobile_collection(self):
+        return self.ihome.add_share(_('mobile collection'))
     
     def run(self):
         self.check()
@@ -81,9 +90,9 @@ class Objects:
     
     def get_config(self):
         if self.config is None:
-            default = self.get_paths().get_default()
+            default = self.get_paths().get_default_config()
             schema = self.paths.get_schema()
-            local = self.paths.get_local()
+            local = self.paths.get_local_config()
             self.config = Config(default, schema, local)
             self.config.run()
         return self.config

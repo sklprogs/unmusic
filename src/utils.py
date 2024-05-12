@@ -6,6 +6,7 @@ import sqlite3
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 #import skl_shared_qt.image.controller as im
+import config as cf
 import logic as lg
 import gui as gi
 
@@ -40,19 +41,19 @@ class DeleteBad:
                 count += 1
         gi.objs.progress.close()
         mes = _('{}/{} folders have been deleted.')
-        mes = mes.format(count,len(self.del_dirs))
-        sh.objs.get_mes(f,mes).show_info()
+        mes = mes.format(count, len(self.del_dirs))
+        sh.objs.get_mes(f, mes).show_info()
     
     def get_sizes(self):
         f = '[unmusic] utils.DeleteBad.get_sizes'
         if not self.Success:
             sh.com.cancel(f)
             return
-        local = lg.objs.get_default().ihome.add_share(_('local collection'))
+        local = cf.objs.get_paths().get_local_collection()
         local = os.path.realpath(local)
-        external = lg.objs.default.ihome.add_share(_('external collection'))
+        external = cf.objs.paths.get_external_collection()
         external = os.path.realpath(external)
-        mobile = lg.objs.default.ihome.add_share(_('mobile collection'))
+        mobile = cf.objs.paths.get_mobile_collection()
         mobile = os.path.realpath(mobile)
         total_size = 0
         local_size = 0

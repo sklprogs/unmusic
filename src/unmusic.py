@@ -647,7 +647,7 @@ class Tracks:
         if not self.Success:
             sh.com.cancel(f)
             return
-        for track in self.get_gui().tracks:
+        for track in self.tracks:
             title = track.ent_tit.get()
             title = lg.com.decode_back(title)
             track.ent_tit.clear_text()
@@ -879,7 +879,7 @@ class Copy:
                              ,'; '.join(gi.ITEMS_YEAR)
                              )
             sh.objs.get_mes(f, mes).show_error()
-        self.source = lg.objs.get_default().ihome.add_share(self.gui.opt_src.choice)
+        self.source = cf.objs.get_paths().ihome.add_share(self.gui.opt_src.choice)
         self.target = lg.objs.default.ihome.add_share(self.gui.opt_trg.choice)
         self.limit = sh.lg.Input (title = f
                                  ,value = self.gui.ent_lim.get()
@@ -1320,6 +1320,7 @@ if __name__ == '__main__':
     sh.com.start()
     if cf.objs.get_config().Success:
         editor = AlbumEditor()
+        editor.reset()
         editor.show()
     else:
         mes = _('Invalid configuration!')

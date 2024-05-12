@@ -93,9 +93,9 @@ class Collection:
         self.set_paths()
     
     def set_paths(self):
-        self.local = objs.get_default().ihome.add_share(_('local collection'))
-        self.external = objs.default.ihome.add_share(_('external collection'))
-        self.mobile = objs.default.ihome.add_share(_('mobile collection'))
+        self.local = cf.objs.get_paths().get_local_collection()
+        self.external = cf.objs.paths.get_external_collection()
+        self.mobile = cf.objs.paths.get_mobile_collection()
     
     def get_local_album(self, albumid=None):
         if albumid is None:
