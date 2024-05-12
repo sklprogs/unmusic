@@ -69,6 +69,20 @@ class Track:
     def __init__(self):
         self.set_gui()
     
+    def configure(self):
+        self.ent_tno.disable()
+        self.ent_bit.disable()
+        self.ent_len.disable()
+    
+    def reset(self):
+        self.ent_tno.clear()
+        self.ent_tit.clear()
+        self.ent_lyr.clear()
+        self.ent_com.clear()
+        self.ent_bit.clear()
+        self.ent_len.clear()
+        self.opt_rtg.set(0)
+    
     def set_layout(self):
         self.pnl_trk = PyQt6.QtWidgets.QWidget()
         self.lay_trk = PyQt6.QtWidgets.QGridLayout()
@@ -128,3 +142,4 @@ class Track:
         self.set_layout()
         self.set_widgets()
         self.add_widgets()
+        self.configure()

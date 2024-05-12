@@ -638,6 +638,7 @@ class Tracks:
     def __init__(self):
         self.tracks = []
         self.Active = False
+        self.Success = True
         self.gui = gt.Tracks()
         self.set_bindings()
     
@@ -702,8 +703,8 @@ class Tracks:
             sh.objs.get_mes(f, mes).show_warning()
             return
         Extended = False
-        if self.get_gui().tracks:
-            Extended = self.gui.tracks[0].Extended
+        if self.tracks:
+            Extended = self.tracks[0].Extended
         old = lg.objs.db.get_tracks()
         new = self.gui.dump()
         if Extended:
@@ -732,6 +733,7 @@ class Tracks:
         track = gt.Track()
         self.gui.add(track)
         self.tracks.append(track)
+        return track
     
     def show(self):
         self.Active = True
@@ -743,48 +745,35 @@ class Tracks:
         self.save()
         self.gui.close()
     
+    def reset(self):
+        f = '[unmusic] unmusic.Tracks.reset'
+        print(f, 'to be implemented')
+    
     def fill_search(self, data):
         f = '[unmusic] unmusic.Tracks.fill_search'
         if not self.Success:
             sh.com.cancel(f)
             return
-        self.get_gui().reset()
+        self.reset()
         if not data:
             sh.com.rep_empty(f)
             return
         for i in range(len(data)):
-            self.gui.add(Extended=True)
             record = data[i]
-            track = self.gui.tracks[i]
-            if len(record) == 8:
-                track.ent_aid.enable()
-                track.ent_aid.clear_text()
-                track.ent_aid.insert(record[0])
-                track.ent_aid.disable()
-                track.ent_tno.enable()
-                track.ent_tno.clear_text()
-                track.ent_tno.insert(str(record[2]))
-                track.ent_tno.disable()
-                track.ent_tit.clear_text()
-                track.ent_tit.insert(record[1])
-                track.ent_lyr.clear_text()
-                track.ent_lyr.insert(record[3])
-                track.ent_com.clear_text()
-                track.ent_com.insert(record[4])
-                track.ent_bit.enable()
-                track.ent_bit.clear_text()
-                track.ent_bit.insert(str(record[5] // 1000) + 'k')
-                track.ent_bit.disable()
-                track.ent_len.enable()
-                track.ent_len.clear_text()
-                track.ent_len.insert(sh.lg.com.get_human_time(float(record[6])))
-                track.ent_len.disable()
-                track.opt_rtg.set(record[7])
-            else:
+            track = self.add()
+            if len(record) != 8:
                 self.Success = False
                 mes = _('Wrong input data: "{}"!').format(data)
                 sh.objs.get_mes(f, mes).show_error()
-        self.gui.adjust_by_content()
+                return
+            track.reset()
+            track.ent_tno.insert(record[2])
+            track.ent_tit.insert(record[1])
+            track.ent_lyr.insert(record[3])
+            track.ent_com.insert(record[4])
+            track.ent_bit.insert(str(record[5] // 1000) + 'k')
+            track.ent_len.insert(sh.lg.com.get_human_time(float(record[6])))
+            track.opt_rtg.set(record[7])
     
     def reload(self):
         self.fill()
