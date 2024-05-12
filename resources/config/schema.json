@@ -3,4 +3,5 @@
     {"type": "object"
     ,"properties": {"min_version": {"type": "integer"}}
     }
+,"delete": {"type": "object"}
 }
