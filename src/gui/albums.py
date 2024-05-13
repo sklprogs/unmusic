@@ -115,6 +115,30 @@ class Center:
     def set_values(self):
         self.image_path = sh.objs.get_pdir().add('..', 'resources', 'cd.png')
     
+    def set_font_size(self):
+        # Labels
+        self.lbl_art.change_font_size(2)
+        self.lbl_alb.change_font_size(2)
+        self.lbl_yer.change_font_size(2)
+        self.lbl_cnt.change_font_size(2)
+        self.lbl_com.change_font_size(2)
+        self.lbl_bit.change_font_size(2)
+        self.lbl_len.change_font_size(2)
+        self.lbl_gnr.change_font_size(2)
+        self.lbl_loc.change_font_size(1)
+        self.lbl_ext.change_font_size(1)
+        self.lbl_mob.change_font_size(1)
+        # Entries
+        self.ent_art.change_font_size(2)
+        self.ent_alb.change_font_size(2)
+        self.ent_yer.change_font_size(2)
+        self.ent_cnt.change_font_size(2)
+        self.ent_com.change_font_size(2)
+        self.ent_bit.change_font_size(2)
+        self.ent_len.change_font_size(2)
+        # Option menus
+        self.opt_gnr.change_font_size(1)
+    
     def add_widgets(self):
         self.add_labels()
         self.add_entries()
@@ -202,16 +226,6 @@ class Center:
     def set_options(self):
         self.opt_gnr = sh.OptionMenu(GENRES)
     
-    def set_label_font_size(self):
-        self.lbl_art.change_font_size(2)
-        self.lbl_alb.change_font_size(2)
-        self.lbl_yer.change_font_size(2)
-        self.lbl_cnt.change_font_size(2)
-        self.lbl_com.change_font_size(2)
-        self.lbl_bit.change_font_size(2)
-        self.lbl_len.change_font_size(2)
-        self.lbl_gnr.change_font_size(2)
-    
     def set_widgets(self):
         self.set_labels()
         self.set_entries()
@@ -226,7 +240,7 @@ class Center:
         self.set_layout()
         self.set_widgets()
         self.set_image()
-        self.set_label_font_size()
+        self.set_font_size()
         self.add_widgets()
 
 
