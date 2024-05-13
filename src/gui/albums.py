@@ -9,6 +9,7 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 
+RATINGS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 PLAY = (_('Play'), _('All'), _('Good'), _('Best'))
 #NOTE: Do not localize (being stored in DB)
 GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
@@ -88,7 +89,7 @@ class Top:
                                  ,active = self.next_active
                                  )
         self.ent_sr2 = sh.Entry()
-        self.opt_rtg = sh.OptionMenu((0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+        self.opt_rtg = sh.OptionMenu(RATINGS)
         self.opt_ply = sh.OptionMenu(PLAY)
     
     def add_widgets(self):
@@ -309,17 +310,17 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
 
 
 class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
-    
+
     sig_close = PyQt6.QtCore.pyqtSignal()
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_gui()
-    
+
     def closeEvent(self, event):
         self.sig_close.emit()
         return super().closeEvent(event)
-    
+
     def clear_entries(self):
         self.center.ent_art.clear()
         self.center.ent_alb.clear()

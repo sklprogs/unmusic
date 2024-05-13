@@ -372,7 +372,13 @@ class AlbumEditor:
         ''' We call GUI directly here since shared checks for fixed values, and
             we want float here.
         '''
-        self.gui.top.opt_rtg.set(rating)
+        ratings = list(ga.RATINGS)
+        if rating in ratings:
+            self.gui.top.opt_rtg.set(rating)
+        else:
+            ratings.append(rating)
+            ratings.sort()
+            self.gui.top.opt_rtg.reset(ratings, rating)
     
     def update_rating(self):
         f = '[unmusic] unmusic.AlbumEditor.update_rating'
