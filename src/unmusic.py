@@ -37,7 +37,6 @@ class AlbumEditor:
         self.gui.bottom.lbl_inf.set_text(self.pool.get())
     
     def minimize(self):
-        #ok
         self.gui.minimize()
     
     def reset(self):

@@ -335,6 +335,13 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.sig_close.emit()
         return super().closeEvent(event)
 
+    def dump(self):
+        return (self.center.ent_alb.get(), self.center.ent_art.get()
+               ,self.center.ent_yer.get(), self.center.opt_gnr.get()
+               ,self.center.ent_cnt.get(), self.center.ent_com.get()
+               ,float(self.top.opt_rtg.get())
+               )
+    
     def clear_entries(self):
         self.center.ent_art.clear()
         self.center.ent_alb.clear()
