@@ -355,17 +355,11 @@ class Play:
             sh.com.cancel(f)
             return self.album
         if not self.album:
-            local_album = objs.get_default().ihome.add_share (_('local collection')
-                                                             ,str(objs.get_db().albumid)
-                                                             )
-            exter_album = objs.default.ihome.add_share (_('external collection')
-                                                       ,str(objs.db.albumid)
-                                                       )
-            local_exists = os.path.exists(local_album)
-            exter_exists = os.path.exists(exter_album)
-            if local_exists:
+            local_album = cf.objs.get_paths().get_local_album(objs.get_db().albumid)
+            exter_album = cf.objs.paths.get_external_album(objs.db.albumid)
+            if os.path.exists(local_album):
                 self.album = local_album
-            elif exter_exists:
+            elif os.path.exists(exter_album):
                 self.album = exter_album
         return self.album
     
@@ -431,8 +425,7 @@ class Play:
             sh.com.cancel(f)
             return self.playlist
         if not self.playlist:
-            self.playlist = _('playlist') + '.m3u8'
-            self.playlist = objs.get_default().ihome.add_share(self.playlist)
+            self.playlist = cf.objs.get_paths().get_playlist()
         return self.playlist
     
     def gen_list(self):
@@ -451,11 +444,10 @@ class Play:
             hyphens may not be supported).
         '''
         if result:
-            ''' The hyphen here is actually useless, but
-                'deadbeef' will not separate an album and
-                a title correctly otherwise.
+            ''' The hyphen here is actually useless, but 'deadbeef' will not
+                separate an album and a title correctly otherwise.
             '''
-            header = result[1] + ': ' + result[0] + ' - '
+            header = f'{result[1]}: {result[0]} - '
         else:
             header = ''
         files = self.get_available()

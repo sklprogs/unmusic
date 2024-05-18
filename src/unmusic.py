@@ -296,22 +296,22 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        choice = self.gui.opt_ply.choice
+        choice = self.gui.top.opt_ply.get()
         default = _('Play')
         if choice == default:
             sh.com.rep_lazy(f)
         elif choice == _('All'):
-            self.gui.opt_ply.set(default)
+            self.gui.top.opt_ply.set(default)
             lg.Play().play_all_tracks()
         elif choice == _('Good'):
-            self.gui.opt_ply.set(default)
+            self.gui.top.opt_ply.set(default)
             lg.Play().play_good_tracks()
         elif choice == _('Best'):
-            self.gui.opt_ply.set(default)
+            self.gui.top.opt_ply.set(default)
             lg.Play().play_good_tracks(9)
         else:
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
-            mes = mes.format(choice,';'.join(gi.PLAY))
+            mes = mes.format(choice, ';'.join(gi.PLAY))
             sh.objs.get_mes(f, mes).show_error()
     
     def get_length(self):
