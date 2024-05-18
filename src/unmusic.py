@@ -281,24 +281,15 @@ class AlbumEditor:
         if not path:
             sh.com.rep_empty(f)
             return
+        #TODO: create a smaller image
         try:
-            #TODO: load image
-            #self.image = iimage.get_image()
-            thumb = None
+            self.gui.center.set_image(path)
         except Exception as e:
-            ''' Do not fail 'Success' here - it can just be
-                an incorrectly ripped image.
+            ''' Do not fail 'Success' here - it can be just an incorrectly
+                ripped image.
             '''
-            thumb = None
-            mes = _('Third-party module has failed!\n\nDetails: {}')
-            mes = mes.format(e)
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
             sh.objs.get_mes(f, mes).show_warning()
-        if not thumb:
-            sh.com.rep_empty(f)
-            return
-        self.gui.lbl_img.widget.config(image=thumb)
-        # Prevent the garbage collector from deleting the image
-        self.gui.lbl_img.widget.image = thumb
     
     def play(self):
         f = '[unmusic] unmusic.AlbumEditor.play'

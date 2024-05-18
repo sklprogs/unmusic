@@ -109,11 +109,7 @@ class Top:
 class Center:
     
     def __init__(self):
-        self.set_values()
         self.set_gui()
-    
-    def set_values(self):
-        self.image_path = sh.objs.get_pdir().add('..', 'resources', 'cd.png')
     
     def set_font_size(self):
         # Labels
@@ -232,14 +228,13 @@ class Center:
         self.set_options()
         self.set_collections()
     
-    def set_image(self):
-        image = PyQt6.QtGui.QPixmap(self.image_path)
+    def set_image(self, path):
+        image = PyQt6.QtGui.QPixmap(path)
         self.lbl_img.widget.setPixmap(image)
     
     def set_gui(self):
         self.set_layout()
         self.set_widgets()
-        self.set_image()
         self.set_font_size()
         self.add_widgets()
 
