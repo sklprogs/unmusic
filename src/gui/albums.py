@@ -232,6 +232,7 @@ class Center:
         image = PyQt6.QtGui.QPixmap(path)
         image = image.scaled(PyQt6.QtCore.QSize(150, 150))
         self.lbl_img.widget.setPixmap(image)
+        return image
     
     def set_gui(self):
         self.set_layout()

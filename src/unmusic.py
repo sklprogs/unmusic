@@ -12,15 +12,46 @@ import config as cf
 import logic as lg
 import gui.albums as ga
 import gui.tracks as gt
+import gui.image_viewer
+
+
+class ImageViewer:
+    
+    def __init__(self):
+        self.gui = gui.image_viewer.ImageViewer()
+    
+    def set_image(self):
+        f = '[unmusic] unmusic.ImageViewer.set_image'
+        path = objs.get_image().run()
+        if not path:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self.image = self.gui.set_image(path)
+        except Exception as e:
+            ''' Do not fail 'Success' here - it can be just an incorrectly
+                ripped image.
+            '''
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
+    
+    def show(self):
+        self.gui.show()
+    
+    def close(self):
+        self.gui.close()
+
 
 
 class AlbumEditor:
     
     def __init__(self):
         self.Success = True
+        self.image = None
         self.pool = lg.MessagePool(max_size=4)
         self.logic = lg.AlbumEditor()
         self.gui = ga.AlbumEditor()
+        self.image_viewer = ImageViewer()
         self.set_bindings()
     
     def quit(self):
@@ -258,7 +289,7 @@ class AlbumEditor:
         self.gui.ent_com.clear_text()
         self.gui.ent_com.insert(comment)
         
-    def zoom_image(self):
+    def zoom_image(self, event=None):
         f = '[unmusic] unmusic.AlbumEditor.zoom_image'
         if not self.Success:
             sh.com.cancel(f)
@@ -267,10 +298,8 @@ class AlbumEditor:
             # This should not happen
             sh.com.rep_empty(f)
             return
-        viewer = gi.ImageViewer()
-        viewer.lbl.widget.config(image=self.image)
-        viewer.lbl.widget.image = self.image
-        viewer.show()
+        self.image_viewer.set_image()
+        self.image_viewer.show()
     
     def set_image(self):
         f = '[unmusic] unmusic.AlbumEditor.set_image'
@@ -281,9 +310,8 @@ class AlbumEditor:
         if not path:
             sh.com.rep_empty(f)
             return
-        #TODO: create a smaller image
         try:
-            self.gui.center.set_image(path)
+            self.image = self.gui.center.set_image(path)
         except Exception as e:
             ''' Do not fail 'Success' here - it can be just an incorrectly
                 ripped image.
@@ -603,10 +631,10 @@ class AlbumEditor:
             lg.objs.get_db().save()
     
     def set_bindings(self):
+        # Connect to signals
         self.gui.sig_close.connect(self.close)
         self.gui.sig_close.connect(self.quit)
-        self.gui.bind(('Ctrl+Q',), self.close)
-        self.gui.bind(('Esc',), self.minimize)
+        # Bind widgets
         self.gui.top.btn_nxt.set_action(self.go_next)
         self.gui.top.btn_prv.set_action(self.go_prev)
         self.gui.top.btn_snr.set_action(self.search_next_album)
@@ -619,6 +647,25 @@ class AlbumEditor:
         self.gui.bottom.btn_rld.set_action(self.fill)
         self.gui.bottom.btn_sav.set_action(self.save)
         self.gui.bottom.btn_trk.set_action(self.show_tracks)
+        # Enable hotkeys
+        self.gui.bind(('Ctrl+Q',), self.close)
+        self.gui.bind(('Esc',), self.minimize)
+        self.gui.bind(('Alt+Left',), self.go_prev)
+        self.gui.bind(('Alt+Right',), self.go_next)
+        self.gui.bind(('Alt+N',), self.go_next_unrated)
+        self.gui.bind(('Alt+P',), self.go_prev_unrated)
+        self.gui.bind(('F5', 'Ctrl+R',), self.fill)
+        self.gui.bind(('F2', 'Ctrl+S',), self.save)
+        self.gui.bind(('F4', 'Ctrl+T', 'Alt+T',), self.show_tracks)
+        # Bind entries
+        self.gui.top.ent_ids.bind(('Return',), self.search_id)
+        self.gui.top.ent_ids.bind(('Enter',), self.search_id)
+        self.gui.top.ent_src.bind(('Return',), self.search_album)
+        self.gui.top.ent_src.bind(('Enter',), self.search_album)
+        self.gui.top.ent_sr2.bind(('Return',), self.search_track)
+        self.gui.top.ent_sr2.bind(('Enter',), self.search_track)
+        # Bind lables
+        self.gui.center.lbl_img.set_action(self.zoom_image)
     
     def show(self):
         self.gui.show()
