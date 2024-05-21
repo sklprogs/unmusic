@@ -28,7 +28,7 @@ class ImageViewer:
     def set_image(self, path):
         image = PyQt6.QtGui.QPixmap(path)
         image = image.scaled(PyQt6.QtCore.QSize(1024, 768))
-        self.lbl_img.setPixmap(image)
+        self.lbl_img.widget.setPixmap(image)
         return image
     
     def set_layout(self):
@@ -39,8 +39,8 @@ class ImageViewer:
     
     def set_gui(self):
         self.set_layout()
-        self.lbl_img = PyQt6.QtWidgets.QLabel()
-        self.lay_img.addWidget(self.lbl_img)
+        self.lbl_img = sh.Label()
+        self.lay_img.addWidget(self.lbl_img.widget)
         self.set_icon()
         self.set_title()
     

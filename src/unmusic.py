@@ -19,6 +19,10 @@ class ImageViewer:
     
     def __init__(self):
         self.gui = gui.image_viewer.ImageViewer()
+        self.set_bindings()
+    
+    def set_bindings(self):
+        self.gui.lbl_img.set_action(self.close)
     
     def set_image(self):
         f = '[unmusic] unmusic.ImageViewer.set_image'
@@ -38,7 +42,7 @@ class ImageViewer:
     def show(self):
         self.gui.show()
     
-    def close(self):
+    def close(self, event=None):
         self.gui.close()
 
 
