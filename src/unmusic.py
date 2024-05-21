@@ -22,6 +22,7 @@ class ImageViewer:
         self.set_bindings()
     
     def set_bindings(self):
+        self.gui.bind(('Esc',), self.close)
         self.gui.lbl_img.set_action(self.close)
     
     def set_image(self):
