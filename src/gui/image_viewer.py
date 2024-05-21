@@ -12,6 +12,13 @@ class ImageViewer:
     def __init__(self):
         self.set_gui()
     
+    def set_icon(self):
+        # Does not accent None
+        self.pnl_img.setWindowIcon(sh.gi.objs.get_icon())
+    
+    def set_title(self):
+        self.pnl_img.setWindowTitle(_('Image Viewer'))
+    
     def centralize(self):
         ''' Do this only after showing the widget; otherwise, it will have
             bogus dimensions of 640×480.
@@ -34,6 +41,8 @@ class ImageViewer:
         self.set_layout()
         self.lbl_img = PyQt6.QtWidgets.QLabel()
         self.lay_img.addWidget(self.lbl_img)
+        self.set_icon()
+        self.set_title()
     
     def show(self):
         self.pnl_img.show()
