@@ -265,19 +265,17 @@ class AlbumEditor:
             will be overwritten!
         '''
         self.save()
-        albumid = self.gui.ent_ids.get()
+        albumid = self.gui.top.ent_ids.get()
         if not albumid:
             sh.com.rep_lazy(f)
             return
         if not str(albumid).isdigit():
-            mes = _('Wrong input data: "{}"!')
-            mes = mes.format(albumid)
+            mes = _('Wrong input data: "{}"!').format(albumid)
             sh.objs.get_mes(f, mes).show_warning()
             return
         albumid = int(albumid)
         if albumid <= 0:
-            mes = _('Wrong input data: "{}"!')
-            mes = mes.format(albumid)
+            mes = _('Wrong input data: "{}"!').format(albumid)
             sh.objs.get_mes(f, mes).show_warning()
             return
         data = lg.objs.get_db().has_id(albumid)
@@ -678,10 +676,9 @@ class AlbumEditor:
         self.gui.bind(('F3',), self.focus_album_search)
         self.gui.bind(('F6',), self.focus_id_search)
         self.gui.bind(('F9',), self.focus_track_search)
-        #self.gui.bind(('F6', 'Return', 'Enter',), self.search_id)
-        #self.gui.top.ent_ids.bind(('Return', 'Enter',), self.search_id)
-        #self.gui.top.ent_src.bind(('F3', 'Return', 'Enter',), self.search_album)
-        #self.gui.top.ent_sr2.bind(('Return', 'Enter',), self.search_track)
+        self.gui.top.ent_ids.widget.returnPressed.connect(self.search_id)
+        self.gui.top.ent_src.widget.returnPressed.connect(self.search_album)
+        self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)
         # Bind lables
         self.gui.center.lbl_img.set_action(self.zoom_image)
     
