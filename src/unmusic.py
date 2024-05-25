@@ -550,10 +550,10 @@ class AlbumEditor:
         '''
         if Save:
             self.save()
-        pattern = self.gui.ent_src.get()
+        pattern = self.gui.top.ent_src.get()
         if not pattern:
-            self.gui.btn_spr.inactivate()
-            self.gui.btn_snx.inactivate()
+            self.gui.top.btn_spr.inactivate()
+            self.gui.top.btn_snx.inactivate()
             sh.com.rep_lazy(f)
             return
         old = lg.objs.get_db().albumid
@@ -575,10 +575,10 @@ class AlbumEditor:
             'self.search_prev_album'.
         '''
         self.save()
-        pattern = self.gui.ent_src.get()
+        pattern = self.gui.top.ent_src.get()
         if not pattern:
-            self.gui.btn_spr.inactivate()
-            self.gui.btn_snx.inactivate()
+            self.gui.top.btn_spr.inactivate()
+            self.gui.top.btn_snx.inactivate()
             sh.com.rep_lazy(f)
             return
         old = lg.objs.get_db().albumid
