@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import re
 import phrydy
 
 from skl_shared_qt.localize import _
@@ -292,13 +293,11 @@ class Directory:
         if not self.Success:
             sh.com.cancel(f)
             return
-        if not objs.get_db().albumid:
+        if not DB.albumid:
             self.Success = False
             sh.com.rep_empty(f)
             return
-        self.target = objs.get_default().ihome.add_share (_('processed')
-                                                         ,str(objs.db.albumid)
-                                                         )
+        self.target = PATHS.get_processed_album()
         self.Success = sh.lg.Path(self.target).create()
     
     def reset(self, path):
@@ -370,7 +369,7 @@ class Directory:
         search = ' '.join(search)
         search = search.lower()
         
-        objs.get_db().add_album([album, artist, year, genre, '', '', search, 0])
+        DB.add_album([album, artist, year, genre, '', '', search, 0])
     
     def _add_tracks_meta(self, albumid):
         f = '[unmusic] album_editor.logic.Directory._add_tracks_meta'
@@ -383,11 +382,11 @@ class Directory:
             if not track.audio or not data:
                 sh.com.rep_empty(f)
                 return
-            objs.get_db().albumid = albumid
-            objs.db.add_track ([albumid, data[0], data[1], data[2], '', data[3]
-                               ,data[4], data[5], self.rating
-                               ]
-                              )
+            DB.albumid = albumid
+            DB.add_track ([albumid, data[0], data[1], data[2], '', data[3]
+                          ,data[4], data[5], self.rating
+                          ]
+                         )
     
     def save_meta(self):
         f = '[unmusic] album_editor.logic.Directory.save_meta'
@@ -410,7 +409,7 @@ class Directory:
                to establish if DB already has a corresponding ALBUMID.
         '''
         self.add_album_meta()
-        albumid = objs.db.get_max_id()
+        albumid = lg.DB.get_max_id()
         if not albumid:
             sh.com.rep_empty(f)
             return
@@ -484,7 +483,7 @@ class Play:
     
     def __init__(self):
         self.set_values()
-        self.Success = lg.objs.get_db().Success
+        self.Success = lg.DB.Success
     
     def call_player(self):
         f = '[unmusic] album_editor.logic.Play.call_player'
@@ -515,8 +514,8 @@ class Play:
             sh.com.cancel(f)
             return self.album
         if not self.album:
-            local_album = PATHS.get_local_album(lg.objs.get_db().albumid)
-            exter_album = PATHS.get_external_album(lg.objs.db.albumid)
+            local_album = PATHS.get_local_album(lg.DB.albumid)
+            exter_album = PATHS.get_external_album(lg.DB.albumid)
             if os.path.exists(local_album):
                 self.album = local_album
             elif os.path.exists(exter_album):
@@ -597,7 +596,7 @@ class Play:
             sh.com.rep_empty(f)
             return
         out = []
-        result = lg.objs.get_db().get_album()
+        result = lg.DB.get_album()
         ''' Adding #EXTINF will allow to use tags in those players that support
             it (e.g., clementine, deadbeef). This entry should have the
             following format: '#EXTINF:191,Artist Name - Track Title' (multiple
@@ -642,7 +641,7 @@ class Play:
         if not self.Success:
             sh.com.cancel(f)
             return
-        tracks = lg.objs.get_db().get_tracks()
+        tracks = lg.DB.get_tracks()
         if not tracks:
             sh.com.rep_empty(f)
             return
@@ -658,7 +657,7 @@ class Play:
         if not self.Success:
             sh.com.cancel(f)
             return
-        tracks = lg.objs.get_db().get_good_tracks(rating)
+        tracks = lg.DB.get_good_tracks(rating)
         if not tracks:
             sh.com.rep_empty(f)
             return
@@ -725,19 +724,19 @@ class Collection:
     
     def get_local_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.local, str(lg.objs.get_db().albumid))
+            return os.path.join(self.local, str(lg.DB.albumid))
         else:
             return os.path.join(self.local, str(albumid))
     
     def get_ext_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.external, str(lg.objs.get_db().albumid))
+            return os.path.join(self.external, str(lg.DB.albumid))
         else:
             return os.path.join(self.external, str(albumid))
     
     def get_mob_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.mobile, str(lg.objs.get_db().albumid))
+            return os.path.join(self.mobile, str(lg.DB.albumid))
         else:
             return os.path.join(self.mobile, str(albumid))
     
@@ -771,7 +770,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumids = lg.objs.get_db().get_prev_unrated(lg.objs.db.albumid)
+        albumids = lg.DB.get_prev_unrated(lg.DB.albumid)
         self._set_unrated(albumids)
     
     def set_next_unrated(self):
@@ -779,7 +778,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumids = lg.objs.get_db().get_next_unrated(lg.objs.db.albumid)
+        albumids = lg.DB.get_next_unrated(lg.DB.albumid)
         self._set_unrated(albumids)
     
     def _set_unrated(self, albumids):
@@ -793,7 +792,7 @@ class AlbumEditor:
             mes = _('No more matches!')
             sh.objs.get_mes(f, mes).show_info()
             return
-        lg.objs.db.albumid = albumid
+        lg.DB.albumid = albumid
         self.check_no()
     
     def set_prev_rated(self, rating=0):
@@ -802,12 +801,12 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = lg.objs.get_db().get_prev_rated(rating, lg.objs.db.albumid)
+        albumid = lg.DB.get_prev_rated(rating, lg.DB.albumid)
         if not albumid:
             mes = _('No more matches!')
             sh.objs.get_mes(f, mes).show_info()
             return
-        lg.objs.db.albumid = albumid
+        lg.DB.albumid = albumid
         self.check_no()
     
     def set_next_rated(self, rating=0):
@@ -816,12 +815,12 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        albumid = lg.objs.get_db().get_next_rated(rating, lg.objs.db.albumid)
+        albumid = lg.DB.get_next_rated(rating, lg.DB.albumid)
         if not albumid:
             mes = _('No more matches!')
             sh.objs.get_mes(f, mes).show_info()
             return
-        lg.objs.db.albumid = albumid
+        lg.DB.albumid = albumid
         self.check_no()
     
     def get_mean_bitrate(self):
@@ -829,7 +828,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        mean = lg.objs.get_db().get_bitrate()
+        mean = lg.DB.get_bitrate()
         if not mean:
             sh.com.rep_empty(f)
             return
@@ -844,7 +843,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return 0.0
-        mean = lg.objs.get_db().get_rates()
+        mean = lg.DB.get_rates()
         if not mean:
             sh.com.rep_empty(f)
             return 0.0
@@ -865,24 +864,24 @@ class AlbumEditor:
     def check_no(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.check_no'
         if self.Success:
-            lg.objs.get_db().albumid = sh.lg.Input(f, lg.objs.get_db().albumid).get_integer()
+            lg.DB.albumid = sh.lg.Input(f, lg.DB.albumid).get_integer()
         else:
             sh.com.cancel(f)
-        return lg.objs.get_db().albumid
+        return lg.DB.albumid
     
     def get_min(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_min'
         if not self.Success:
             sh.com.cancel(f)
             return 0
-        return sh.lg.Input(f, lg.objs.get_db().get_min_id()).get_integer()
+        return sh.lg.Input(f, lg.DB.get_min_id()).get_integer()
     
     def get_max(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_max'
         if not self.Success:
             sh.com.cancel(f)
             return 0
-        _max = lg.objs.get_db().get_max_id()
+        _max = lg.DB.get_max_id()
         if not isinstance(_max, int):
             mes = _('The database is empty. You need to fill it first.')
             sh.objs.get_mes(f, mes).show_warning()
@@ -895,9 +894,9 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         if self.check_no() == self.get_max():
-            lg.objs.get_db().albumid = self.get_min()
+            lg.DB.albumid = self.get_min()
         else:
-            lg.objs.get_db().albumid = lg.objs.get_db().get_next_id()
+            lg.DB.albumid = lg.DB.get_next_id()
             self.check_no()
     
     def dec(self):
@@ -906,9 +905,9 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         if self.check_no() == self.get_min():
-            lg.objs.get_db().albumid = self.get_max()
+            lg.DB.albumid = self.get_max()
         else:
-            lg.objs.get_db().albumid = lg.objs.get_db().get_prev_id()
+            lg.DB.albumid = lg.DB.get_prev_id()
             self.check_no()
 
     def _compare_albums(self, old, new):
@@ -944,7 +943,7 @@ class AlbumEditor:
         if add:
             add.append('SEARCH="%s"' % search)
             add = 'begin;update ALBUMS set ' + ','.join(add)
-            add += ' where ALBUMID=%d;commit;' % lg.objs.get_db().albumid
+            add += ' where ALBUMID=%d;commit;' % lg.DB.albumid
             return add
 
 

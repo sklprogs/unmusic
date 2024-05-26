@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import os
-import io
 import re
 import db
 
@@ -43,7 +42,7 @@ class BadMusic:
     
     def __init__(self):
         self.set_values()
-        self.Success = objs.get_db().Success
+        self.Success = DB.Success
     
     def set_values(self):
         self.Success = True
@@ -59,9 +58,9 @@ class BadMusic:
         if not self.Success:
             sh.com.cancel(f)
             return
-        self.local = objs.get_default().ihome.add_share(_('local collection'))
-        self.exter = objs.default.ihome.add_share(_('external collection'))
-        self.mobil = objs.default.ihome.add_share(_('mobile collection'))
+        self.local = PATHS.get_local_collection()
+        self.exter = PATHS.get_external_collection()
+        self.mobil = PATHS.get_mobile_collection()
         mes = _('Local collection: {}').format(self.local)
         sh.objs.get_mes(f, mes, True).show_debug()
         mes = _('External collection: {}').format(self.exter)
@@ -177,17 +176,17 @@ class BadMusic:
             sh.com.cancel(f)
             return
         # ALBUMID (0), ALBUM (1), ARTIST (2), YEAR (3)
-        albums = objs.get_db().get_albums(limit)
+        albums = DB.get_albums(limit)
         if not albums:
             sh.com.cancel(f)
             return
-        old = objs.db.albumid
+        old = DB.albumid
         for album in albums:
-            objs.db.albumid = album[0]
+            DB.albumid = album[0]
             mes = _('Process album ID: {}')
-            mes = mes.format(objs.db.albumid)
+            mes = mes.format(DB.albumid)
             sh.objs.get_mes(f, mes, True).show_debug()
-            rates = objs.db.get_rates()
+            rates = DB.get_rates()
             if not rates:
                 sh.com.rep_empty(f)
                 continue
@@ -196,22 +195,8 @@ class BadMusic:
                 album_title = ' - '.join(album_title)
                 item = [album[0], album_title, min(rates), max(rates)]
                 self.rates.append(item)
-        objs.db.albumid = old
+        DB.albumid = old
         return self.rates
-
-
-
-class Objects:
-    
-    def __init__(self):
-        self.default = self.db = self.image = None
-        
-    def get_db(self):
-        f = '[unmusic] logic.Objects.get_db'
-        if self.db is not None:
-            return self.db
-        self.db = db.DB(PATHS.get_db())
-        return self.db
 
 
 
@@ -269,13 +254,13 @@ class Commands:
     
     def restore_id(self):
         f = '[unmusic] logic.Commands.restore_id'
-        min_ = objs.get_db().get_min_id()
-        max_ = objs.db.get_max_id()
+        min_ = DB.get_min_id()
+        max_ = DB.get_max_id()
         if not min_ or not max_:
             sh.com.rep_empty(f)
             return
         if min_ <= CONFIG.new['cur_id'] <= max_:
-            objs.db.albumid = CONFIG.new['cur_id']
+            DB.albumid = CONFIG.new['cur_id']
         else:
             sub = f"{min_} <= {CONFIG.new['cur_id']} <= {max_}"
             mes = _('Condition "{}" is not observed!').format(sub)
@@ -290,7 +275,7 @@ class Commands:
 
 
 
-objs = Objects()
+DB = db.DB(PATHS.get_db())
 com = Commands()
 com.restore_id()
 
@@ -301,4 +286,4 @@ if __name__ == '__main__':
     ibad = BadMusic()
     ibad.rates = [[1]]
     ibad.get_sizes()
-    objs.get_db().close()
+    DB.close()

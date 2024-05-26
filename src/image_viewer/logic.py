@@ -33,7 +33,7 @@ class Image:
         if not self.Success:
             sh.com.cancel(f)
             return
-        name = str(lg.objs.get_db().albumid) + '.jpg'
+        name = str(lg.DB.albumid) + '.jpg'
         return os.path.join(self.dir, name)
     
     def run(self):

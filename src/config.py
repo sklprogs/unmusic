@@ -38,6 +38,9 @@ class Paths:
     def get_external_album(self, albumid):
         return self.ihome.add_share(_('external collection'), str(albumid))
     
+    def get_processed_album(self, albumid):
+        return self.ihome.add_share(_('processed'), str(albumid))
+    
     def get_external_collection(self):
         return self.ihome.add_share(_('external collection'))
     

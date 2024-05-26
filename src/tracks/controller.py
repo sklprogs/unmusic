@@ -56,7 +56,7 @@ class Tracks:
                     continue
                 mes = _('Edit #{}.').format(i+1)
                 self.gui.update_info(mes)
-                lg.objs.get_db().update_track (no = i + 1
+                lg.DB.update_track (no = i + 1
                                               ,data = new_record
                                               )
                 Dump = True
@@ -73,11 +73,11 @@ class Tracks:
         if not self.Success:
             sh.com.cancel(f)
             return
-        if not lg.objs.get_db().check_nos():
+        if not lg.DB.check_nos():
             mes = _('Track numbers should be sequential!')
             sh.objs.get_mes(f, mes).show_warning()
             return
-        old = lg.objs.db.get_tracks()
+        old = lg.DB.get_tracks()
         new = self.dump_new()
         return self._dump(old, new)
     
@@ -92,7 +92,7 @@ class Tracks:
         if self.dump():
             objs.get_editor().update_rating()
             self.gui.update_info(_('Save DB.'))
-            lg.objs.get_db().save()
+            lg.DB.save()
     
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q',), self.close)
@@ -148,7 +148,7 @@ class Tracks:
         if not self.Success:
             sh.com.cancel(f)
             return
-        data = lg.objs.get_db().get_tracks()
+        data = lg.DB.get_tracks()
         if not data:
             mes = _('No tracks are associated with this album.')
             sh.objs.get_mes(f, mes).show_info()

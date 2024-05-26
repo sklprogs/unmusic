@@ -82,10 +82,6 @@ class Menu:
     def copy(self):
         objs.get_copy().show()
     
-    def album_editor(self):
-        objs.get_editor().reset()
-        objs.editor.show()
-    
     def collect(self):
         ''' If an artist and/or album title were changed and originally
             were not empty, there is no easy way to tell if we are
@@ -102,13 +98,13 @@ class Menu:
         if not dirs:
             sh.com.rep_empty(f)
             iwalk.delete_empty()
-            lg.objs.get_db().save()
+            lg.DB.save()
             return
         count = 0
         timer = sh.lg.Timer(f)
         timer.start()
         for folder in dirs:
-            if not lg.objs.get_db().Success:
+            if not lg.DB.Success:
                 sh.com.cancel(f)
                 continue
             count += 1
@@ -126,7 +122,7 @@ class Menu:
             ''' In case something went wrong, we should loose only 1 album
                 record, not the entire sequence.
             '''
-            lg.objs.get_db().save()
+            lg.DB.save()
         gi.objs.get_wait().close()
         delta = timer.end()
         mes = _('Operation has taken {}')
@@ -135,7 +131,7 @@ class Menu:
         objs.get_editor().reset()
         objs.editor.show()
         iwalk.delete_empty()
-        lg.objs.get_db().save()
+        lg.DB.save()
     
     def prepare(self):
         f = '[unmusic] album_editor.controller.Menu.prepare'
