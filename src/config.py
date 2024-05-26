@@ -85,26 +85,10 @@ class Config(qc.Config):
         self.set_local_dump()
 
 
-
-class Objects:
-    
-    def __init__(self):
-        self.paths = self.config = None
-    
-    def get_paths(self):
-        if self.paths is None:
-            self.paths = Paths()
-            self.paths.run()
-        return self.paths
-    
-    def get_config(self):
-        if self.config is None:
-            default = self.get_paths().get_default_config()
-            schema = self.paths.get_schema()
-            local = self.paths.get_local_config()
-            self.config = Config(default, schema, local)
-            self.config.run()
-        return self.config
-
-
-objs = Objects()
+PATHS = Paths()
+PATHS.run()
+default = PATHS.get_default_config()
+schema = PATHS.get_schema()
+local = PATHS.get_local_config()
+CONFIG = Config(default, schema, local)
+CONFIG.run()

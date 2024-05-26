@@ -7,11 +7,10 @@ import re
 import phrydy
 import db
 
-import config as cf
+from config import CONFIG, PATHS
 
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
-#import skl_shared_qt.image.controller as im
 
 VERSION = '1.1'
 # Derived from 'phrydy.mediafile.TYPES'
@@ -93,9 +92,9 @@ class Collection:
         self.set_paths()
     
     def set_paths(self):
-        self.local = cf.objs.get_paths().get_local_collection()
-        self.external = cf.objs.paths.get_external_collection()
-        self.mobile = cf.objs.paths.get_mobile_collection()
+        self.local = PATHS.get_local_collection()
+        self.external = PATHS.get_external_collection()
+        self.mobile = PATHS.get_mobile_collection()
     
     def get_local_album(self, albumid=None):
         if albumid is None:
@@ -355,8 +354,8 @@ class Play:
             sh.com.cancel(f)
             return self.album
         if not self.album:
-            local_album = cf.objs.get_paths().get_local_album(objs.get_db().albumid)
-            exter_album = cf.objs.paths.get_external_album(objs.db.albumid)
+            local_album = PATHS.get_local_album(objs.get_db().albumid)
+            exter_album = PATHS.get_external_album(objs.db.albumid)
             if os.path.exists(local_album):
                 self.album = local_album
             elif os.path.exists(exter_album):
@@ -425,7 +424,7 @@ class Play:
             sh.com.cancel(f)
             return self.playlist
         if not self.playlist:
-            self.playlist = cf.objs.get_paths().get_playlist()
+            self.playlist = PATHS.get_playlist()
         return self.playlist
     
     def gen_list(self):
@@ -991,8 +990,7 @@ class Directory:
 class Objects:
     
     def __init__(self):
-        self.default = self.db = self.image = self.collection \
-                     = None
+        self.default = self.db = self.image = self.collection = None
         
     def get_collection(self):
         if not self.collection:
@@ -1008,7 +1006,7 @@ class Objects:
         f = '[unmusic] logic.Objects.get_db'
         if self.db is not None:
             return self.db
-        self.db = db.DB(cf.objs.get_paths().get_db())
+        self.db = db.DB(PATHS.get_db())
         return self.db
 
 
@@ -1283,10 +1281,10 @@ class Commands:
         if not min_ or not max_:
             sh.com.rep_empty(f)
             return
-        if min_ <= cf.objs.get_config().new['cur_id'] <= max_:
-            objs.db.albumid = cf.objs.config.new['cur_id']
+        if min_ <= CONFIG.new['cur_id'] <= max_:
+            objs.db.albumid = CONFIG.new['cur_id']
         else:
-            sub = f"{min_} <= {cf.objs.config.new['cur_id']} <= {max_}"
+            sub = f"{min_} <= {CONFIG.new['cur_id']} <= {max_}"
             mes = _('Condition "{}" is not observed!').format(sub)
             sh.objs.get_mes(f, mes).show_warning()
     
