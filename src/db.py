@@ -644,7 +644,7 @@ class DB:
         mes = _('Database "{}" has failed!\n\nDetails: {}')
         mes = mes.format(self.path, error)
         sh.objs.get_mes(func, mes).show_warning()
-        ''' We need to quit as soon as possible, otherwise, folders will be
+        ''' We need to quit as soon as possible; otherwise, folders will be
             obfuscated, but the info about them will not be stored in the DB!
         '''
         sys.exit()

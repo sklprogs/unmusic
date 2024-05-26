@@ -12,10 +12,6 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 VERSION = '1.1'
-# Derived from 'phrydy.mediafile.TYPES'
-TYPES = ['.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape', '.wv'
-        ,'.mpc', '.asf', '.aiff', '.dsf'
-        ]
 #NOTE: Do not localize (being stored in DB)
 GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          ,'Brutal Death Metal', 'Chanson', 'Classical', 'Death Metal'

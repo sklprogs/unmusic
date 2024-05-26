@@ -415,8 +415,7 @@ class Directory:
             sh.com.rep_empty(f)
             return
         self._add_tracks_meta(albumid)
-        mes = _('Album {}: {} tracks.')
-        mes = mes.format(albumid, len(self.tracks))
+        mes = _('Album {}: {} tracks.').format(albumid, len(self.tracks))
         sh.objs.get_mes(f, mes, True).show_info()
     
     def set_values(self):
@@ -441,7 +440,7 @@ class Directory:
             return self.files
         self.files = self.idir.get_files()
         for file in self.files:
-            if sh.lg.Path(file).get_ext().lower() in TYPES:
+            if sh.lg.Path(file).get_ext().lower() in self.types:
                 self.audio.append(file)
         return self.files
     
@@ -499,6 +498,10 @@ class Play:
     
     def set_values(self):
         self.Success = True
+        # Derived from 'phrydy.mediafile.TYPES'
+        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
+                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf'
+                     )
         self.album = ''
         self.playlist = ''
         self.audio = []
