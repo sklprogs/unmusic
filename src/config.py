@@ -47,6 +47,12 @@ class Paths:
     def get_mobile_collection(self):
         return self.ihome.add_share(_('mobile collection'))
     
+    def get_images(self):
+        return self.ihome.add_share(_('Images'))
+    
+    def get_cover(self, albumid):
+        return self.ihome.add_share(_('Images'), str(albumid) + '.jpg')
+    
     def get_playlist(self):
         return self.ihome.add_share(_('playlist') + '.m3u8')
     
