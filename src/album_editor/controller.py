@@ -8,6 +8,7 @@ from config import PATHS, CONFIG
 import logic as lg
 from image_viewer.controller import IMAGE_VIEWER, IMAGE
 from tracks.controller import TRACKS
+from . import logic
 from . import gui
 
 
@@ -17,7 +18,7 @@ class AlbumEditor:
         self.Success = True
         self.image = None
         self.pool = lg.MessagePool(max_size=4)
-        self.logic = lg.AlbumEditor()
+        self.logic = logic.AlbumEditor()
         self.gui = gui.AlbumEditor()
         self.set_bindings()
     
@@ -159,15 +160,15 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        if lg.objs.get_collection().has_local_album():
+        if logic.COLLECTION.has_local_album():
             self.gui.center.cbx_loc.enable()
         else:
             self.gui.center.cbx_loc.disable()
-        if lg.objs.collection.has_ext_album():
+        if logic.COLLECTION.has_ext_album():
             self.gui.center.cbx_ext.enable()
         else:
             self.gui.center.cbx_ext.disable()
-        if lg.objs.collection.has_mob_album():
+        if logic.COLLECTION.has_mob_album():
             self.gui.center.cbx_mob.enable()
         else:
             self.gui.center.cbx_mob.disable()
