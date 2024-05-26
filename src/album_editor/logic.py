@@ -10,6 +10,479 @@ from config import PATHS
 import logic as lg
 
 
+class Directory:
+    
+    def __init__(self, path):
+        self.set_values()
+        if path:
+            self.reset(path)
+    
+    def _set_no(self, i, max_len):
+        no = str(i + 1)
+        while len(no) < max_len:
+            no = '0' + no
+        return no
+    
+    def move_tracks(self):
+        f = '[unmusic] album_editor.logic.Directory.move_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        success = []
+        ''' The current algorithm of tracks renumbering guarantees that
+            the file list (*unless changed*) will have a consecutive numbering
+            of tracks.
+        '''
+        max_len = len(self.audio)
+        max_len = len(str(max_len))
+        for i in range(len(self.audio)):
+            file = self.audio[i]
+            no = self._set_no(i, max_len)
+            basename = no + sh.lg.Path(file).get_ext().lower()
+            dest = os.path.join(self.target, basename)
+            success.append(sh.lg.File(file=file, dest=dest).move())
+        self.Success = not (False in success or None in success)
+    
+    def purge(self):
+        f = '[unmusic] album_editor.logic.Directory.purge'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.tracks:
+            sh.com.rep_empty(f)
+            return
+        mes = _('Purge tracks')
+        sh.objs.get_mes(f, mes, True).show_info()
+        for track in self.tracks:
+            track.purge()
+            track.save()
+            if not track.Success:
+                self.Success = False
+                return
+    
+    def create_target(self):
+        f = '[unmusic] album_editor.logic.Directory.create_target'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not objs.get_db().albumid:
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        self.target = objs.get_default().ihome.add_share (_('processed')
+                                                         ,str(objs.db.albumid)
+                                                         )
+        self.Success = sh.lg.Path(self.target).create()
+    
+    def reset(self, path):
+        self.set_values()
+        self.path = path
+        self.idir = sh.lg.Directory(self.path)
+        self.Success = self.idir.Success
+        
+    def get_rating(self):
+        f = '[unmusic] album_editor.logic.Directory.get_rating'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        match = re.search(r'\(rating (\d+)\)', self.path)
+        if match:
+            try:
+                rating = match.group(1)
+                if rating.isdigit():
+                    self.rating = int(rating)
+            except IndexError:
+                pass
+    
+    def run(self):
+        self.get_rating()
+        self.create_list()
+        self.get_tracks()
+        if self.tracks:
+            self.renumber_tracks()
+            self.save_meta()
+            ''' The following actions should be carried out
+                only if we want to obfuscate tracks.
+            '''
+            self.create_target()
+            self.purge()
+            self.move_tracks()
+            self.save_image()
+        return self.Success
+    
+    def add_album_meta(self):
+        f = '[unmusic] album_editor.logic.Directory.add_album_meta'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.tracks:
+            sh.com.rep_empty(f)
+            return
+        ''' If a track could not be processed, empty tags will be returned,
+            which, when written to DB, can cause confusion. Here we check that
+            the track was processed successfully.
+        '''
+        if not self.tracks[0].audio:
+            sh.com.rep_empty(f)
+            return
+        album = self.tracks[0].album
+        artist = self.tracks[0].artist
+        year = self.tracks[0].year
+        genre = self.tracks[0].genre
+        album = com.sanitize(album)
+        album = com.delete_album_trash(album)
+        artist = com.sanitize(artist)
+        if str(year).isdigit():
+            year = int(year)
+        else:
+            # Prevent from storing an incorrect value
+            year = 0
+        genre = com.sanitize(genre)
+        
+        search = [album,artist,str(year),genre]
+        search = ' '.join(search)
+        search = search.lower()
+        
+        objs.get_db().add_album([album, artist, year, genre, '', '', search, 0])
+    
+    def _add_tracks_meta(self, albumid):
+        f = '[unmusic] album_editor.logic.Directory._add_tracks_meta'
+        for track in self.tracks:
+            data = track.get_track_meta()
+            ''' If a track could not be processed, empty tags will be returned,
+                which, when written to DB, can cause confusion. Here we check
+                that the track was processed successfully.
+            '''
+            if not track.audio or not data:
+                sh.com.rep_empty(f)
+                return
+            objs.get_db().albumid = albumid
+            objs.db.add_track ([albumid, data[0], data[1], data[2], '', data[3]
+                               ,data[4], data[5], self.rating
+                               ]
+                              )
+    
+    def save_meta(self):
+        f = '[unmusic] album_editor.logic.Directory.save_meta'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.tracks:
+            sh.com.rep_empty(f)
+            return
+        ''' It seems better to create new ALBUMID without checking if it
+            already exists. Reasons:
+            1) CD1, CD2, etc. may share same tags.
+            2) Albums of different bitrate may share same tags, however, they
+               are actually different albums.
+            3) Since extracting metadata and obfucating are united by default,
+               the program may try to overwrite already existing files in case
+               there is an ALBUMID conflict (which does not and should not fail
+               'Success').
+            4) If tags have been edited after extraction, there is no easy way
+               to establish if DB already has a corresponding ALBUMID.
+        '''
+        self.add_album_meta()
+        albumid = objs.db.get_max_id()
+        if not albumid:
+            sh.com.rep_empty(f)
+            return
+        self._add_tracks_meta(albumid)
+        mes = _('Album {}: {} tracks.')
+        mes = mes.format(albumid, len(self.tracks))
+        sh.objs.get_mes(f, mes, True).show_info()
+    
+    def set_values(self):
+        self.Success = True
+        self.idir = None
+        self.path = ''
+        self.target = ''
+        self.rating = 0
+        self.files = []
+        self.audio = []
+        self.tracks = []
+    
+    def create_list(self):
+        f = '[unmusic] album_editor.logic.Directory.create_list'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if self.files:
+            return self.files
+        if not self.idir:
+            sh.com.rep_empty(f)
+            return self.files
+        self.files = self.idir.get_files()
+        for file in self.files:
+            if sh.lg.Path(file).get_ext().lower() in TYPES:
+                self.audio.append(file)
+        return self.files
+    
+    def renumber_tracks(self):
+        ''' We use track NO field instead of an autoincrement, so we must keep
+            these fields unique within the same album.
+        '''
+        f = '[unmusic] album_editor.logic.Directory.renumber_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        nos = [i + 1 for i in range(len(self.tracks))]
+        count = 0
+        for i in range(len(self.tracks)):
+            if self.tracks[i].no != nos[i]:
+                count += 1
+                self.tracks[i].no = nos[i]
+        if count:
+            mes = _('{}/{} tracks have been renumbered.')
+            mes = mes.format(count, len(self.tracks))
+            sh.objs.get_mes(f, mes, True).show_warning()
+    
+    def get_tracks(self):
+        f = '[unmusic] album_editor.logic.Directory.get_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if self.tracks:
+            return self.tracks
+        if not self.audio:
+            mes = _('Folder "{}" has no audio files.').format(self.path)
+            sh.objs.get_mes(f, mes, True).show_info()
+            return self.tracks
+        for file in self.audio:
+            self.tracks.append(Track(file=file))
+        return self.tracks
+
+
+
+class Play:
+    
+    def __init__(self):
+        self.set_values()
+        self.Success = lg.objs.get_db().Success
+    
+    def call_player(self):
+        f = '[unmusic] album_editor.logic.Play.call_player'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.get_playlist():
+            sh.com.rep_empty(f)
+            return
+        sh.lg.Launch(self.playlist).launch_default()
+    
+    def set_values(self):
+        self.Success = True
+        self.album = ''
+        self.playlist = ''
+        self.audio = []
+        self.nos = []
+        self.titles = []
+        self.len_ = []
+    
+    def get_album(self):
+        f = '[unmusic] album_editor.logic.Play.get_album'
+        if not self.Success:
+            sh.com.cancel(f)
+            return self.album
+        if not self.album:
+            local_album = PATHS.get_local_album(lg.objs.get_db().albumid)
+            exter_album = PATHS.get_external_album(lg.objs.db.albumid)
+            if os.path.exists(local_album):
+                self.album = local_album
+            elif os.path.exists(exter_album):
+                self.album = exter_album
+        return self.album
+    
+    def get_audio(self):
+        f = '[unmusic] album_editor.logic.Play.get_audio'
+        if not self.Success:
+            sh.com.cancel(f)
+            return self.audio
+        if not self.audio:
+            idir = Directory(self.get_album())
+            idir.create_list()
+            self.Success = idir.Success
+            if idir.audio:
+                self.audio = idir.audio
+        return self.audio
+    
+    def get_available(self):
+        f = '[unmusic] album_editor.logic.Play.get_available'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        self.get_audio()
+        if not (self.audio and self.nos and self.titles and self.len_):
+            self.Success = False
+            sh.com.rep_empty(f)
+            return
+        result = []
+        errors = []
+        for no in self.nos:
+            try:
+                result.append(self.audio[no])
+            except IndexError:
+                errors.append(no)
+        ''' This may happen when some tracks have been deleted from
+            a collection after filling DB or when there is a mismatch of
+            ALBUMID stored in DB and the folder named after ALBUMID in the
+            collection. In any case, this should not normally happen.
+        '''
+        if errors:
+            for no in errors:
+                try:
+                    del self.titles[no]
+                    del self.nos[no]
+                    del self.len_[no]
+                except IndexError:
+                    pass
+            errors = [str(error) for error in errors]
+            mes = _('Tracks {} have not been found in "{}"!')
+            mes = mes.format(errors, self.get_album())
+            sh.objs.get_mes(f, mes).show_warning()
+        if len(self.nos) == len(self.titles) == len(self.len_):
+            pass
+        else:
+            self.Success = False
+            sub = f'{len(self.nos)} = {len(self.titles)} = {len(self.len_)}'
+            mes = _('Condition "{}" is not observed!').format(sub)
+            sh.objs.get_mes(f, mes).show_error()
+        return result
+    
+    def get_playlist(self):
+        f = '[unmusic] album_editor.logic.Play.get_playlist'
+        if not self.Success:
+            sh.com.cancel(f)
+            return self.playlist
+        if not self.playlist:
+            self.playlist = PATHS.get_playlist()
+        return self.playlist
+    
+    def gen_list(self):
+        f = '[unmusic] album_editor.logic.Play.gen_list'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.nos:
+            sh.com.rep_empty(f)
+            return
+        out = []
+        result = lg.objs.get_db().get_album()
+        ''' Adding #EXTINF will allow to use tags in those players that support
+            it (e.g., clementine, deadbeef). This entry should have the
+            following format: '#EXTINF:191,Artist Name - Track Title' (multiple
+            hyphens may not be supported).
+        '''
+        if result:
+            ''' The hyphen here is actually useless, but 'deadbeef' will not
+                separate an album and a title correctly otherwise.
+            '''
+            header = f'{result[1]}: {result[0]} - '
+        else:
+            header = ''
+        files = self.get_available()
+        if files and self.nos:
+            out.write('#EXTM3U\n')
+            for i in range(len(files)):
+                out.append('#EXTINF:')
+                out.append(str(int(self.len_[i])))
+                out.append(',')
+                out.append(header)
+                out.append(str(self.nos[i] + 1))
+                out.append('. ')
+                ''' Replacing a hyphen will allow 'deadbeef' to correctly
+                    distinguish between an album and a title.
+                '''
+                out.append(self.titles[i].replace(' - ',': ').replace(' ~ ',': '))
+                out.append('\n')
+                out.append(files[i])
+                out.append('\n')
+        else:
+            sh.com.rep_empty(f)
+        text = ''.join(out)
+        if not text:
+            sh.com.rep_empty(f)
+            return
+        sh.lg.WriteTextFile (file = self.get_playlist()
+                            ,Rewrite = True
+                            ).write(text)
+    
+    def play_all_tracks(self):
+        f = '[unmusic] album_editor.logic.Play.play_all_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        tracks = lg.objs.get_db().get_tracks()
+        if not tracks:
+            sh.com.rep_empty(f)
+            return
+        self.titles = [track[0] for track in tracks]
+        self.len_ = [track[5] for track in tracks]
+        # '-1' since count starts with 1 in DB and we need 0
+        self.nos = [track[1] - 1 for track in tracks]
+        self.gen_list()
+        self.call_player()
+    
+    def play_good_tracks(self, rating=8):
+        f = '[unmusic] album_editor.logic.Play.play_good_tracks'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        tracks = lg.objs.get_db().get_good_tracks(rating)
+        if not tracks:
+            sh.com.rep_empty(f)
+            return
+        self.titles = [track[0] for track in tracks]
+        self.len_ = [track[5] for track in tracks]
+        # '-1' since count starts with 1 in DB and we need 0
+        self.nos = [track[1] - 1 for track in tracks]
+        self.gen_list()
+        self.call_player()
+
+
+
+class MessagePool:
+
+    def __init__(self, max_size=5):
+        self.max_size = max_size
+        self.pool = []
+
+    def free(self):
+        if len(self.pool) == self.max_size:
+            self.delete_first()
+
+    def add(self, message):
+        f = '[unmusic] album_editor.logic.MessagePool.add'
+        if not message:
+            sh.com.rep_empty(f)
+            return
+        self.free()
+        self.pool.append(message)
+
+    def delete_first(self):
+        f = '[unmusic] album_editor.logic.MessagePool.delete_first'
+        if not self.pool:
+            mes = _('The pool is empty!')
+            sh.objs.get_mes(f, mes, True).show_warning()
+            return
+        del self.pool[0]
+
+    def delete_last(self):
+        f = '[unmusic] album_editor.logic.MessagePool.delete_last'
+        if not self.pool:
+            mes = _('The pool is empty!')
+            sh.objs.get_mes(f, mes, True).show_warning()
+            return
+        del self.pool[-1]
+
+    def clear(self):
+        self.pool = []
+
+    def get(self):
+        return sh.List(lst1=self.pool).space_items()
+
+
+
 class Collection:
     
     def __init__(self):

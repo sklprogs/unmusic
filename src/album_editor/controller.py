@@ -17,7 +17,7 @@ class AlbumEditor:
     def __init__(self):
         self.Success = True
         self.image = None
-        self.pool = lg.MessagePool(max_size=4)
+        self.pool = logic.MessagePool(4)
         self.logic = logic.AlbumEditor()
         self.gui = gui.AlbumEditor()
         self.set_bindings()
@@ -308,13 +308,13 @@ class AlbumEditor:
             sh.com.rep_lazy(f)
         elif choice == _('All'):
             self.gui.top.opt_ply.set(default)
-            lg.Play().play_all_tracks()
+            logic.Play().play_all_tracks()
         elif choice == _('Good'):
             self.gui.top.opt_ply.set(default)
-            lg.Play().play_good_tracks()
+            logic.Play().play_good_tracks()
         elif choice == _('Best'):
             self.gui.top.opt_ply.set(default)
-            lg.Play().play_good_tracks(9)
+            logic.Play().play_good_tracks(9)
         else:
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
             mes = mes.format(choice, ';'.join(gi.PLAY))
