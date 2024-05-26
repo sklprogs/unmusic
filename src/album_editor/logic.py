@@ -420,6 +420,10 @@ class Directory:
     def set_values(self):
         self.Success = True
         self.idir = None
+        # Derived from 'phrydy.mediafile.TYPES'
+        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
+                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf'
+                     )
         self.path = ''
         self.target = ''
         self.rating = 0
@@ -497,10 +501,6 @@ class Play:
     
     def set_values(self):
         self.Success = True
-        # Derived from 'phrydy.mediafile.TYPES'
-        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
-                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf'
-                     )
         self.album = ''
         self.playlist = ''
         self.audio = []
@@ -611,7 +611,7 @@ class Play:
             header = ''
         files = self.get_available()
         if files and self.nos:
-            out.write('#EXTM3U\n')
+            out.append('#EXTM3U\n')
             for i in range(len(files)):
                 out.append('#EXTINF:')
                 out.append(str(int(self.len_[i])))
