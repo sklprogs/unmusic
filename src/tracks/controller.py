@@ -148,7 +148,6 @@ class Tracks:
         if not self.Success:
             sh.com.cancel(f)
             return
-        self.get_gui().reset()
         data = lg.objs.get_db().get_tracks()
         if not data:
             mes = _('No tracks are associated with this album.')

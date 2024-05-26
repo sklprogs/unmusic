@@ -2,12 +2,239 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import phrydy
 
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 from config import PATHS
 import logic as lg
+
+
+class Commands:
+    
+    def decode(self, text):
+        try:
+            byted = bytes(text, 'iso-8859-1')
+            return byted.decode('cp1251')
+        except:
+            return text
+    
+    def delete_album_trash(self, album):
+        album = album.replace(' (@FLAC)', '').replace(' (@VBR)', '')
+        album = album.replace(' (@vbr)', '').replace(', @FLAC', '')
+        album = album.replace(',@FLAC', '').replace(', @VBR', '')
+        album = album.replace(',@VBR', '').replace(', @vbr', '')
+        album = album.replace(',@vbr', '')
+        album = re.sub(' \(@\d+\)', '', album)
+        album = re.sub(',[\s]{0,1}@\d+\)', '', album)
+        return album
+    
+    def sanitize(self, field):
+        field = sh.lg.Text(field).delete_duplicate_spaces()
+        field = field.strip()
+        field = self.decode(field)
+        if not field:
+            field = '?'
+        return field
+
+
+
+class Track:
+    
+    def __init__(self, file):
+        self.set_values()
+        self.file = file
+        self.Success = sh.lg.File(self.file).Success
+        self.load()
+        self.set_info()
+        self.decode()
+    
+    def purge(self):
+        f = '[unmusic] album_editor.logic.Track.purge'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.audio:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self.audio.delete()
+            self.audio.images = {}
+        except Exception as e:
+            self.Success = False
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
+    
+    def save(self):
+        ''' This is only needed if the file was changed by means of 'phrydy',
+            see, for example, 'self.purge'.
+        '''
+        f = '[unmusic] album_editor.logic.Track.save'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.audio:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self.audio.save()
+        except Exception as e:
+            self.Success = False
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
+    
+    def decode(self):
+        # Fix Cyrillic tags
+        f = '[unmusic] album_editor.logic.Track.decode'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        # Other fields should be decoded before writing to DB
+        self.title = com.decode(self.title)
+        self.lyrics = com.decode(self.lyrics)
+    
+    def get_track_meta(self):
+        f = '[unmusic] album_editor.logic.Track.get_track_meta'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        search = [self.title,self.lyrics]
+        search = ' '.join(search)
+        search = sh.lg.Text(search).delete_duplicate_spaces()
+        search = search.strip().lower()
+        return (self.title, self.no, self.lyrics, search, self.bitrate
+               ,self.length
+               )
+    
+    def set_values(self):
+        self.Success = True
+        self.audio = None
+        self.image = None
+        self.artist = ''
+        self.album = ''
+        self.title = ''
+        self.lyrics = ''
+        self.genre = ''
+        self.year = 0
+        self.bitrate = 0
+        self.length = 0
+        self.no = 1
+    
+    def show_summary(self):
+        f = '[unmusic] album_editor.logic.Track.show_summary'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        mes = _('Artist: {}').format(self.artist)
+        mes += '\n'
+        mes += _('Album: {}').format(self.album)
+        mes += '\n'
+        mes += _('Genre: {}').format(self.genre)
+        mes += '\n'
+        mes += _('Year: {}').format(self.year)
+        mes += '\n'
+        mes += _('Track #: {}').format(self.no)
+        mes += '\n'
+        mes += _('Title: {}').format(self.title)
+        mes += '\n'
+        mes += _('Lyrics: {}').format(self.lyrics)
+        if self.length:
+            minutes = self.length // 60
+            seconds = self.length - minutes * 60
+        else:
+            minutes = seconds = 0
+        mes += _('Length: {} {} {} {}').format (minutes, _('min'), seconds
+                                               ,_('sec')
+                                               )
+        mes +=  '\n'
+        sh.objs.get_mes(f, mes).show_info()
+    
+    def extract_title(self):
+        f = '[unmusic] album_editor.logic.Track.extract_title'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        title = sh.lg.Path(self.file).get_filename()
+        if not title:
+            return
+        result = re.sub('^\d+[\.]{0,1}[\s]{0,1}','',title)
+        if not result:
+            # If a title is just a digit + an extension.
+            return title
+        return result
+    
+    def _set_info(self):
+        f = '[unmusic] album_editor.logic.Track._set_info'
+        artist = [self.audio.artist, self.audio.albumartist
+                 ,self.audio.composer
+                 ]
+        artist = [item for item in artist if item]
+        if artist:
+            self.artist = artist[0]
+        ''' - Prevents from type mismatch (e.g., 'phrydy' returns 'None'
+              in case a year is not set).
+            - If an input value is empty then we do not overwrite a default
+              value which should be of a correct type. This does not work
+              as a separate procedure.
+        '''
+        if self.audio.album:
+            self.album = str(self.audio.album)
+        else:
+            dirname = sh.lg.Path(self.file).get_dirname()
+            dirname = sh.lg.Path(dirname).get_basename()
+            self.album = '[[' + dirname + ']]'
+        if self.audio.genre:
+            self.genre = str(self.audio.genre)
+        if self.audio.year:
+            self.year = sh.lg.Input (title = f
+                                    ,value = self.audio.year
+                                    ).get_integer()
+        if self.audio.title:
+            self.title = str(self.audio.title)
+        else:
+            extracted = self.extract_title()
+            if extracted:
+                self.title = extracted
+        if self.audio.bitrate:
+            self.bitrate = self.audio.bitrate
+        if self.audio.length:
+            self.length = self.audio.length
+        if str(self.audio.track).isdigit():
+            self.no = self.audio.track
+        if self.audio.lyrics:
+            self.lyrics = str(self.audio.lyrics)
+        if self.audio.images:
+            self.image = self.audio.images[0].data
+    
+    def set_info(self):
+        f = '[unmusic] album_editor.logic.Track.set_info'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if not self.audio:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self._set_info()
+        except Exception as e:
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
+    
+    def load(self):
+        f = '[unmusic] album_editor.logic.Track.load'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        if self.audio:
+            return self.audio
+        try:
+            self.audio = phrydy.MediaFile(self.file)
+        except Exception as e:
+            mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
+            sh.objs.get_mes(f, mes).show_warning()
+        return self.audio
+
 
 
 class Directory:
@@ -719,3 +946,4 @@ class AlbumEditor:
 
 
 COLLECTION = Collection()
+com = Commands()
