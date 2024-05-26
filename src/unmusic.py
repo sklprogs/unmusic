@@ -513,7 +513,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        pattern = self.gui.ent_sr2.get()
+        pattern = self.gui.top.ent_sr2.get()
         if not pattern:
             sh.com.rep_lazy(f)
             return
@@ -522,7 +522,7 @@ class AlbumEditor:
             mes = _('No matches!')
             sh.objs.get_mes(f, mes).show_info()
             return
-        objs.get_tracks().fill_search(data=data)
+        objs.get_tracks().fill_search(data)
         objs.tracks.show()
     
     def search_album(self):
@@ -711,12 +711,6 @@ class Tracks:
             track.ent_tit.clear_text()
             track.ent_tit.insert(title)
     
-    def _dump_search(self, old, new):
-        f = '[unmusic] unmusic.Tracks._dump_search'
-        mes = _('Not implemented yet!')
-        sh.objs.get_mes(f, mes).show_info()
-        return False
-    
     def _dump(self, old, new):
         f = '[unmusic] unmusic.Tracks._dump'
         if not old or not new:
@@ -744,12 +738,18 @@ class Tracks:
                     # We're in loop - do not use 'return'
                     continue
                 mes = _('Edit #{}.').format(i+1)
-                self.get_gui().update_info(mes)
+                self.gui.update_info(mes)
                 lg.objs.get_db().update_track (no = i + 1
                                               ,data = new_record
                                               )
                 Dump = True
         return Dump
+    
+    def dump_new(self):
+        new = []
+        for track in self.tracks:
+            new.append(track.dump())
+        return new
     
     def dump(self):
         f = '[unmusic] unmusic.Tracks.dump'
@@ -760,15 +760,9 @@ class Tracks:
             mes = _('Track numbers should be sequential!')
             sh.objs.get_mes(f, mes).show_warning()
             return
-        Extended = False
-        if self.tracks:
-            Extended = self.tracks[0].Extended
         old = lg.objs.db.get_tracks()
-        new = self.gui.dump()
-        if Extended:
-            return self._dump_search(old, new)
-        else:
-            return self._dump(old, new)
+        new = self.dump_new()
+        return self._dump(old, new)
     
     def save(self):
         ''' #NOTE: this should be done before 'albumid' is changed, otherwise,
@@ -780,7 +774,7 @@ class Tracks:
             return
         if self.dump():
             objs.get_editor().update_rating()
-            self.get_gui().update_info(_('Save DB.'))
+            self.gui.update_info(_('Save DB.'))
             lg.objs.get_db().save()
     
     def set_bindings(self):
@@ -803,16 +797,11 @@ class Tracks:
         self.save()
         self.gui.close()
     
-    def reset(self):
-        f = '[unmusic] unmusic.Tracks.reset'
-        print(f, 'to be implemented')
-    
     def fill_search(self, data):
         f = '[unmusic] unmusic.Tracks.fill_search'
         if not self.Success:
             sh.com.cancel(f)
             return
-        self.reset()
         if not data:
             sh.com.rep_empty(f)
             return
@@ -854,30 +843,30 @@ class Tracks:
             self.gui.update_info(mes)
             record = data[i]
             track = self.gui.tracks[i]
-            if len(record) == 7:
-                track.ent_tno.enable()
-                track.ent_tno.clear_text()
-                track.ent_tno.insert(str(record[1]))
-                track.ent_tno.disable()
-                track.ent_tit.clear_text()
-                track.ent_tit.insert(record[0])
-                track.ent_lyr.clear_text()
-                track.ent_lyr.insert(record[2])
-                track.ent_com.clear_text()
-                track.ent_com.insert(record[3])
-                track.ent_bit.enable()
-                track.ent_bit.clear_text()
-                track.ent_bit.insert(str(record[4] // 1000) + 'k')
-                track.ent_bit.disable()
-                track.ent_len.enable()
-                track.ent_len.clear_text()
-                track.ent_len.insert(sh.lg.com.get_human_time(float(record[5])))
-                track.ent_len.disable()
-                track.opt_rtg.set(record[6])
-            else:
+            if len(record) != 7:
                 self.Success = False
                 mes = _('Wrong input data: "{}"!').format(data)
                 sh.objs.get_mes(f, mes).show_error()
+                return
+            track.ent_tno.enable()
+            track.ent_tno.clear_text()
+            track.ent_tno.insert(str(record[1]))
+            track.ent_tno.disable()
+            track.ent_tit.clear_text()
+            track.ent_tit.insert(record[0])
+            track.ent_lyr.clear_text()
+            track.ent_lyr.insert(record[2])
+            track.ent_com.clear_text()
+            track.ent_com.insert(record[3])
+            track.ent_bit.enable()
+            track.ent_bit.clear_text()
+            track.ent_bit.insert(str(record[4] // 1000) + 'k')
+            track.ent_bit.disable()
+            track.ent_len.enable()
+            track.ent_len.clear_text()
+            track.ent_len.insert(sh.lg.com.get_human_time(float(record[5])))
+            track.ent_len.disable()
+            track.opt_rtg.set(record[6])
         self.gui.adjust_by_content()
 
 

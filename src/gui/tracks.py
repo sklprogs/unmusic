@@ -69,6 +69,11 @@ class Track:
     def __init__(self):
         self.set_gui()
     
+    def dump(self):
+        return (self.ent_tit.get(), self.ent_lyr.get(), self.ent_com.get()
+               ,int(self.opt_rtg.get())
+               )
+    
     def configure(self):
         self.ent_tno.disable()
         self.ent_bit.disable()
