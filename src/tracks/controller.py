@@ -25,7 +25,7 @@ class Tracks:
         for track in self.tracks:
             title = track.ent_tit.get()
             title = lg.com.decode_back(title)
-            track.ent_tit.clear_text()
+            track.ent_tit.clear()
             track.ent_tit.insert(title)
     
     def _dump(self, old, new):
@@ -154,34 +154,21 @@ class Tracks:
             sh.objs.get_mes(f, mes).show_info()
             return
         for i in range(len(data)):
-            self.gui.add()
-            mes = _('Load #{}.').format(i+1)
-            self.gui.update_info(mes)
+            self.add()
             record = data[i]
-            track = self.gui.tracks[i]
+            track = self.tracks[i]
             if len(record) != 7:
                 self.Success = False
                 mes = _('Wrong input data: "{}"!').format(data)
                 sh.objs.get_mes(f, mes).show_error()
                 return
-            track.ent_tno.enable()
-            track.ent_tno.clear_text()
+            track.reset()
             track.ent_tno.insert(str(record[1]))
-            track.ent_tno.disable()
-            track.ent_tit.clear_text()
             track.ent_tit.insert(record[0])
-            track.ent_lyr.clear_text()
             track.ent_lyr.insert(record[2])
-            track.ent_com.clear_text()
             track.ent_com.insert(record[3])
-            track.ent_bit.enable()
-            track.ent_bit.clear_text()
             track.ent_bit.insert(str(record[4] // 1000) + 'k')
-            track.ent_bit.disable()
-            track.ent_len.enable()
-            track.ent_len.clear_text()
             track.ent_len.insert(sh.lg.com.get_human_time(float(record[5])))
-            track.ent_len.disable()
             track.opt_rtg.set(record[6])
 
 
