@@ -7,6 +7,7 @@ import skl_shared_qt.shared as sh
 from config import CONFIG
 import logic as lg
 from . import gui
+from .logic import IMAGE
 
 
 class ImageViewer:
@@ -21,7 +22,7 @@ class ImageViewer:
     
     def set_image(self):
         f = '[unmusic] image_viewer.controller.ImageViewer.set_image'
-        path = objs.get_image().run()
+        path = IMAGE.run()
         if not path:
             sh.com.rep_empty(f)
             return

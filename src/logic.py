@@ -129,38 +129,6 @@ class Collection:
 
 
 
-class Image:
-    
-    def __init__(self):
-        self.dir = sh.Home('unmusic').add_share(_('Images'))
-        self.Success = sh.Path(self.dir).create()
-        self.path = ''
-    
-    def get(self):
-        f = '[unmusic] logic.Image.get'
-        if not self.Success:
-            sh.com.cancel(f)
-            return self.path
-        path = self.get_cover()
-        if path and os.path.exists(path):
-            self.path = path
-        else:
-            self.path = sh.objs.get_pdir().add('..', 'resources', 'cd.png')
-        return self.path
-    
-    def get_cover(self):
-        f = '[unmusic] logic.Image.get_cover'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        name = str(objs.get_db().albumid) + '.jpg'
-        return os.path.join(self.dir, name)
-    
-    def run(self):
-        return self.get()
-
-
-
 class BadMusic:
     
     def __init__(self):
@@ -996,11 +964,6 @@ class Objects:
         if not self.collection:
             self.collection = Collection()
         return self.collection
-    
-    def get_image(self):
-        if self.image is None:
-            self.image = Image()
-        return self.image
     
     def get_db(self):
         f = '[unmusic] logic.Objects.get_db'

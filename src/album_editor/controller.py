@@ -6,7 +6,7 @@ import skl_shared_qt.shared as sh
 
 from config import PATHS, CONFIG
 import logic as lg
-from image_viewer.controller import IMAGE_VIEWER
+from image_viewer.controller import IMAGE_VIEWER, IMAGE
 from tracks.controller import TRACKS
 from . import gui
 
@@ -283,7 +283,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        path = objs.get_image().run()
+        path = IMAGE.run()
         if not path:
             sh.com.rep_empty(f)
             return
@@ -367,7 +367,7 @@ class AlbumEditor:
         ''' We call GUI directly here since shared checks for fixed values, and
             we want float here.
         '''
-        ratings = list(ga.RATINGS)
+        ratings = list(gui.RATINGS)
         if rating in ratings:
             self.gui.top.opt_rtg.set(rating)
         else:

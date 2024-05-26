@@ -99,7 +99,7 @@ class Tracks:
         self.gui.bind(('Esc',), self.close)
     
     def add(self):
-        track = gt.Track()
+        track = gui.Track()
         self.gui.add(track)
         self.tracks.append(track)
         return track

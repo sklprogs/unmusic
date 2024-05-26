@@ -4,6 +4,13 @@
 import skl_shared_qt.shared as sh
 from skl_shared_qt.localize import _
 
+''' If we use module-level variables instead of 'Objects', this must be done
+    as soon as we can; otherwise, we can get the following error: 'QWidget:
+    Must construct a QApplication before a QWidget'. This is because creating
+    a class stored in a controller will also create its GUI.
+'''
+sh.com.start()
+
 from config import CONFIG
 import logic as lg
 from album_editor.controller import ALBUM_EDITOR
@@ -149,16 +156,14 @@ class Menu:
         self.gui.close()
 
 
-if __name__ == '__main__':
-    f = '[unmusic] unmusic.__main__'
-    sh.com.start()
-    if CONFIG.Success:
-        ALBUM_EDITOR.reset()
-        ALBUM_EDITOR.show()
-    else:
-        mes = _('Invalid configuration!')
-        #FIX: quit app normally after common dialog
-        #sh.objs.get_mes(f, mes).show_error()
-        idebug = sh.Debug(f, mes)
-        idebug.show()
-    sh.com.end()
+f = '[unmusic] unmusic.__main__'
+if CONFIG.Success:
+    ALBUM_EDITOR.reset()
+    ALBUM_EDITOR.show()
+else:
+    mes = _('Invalid configuration!')
+    #FIX: quit app normally after common dialog
+    #sh.objs.get_mes(f, mes).show_error()
+    idebug = sh.Debug(f, mes)
+    idebug.show()
+sh.com.end()
