@@ -591,7 +591,7 @@ class AlbumEditor:
         if not sh.objs.get_mes(f, mes).show_question():
             return
         mes = _('Delete #{}.').format(lg.DB.albumid)
-        self.gui.update_info(text=mes)
+        self.update_info(mes)
         lg.DB.delete()
         lg.DB.albumid = self.logic.get_max()
         self.fill()
@@ -605,7 +605,7 @@ class AlbumEditor:
             sh.com.cancel(f)
             return
         if self.dump():
-            self.gui.update_info(_('Save DB.'))
+            self.update_info(_('Save DB.'))
             lg.DB.save()
     
     def set_bindings(self):

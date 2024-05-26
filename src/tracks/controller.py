@@ -54,11 +54,12 @@ class Tracks:
                     sh.objs.get_mes(f, mes).show_warning()
                     # We're in loop - do not use 'return'
                     continue
-                mes = _('Edit #{}.').format(i+1)
-                self.gui.update_info(mes)
+                mes = _('Edit #{}.').format(i + 1)
+                #cur
+                self.update_info(mes)
                 lg.DB.update_track (no = i + 1
-                                              ,data = new_record
-                                              )
+                                   ,data = new_record
+                                   )
                 Dump = True
         return Dump
     
@@ -90,8 +91,9 @@ class Tracks:
             sh.com.cancel(f)
             return
         if self.dump():
+            #cur
             objs.get_editor().update_rating()
-            self.gui.update_info(_('Save DB.'))
+            #self.gui.update_info(_('Save DB.'))
             lg.DB.save()
     
     def set_bindings(self):
