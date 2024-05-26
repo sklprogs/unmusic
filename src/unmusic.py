@@ -867,7 +867,6 @@ class Tracks:
             track.ent_len.insert(sh.lg.com.get_human_time(float(record[5])))
             track.ent_len.disable()
             track.opt_rtg.set(record[6])
-        self.gui.adjust_by_content()
 
 
 
