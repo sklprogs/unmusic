@@ -23,15 +23,25 @@ class AlbumEditor:
         self.set_bindings()
     
     def focus_id_search(self):
+        if self.gui.top.ent_ids.get() == _('ID'):
+            self.gui.top.ent_ids.clear()
+        else:
+            self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.focus()
     
     def focus_album_search(self):
-        self.gui.top.ent_src.select_all()
+        if self.gui.top.ent_src.get() == _('Search in albums'):
+            self.gui.top.ent_src.clear()
+        else:
+            self.gui.top.ent_src.select_all()
         self.gui.top.ent_src.focus()
     
     def focus_track_search(self):
-        self.gui.top.ent_sr2.select_all()
+        if self.gui.top.ent_sr2.get() == _('Search in tracks'):
+            self.gui.top.ent_sr2.clear()
+        else:
+            self.gui.top.ent_sr2.select_all()
         self.gui.top.ent_sr2.focus()
     
     def quit(self):
