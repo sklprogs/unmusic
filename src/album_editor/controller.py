@@ -642,6 +642,8 @@ class AlbumEditor:
         self.gui.bind(('Alt+Right',), self.go_next)
         self.gui.bind(('Alt+N',), self.go_next_unrated)
         self.gui.bind(('Alt+P',), self.go_prev_unrated)
+        self.gui.bind(('Alt+Home',), self.go_start)
+        self.gui.bind(('Alt+End',), self.go_end)
         self.gui.bind(('F5', 'Ctrl+R',), self.fill)
         self.gui.bind(('F2', 'Ctrl+S',), self.save)
         self.gui.bind(('F4', 'Ctrl+T', 'Alt+T',), self.show_tracks)
