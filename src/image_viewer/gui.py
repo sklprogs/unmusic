@@ -7,6 +7,9 @@ from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
 
+sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
+
+
 class ImageViewer:
     
     def __init__(self):
