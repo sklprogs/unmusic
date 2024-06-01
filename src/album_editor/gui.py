@@ -4,6 +4,7 @@
 import PyQt6
 import PyQt6.QtWidgets
 import PyQt6.QtGui
+import PyQt6.QtCore
 
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
@@ -62,10 +63,24 @@ class Top:
         self.configure()
     
     def configure(self):
+        # Set text
         self.ent_src.set_text(_('Search in albums'))
         self.ent_ids.set_text(_('ID'))
-        self.ent_ids.widget.setMaximumWidth(40)
         self.ent_sr2.set_text(_('Search in tracks'))
+        # Set max width
+        self.ent_ids.widget.setMaximumWidth(40)
+        # Set italics
+        font = PyQt6.QtGui.QFont('Mono')
+        font.setItalic(True)
+        self.ent_src.widget.setFont(font)
+        self.ent_ids.widget.setFont(font)
+        self.ent_sr2.widget.setFont(font)
+        # Set color
+        palette = PyQt6.QtGui.QPalette()
+        palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('gray'))
+        self.ent_src.widget.setPalette(palette)
+        self.ent_ids.widget.setPalette(palette)
+        self.ent_sr2.widget.setPalette(palette)
     
     def set_widgets(self):
         self.btn_spr = sh.Button (hint = _('Search older records')
