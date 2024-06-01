@@ -24,7 +24,7 @@ class Tracks:
         self.pnl_trs.move(sh.objs.get_root().primaryScreen().geometry().center() - self.pnl_trs.rect().center())
     
     def set_icon(self):
-        # Does not accent None
+        # Does not accept None
         self.pnl_trs.setWindowIcon(sh.gi.objs.get_icon())
     
     def set_title(self):

@@ -17,7 +17,7 @@ class ImageViewer:
             PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self.pnl_img).activated.connect(action)
     
     def set_icon(self):
-        # Does not accent None
+        # Does not accept None
         self.pnl_img.setWindowIcon(sh.gi.objs.get_icon())
     
     def set_title(self):

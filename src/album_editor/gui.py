@@ -369,7 +369,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         self.pnl_edt.setLayout(self.lay_edt)
     
     def set_icon(self):
-        # Does not accent None
+        # Does not accept None
         self.setWindowIcon(sh.gi.objs.get_icon())
     
     def set_title(self):
