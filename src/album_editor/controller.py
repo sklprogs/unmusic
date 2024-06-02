@@ -618,39 +618,78 @@ class AlbumEditor:
             self.update_info(_('Save DB.'))
             lg.DB.save()
     
+    def _bind_key(self, key, action):
+        f = '[unmusic] album_editor.controller.AlbumEditor._bind_key'
+        if not key or not action:
+            sh.com.rep_empty(f)
+            return
+        try:
+            self.gui.bind(CONFIG.new['actions'][key]['hotkeys'], action)
+            return True
+        except KeyError:
+            mes = _('Wrong input data: "{}"!').format(key)
+            sh.objs.get_mes(f, mes).show_warning()
+    
+    def _bind_hint(self, key, widget):
+        f = '[unmusic] album_editor.controller.AlbumEditor._bind_hint'
+        if not key or not widget:
+            sh.com.rep_empty(f)
+            return
+        if not hasattr(widget, 'hint'):
+            # Set a hint on a supported widget only such as a button
+            return
+        hotkeys = hint = None
+        try:
+            hotkeys = CONFIG.new['actions'][key]['hotkeys']
+            hint = CONFIG.new['actions'][key]['hint']
+        except KeyError:
+            mes = _('Wrong input data: "{}"!').format(key)
+            sh.objs.get_mes(f, mes).show_warning()
+            return
+        if not hotkeys or not hint:
+            sh.com.rep_empty(f)
+            return
+        hotkeys = ', '.join(hotkeys)
+        widget.hint = f'{hint}<i><center>{hotkeys}</center></i>'
+        widget.set_hint()
+    
+    def bind_top(self, key, action, widget=None):
+        # Bind hotkeys to the window and set up a button with the same action
+        f = '[unmusic] album_editor.controller.AlbumEditor.bind_top'
+        if not self._bind_key(key, action):
+            return
+        if not widget:
+            return
+        widget.set_action(action)
+        self._bind_hint(key, widget)
+    
     def set_bindings(self):
         # Connect to signals
         self.gui.sig_close.connect(self.close)
         self.gui.sig_close.connect(self.quit)
         # Bind widgets
-        self.gui.top.btn_nxt.set_action(self.go_next)
-        self.gui.top.btn_prv.set_action(self.go_prev)
+        self.bind_top('go_next', self.go_next, self.gui.top.btn_nxt)
+        self.bind_top('go_prev', self.go_prev, self.gui.top.btn_prv)
+        self.bind_top('go_next_unrated', self.go_next_unrated)
+        self.bind_top('go_prev_unrated', self.go_prev_unrated)
+        self.bind_top('go_start', self.go_start)
+        self.bind_top('go_end', self.go_end)
+        self.bind_top('reload', self.fill, self.gui.bottom.btn_rld)
+        self.bind_top('save', self.save, self.gui.bottom.btn_sav)
+        self.bind_top('show_tracks', self.show_tracks, self.gui.bottom.btn_trk)
+        self.bind_top('focus_album_search', self.focus_album_search)
+        self.bind_top('focus_id_search', self.focus_id_search)
+        self.bind_top('focus_track_search', self.focus_track_search)
+        self.bind_top('delete_tracks', self.delete_tracks, self.gui.bottom.btn_trs)
         self.gui.top.btn_snr.set_action(self.search_next_album)
         self.gui.top.btn_spr.set_action(self.search_prev_album)
         self.gui.top.opt_rtg.set_action(self.set_rating)
         self.gui.top.opt_ply.set_action(self.play)
         self.gui.bottom.btn_dec.set_action(self.decode)
         self.gui.bottom.btn_del.set_action(self.delete)
-        self.gui.bottom.btn_trs.set_action(self.delete_tracks)
-        self.gui.bottom.btn_rld.set_action(self.fill)
-        self.gui.bottom.btn_sav.set_action(self.save)
-        self.gui.bottom.btn_trk.set_action(self.show_tracks)
-        # Enable hotkeys
+        # Hardcode hotkeys
         self.gui.bind(('Ctrl+Q',), self.close)
-        self.gui.bind(('Esc',), self.minimize)
-        self.gui.bind(('Alt+Left',), self.go_prev)
-        self.gui.bind(('Alt+Right',), self.go_next)
-        self.gui.bind(('Alt+N',), self.go_next_unrated)
-        self.gui.bind(('Alt+P',), self.go_prev_unrated)
-        self.gui.bind(('Alt+Home',), self.go_start)
-        self.gui.bind(('Alt+End',), self.go_end)
-        self.gui.bind(('F5', 'Ctrl+R',), self.fill)
-        self.gui.bind(('F2', 'Ctrl+S',), self.save)
-        self.gui.bind(('F4', 'Ctrl+T', 'Alt+T',), self.show_tracks)
         # Bind entries
-        self.gui.bind(('F3',), self.focus_album_search)
-        self.gui.bind(('F6',), self.focus_id_search)
-        self.gui.bind(('F9',), self.focus_track_search)
         self.gui.top.ent_ids.widget.returnPressed.connect(self.search_id)
         self.gui.top.ent_src.widget.returnPressed.connect(self.search_album)
         self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)

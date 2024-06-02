@@ -1,7 +1,113 @@
-{"cur_id": {"type": "integer"}
-,"config":
-    {"type": "object"
-    ,"properties": {"min_version": {"type": "integer"}}
+{"type": "object"
+,"properties":
+    {"cur_id": {"type": "integer"}
+    ,"config":
+        {"type": "object"
+        ,"properties": {"min_version": {"type": "integer"}}
+        }
+    ,"delete": {"type": "object"}
+    ,"actions":
+        {"type": "object"
+        ,"properties":
+            {"minimize":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_prev":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_next":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_next_unrated":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_prev_unrated":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_start":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"go_end":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"reload":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"save":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"show_tracks":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"focus_album_search":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"focus_id_search":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"focus_track_search":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            ,"delete_tracks":
+                {"type": "object"
+                ,"properties":
+                    {"hotkeys": {"type": "array"}
+                    ,"hint": {"type": "string"}
+                    }
+                }
+            }
+        }
     }
-,"delete": {"type": "object"}
 }

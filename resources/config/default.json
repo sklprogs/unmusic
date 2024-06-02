@@ -1,4 +1,62 @@
 {"cur_id": 1
 ,"config": {"min_version": 1}
 ,"delete": {}
+,"actions":
+    {"minimize":
+        {"hotkeys": ["Esc"]
+        ,"hint": "Minimize the app"
+        }
+    ,"go_prev":
+        {"hotkeys": ["Alt+Left"]
+        ,"hint": "Go to the previous album"
+        }
+    ,"go_next":
+        {"hotkeys": ["Alt+Next"]
+        ,"hint": "Go to the next album"
+        }
+    ,"go_next_unrated":
+        {"hotkeys": ["Alt+N"]
+        ,"hint": "Go to the next unrated album"
+        }
+    ,"go_prev_unrated":
+        {"hotkeys": ["Alt+P"]
+        ,"hint": "Go to the previous unrated album"
+        }
+    ,"go_start":
+        {"hotkeys": ["Alt+Home"]
+        ,"hint": "Go to the first album"
+        }
+    ,"go_end":
+        {"hotkeys": ["Alt+End"]
+        ,"hint": "Go to the last album"
+        }
+    ,"reload":
+        {"hotkeys": ["F5", "Ctrl+R"]
+        ,"hint": "Reload the current album"
+        }
+    ,"save":
+        {"hotkeys": ["F2", "Ctrl+S"]
+        ,"hint": "Save changes"
+        }
+    ,"show_tracks":
+        {"hotkeys": ["F4", "Ctrl+T", "Alt+T"]
+        ,"hint": "Show tracks"
+        }
+    ,"focus_album_search":
+        {"hotkeys": ["F3"]
+        ,"hint": "Go to the album search field"
+        }
+    ,"focus_id_search":
+        {"hotkeys": ["F6"]
+        ,"hint": "Go to the album ID search field"
+        }
+    ,"focus_track_search":
+        {"hotkeys": ["F9"]
+        ,"hint": "Go to the track search field"
+        }
+    ,"delete_tracks":
+        {"hotkeys": ["Ctrl+Shift+Del"]
+        ,"hint": "Delete tracks with rating < 8"
+        }
+    }
 }
