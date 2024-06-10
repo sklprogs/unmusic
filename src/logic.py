@@ -254,6 +254,12 @@ class Commands:
     
     def restore_id(self):
         f = '[unmusic] logic.Commands.restore_id'
+        if not CONFIG.Success:
+            sh.com.cancel(f)
+            return
+        if not DB.Success:
+            sh.com.cancel(f)
+            return
         min_ = DB.get_min_id()
         max_ = DB.get_max_id()
         if not min_ or not max_:
