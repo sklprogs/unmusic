@@ -628,7 +628,8 @@ class AlbumEditor:
             return True
         except KeyError:
             mes = _('Wrong input data: "{}"!').format(key)
-            sh.objs.get_mes(f, mes).show_warning()
+            # Failed config fails all keys, so this should be silent
+            sh.objs.get_mes(f, mes, True).show_warning()
     
     def _bind_hint(self, key, widget):
         f = '[unmusic] album_editor.controller.AlbumEditor._bind_hint'
