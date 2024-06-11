@@ -11,7 +11,7 @@
         ,"hint": "Go to the previous album"
         }
     ,"go_next":
-        {"hotkeys": ["Alt+Next"]
+        {"hotkeys": ["Alt+Right"]
         ,"hint": "Go to the next album"
         }
     ,"go_next_unrated":
