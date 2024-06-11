@@ -22,7 +22,7 @@ class AlbumEditor:
         self.gui = gui.AlbumEditor()
         self.set_bindings()
     
-    def focus_id_search(self):
+    def focus_id_search(self, event=None):
         if self.gui.top.ent_ids.get() == _('ID'):
             self.gui.top.ent_ids.clear()
         else:
@@ -30,14 +30,14 @@ class AlbumEditor:
         self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.focus()
     
-    def focus_album_search(self):
+    def focus_album_search(self, event=None):
         if self.gui.top.ent_src.get() == _('Search in albums'):
             self.gui.top.ent_src.clear()
         else:
             self.gui.top.ent_src.select_all()
         self.gui.top.ent_src.focus()
     
-    def focus_track_search(self):
+    def focus_track_search(self, event=None):
         if self.gui.top.ent_sr2.get() == _('Search in tracks'):
             self.gui.top.ent_sr2.clear()
         else:
@@ -691,6 +691,9 @@ class AlbumEditor:
         # Hardcode hotkeys
         self.gui.bind(('Ctrl+Q',), self.close)
         # Bind entries
+        self.gui.top.ent_ids.widget.mousePressEvent = self.focus_id_search
+        self.gui.top.ent_src.widget.mousePressEvent = self.focus_album_search
+        self.gui.top.ent_sr2.widget.mousePressEvent = self.focus_track_search
         self.gui.top.ent_ids.widget.returnPressed.connect(self.search_id)
         self.gui.top.ent_src.widget.returnPressed.connect(self.search_album)
         self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)
