@@ -29,6 +29,7 @@ class AlbumEditor:
             self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.focus()
+        self.gui.top.reset_font_ids()
     
     def focus_album_search(self, event=None):
         if self.gui.top.ent_src.get() == _('Search in albums'):
@@ -36,6 +37,7 @@ class AlbumEditor:
         else:
             self.gui.top.ent_src.select_all()
         self.gui.top.ent_src.focus()
+        self.gui.top.reset_font_src()
     
     def focus_track_search(self, event=None):
         if self.gui.top.ent_sr2.get() == _('Search in tracks'):
@@ -43,6 +45,7 @@ class AlbumEditor:
         else:
             self.gui.top.ent_sr2.select_all()
         self.gui.top.ent_sr2.focus()
+        self.gui.top.reset_font_sr2()
     
     def quit(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.quit'

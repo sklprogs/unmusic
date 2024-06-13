@@ -49,6 +49,9 @@ class Top:
         self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                             ,'go_next.png'
                                             )
+        self.font = None
+        self.black_palette = PyQt6.QtGui.QPalette()
+        self.black_palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('black'))
     
     def set_layout(self):
         self.pnl_top = PyQt6.QtWidgets.QWidget()
@@ -62,7 +65,26 @@ class Top:
         self.add_widgets()
         self.configure()
     
+    def reset_font_src(self):
+        if not self.font:
+            return
+        self.ent_src.widget.setFont(self.font)
+        self.ent_src.widget.setPalette(self.black_palette)
+    
+    def reset_font_sr2(self):
+        if not self.font:
+            return
+        self.ent_sr2.widget.setFont(self.font)
+        self.ent_sr2.widget.setPalette(self.black_palette)
+    
+    def reset_font_ids(self):
+        if not self.font:
+            return
+        self.ent_ids.widget.setFont(self.font)
+        self.ent_ids.widget.setPalette(self.black_palette)
+    
     def configure(self):
+        self.font = self.ent_src.widget.font()
         # Set text
         self.ent_src.set_text(_('Search in albums'))
         self.ent_ids.set_text(_('ID'))
