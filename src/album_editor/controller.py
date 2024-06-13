@@ -656,7 +656,7 @@ class AlbumEditor:
             sh.com.rep_empty(f)
             return
         hotkeys = ', '.join(hotkeys)
-        widget.hint = f'{html.escape(hint)}<i><center>{hotkeys}</center></i>'
+        widget.hint = f'{html.escape(_(hint))}<i><center>{hotkeys}</center></i>'
         widget.set_hint()
     
     def bind_top(self, key, action, widget=None):
