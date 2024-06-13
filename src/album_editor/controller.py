@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import html
+
 from skl_shared_qt.localize import _
 import skl_shared_qt.shared as sh
 
@@ -654,7 +656,7 @@ class AlbumEditor:
             sh.com.rep_empty(f)
             return
         hotkeys = ', '.join(hotkeys)
-        widget.hint = f'{hint}<i><center>{hotkeys}</center></i>'
+        widget.hint = f'{html.escape(hint)}<i><center>{hotkeys}</center></i>'
         widget.set_hint()
     
     def bind_top(self, key, action, widget=None):
