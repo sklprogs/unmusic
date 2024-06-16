@@ -78,6 +78,12 @@ class Track:
         self.ent_tno.disable()
         self.ent_bit.disable()
         self.ent_len.disable()
+        self.ent_tno.widget.setMinimumWidth(180)
+        self.ent_tit.widget.setMinimumWidth(180)
+        self.ent_lyr.widget.setMinimumWidth(180)
+        self.ent_com.widget.setMinimumWidth(180)
+        self.ent_bit.widget.setMinimumWidth(180)
+        self.ent_len.widget.setMinimumWidth(180)
     
     def reset(self):
         self.ent_tno.clear()
