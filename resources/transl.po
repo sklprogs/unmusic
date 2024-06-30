@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-14 00:55+0300\n"
-"PO-Revision-Date: 2024-06-14 00:57+0300\n"
+"POT-Creation-Date: 2024-06-30 15:40+0300\n"
+"PO-Revision-Date: 2024-06-30 15:41+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -105,7 +105,7 @@ msgid "Set the max column width to {} symbols"
 msgstr "Ограничить максимальную ширину столбца {} символами"
 
 #: skl_shared_qt/src/logic.py:159 skl_shared_qt/src/logic.py:2941
-#: unmusic/src/album_editor/controller.py:449
+#: unmusic/src/album_editor/controller.py:452
 msgid "The condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -117,13 +117,14 @@ msgstr "Поддерживаются только итерируемые объ�
 #: skl_shared_qt/src/logic.py:1711 skl_shared_qt/src/logic.py:1861
 #: skl_shared_qt/src/logic.py:2629 skl_shared_qt/src/logic.py:2763
 #: skl_shared_qt/src/logic.py:2777 skl_shared_qt/src/logic.py:2856
-#: unmusic/src/album_editor/controller.py:127
-#: unmusic/src/album_editor/controller.py:251
-#: unmusic/src/album_editor/controller.py:256
-#: unmusic/src/album_editor/controller.py:420
-#: unmusic/src/album_editor/controller.py:635
-#: unmusic/src/album_editor/controller.py:652
-#: unmusic/src/tracks/controller.py:132 unmusic/src/tracks/controller.py:164
+#: unmusic/src/album_editor/controller.py:128
+#: unmusic/src/album_editor/controller.py:254
+#: unmusic/src/album_editor/controller.py:259
+#: unmusic/src/album_editor/controller.py:423
+#: unmusic/src/album_editor/controller.py:632
+#: unmusic/src/album_editor/controller.py:649
+#: unmusic/src/search_tracks/controller.py:83
+#: unmusic/src/tracks/controller.py:139
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
@@ -155,7 +156,7 @@ msgid "Not enough input data!"
 msgstr "Недостаточно входных данных!"
 
 #: skl_shared_qt/src/logic.py:517 skl_shared_qt/src/shared.py:377
-#: unmusic/src/album_editor/controller.py:334 unmusic/src/copy_album.py:66
+#: unmusic/src/album_editor/controller.py:337 unmusic/src/copy_album.py:66
 #: unmusic/src/copy_album.py:284
 msgid ""
 "An unknown mode \"{}\"!\n"
@@ -191,6 +192,7 @@ msgstr "Файл \"{}\" не найден!"
 #: skl_shared_qt/src/logic.py:1481 skl_shared_qt/src/logic.py:2337
 #: skl_shared_qt/src/logic.py:2902 skl_shared_qt/src/shared.py:306
 #: unmusic/src/copy_album.py:225 unmusic/src/copy_album.py:232
+#: unmusic/src/search_tracks/controller.py:40
 #: unmusic/src/tracks/controller.py:45
 msgid "Wrong input data!"
 msgstr "Недопустимые входные данные!"
@@ -553,7 +555,7 @@ msgstr "{} совпадений"
 
 #: skl_shared_qt/src/logic.py:2935 skl_shared_qt/src/shared.py:161
 #: skl_shared_qt/src/shared.py:771 skl_shared_qt/src/web.py:28
-#: unmusic/src/album_editor/controller.py:312
+#: unmusic/src/album_editor/controller.py:315
 #: unmusic/src/album_editor/logic.py:67 unmusic/src/album_editor/logic.py:85
 #: unmusic/src/album_editor/logic.py:222 unmusic/src/album_editor/logic.py:235
 #: unmusic/src/image_viewer/controller.py:35
@@ -638,91 +640,91 @@ msgstr "Перейти к полю поиска дорожек"
 msgid "Delete tracks with rating < 8"
 msgstr "Удалить дорожки с рейтингом < 8"
 
-#: unmusic/src/album_editor/controller.py:28 unmusic/src/album_editor/gui.py:90
+#: unmusic/src/album_editor/controller.py:29 unmusic/src/album_editor/gui.py:90
 msgid "ID"
 msgstr "ИД"
 
-#: unmusic/src/album_editor/controller.py:37 unmusic/src/album_editor/gui.py:89
+#: unmusic/src/album_editor/controller.py:38 unmusic/src/album_editor/gui.py:89
 msgid "Search in albums"
 msgstr "Поиск по альбомам"
 
-#: unmusic/src/album_editor/controller.py:45 unmusic/src/album_editor/gui.py:91
+#: unmusic/src/album_editor/controller.py:46 unmusic/src/album_editor/gui.py:91
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: unmusic/src/album_editor/controller.py:58 unmusic/src/collect_silent.py:22
+#: unmusic/src/album_editor/controller.py:59 unmusic/src/collect_silent.py:22
 #: unmusic/src/collect_silent.py:51 unmusic/src/utils.py:466
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: unmusic/src/album_editor/controller.py:130
+#: unmusic/src/album_editor/controller.py:131
 msgid "Load #{}."
 msgstr "Загрузка \"{}\"."
 
-#: unmusic/src/album_editor/controller.py:261
-#: unmusic/src/album_editor/controller.py:500
-#: unmusic/src/album_editor/controller.py:541
-#: unmusic/src/album_editor/controller.py:566
+#: unmusic/src/album_editor/controller.py:264
+#: unmusic/src/album_editor/controller.py:538
+#: unmusic/src/album_editor/controller.py:563
+#: unmusic/src/search_tracks/controller.py:75
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
-#: unmusic/src/album_editor/controller.py:321
+#: unmusic/src/album_editor/controller.py:324
 #: unmusic/src/album_editor/gui.py:14
 msgid "Play"
 msgstr "Слушать"
 
-#: unmusic/src/album_editor/controller.py:324
+#: unmusic/src/album_editor/controller.py:327
 #: unmusic/src/album_editor/gui.py:14 unmusic/src/copy_album.py:93
 #: unmusic/src/copy_album.py:275 unmusic/src/copy_album.py:283
 msgid "All"
 msgstr "Все"
 
-#: unmusic/src/album_editor/controller.py:327
+#: unmusic/src/album_editor/controller.py:330
 #: unmusic/src/album_editor/gui.py:14
 msgid "Good"
 msgstr "Хорошее"
 
-#: unmusic/src/album_editor/controller.py:330
+#: unmusic/src/album_editor/controller.py:333
 #: unmusic/src/album_editor/gui.py:14
 msgid "Best"
 msgstr "Лучшее"
 
-#: unmusic/src/album_editor/controller.py:345
+#: unmusic/src/album_editor/controller.py:348
 msgid "{} ({} tracks)"
 msgstr "{} ({} дорожек)"
 
-#: unmusic/src/album_editor/controller.py:423
+#: unmusic/src/album_editor/controller.py:426
 msgid ""
 "Tracks are of a mixed rating. Do you want to assign the same rating to all "
 "of them?"
 msgstr ""
 "Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
 
-#: unmusic/src/album_editor/controller.py:458
+#: unmusic/src/album_editor/controller.py:461
 msgid "An album title should be indicated."
 msgstr "Необходимо указать название альбома."
 
-#: unmusic/src/album_editor/controller.py:466
+#: unmusic/src/album_editor/controller.py:469
 msgid "An artist should be indicated."
 msgstr "Необходимо указать исполнителя."
 
-#: unmusic/src/album_editor/controller.py:480
+#: unmusic/src/album_editor/controller.py:483
 msgid "No changes!"
 msgstr "Изменений не было!"
 
-#: unmusic/src/album_editor/controller.py:483
+#: unmusic/src/album_editor/controller.py:486
 msgid "Some fields have been updated."
 msgstr "Некоторые поля были обновлены."
 
-#: unmusic/src/album_editor/controller.py:604
+#: unmusic/src/album_editor/controller.py:601
 msgid "Are you sure you want to permanently delete record #{}?"
 msgstr "Вы действительно хотите безвозвратно удалить запись №{}?"
 
-#: unmusic/src/album_editor/controller.py:608
+#: unmusic/src/album_editor/controller.py:605
 msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
 
-#: unmusic/src/album_editor/controller.py:623
+#: unmusic/src/album_editor/controller.py:620
 msgid "Save DB."
 msgstr "Сохранение БД."
 
@@ -773,7 +775,8 @@ msgstr "Год:"
 msgid "Country:"
 msgstr "Страна:"
 
-#: unmusic/src/album_editor/gui.py:244 unmusic/src/tracks/gui.py:108
+#: unmusic/src/album_editor/gui.py:244 unmusic/src/search_tracks/gui.py:72
+#: unmusic/src/tracks/gui.py:114
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -866,7 +869,8 @@ msgid "Tracks {} have not been found in \"{}\"!"
 msgstr "Дорожки {} не были найдены в \"{}\"!"
 
 #: unmusic/src/album_editor/logic.py:577 unmusic/src/db.py:237
-#: unmusic/src/logic.py:272 unmusic/src/tracks/controller.py:38
+#: unmusic/src/logic.py:272 unmusic/src/search_tracks/controller.py:33
+#: unmusic/src/tracks/controller.py:38
 msgid "Condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -1007,49 +1011,59 @@ msgstr "Н/Д"
 msgid "Process album ID: {}"
 msgstr "Обработка ИД альбома: {}"
 
+#: unmusic/src/search_tracks/controller.py:48
 #: unmusic/src/tracks/controller.py:53
 msgid "A track title should be indicated."
 msgstr "Необходимо указать название дорожки."
 
+#: unmusic/src/search_tracks/controller.py:52
 #: unmusic/src/tracks/controller.py:57
 msgid "Edit #{}."
 msgstr "Правка №{}."
+
+#: unmusic/src/search_tracks/gui.py:21
+msgid "Track Search"
+msgstr "Поиск дорожек"
+
+#: unmusic/src/search_tracks/gui.py:68
+msgid "Album #:"
+msgstr "Номер альбома:"
+
+#: unmusic/src/search_tracks/gui.py:69 unmusic/src/tracks/gui.py:111
+msgid "Track #:"
+msgstr "Номер дорожки:"
+
+#: unmusic/src/search_tracks/gui.py:70 unmusic/src/tracks/gui.py:112
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: unmusic/src/search_tracks/gui.py:71 unmusic/src/tracks/gui.py:113
+msgid "Lyrics:"
+msgstr "Слова:"
+
+#: unmusic/src/search_tracks/gui.py:73 unmusic/src/tracks/gui.py:115
+msgid "Bitrate:"
+msgstr "Битрейт:"
+
+#: unmusic/src/search_tracks/gui.py:74 unmusic/src/tracks/gui.py:116
+msgid "Length:"
+msgstr "Продолжительность:"
+
+#: unmusic/src/search_tracks/gui.py:75 unmusic/src/tracks/gui.py:117
+msgid "Rating:"
+msgstr "Оценка:"
 
 #: unmusic/src/tracks/controller.py:78
 msgid "Track numbers should be sequential!"
 msgstr "Номера дорожек должны идти последовательно!"
 
-#: unmusic/src/tracks/controller.py:155
+#: unmusic/src/tracks/controller.py:130
 msgid "No tracks are associated with this album."
 msgstr "Для этого альбома дорожки не указаны."
 
 #: unmusic/src/tracks/gui.py:31
 msgid "Tracks"
 msgstr "Дорожки"
-
-#: unmusic/src/tracks/gui.py:105
-msgid "Track #:"
-msgstr "Номер дорожки:"
-
-#: unmusic/src/tracks/gui.py:106
-msgid "Title:"
-msgstr "Заголовок:"
-
-#: unmusic/src/tracks/gui.py:107
-msgid "Lyrics:"
-msgstr "Слова:"
-
-#: unmusic/src/tracks/gui.py:109
-msgid "Bitrate:"
-msgstr "Битрейт:"
-
-#: unmusic/src/tracks/gui.py:110
-msgid "Length:"
-msgstr "Продолжительность:"
-
-#: unmusic/src/tracks/gui.py:111
-msgid "Rating:"
-msgstr "Оценка:"
 
 #: unmusic/src/unmusic.py:29
 msgid "Calculate ratings"
@@ -1439,9 +1453,6 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 
 #~ msgid "Wrong input data: \"{}\""
 #~ msgstr "Недопустимые входные данные: \"{}\"!"
-
-#~ msgid "Search:"
-#~ msgstr "Поиск:"
 
 #~ msgid "Enter a string to search:"
 #~ msgstr "Строка для поиска:"
