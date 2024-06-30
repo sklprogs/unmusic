@@ -116,31 +116,6 @@ class Tracks:
         self.save()
         self.gui.close()
     
-    def fill_search(self, data):
-        f = '[unmusic] tracks.controller.Tracks.fill_search'
-        if not self.Success:
-            sh.com.cancel(f)
-            return
-        if not data:
-            sh.com.rep_empty(f)
-            return
-        for i in range(len(data)):
-            record = data[i]
-            track = self.add()
-            if len(record) != 8:
-                self.Success = False
-                mes = _('Wrong input data: "{}"!').format(data)
-                sh.objs.get_mes(f, mes).show_error()
-                return
-            track.reset()
-            track.ent_tno.insert(record[2])
-            track.ent_tit.insert(record[1])
-            track.ent_lyr.insert(record[3])
-            track.ent_com.insert(record[4])
-            track.ent_bit.insert(str(record[5] // 1000) + 'k')
-            track.ent_len.insert(sh.lg.com.get_human_time(float(record[6])))
-            track.opt_rtg.set(record[7])
-    
     def reload(self):
         self.fill()
         self.show()

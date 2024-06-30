@@ -377,7 +377,7 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
-    def search_track(self, pattern, limit=50):
+    def search_tracks(self, pattern, limit=50):
         f = '[unmusic] db.DB.search_track'
         if not self.Success:
             sh.com.cancel(f)

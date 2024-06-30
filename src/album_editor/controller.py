@@ -10,6 +10,7 @@ from config import PATHS, CONFIG
 import logic as lg
 from image_viewer.controller import IMAGE_VIEWER, IMAGE
 from tracks.controller import TRACKS
+from search_tracks.controller import SEARCH_TRACKS
 from . import logic
 from . import gui
 
@@ -144,6 +145,8 @@ class AlbumEditor:
         self.update()
         if TRACKS.Active:
             TRACKS.reload()
+        if SEARCH_TRACKS.Active:
+            SEARCH_TRACKS.reload()
     
     def delete_tracks(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.delete_tracks'
@@ -495,13 +498,7 @@ class AlbumEditor:
         if not pattern:
             sh.com.rep_lazy(f)
             return
-        data = lg.DB.search_track(pattern)
-        if not data:
-            mes = _('No matches!')
-            sh.objs.get_mes(f, mes).show_info()
-            return
-        TRACKS.fill_search(data)
-        TRACKS.show()
+        SEARCH_TRACKS.reload(pattern)
     
     def search_album(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.search_album'
