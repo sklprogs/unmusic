@@ -684,6 +684,7 @@ class AlbumEditor:
         self.bind_top('focus_id_search', self.focus_id_search)
         self.bind_top('focus_track_search', self.focus_track_search)
         self.bind_top('delete_tracks', self.delete_tracks, self.gui.bottom.btn_trs)
+        self.bind_top('minimize', self.minimize)
         self.gui.top.btn_snr.set_action(self.search_next_album)
         self.gui.top.btn_spr.set_action(self.search_prev_album)
         self.gui.top.opt_rtg.set_action(self.set_rating)
