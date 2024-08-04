@@ -12,10 +12,21 @@ import skl_shared_qt.shared as sh
 sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
 
 
+class Signal(PyQt6.QtCore.QObject):
+    # Separate from Tracks; otherwise, the following error is thrown:
+    # TypeError: Tracks cannot be converted to PyQt6.QtCore.QObject
+    sig_rating = PyQt6.QtCore.pyqtSignal()
+
+
+
 class Tracks:
     
     def __init__(self):
         self.set_gui()
+        self.signal = Signal()
+    
+    def send_rating(self):
+        self.signal.sig_rating.emit()
     
     def centralize(self):
         ''' Do this only after showing the widget; otherwise, it will have
@@ -61,6 +72,7 @@ class Tracks:
     
     def close(self):
         self.pnl_trs.close()
+        self.send_rating()
 
 
 

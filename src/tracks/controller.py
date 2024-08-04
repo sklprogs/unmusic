@@ -56,7 +56,7 @@ class Tracks:
                     continue
                 mes = _('Edit #{}.').format(i + 1)
                 #cur
-                self.update_info(mes)
+                #self.update_info(mes)
                 lg.DB.update_track (no = i + 1
                                    ,data = new_record
                                    )
@@ -91,8 +91,6 @@ class Tracks:
             sh.com.cancel(f)
             return
         if self.dump():
-            #cur
-            objs.get_editor().update_rating()
             #self.gui.update_info(_('Save DB.'))
             lg.DB.save()
     

@@ -700,6 +700,7 @@ class AlbumEditor:
         self.gui.top.ent_ids.widget.returnPressed.connect(self.search_id)
         self.gui.top.ent_src.widget.returnPressed.connect(self.search_album)
         self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)
+        TRACKS.gui.signal.sig_rating.connect(self.update_rating)
         # Bind lables
         self.gui.center.lbl_img.set_action(self.zoom_image)
     
