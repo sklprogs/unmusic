@@ -128,6 +128,7 @@ class Tracks:
             mes = _('No tracks are associated with this album.')
             sh.objs.get_mes(f, mes).show_info()
             return
+        self.tracks = []
         for i in range(len(data)):
             self.add()
             record = data[i]
