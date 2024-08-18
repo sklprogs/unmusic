@@ -48,19 +48,19 @@ class Tracks:
                 continue
             old_record = [old[i][0], old[i][2], old[i][3], old[i][6]]
             new_record = [new[i][0], new[i][1], new[i][2], new[i][3]]
-            if old_record != new_record:
-                if not new[i][0]:
-                    mes = _('A track title should be indicated.')
-                    sh.objs.get_mes(f, mes).show_warning()
-                    # We're in loop - do not use 'return'
-                    continue
-                mes = _('Edit #{}.').format(i + 1)
-                #cur
-                #self.update_info(mes)
-                lg.DB.update_track (no = i + 1
-                                   ,data = new_record
-                                   )
-                Dump = True
+            if old_record == new_record:
+                continue
+            if not new[i][0]:
+                mes = _('A track title should be indicated.')
+                sh.objs.get_mes(f, mes).show_warning()
+                # We're in loop - do not use 'return'
+                continue
+            mes = _('Edit track #{}.').format(i + 1)
+            self.gui.send_info(mes)
+            lg.DB.update_track (no = i + 1
+                               ,data = new_record
+                               )
+            Dump = True
         return Dump
     
     def dump_new(self):
@@ -91,12 +91,12 @@ class Tracks:
             sh.com.cancel(f)
             return
         if self.dump():
-            #self.gui.update_info(_('Save DB.'))
+            self.gui.send_info(_('Save DB.'))
             lg.DB.save()
     
     def set_bindings(self):
-        self.gui.bind(('Ctrl+Q',), self.close)
-        self.gui.bind(('Esc',), self.close)
+        self.gui.bind(('Ctrl+Q', 'Esc',), self.close)
+        self.gui.pnl_trs.sig_close.connect(self.close)
     
     def add(self):
         track = gui.Track()

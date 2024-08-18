@@ -16,6 +16,20 @@ class Signal(PyQt6.QtCore.QObject):
     # Separate from Tracks; otherwise, the following error is thrown:
     # TypeError: Tracks cannot be converted to PyQt6.QtCore.QObject
     sig_rating = PyQt6.QtCore.pyqtSignal()
+    sig_info = PyQt6.QtCore.pyqtSignal(str)
+
+
+
+class Top(PyQt6.QtWidgets.QWidget):
+    
+    sig_close = PyQt6.QtCore.pyqtSignal()
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    def closeEvent(self, event):
+        self.sig_close.emit()
+        return super().closeEvent(event)
 
 
 
@@ -27,6 +41,9 @@ class Tracks:
     
     def send_rating(self):
         self.signal.sig_rating.emit()
+    
+    def send_info(self, mes):
+        self.signal.sig_info.emit(mes)
     
     def centralize(self):
         ''' Do this only after showing the widget; otherwise, it will have
@@ -50,7 +67,7 @@ class Tracks:
         scroll_area.setWidget(self.pnl_scr)
     
     def set_layout(self):
-        self.pnl_trs = PyQt6.QtWidgets.QWidget()
+        self.pnl_trs = Top()
         self.lay_trs = PyQt6.QtWidgets.QVBoxLayout()
         self.pnl_trs.setLayout(self.lay_trs)
     
