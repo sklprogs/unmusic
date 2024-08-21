@@ -115,8 +115,13 @@ class Tracks:
         self.gui.close()
     
     def reload(self):
+        self.clear()
         self.fill()
         self.show()
+    
+    def clear(self):
+        for track in self.tracks:
+            self.gui.remove(track)
     
     def fill(self):
         f = '[unmusic] tracks.controller.Tracks.fill'

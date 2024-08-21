@@ -84,6 +84,9 @@ class Tracks:
     def add(self, track):
         self.lay_scr.addWidget(track.pnl_trk)
     
+    def remove(self, track):
+        self.lay_scr.removeWidget(track.pnl_trk)
+    
     def show(self):
         self.pnl_trs.show()
     
