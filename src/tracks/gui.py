@@ -12,6 +12,64 @@ import skl_shared_qt.shared as sh
 sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
 
 
+class Bottom:
+    
+    def __init__(self):
+        self.set_values()
+        self.set_gui()
+    
+    def set_values(self):
+        self.icn_rld = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
+                                              ,'reload.png'
+                                              )
+        self.icn_rtg = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'clear_rating.png'
+                                        )
+        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'decode.png'
+                                        )
+        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
+                                        ,'save.png'
+                                        )
+
+    def set_layout(self):
+        self.pnl_btm = PyQt6.QtWidgets.QWidget()
+        self.lay_btm = PyQt6.QtWidgets.QHBoxLayout()
+        self.lay_btm.setContentsMargins(0, 0, 0, 0)
+        self.pnl_btm.setLayout(self.lay_btm)
+    
+    def set_gui(self):
+        self.set_layout()
+        self.set_widgets()
+        self.add_widgets()
+    
+    def set_widgets(self):
+        self.btn_rld = sh.Button (hint = _('Reload the present record')
+                                 ,inactive = self.icn_rld
+                                 ,active = self.icn_rld
+                                 )
+        self.btn_rtg = sh.Button (hint = _('Clear rating of all tracks')
+                                 ,inactive = self.icn_rtg
+                                 ,active = self.icn_rtg
+                                 )
+        self.btn_dec = sh.Button (hint = _('Decode back to cp1251')
+                                 ,inactive = self.icn_dec
+                                 ,active = self.icn_dec
+                                 )
+        self.btn_sav = sh.Button (hint = _('Save changes')
+                                 ,inactive = self.icn_sav
+                                 ,active = self.icn_sav
+                                 )
+        self.pnl_btm.setLayout(self.lay_btm)
+    
+    def add_widgets(self):
+        self.lay_btm.addWidget(self.btn_rld.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_rtg.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_dec.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_sav.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+
+
+
 class Signal(PyQt6.QtCore.QObject):
     # Separate from Tracks; otherwise, the following error is thrown:
     # TypeError: Tracks cannot be converted to PyQt6.QtCore.QObject
@@ -62,12 +120,14 @@ class Tracks:
         scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
         scroll_area.setWidgetResizable(True)
         self.lay_trs.addWidget(scroll_area)
+        self.lay_trs.addWidget(self.bottom.pnl_btm)
         self.pnl_scr = PyQt6.QtWidgets.QWidget(scroll_area)
         self.lay_scr = PyQt6.QtWidgets.QVBoxLayout(self.pnl_scr)
         scroll_area.setWidget(self.pnl_scr)
     
     def set_layout(self):
         self.pnl_trs = Top()
+        self.bottom = Bottom()
         self.lay_trs = PyQt6.QtWidgets.QVBoxLayout()
         self.pnl_trs.setLayout(self.lay_trs)
     
