@@ -75,8 +75,8 @@ class Bottom:
     def add_widgets(self):
         self.lay_btm.addWidget(self.btn_rld.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
         self.lay_btm.addWidget(self.btn_rtg.widget, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_dec.widget, 0, 2, 1, 4, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_sav.widget, 0, 5, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_dec.widget, 0, 2, 1, 6, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_sav.widget, 0, 7, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
 
 
 
