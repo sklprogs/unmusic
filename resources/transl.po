@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-30 15:40+0300\n"
-"PO-Revision-Date: 2024-06-30 15:41+0300\n"
+"POT-Creation-Date: 2024-09-10 23:26+0300\n"
+"PO-Revision-Date: 2024-09-10 23:27+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -124,7 +124,7 @@ msgstr "Поддерживаются только итерируемые объ�
 #: unmusic/src/album_editor/controller.py:632
 #: unmusic/src/album_editor/controller.py:649
 #: unmusic/src/search_tracks/controller.py:83
-#: unmusic/src/tracks/controller.py:139
+#: unmusic/src/tracks/controller.py:143
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
 
@@ -617,6 +617,7 @@ msgid "Reload the current album"
 msgstr "Перезагрузить текущий альбом"
 
 #: unmusic/src/_translations.py:19 unmusic/src/album_editor/gui.py:339
+#: unmusic/src/tracks/gui.py:69
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -725,6 +726,7 @@ msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
 
 #: unmusic/src/album_editor/controller.py:620
+#: unmusic/src/tracks/controller.py:94
 msgid "Save DB."
 msgstr "Сохранение БД."
 
@@ -776,7 +778,7 @@ msgid "Country:"
 msgstr "Страна:"
 
 #: unmusic/src/album_editor/gui.py:244 unmusic/src/search_tracks/gui.py:72
-#: unmusic/src/tracks/gui.py:114
+#: unmusic/src/tracks/gui.py:216
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -792,7 +794,7 @@ msgstr "Общая длина:"
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: unmusic/src/album_editor/gui.py:322
+#: unmusic/src/album_editor/gui.py:322 unmusic/src/tracks/gui.py:57
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
@@ -804,7 +806,7 @@ msgstr "Удалить текущую запись"
 msgid "Current messages are shown here."
 msgstr "Текущие сообщения отображаются здесь."
 
-#: unmusic/src/album_editor/gui.py:335
+#: unmusic/src/album_editor/gui.py:335 unmusic/src/tracks/gui.py:65
 msgid "Decode back to cp1251"
 msgstr "Декодировать обратно в cp1251"
 
@@ -1012,12 +1014,11 @@ msgid "Process album ID: {}"
 msgstr "Обработка ИД альбома: {}"
 
 #: unmusic/src/search_tracks/controller.py:48
-#: unmusic/src/tracks/controller.py:53
+#: unmusic/src/tracks/controller.py:54
 msgid "A track title should be indicated."
 msgstr "Необходимо указать название дорожки."
 
 #: unmusic/src/search_tracks/controller.py:52
-#: unmusic/src/tracks/controller.py:57
 msgid "Edit #{}."
 msgstr "Правка №{}."
 
@@ -1029,39 +1030,47 @@ msgstr "Поиск дорожек"
 msgid "Album #:"
 msgstr "Номер альбома:"
 
-#: unmusic/src/search_tracks/gui.py:69 unmusic/src/tracks/gui.py:111
+#: unmusic/src/search_tracks/gui.py:69 unmusic/src/tracks/gui.py:213
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: unmusic/src/search_tracks/gui.py:70 unmusic/src/tracks/gui.py:112
+#: unmusic/src/search_tracks/gui.py:70 unmusic/src/tracks/gui.py:214
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: unmusic/src/search_tracks/gui.py:71 unmusic/src/tracks/gui.py:113
+#: unmusic/src/search_tracks/gui.py:71 unmusic/src/tracks/gui.py:215
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: unmusic/src/search_tracks/gui.py:73 unmusic/src/tracks/gui.py:115
+#: unmusic/src/search_tracks/gui.py:73 unmusic/src/tracks/gui.py:217
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: unmusic/src/search_tracks/gui.py:74 unmusic/src/tracks/gui.py:116
+#: unmusic/src/search_tracks/gui.py:74 unmusic/src/tracks/gui.py:218
 msgid "Length:"
 msgstr "Продолжительность:"
 
-#: unmusic/src/search_tracks/gui.py:75 unmusic/src/tracks/gui.py:117
+#: unmusic/src/search_tracks/gui.py:75 unmusic/src/tracks/gui.py:219
 msgid "Rating:"
 msgstr "Оценка:"
+
+#: unmusic/src/tracks/controller.py:58
+msgid "Edit track #{}."
+msgstr "Правка дорожки №{}."
 
 #: unmusic/src/tracks/controller.py:78
 msgid "Track numbers should be sequential!"
 msgstr "Номера дорожек должны идти последовательно!"
 
-#: unmusic/src/tracks/controller.py:130
+#: unmusic/src/tracks/controller.py:133
 msgid "No tracks are associated with this album."
 msgstr "Для этого альбома дорожки не указаны."
 
-#: unmusic/src/tracks/gui.py:31
+#: unmusic/src/tracks/gui.py:61
+msgid "Zero rating for all tracks"
+msgstr "Обнулить оценку для всех дорожек"
+
+#: unmusic/src/tracks/gui.py:127
 msgid "Tracks"
 msgstr "Дорожки"
 
@@ -1662,9 +1671,6 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 
 #~ msgid "Clear rating"
 #~ msgstr "Очистить оценку"
-
-#~ msgid "Clear rating of all tracks"
-#~ msgstr "Очистить оценку для всех дорожек"
 
 #~ msgid "Album ID:"
 #~ msgstr "ИД альбома:"
