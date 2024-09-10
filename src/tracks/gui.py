@@ -34,7 +34,7 @@ class Bottom:
 
     def set_layout(self):
         self.pnl_btm = PyQt6.QtWidgets.QWidget()
-        self.lay_btm = PyQt6.QtWidgets.QHBoxLayout()
+        self.lay_btm = PyQt6.QtWidgets.QGridLayout(self.pnl_btm)
         self.lay_btm.setContentsMargins(0, 0, 0, 0)
         self.pnl_btm.setLayout(self.lay_btm)
     
@@ -42,6 +42,16 @@ class Bottom:
         self.set_layout()
         self.set_widgets()
         self.add_widgets()
+        self.configure()
+    
+    def configure(self):
+        policy = PyQt6.QtWidgets.QSizePolicy (PyQt6.QtWidgets.QSizePolicy.Policy.Fixed
+                                             ,PyQt6.QtWidgets.QSizePolicy.Policy.Fixed
+                                             )
+        self.btn_rld.widget.setSizePolicy(policy)
+        self.btn_rtg.widget.setSizePolicy(policy)
+        self.btn_dec.widget.setSizePolicy(policy)
+        self.btn_sav.widget.setSizePolicy(policy)
     
     def set_widgets(self):
         self.btn_rld = sh.Button (hint = _('Reload the present record')
@@ -63,10 +73,10 @@ class Bottom:
         self.pnl_btm.setLayout(self.lay_btm)
     
     def add_widgets(self):
-        self.lay_btm.addWidget(self.btn_rld.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_rtg.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_dec.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_sav.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_rld.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_rtg.widget, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_dec.widget, 0, 2, 1, 4, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_sav.widget, 0, 5, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
 
 
 
