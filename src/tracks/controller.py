@@ -17,6 +17,14 @@ class Tracks:
         self.gui = gui.Tracks()
         self.set_bindings()
     
+    def zero_rating(self):
+        f = '[unmusic] tracks.controller.Tracks.zero_rating'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        for track in self.tracks:
+            track.opt_rtg.set(0)
+    
     def decode(self):
         f = '[unmusic] tracks.controller.Tracks.decode'
         if not self.Success:
@@ -96,6 +104,7 @@ class Tracks:
     
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q', 'Esc',), self.close)
+        self.gui.bottom.btn_zer.set_action(self.zero_rating)
         self.gui.pnl_trs.sig_close.connect(self.close)
     
     def add(self):
