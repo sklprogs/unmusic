@@ -17,6 +17,20 @@ class Tracks:
         self.gui = gui.Tracks()
         self.set_bindings()
     
+    def go_start(self):
+        f = '[unmusic] tracks.controller.Tracks.go_start'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        self.gui.go_start()
+    
+    def go_end(self):
+        f = '[unmusic] tracks.controller.Tracks.go_end'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        self.gui.go_end()
+    
     def zero_rating(self):
         f = '[unmusic] tracks.controller.Tracks.zero_rating'
         if not self.Success:
@@ -104,6 +118,8 @@ class Tracks:
     
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q', 'Esc',), self.close)
+        self.gui.bind(('Ctrl+Home',), self.go_start)
+        self.gui.bind(('Ctrl+End',), self.go_end)
         self.gui.bottom.btn_zer.set_action(self.zero_rating)
         self.gui.pnl_trs.sig_close.connect(self.close)
     

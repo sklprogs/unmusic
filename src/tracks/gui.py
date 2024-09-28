@@ -126,14 +126,22 @@ class Tracks:
     def set_title(self):
         self.pnl_trs.setWindowTitle(_('Tracks'))
     
+    def go_start(self):
+        slider = self.scroll_area.verticalScrollBar()
+        slider.setValue(slider.minimum())
+    
+    def go_end(self):
+        slider = self.scroll_area.verticalScrollBar()
+        slider.setValue(slider.maximum())
+    
     def set_scroll(self):
-        scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
-        scroll_area.setWidgetResizable(True)
-        self.lay_trs.addWidget(scroll_area)
+        self.scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
+        self.scroll_area.setWidgetResizable(True)
+        self.lay_trs.addWidget(self.scroll_area)
         self.lay_trs.addWidget(self.bottom.pnl_btm)
-        self.pnl_scr = PyQt6.QtWidgets.QWidget(scroll_area)
+        self.pnl_scr = PyQt6.QtWidgets.QWidget(self.scroll_area)
         self.lay_scr = PyQt6.QtWidgets.QVBoxLayout(self.pnl_scr)
-        scroll_area.setWidget(self.pnl_scr)
+        self.scroll_area.setWidget(self.pnl_scr)
     
     def set_layout(self):
         self.pnl_trs = Top()
