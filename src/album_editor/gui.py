@@ -232,6 +232,7 @@ class Center:
         self.lay_ctr.addWidget(self.pnl_grd)
         self.lay_ctr.addWidget(self.pnl_img)
         self.lay_ctr.setContentsMargins(0, 0, 0, 0)
+        self.lay_grd.setContentsMargins(0, 0, 0, 0)
         self.pnl_ctr.setLayout(self.lay_ctr)
         self.pnl_grd.setLayout(self.lay_grd)
         self.pnl_img.setLayout(self.lay_img)
@@ -400,6 +401,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     def set_layout(self):
         self.pnl_edt = PyQt6.QtWidgets.QWidget()
         self.lay_edt = PyQt6.QtWidgets.QVBoxLayout()
+        self.lay_edt.setContentsMargins(13, 7, 13, 7)
         self.lay_edt.addWidget(self.top.pnl_top)
         self.lay_edt.addWidget(self.center.pnl_ctr)
         self.lay_edt.addWidget(self.bottom.pnl_btm)
