@@ -35,7 +35,7 @@ class Bottom:
     def set_layout(self):
         self.pnl_btm = PyQt6.QtWidgets.QWidget()
         self.lay_btm = PyQt6.QtWidgets.QGridLayout(self.pnl_btm)
-        self.lay_btm.setContentsMargins(0, 0, 0, 0)
+        self.lay_btm.setContentsMargins(10, 2, 10, 7)
         self.pnl_btm.setLayout(self.lay_btm)
     
     def set_gui(self):
@@ -147,6 +147,7 @@ class Tracks:
         self.pnl_trs = Top()
         self.bottom = Bottom()
         self.lay_trs = PyQt6.QtWidgets.QVBoxLayout()
+        self.lay_trs.setContentsMargins(0, 0, 0, 0)
         self.pnl_trs.setLayout(self.lay_trs)
     
     def set_gui(self):
