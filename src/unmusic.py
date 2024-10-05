@@ -89,7 +89,7 @@ class Menu:
             tags to DB only once.
         '''
         f = '[unmusic] album_editor.controller.Menu.collect'
-        folder = sh.lg.Home(app_name='unmusic').add_share(_('not processed'))
+        folder = sh.lg.Home('unmusic').add_share(_('not processed'))
         if not sh.lg.Path(folder).create():
             sh.com.cancel(f)
             return
@@ -111,7 +111,7 @@ class Menu:
             basename = sh.lg.Path(folder).get_basename()
             itext = sh.lg.Text(basename)
             itext.delete_unsupported()
-            itext.shorten(max_len=15)
+            itext.shorten(15)
             mes = _('Process "{}" ({}/{})')
             mes = mes.format(itext.text, count, len(dirs))
             gi.objs.get_wait().reset (func = f
