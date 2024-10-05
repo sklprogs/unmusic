@@ -141,6 +141,7 @@ class Tracks:
         self.lay_trs.addWidget(self.bottom.pnl_btm)
         self.pnl_scr = PyQt6.QtWidgets.QWidget(self.scroll_area)
         self.lay_scr = PyQt6.QtWidgets.QVBoxLayout(self.pnl_scr)
+        self.lay_scr.setContentsMargins(4, 0, 18, 0)
         self.scroll_area.setWidget(self.pnl_scr)
     
     def set_layout(self):
