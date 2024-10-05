@@ -137,6 +137,7 @@ class Tracks:
     def set_scroll(self):
         self.scroll_area = PyQt6.QtWidgets.QScrollArea(self.pnl_trs)
         self.scroll_area.setWidgetResizable(True)
+        self.scroll_area.setHorizontalScrollBarPolicy(PyQt6.QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.lay_trs.addWidget(self.scroll_area)
         self.lay_trs.addWidget(self.bottom.pnl_btm)
         self.pnl_scr = PyQt6.QtWidgets.QWidget(self.scroll_area)
