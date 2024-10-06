@@ -131,6 +131,8 @@ class Tracks:
     
     def show(self):
         self.Active = True
+        self.clear()
+        self.fill()
         self.gui.show()
         self.gui.centralize()
     
@@ -138,11 +140,6 @@ class Tracks:
         self.Active = False
         self.save()
         self.gui.close()
-    
-    def reload(self):
-        self.clear()
-        self.fill()
-        self.show()
     
     def clear(self):
         for track in self.tracks:

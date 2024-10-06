@@ -144,9 +144,11 @@ class AlbumEditor:
         self.set_image()
         self.update()
         if TRACKS.Active:
-            TRACKS.reload()
+            TRACKS.clear()
+            TRACKS.fill()
         if SEARCH_TRACKS.Active:
-            SEARCH_TRACKS.reload()
+            SEARCH_TRACKS.clear()
+            SEARCH_TRACKS.fill()
     
     def delete_tracks(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.delete_tracks'
@@ -589,9 +591,7 @@ class AlbumEditor:
         if not self.Success:
             sh.com.cancel(f)
             return
-        TRACKS.fill()
-        if TRACKS.tracks:
-            TRACKS.show()
+        TRACKS.show()
     
     def delete(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.delete'
