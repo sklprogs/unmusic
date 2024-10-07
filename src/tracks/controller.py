@@ -138,6 +138,7 @@ class Tracks:
         self.clear()
         self.fill()
         self.gui.show()
+        self.gui.update_size()
         self.gui.centralize()
         self.go_start()
     

@@ -95,6 +95,10 @@ class Top(PyQt6.QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
+    def update_size(self):
+        self.resize(self.sizeHint())
+        self.updateGeometry()
+    
     def closeEvent(self, event):
         self.sig_close.emit()
         return super().closeEvent(event)
@@ -106,6 +110,9 @@ class Tracks:
     def __init__(self):
         self.set_gui()
         self.signal = Signal()
+    
+    def update_size(self):
+        self.pnl_scr.update_size()
     
     def send_rating(self):
         self.signal.sig_rating.emit()
@@ -140,8 +147,12 @@ class Tracks:
         self.scroll_area.setHorizontalScrollBarPolicy(PyQt6.QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.lay_trs.addWidget(self.scroll_area)
         self.lay_trs.addWidget(self.bottom.pnl_btm)
-        self.pnl_scr = PyQt6.QtWidgets.QWidget(self.scroll_area)
+        self.pnl_scr = Top(self.scroll_area)
         self.lay_scr = PyQt6.QtWidgets.QVBoxLayout(self.pnl_scr)
+        ''' Prevent tracks (QLineEdit) from gaining too much space between each
+            other, e.g. when there is only one track for the whole album (#2).
+        '''
+        self.lay_scr.setSizeConstraint(PyQt6.QtWidgets.QLayout.SizeConstraint.SetFixedSize)
         self.lay_scr.setContentsMargins(3, 0, 18, 0)
         self.scroll_area.setWidget(self.pnl_scr)
     
