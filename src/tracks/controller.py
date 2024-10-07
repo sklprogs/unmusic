@@ -130,6 +130,10 @@ class Tracks:
         return track
     
     def show(self):
+        f = '[unmusic] tracks.controller.Tracks.show'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
         self.Active = True
         self.clear()
         self.fill()
@@ -152,8 +156,9 @@ class Tracks:
             return
         data = lg.DB.get_tracks()
         if not data:
-            mes = _('No tracks are associated with this album.')
-            sh.objs.get_mes(f, mes).show_info()
+            self.Success = False
+            mes = _('Album {} has no tracks!').format(lg.DB.albumid)
+            sh.objs.get_mes(f, mes).show_warning()
             return
         self.tracks = []
         for i in range(len(data)):

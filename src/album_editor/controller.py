@@ -143,12 +143,11 @@ class AlbumEditor:
         self.get_length()
         self.set_image()
         self.update()
+        # Refill tracks if the widget is shown
         if TRACKS.Active:
-            TRACKS.clear()
-            TRACKS.fill()
+            TRACKS.show()
         if SEARCH_TRACKS.Active:
-            SEARCH_TRACKS.clear()
-            SEARCH_TRACKS.fill()
+            SEARCH_TRACKS.show()
     
     def delete_tracks(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.delete_tracks'
