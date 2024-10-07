@@ -139,6 +139,7 @@ class Tracks:
         self.fill()
         self.gui.show()
         self.gui.centralize()
+        self.go_start()
     
     def close(self):
         self.Active = False
