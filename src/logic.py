@@ -252,6 +252,17 @@ class Commands:
     def __init__(self):
         pass
     
+    def export_config(self):
+        f = '[unmusic] logic.Commands.export_config'
+        if not CONFIG.Success:
+            sh.com.cancel(f)
+            return
+        if not DB.Success:
+            sh.com.cancel(f)
+            return
+        CONFIG.new['cur_id'] = DB.albumid
+        #TODO: Save CONFIG.new['delete']
+    
     def restore_id(self):
         f = '[unmusic] logic.Commands.restore_id'
         if not CONFIG.Success:
@@ -265,12 +276,14 @@ class Commands:
         if not min_ or not max_:
             sh.com.rep_empty(f)
             return
-        if min_ <= CONFIG.new['cur_id'] <= max_:
-            DB.albumid = CONFIG.new['cur_id']
-        else:
+        if not min_ <= CONFIG.new['cur_id'] <= max_:
             sub = f"{min_} <= {CONFIG.new['cur_id']} <= {max_}"
             mes = _('Condition "{}" is not observed!').format(sub)
             sh.objs.get_mes(f, mes).show_warning()
+            return
+        DB.albumid = CONFIG.new['cur_id']
+        mes = _('Current album: #{}').format(DB.albumid)
+        sh.objs.get_mes(f, mes, True).show_info()
     
     def decode_back(self, text):
         try:

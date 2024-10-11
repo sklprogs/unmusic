@@ -52,6 +52,7 @@ class AlbumEditor:
     
     def quit(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.quit'
+        lg.com.export_config()
         CONFIG.quit()
         ''' For this code to be executed last, it's not enough to put it in 
             '__main__' right before 'sh.com.end'.
