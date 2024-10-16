@@ -32,7 +32,7 @@ class AlbumEditor:
             self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.select_all()
         self.gui.top.ent_ids.focus()
-        self.gui.top.reset_font_ids()
+        self.gui.top.undecorate_ids()
     
     def focus_album_search(self, event=None):
         if self.gui.top.ent_src.get() == _('Search in albums'):
@@ -40,7 +40,7 @@ class AlbumEditor:
         else:
             self.gui.top.ent_src.select_all()
         self.gui.top.ent_src.focus()
-        self.gui.top.reset_font_src()
+        self.gui.top.undecorate_src()
     
     def focus_track_search(self, event=None):
         if self.gui.top.ent_sr2.get() == _('Search in tracks'):
@@ -48,7 +48,7 @@ class AlbumEditor:
         else:
             self.gui.top.ent_sr2.select_all()
         self.gui.top.ent_sr2.focus()
-        self.gui.top.reset_font_sr2()
+        self.gui.top.undecorate_sr2()
     
     def quit(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.quit'
@@ -702,7 +702,7 @@ class AlbumEditor:
         self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)
         TRACKS.gui.signal.sig_rating.connect(self.update_rating)
         TRACKS.gui.signal.sig_info.connect(self.update_info)
-        # Bind lables
+        # Bind labels
         self.gui.center.lbl_img.set_action(self.zoom_image)
     
     def show(self):

@@ -50,6 +50,10 @@ class Top:
                                             ,'go_next.png'
                                             )
         self.font = None
+        self.mono = PyQt6.QtGui.QFont('Mono')
+        self.mono.setItalic(True)
+        self.gray_palette = PyQt6.QtGui.QPalette()
+        self.gray_palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('gray'))
         self.black_palette = PyQt6.QtGui.QPalette()
         self.black_palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('black'))
     
@@ -65,19 +69,34 @@ class Top:
         self.add_widgets()
         self.configure()
     
-    def reset_font_src(self):
+    def decorate_src(self):
+        self.ent_src.set_text(_('Search in albums'))
+        self.ent_src.widget.setFont(self.mono)
+        self.ent_src.widget.setPalette(self.gray_palette)
+    
+    def decorate_id(self):
+        self.ent_ids.set_text(_('ID'))
+        self.ent_ids.widget.setFont(self.mono)
+        self.ent_ids.widget.setPalette(self.gray_palette)
+    
+    def decorate_sr2(self):
+        self.ent_sr2.set_text(_('Search in tracks'))
+        self.ent_sr2.widget.setFont(self.mono)
+        self.ent_sr2.widget.setPalette(self.gray_palette)
+    
+    def undecorate_src(self):
         if not self.font:
             return
         self.ent_src.widget.setFont(self.font)
         self.ent_src.widget.setPalette(self.black_palette)
     
-    def reset_font_sr2(self):
+    def undecorate_sr2(self):
         if not self.font:
             return
         self.ent_sr2.widget.setFont(self.font)
         self.ent_sr2.widget.setPalette(self.black_palette)
     
-    def reset_font_ids(self):
+    def undecorate_ids(self):
         if not self.font:
             return
         self.ent_ids.widget.setFont(self.font)
@@ -85,24 +104,11 @@ class Top:
     
     def configure(self):
         self.font = self.ent_src.widget.font()
-        # Set text
-        self.ent_src.set_text(_('Search in albums'))
-        self.ent_ids.set_text(_('ID'))
-        self.ent_sr2.set_text(_('Search in tracks'))
         # Set max width
         self.ent_ids.widget.setMaximumWidth(40)
-        # Set italics
-        font = PyQt6.QtGui.QFont('Mono')
-        font.setItalic(True)
-        self.ent_src.widget.setFont(font)
-        self.ent_ids.widget.setFont(font)
-        self.ent_sr2.widget.setFont(font)
-        # Set color
-        palette = PyQt6.QtGui.QPalette()
-        palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('gray'))
-        self.ent_src.widget.setPalette(palette)
-        self.ent_ids.widget.setPalette(palette)
-        self.ent_sr2.widget.setPalette(palette)
+        self.decorate_src()
+        self.decorate_id()
+        self.decorate_sr2()
     
     def set_widgets(self):
         self.btn_spr = sh.Button (hint = _('Search older records')
