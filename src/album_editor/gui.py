@@ -28,6 +28,14 @@ GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
 sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
 
 
+class SearchField(PyQt6.QtWidgets.QLineEdit):
+    sig_focus_out = PyQt6.QtCore.pyqtSignal()
+    
+    def focusOutEvent(self, event):
+        super().focusOutEvent(event)
+        self.sig_focus_out.emit()
+
+
 
 class Top:
     
@@ -66,20 +74,31 @@ class Top:
     def set_gui(self):
         self.set_layout()
         self.set_widgets()
+        # Overload entries as early as possible
+        self.overload_entries()
         self.add_widgets()
         self.configure()
     
     def decorate_src(self):
+        # Do not overwrite existing text
+        if self.ent_src.get():
+            return
         self.ent_src.set_text(_('Search in albums'))
         self.ent_src.widget.setFont(self.mono)
         self.ent_src.widget.setPalette(self.gray_palette)
     
     def decorate_id(self):
+        # Do not overwrite existing text
+        if self.ent_ids.get():
+            return
         self.ent_ids.set_text(_('ID'))
         self.ent_ids.widget.setFont(self.mono)
         self.ent_ids.widget.setPalette(self.gray_palette)
     
     def decorate_sr2(self):
+        # Do not overwrite existing text
+        if self.ent_sr2.get():
+            return
         self.ent_sr2.set_text(_('Search in tracks'))
         self.ent_sr2.widget.setFont(self.mono)
         self.ent_sr2.widget.setPalette(self.gray_palette)
@@ -101,6 +120,11 @@ class Top:
             return
         self.ent_ids.widget.setFont(self.font)
         self.ent_ids.widget.setPalette(self.black_palette)
+    
+    def overload_entries(self):
+        self.ent_src.widget = self.ent_src.gui.widget = SearchField()
+        self.ent_ids.widget = self.ent_ids.gui.widget = SearchField()
+        self.ent_sr2.widget = self.ent_sr2.gui.widget = SearchField()
     
     def configure(self):
         self.font = self.ent_src.widget.font()

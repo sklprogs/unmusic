@@ -670,6 +670,9 @@ class AlbumEditor:
         # Connect to signals
         self.gui.sig_close.connect(self.close)
         self.gui.sig_close.connect(self.quit)
+        self.gui.top.ent_src.widget.sig_focus_out.connect(self.gui.top.decorate_src)
+        self.gui.top.ent_ids.widget.sig_focus_out.connect(self.gui.top.decorate_id)
+        self.gui.top.ent_sr2.widget.sig_focus_out.connect(self.gui.top.decorate_sr2)
         # Bind widgets
         self.bind_top('go_next', self.go_next, self.gui.top.btn_nxt)
         self.bind_top('go_prev', self.go_prev, self.gui.top.btn_prv)
