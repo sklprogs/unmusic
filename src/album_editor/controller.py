@@ -52,6 +52,7 @@ class AlbumEditor:
     
     def quit(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.quit'
+        self.save()
         lg.com.export_config()
         CONFIG.quit()
         ''' For this code to be executed last, it's not enough to put it in 
@@ -619,6 +620,9 @@ class AlbumEditor:
         if self.dump():
             self.update_info(_('Save DB.'))
             lg.DB.save()
+        if not TRACKS.Active:
+            return
+        TRACKS.save()
     
     def _bind_key(self, key, action):
         f = '[unmusic] album_editor.controller.AlbumEditor._bind_key'
