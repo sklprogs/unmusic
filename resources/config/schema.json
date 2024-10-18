@@ -11,9 +11,9 @@
         {"type": "object"
         ,"required":
             ["minimize", "go_prev", "go_next", "go_next_unrated"
-            ,"go_prev_unrated", "go_start", "go_end", "reload", "save"
-            ,"show_tracks", "focus_album_search", "focus_id_search"
-            ,"focus_track_search", "delete_tracks"
+            ,"go_prev_unrated", "go_start", "go_end", "reload","show_tracks"
+            ,"focus_album_search", "focus_id_search", "focus_track_search"
+            ,"delete_tracks"
             ]
         ,"properties":
             {"minimize":
@@ -66,13 +66,6 @@
                     }
                 }
             ,"reload":
-                {"type": "object"
-                ,"properties":
-                    {"hotkeys": {"type": "array"}
-                    ,"hint": {"type": "string"}
-                    }
-                }
-            ,"save":
                 {"type": "object"
                 ,"properties":
                     {"hotkeys": {"type": "array"}

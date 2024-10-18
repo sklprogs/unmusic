@@ -34,10 +34,6 @@
         {"hotkeys": ["F5", "Ctrl+R"]
         ,"hint": "Reload the current album"
         }
-    ,"save":
-        {"hotkeys": ["F2", "Ctrl+S"]
-        ,"hint": "Save changes"
-        }
     ,"show_tracks":
         {"hotkeys": ["F4", "Ctrl+T", "Alt+T"]
         ,"hint": "Show tracks"

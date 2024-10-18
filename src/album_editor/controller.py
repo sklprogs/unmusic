@@ -620,9 +620,10 @@ class AlbumEditor:
         if self.dump():
             self.update_info(_('Save DB.'))
             lg.DB.save()
-        if not TRACKS.Active:
-            return
-        TRACKS.save()
+        if TRACKS.Active:
+            TRACKS.save()
+        if SEARCH_TRACKS.Active:
+            SEARCH_TRACKS.save()
     
     def _bind_key(self, key, action):
         f = '[unmusic] album_editor.controller.AlbumEditor._bind_key'
@@ -685,7 +686,6 @@ class AlbumEditor:
         self.bind_top('go_start', self.go_start)
         self.bind_top('go_end', self.go_end)
         self.bind_top('reload', self.fill, self.gui.bottom.btn_rld)
-        self.bind_top('save', self.save, self.gui.bottom.btn_sav)
         self.bind_top('show_tracks', self.show_tracks, self.gui.bottom.btn_trk)
         self.bind_top('focus_album_search', self.focus_album_search)
         self.bind_top('focus_id_search', self.focus_id_search)

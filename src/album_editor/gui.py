@@ -333,9 +333,6 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
         self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'decode.png'
                                         )
-        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'save.png'
-                                        )
         self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'tracks.png'
                                         )
@@ -370,10 +367,6 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
                                  ,inactive = self.icn_dec
                                  ,active = self.icn_dec
                                  )
-        self.btn_sav = sh.Button (hint = _('Save changes')
-                                 ,inactive = self.icn_sav
-                                 ,active = self.icn_sav
-                                 )
         self.btn_trk = sh.Button (hint = _('Edit tracks')
                                  ,inactive = self.icn_trk
                                  ,active = self.icn_trk
@@ -386,7 +379,6 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
         self.lay_btm.addWidget(self.btn_trs.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
         self.lay_btm.addWidget(self.lbl_inf.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
         self.lay_btm.addWidget(self.btn_dec.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
-        self.lay_btm.addWidget(self.btn_sav.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
         self.lay_btm.addWidget(self.btn_trk.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
 
 

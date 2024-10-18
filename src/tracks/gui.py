@@ -28,9 +28,6 @@ class Bottom:
         self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
                                         ,'decode.png'
                                         )
-        self.icn_sav = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'save.png'
-                                        )
 
     def set_layout(self):
         self.pnl_btm = PyQt6.QtWidgets.QWidget()
@@ -51,7 +48,6 @@ class Bottom:
         self.btn_rld.widget.setSizePolicy(policy)
         self.btn_zer.widget.setSizePolicy(policy)
         self.btn_dec.widget.setSizePolicy(policy)
-        self.btn_sav.widget.setSizePolicy(policy)
     
     def set_widgets(self):
         self.btn_rld = sh.Button (hint = _('Reload the present record')
@@ -66,17 +62,12 @@ class Bottom:
                                  ,inactive = self.icn_dec
                                  ,active = self.icn_dec
                                  )
-        self.btn_sav = sh.Button (hint = _('Save changes')
-                                 ,inactive = self.icn_sav
-                                 ,active = self.icn_sav
-                                 )
         self.pnl_btm.setLayout(self.lay_btm)
     
     def add_widgets(self):
         self.lay_btm.addWidget(self.btn_rld.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
         self.lay_btm.addWidget(self.btn_zer.widget, 0, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
         self.lay_btm.addWidget(self.btn_dec.widget, 0, 2, 1, 6, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_sav.widget, 0, 7, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
 
 
 
