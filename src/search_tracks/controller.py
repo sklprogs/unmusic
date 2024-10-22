@@ -75,6 +75,7 @@ class Tracks(tracks.controller.Tracks):
             mes = _('No matches!')
             sh.objs.get_mes(f, mes).show_info()
             return
+        self.clear()
         for i in range(len(data)):
             record = data[i]
             track = self.add()
@@ -92,6 +93,33 @@ class Tracks(tracks.controller.Tracks):
             track.ent_bit.insert(str(record[5] // 1000) + 'k')
             track.ent_len.insert(sh.lg.com.get_human_time(float(record[6])))
             track.opt_rtg.set(record[7])
+    
+    def show(self):
+        f = '[unmusic] search_tracks.controller.Tracks.show'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        self.Active = True
+        self.gui.show()
+        self.gui.update_size()
+        self.gui.centralize()
+        self.go_start()
+    
+    def save(self):
+        ''' #NOTE: this should be done before 'albumid' is changed, otherwise,
+            a wrong DB record will be overwritten!
+        '''
+        f = '[unmusic] search_tracks.controller.Tracks.save'
+        if not self.Success:
+            sh.com.cancel(f)
+            return
+        mes = _('Not implemented yet!')
+        sh.objs.get_mes(f, mes, True).show_info()
+    
+    def close(self):
+        self.Active = False
+        self.save()
+        self.gui.close()
 
 
 SEARCH_TRACKS = Tracks()
