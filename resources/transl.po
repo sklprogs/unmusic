@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 01:51+0300\n"
-"PO-Revision-Date: 2024-10-17 01:52+0300\n"
+"POT-Creation-Date: 2024-10-25 00:16+0300\n"
+"PO-Revision-Date: 2024-10-25 00:16+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -105,7 +105,7 @@ msgid "Set the max column width to {} symbols"
 msgstr "Ограничить максимальную ширину столбца {} символами"
 
 #: skl_shared_qt/src/logic.py:159 skl_shared_qt/src/logic.py:2941
-#: unmusic/src/album_editor/controller.py:454
+#: unmusic/src/album_editor/controller.py:455
 msgid "The condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
 
@@ -117,13 +117,13 @@ msgstr "Поддерживаются только итерируемые объ�
 #: skl_shared_qt/src/logic.py:1711 skl_shared_qt/src/logic.py:1861
 #: skl_shared_qt/src/logic.py:2629 skl_shared_qt/src/logic.py:2763
 #: skl_shared_qt/src/logic.py:2777 skl_shared_qt/src/logic.py:2856
-#: unmusic/src/album_editor/controller.py:129
-#: unmusic/src/album_editor/controller.py:256
-#: unmusic/src/album_editor/controller.py:261
-#: unmusic/src/album_editor/controller.py:425
-#: unmusic/src/album_editor/controller.py:632
-#: unmusic/src/album_editor/controller.py:649
-#: unmusic/src/search_tracks/controller.py:83
+#: unmusic/src/album_editor/controller.py:130
+#: unmusic/src/album_editor/controller.py:257
+#: unmusic/src/album_editor/controller.py:262
+#: unmusic/src/album_editor/controller.py:426
+#: unmusic/src/album_editor/controller.py:637
+#: unmusic/src/album_editor/controller.py:654
+#: unmusic/src/search_tracks/controller.py:84
 #: unmusic/src/tracks/controller.py:172
 msgid "Wrong input data: \"{}\"!"
 msgstr "Недопустимые входные данные: \"{}\"!"
@@ -156,7 +156,7 @@ msgid "Not enough input data!"
 msgstr "Недостаточно входных данных!"
 
 #: skl_shared_qt/src/logic.py:517 skl_shared_qt/src/shared.py:379
-#: unmusic/src/album_editor/controller.py:339 unmusic/src/copy_album.py:66
+#: unmusic/src/album_editor/controller.py:340 unmusic/src/copy_album.py:66
 #: unmusic/src/copy_album.py:284
 msgid ""
 "An unknown mode \"{}\"!\n"
@@ -344,8 +344,7 @@ msgid "Unable to copy the file \"{}\" to iself!"
 msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
 #: skl_shared_qt/src/logic.py:1629 skl_shared_qt/src/logic.py:1676
-#: unmusic/src/copy_album.py:148 unmusic/src/unmusic.py:41
-#: unmusic/src/unmusic.py:72 unmusic/src/utils.py:100
+#: unmusic/src/copy_album.py:148 unmusic/src/utils.py:100
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -472,7 +471,7 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: skl_shared_qt/src/logic.py:2667 unmusic/src/unmusic.py:35
+#: skl_shared_qt/src/logic.py:2667
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
@@ -537,7 +536,7 @@ msgstr "мин"
 msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
-#: skl_shared_qt/src/logic.py:2912 unmusic/src/unmusic.py:138
+#: skl_shared_qt/src/logic.py:2912 unmusic/src/search_tracks/controller.py:116
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
@@ -555,7 +554,7 @@ msgstr "{} совпадений"
 
 #: skl_shared_qt/src/logic.py:2935 skl_shared_qt/src/shared.py:161
 #: skl_shared_qt/src/shared.py:773 skl_shared_qt/src/web.py:28
-#: unmusic/src/album_editor/controller.py:317
+#: unmusic/src/album_editor/controller.py:318
 #: unmusic/src/album_editor/logic.py:67 unmusic/src/album_editor/logic.py:85
 #: unmusic/src/album_editor/logic.py:222 unmusic/src/album_editor/logic.py:235
 #: unmusic/src/image_viewer/controller.py:35
@@ -616,8 +615,7 @@ msgstr "Перейти к последнему альбому"
 msgid "Reload the current album"
 msgstr "Перезагрузить текущий альбом"
 
-#: unmusic/src/_translations.py:19 unmusic/src/album_editor/gui.py:373
-#: unmusic/src/tracks/gui.py:69
+#: unmusic/src/_translations.py:19
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -637,7 +635,7 @@ msgstr "Перейти к полю поиска ИД"
 msgid "Go to the track search field"
 msgstr "Перейти к полю поиска дорожек"
 
-#: unmusic/src/_translations.py:24 unmusic/src/album_editor/gui.py:364
+#: unmusic/src/_translations.py:24 unmusic/src/album_editor/gui.py:361
 msgid "Delete tracks with rating < 8"
 msgstr "Удалить дорожки с рейтингом < 8"
 
@@ -654,79 +652,79 @@ msgstr "Поиск по альбомам"
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: unmusic/src/album_editor/controller.py:60 unmusic/src/collect_silent.py:22
+#: unmusic/src/album_editor/controller.py:61 unmusic/src/collect_silent.py:22
 #: unmusic/src/collect_silent.py:51 unmusic/src/utils.py:466
 msgid "Goodbye!"
 msgstr "До свидания!"
 
-#: unmusic/src/album_editor/controller.py:132
+#: unmusic/src/album_editor/controller.py:133
 msgid "Load #{}."
 msgstr "Загрузка \"{}\"."
 
-#: unmusic/src/album_editor/controller.py:266
-#: unmusic/src/album_editor/controller.py:540
-#: unmusic/src/album_editor/controller.py:565
+#: unmusic/src/album_editor/controller.py:267
+#: unmusic/src/album_editor/controller.py:541
+#: unmusic/src/album_editor/controller.py:566
 #: unmusic/src/search_tracks/controller.py:75
 msgid "No matches!"
 msgstr "Совпадений нет!"
 
-#: unmusic/src/album_editor/controller.py:326
+#: unmusic/src/album_editor/controller.py:327
 #: unmusic/src/album_editor/gui.py:14
 msgid "Play"
 msgstr "Слушать"
 
-#: unmusic/src/album_editor/controller.py:329
+#: unmusic/src/album_editor/controller.py:330
 #: unmusic/src/album_editor/gui.py:14 unmusic/src/copy_album.py:93
 #: unmusic/src/copy_album.py:275 unmusic/src/copy_album.py:283
 msgid "All"
 msgstr "Все"
 
-#: unmusic/src/album_editor/controller.py:332
+#: unmusic/src/album_editor/controller.py:333
 #: unmusic/src/album_editor/gui.py:14
 msgid "Good"
 msgstr "Хорошее"
 
-#: unmusic/src/album_editor/controller.py:335
+#: unmusic/src/album_editor/controller.py:336
 #: unmusic/src/album_editor/gui.py:14
 msgid "Best"
 msgstr "Лучшее"
 
-#: unmusic/src/album_editor/controller.py:350
+#: unmusic/src/album_editor/controller.py:351
 msgid "{} ({} tracks)"
 msgstr "{} ({} дорожек)"
 
-#: unmusic/src/album_editor/controller.py:428
+#: unmusic/src/album_editor/controller.py:429
 msgid ""
 "Tracks are of a mixed rating. Do you want to assign the same rating to all "
 "of them?"
 msgstr ""
 "Дорожки имеют разную оценку. Назначить всем дорожкам одинаковую оценку?"
 
-#: unmusic/src/album_editor/controller.py:463
+#: unmusic/src/album_editor/controller.py:464
 msgid "An album title should be indicated."
 msgstr "Необходимо указать название альбома."
 
-#: unmusic/src/album_editor/controller.py:471
+#: unmusic/src/album_editor/controller.py:472
 msgid "An artist should be indicated."
 msgstr "Необходимо указать исполнителя."
 
-#: unmusic/src/album_editor/controller.py:485
+#: unmusic/src/album_editor/controller.py:486
 msgid "No changes!"
 msgstr "Изменений не было!"
 
-#: unmusic/src/album_editor/controller.py:488
+#: unmusic/src/album_editor/controller.py:489
 msgid "Some fields have been updated."
 msgstr "Некоторые поля были обновлены."
 
-#: unmusic/src/album_editor/controller.py:601
+#: unmusic/src/album_editor/controller.py:602
 msgid "Are you sure you want to permanently delete record #{}?"
 msgstr "Вы действительно хотите безвозвратно удалить запись №{}?"
 
-#: unmusic/src/album_editor/controller.py:605
+#: unmusic/src/album_editor/controller.py:606
 msgid "Delete #{}."
 msgstr "Удаление \"{}\"."
 
-#: unmusic/src/album_editor/controller.py:620
+#: unmusic/src/album_editor/controller.py:621
 #: unmusic/src/tracks/controller.py:116
 msgid "Save DB."
 msgstr "Сохранение БД."
@@ -779,7 +777,7 @@ msgid "Country:"
 msgstr "Страна:"
 
 #: unmusic/src/album_editor/gui.py:278 unmusic/src/search_tracks/gui.py:72
-#: unmusic/src/tracks/gui.py:238
+#: unmusic/src/tracks/gui.py:229
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -795,27 +793,27 @@ msgstr "Общая длина:"
 msgid "Genre:"
 msgstr "Жанр:"
 
-#: unmusic/src/album_editor/gui.py:356 unmusic/src/tracks/gui.py:57
+#: unmusic/src/album_editor/gui.py:353 unmusic/src/tracks/gui.py:53
 msgid "Reload the present record"
 msgstr "Перезагрузить текущую запись"
 
-#: unmusic/src/album_editor/gui.py:360
+#: unmusic/src/album_editor/gui.py:357
 msgid "Delete the present record"
 msgstr "Удалить текущую запись"
 
-#: unmusic/src/album_editor/gui.py:368
+#: unmusic/src/album_editor/gui.py:365
 msgid "Current messages are shown here."
 msgstr "Текущие сообщения отображаются здесь."
 
-#: unmusic/src/album_editor/gui.py:369 unmusic/src/tracks/gui.py:65
+#: unmusic/src/album_editor/gui.py:366 unmusic/src/tracks/gui.py:61
 msgid "Decode back to cp1251"
 msgstr "Декодировать обратно в cp1251"
 
-#: unmusic/src/album_editor/gui.py:377
+#: unmusic/src/album_editor/gui.py:370
 msgid "Edit tracks"
 msgstr "Править дорожки"
 
-#: unmusic/src/album_editor/gui.py:448
+#: unmusic/src/album_editor/gui.py:440 unmusic/src/menu/gui.py:31
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
@@ -890,15 +888,15 @@ msgstr "Совпадений больше нет!"
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: unmusic/src/collect_silent.py:12 unmusic/src/unmusic.py:92
+#: unmusic/src/collect_silent.py:12
 msgid "not processed"
 msgstr "не обработано"
 
-#: unmusic/src/collect_silent.py:38 unmusic/src/unmusic.py:115
+#: unmusic/src/collect_silent.py:38
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: unmusic/src/collect_silent.py:46 unmusic/src/unmusic.py:128
+#: unmusic/src/collect_silent.py:46
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
 
@@ -1006,7 +1004,7 @@ msgstr "Внешняя коллекция: {}"
 msgid "Mobile collection: {}"
 msgstr "Переносная коллекция: {}"
 
-#: unmusic/src/logic.py:130 unmusic/src/unmusic.py:65
+#: unmusic/src/logic.py:130
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -1017,6 +1015,34 @@ msgstr "Обработка ИД альбома: {}"
 #: unmusic/src/logic.py:285
 msgid "Current album: #{}"
 msgstr "Текущий альбом: №{}"
+
+#: unmusic/src/menu/controller.py:53 unmusic/src/unmusic.py:23
+msgid "Invalid configuration!"
+msgstr "Некорректная конфигурация!"
+
+#: unmusic/src/menu/gui.py:32
+msgid "Prepare files"
+msgstr "Подготовить файлы"
+
+#: unmusic/src/menu/gui.py:33
+msgid "Move sub-folders to a root folder, split large lossless files, etc."
+msgstr "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
+
+#: unmusic/src/menu/gui.py:35
+msgid "Collect tags & Obfuscate"
+msgstr "Извлечь тэги и обфусцировать"
+
+#: unmusic/src/menu/gui.py:36
+msgid "Copy music"
+msgstr "Копировать музыку"
+
+#: unmusic/src/menu/gui.py:37
+msgid "Delete low-rated music"
+msgstr "Удалить музыку с низкими оценками"
+
+#: unmusic/src/menu/gui.py:38
+msgid "Quit"
+msgstr "Выйти"
 
 #: unmusic/src/search_tracks/controller.py:48
 #: unmusic/src/tracks/controller.py:76
@@ -1035,27 +1061,27 @@ msgstr "Поиск дорожек"
 msgid "Album #:"
 msgstr "Номер альбома:"
 
-#: unmusic/src/search_tracks/gui.py:69 unmusic/src/tracks/gui.py:235
+#: unmusic/src/search_tracks/gui.py:69 unmusic/src/tracks/gui.py:226
 msgid "Track #:"
 msgstr "Номер дорожки:"
 
-#: unmusic/src/search_tracks/gui.py:70 unmusic/src/tracks/gui.py:236
+#: unmusic/src/search_tracks/gui.py:70 unmusic/src/tracks/gui.py:227
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: unmusic/src/search_tracks/gui.py:71 unmusic/src/tracks/gui.py:237
+#: unmusic/src/search_tracks/gui.py:71 unmusic/src/tracks/gui.py:228
 msgid "Lyrics:"
 msgstr "Слова:"
 
-#: unmusic/src/search_tracks/gui.py:73 unmusic/src/tracks/gui.py:239
+#: unmusic/src/search_tracks/gui.py:73 unmusic/src/tracks/gui.py:230
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-#: unmusic/src/search_tracks/gui.py:74 unmusic/src/tracks/gui.py:240
+#: unmusic/src/search_tracks/gui.py:74 unmusic/src/tracks/gui.py:231
 msgid "Length:"
 msgstr "Продолжительность:"
 
-#: unmusic/src/search_tracks/gui.py:75 unmusic/src/tracks/gui.py:241
+#: unmusic/src/search_tracks/gui.py:75 unmusic/src/tracks/gui.py:232
 msgid "Rating:"
 msgstr "Оценка:"
 
@@ -1071,55 +1097,13 @@ msgstr "Номера дорожек должны идти последовате
 msgid "Album {} has no tracks!"
 msgstr "У альбома {} нет дорожек!"
 
-#: unmusic/src/tracks/gui.py:61
+#: unmusic/src/tracks/gui.py:57
 msgid "Zero rating for all tracks"
 msgstr "Обнулить оценку для всех дорожек"
 
-#: unmusic/src/tracks/gui.py:134
+#: unmusic/src/tracks/gui.py:125
 msgid "Tracks"
 msgstr "Дорожки"
-
-#: unmusic/src/unmusic.py:29
-msgid "Calculate ratings"
-msgstr "Подсчет оценок"
-
-#: unmusic/src/unmusic.py:38
-msgid ""
-"Insert all required media to calculate space to be freed.\n"
-"\n"
-"Continue?"
-msgstr ""
-"Вставьте все нужные носители для подсчета освобождаемого места.\n"
-"\n"
-"Продолжить?"
-
-#: unmusic/src/unmusic.py:45
-msgid "Calculate sizes"
-msgstr "Подсчет места"
-
-#: unmusic/src/unmusic.py:66
-msgid ""
-"Affected carriers: {}.\n"
-"Space to be freed: {}.\n"
-"Number of albums to delete: {}.\n"
-"The list of directories to be deleted is below. Continue?\n"
-"\n"
-"{}"
-msgstr ""
-"Задействованные носители: {}.\n"
-"Высвобождаемое пространство: {}.\n"
-"Число альбомов для удаления: {}.\n"
-"Список каталогов для удаления приведен ниже. Продолжить?\n"
-"\n"
-"{}"
-
-#: unmusic/src/unmusic.py:76
-msgid "Delete albums"
-msgstr "Удаление альбомов"
-
-#: unmusic/src/unmusic.py:160
-msgid "Invalid configuration!"
-msgstr "Некорректная конфигурация!"
 
 #: unmusic/src/utils.py:27
 msgid "Delete folders"
@@ -1189,432 +1173,14 @@ msgstr "У дорожек альбома №{} нет рейтинга!"
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
 
-#~ msgid "No tracks are associated with this album."
-#~ msgstr "Для этого альбома дорожки не указаны."
-
-#~ msgid "Integers"
-#~ msgstr "Целые числа"
-
-#~ msgid "[Autosave] Album ID to load at startup"
-#~ msgstr "[Автосохранение] Загружать ИД альбома при запуске"
-
-#~ msgid "ERROR"
-#~ msgstr "ОШИБКА"
-
-#~ msgid "QUESTION"
-#~ msgstr "ВОПРОС"
-
-#~ msgid "Booleans"
-#~ msgstr "Булевы переменные"
-
-#~ msgid "Floatings"
-#~ msgstr "Числа с учетом порядков"
-
-#~ msgid "Strings"
-#~ msgstr "Строки"
-
-#~ msgid ""
-#~ "# ATTENTION: This file is automatically generated. You can modify key "
-#~ "values manually, but anything else will be overwritten."
-#~ msgstr ""
-#~ "# ВНИМАНИЕ: Данный файл был создан автоматически. Можно вручную менять "
-#~ "значения ключей, однако, все остальное будет перезаписано."
-
-#~ msgid "DEBUG"
-#~ msgstr "ОТЛАДКА"
-
-#~ msgid "File \"{}\" was not found!"
-#~ msgstr "Файл \"{}\" не найден!"
-
-#~ msgid "Left mouse button"
-#~ msgstr "Левая кнопка мыши"
-
-#~ msgid "Middle mouse button"
-#~ msgstr "Средняя кнопка мыши"
-
-#~ msgid "Right mouse button"
-#~ msgstr "Правая кнопка мыши"
-
-#~ msgid "Space"
-#~ msgstr "Пробел"
-
-#~ msgid "Entries deleted: {} ({}-{})"
-#~ msgstr "Удалено вхождений: {} ({}-{})"
-
-#~ msgid "File \"{}\" is not sortable!"
-#~ msgstr "Файл \"{}\" не подлежит сортировке!"
-
-#~ msgid "Dictionary \"{}\": Incorrect line #{}: \"{}\"!"
-#~ msgstr "Словарь \"{}\": Неправильная строка №{}: \"{}\"!"
-
-#~ msgid ""
-#~ "Unable to write file \"{}\"!\n"
-#~ "\n"
-#~ "Details: {}"
-#~ msgstr ""
-#~ "Не удается записать файл \"{}\"!\n"
-#~ "\n"
-#~ "Подробности: {}"
-
-#~ msgid "The following lines cannot be parsed:"
-#~ msgstr "Не удается обработать следующие строки:"
-
-#~ msgid "Keys loaded in total: {}"
-#~ msgstr "Всего загружено ключей: {}"
-
-#~ msgid "Missing sections: {}"
-#~ msgstr "Отсутствующие разделы: {}"
-
-#~ msgid "Missing keys: {}"
-#~ msgstr "Отсутствующие ключи: {}"
-
-#~ msgid "Keys loaded in total:"
-#~ msgstr "Всего загружено ключей:"
-
-#~ msgid "Missing sections:"
-#~ msgstr "Отсутствующие разделы:"
-
-#~ msgid "Missing keys:"
-#~ msgstr "Отсутствующие ключи:"
-
-#~ msgid "Modified keys:"
-#~ msgstr "Измененные ключи:"
-
-#~ msgid "Differences:"
-#~ msgstr "Различия:"
-
-#~ msgid "Texts are identical!"
-#~ msgstr "Различий нет!"
-
-#~ msgid "Shortcut \"{}\" refers to \"{}\""
-#~ msgstr "Ссылка \"{}\" указывает на \"{}\""
-
-#~ msgid "Delete the symbolic link \"{}\""
-#~ msgstr "Удаление ярлыка \"{}\""
-
-#~ msgid "Failed to remove shortcut \"{}\". Remove it manually and press OK."
-#~ msgstr "Не удается удалить ярлык \"{}\". Удалите его вручную и нажмите OK."
-
-#~ msgid "Create a symbolic link \"{}\""
-#~ msgstr "Создание ярлыка \"{}\""
-
-#~ msgid "Failed to create shortcut \"{}\". Create it manually and press OK."
-#~ msgstr "Не удается создать ярлык \"{}\". Создайте его вручную и нажмите OK."
-
-#~ msgid "Unexpected end of text!"
-#~ msgstr "Неожиданный конец текста!"
-
-#~ msgid "Plain text (UTF-8)"
-#~ msgstr "Обычный текст (UTF-8)"
-
-#~ msgid "Web-page"
-#~ msgstr "Веб-страница"
-
-#~ msgid "Set your credentials:"
-#~ msgstr "Укажите данные для входа:"
-
-#~ msgid "Login: \"{}\""
-#~ msgstr "Учетная запись: \"{}\""
-
-#~ msgid "Password: \"{}\""
-#~ msgstr "Пароль: \"{}\""
-
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Login:"
-#~ msgstr "Учетная запись:"
-
-#~ msgid "Password:"
-#~ msgstr "Пароль:"
-
-#~ msgid "A syntax error in the regular expression (id: {})!"
-#~ msgstr "Синтаксическая ошибка в регулярном выражении (запись: {})!"
-
-#~ msgid ""
-#~ "Regular expression {} has failed: we were expecting\n"
-#~ "\"{}\",\n"
-#~ "but received\n"
-#~ "\"{}\"."
-#~ msgstr ""
-#~ "Неудачное вычисление регулярного выражения {}: ожидалось\n"
-#~ "\"{}\",\n"
-#~ "получили\n"
-#~ "\"{}\"."
-
-#~ msgid "Compare texts:"
-#~ msgstr "Сравните тексты:"
+#~ msgid "Limit:"
+#~ msgstr "Предел:"
 
 #~ msgid "Close"
 #~ msgstr "Закрыть"
 
-#~ msgid "Close this window"
-#~ msgstr "Закрыть это окно"
-
-#~ msgid "Reject and close"
-#~ msgstr "Отказаться и закрыть"
-
 #~ msgid "Reset"
 #~ msgstr "Сброс"
-
-#~ msgid "Restore the text"
-#~ msgstr "Восстановить текст"
-
-#~ msgid "Save"
-#~ msgstr "Сохранить"
-
-#~ msgid "Accept and close"
-#~ msgstr "Принять и закрыть"
-
-#~ msgid "No selection!"
-#~ msgstr "Выделение отсутствует!"
-
-#~ msgid "Clear the field"
-#~ msgstr "Очистить поле"
-
-#~ msgid "Clear"
-#~ msgstr "Очистить"
-
-#~ msgid "Save and close"
-#~ msgstr "Запомнить и выйти"
-
-#~ msgid "Toggle all"
-#~ msgstr "Переключить все"
-
-#~ msgid "Mark/unmark all checkboxes"
-#~ msgstr "Добавить/убрать все пометы"
-
-#~ msgid "Select files:"
-#~ msgstr "Выберите файлы:"
-
-#~ msgid "Please wait..."
-#~ msgstr "Подождите..."
-
-#~ msgid "The required widget has not been created yet!"
-#~ msgstr "Требуемый виджет еще не был создан!"
-
-#~ msgid "Clipboard is empty!"
-#~ msgstr "Буфер обмена пуст!"
-
-#~ msgid "Paste a special symbol"
-#~ msgstr "Вставить специальный символ"
-
-#~ msgid "Remove item #{}"
-#~ msgstr "Удаление элемента №{}"
-
-#~ msgid "No item #{}!"
-#~ msgstr "Элемент №{} отсутствует!"
-
-#~ msgid "Item \"{}\" is not in list!"
-#~ msgstr "Элемент \"{}\" не в списке!"
-
-#~ msgid "Set the geometry to \"{}x{}+{}+{}\""
-#~ msgstr "Изменение геометрии виджета на \"{}x{}+{}+{}\""
-
-#~ msgid "Widget width ({}) should not exceed screen width ({})!"
-#~ msgstr "Ширина виджета ({}) не должна превышать ширины экрана ({})!"
-
-#~ msgid "Widget height ({}) should not exceed screen height ({})!"
-#~ msgstr "Высота виджета ({}) не должна превышать высоту экрана ({})!"
-
-#~ msgid "Widget 1 geometry: {}x{}+{}+{}"
-#~ msgstr "Геометрия виджета 1: {}x{}+{}+{}"
-
-#~ msgid "Widget 2 geometry: {}x{}+{}+{}"
-#~ msgstr "Геометрия виджета 2: {}x{}+{}+{}"
-
-#~ msgid "Wrong font: \"{}\"!"
-#~ msgstr "Неправильный шрифт: \"{}\"!"
-
-#~ msgid "Save geometry: {}"
-#~ msgstr "Сохранение геометрии: {}"
-
-#~ msgid "Restore geometry: {}"
-#~ msgstr "Восстановление геометрии: {}"
-
-#~ msgid ""
-#~ "The operation has failed!\n"
-#~ "\n"
-#~ "Details: {}"
-#~ msgstr ""
-#~ "Операция завершилась неудачно!\n"
-#~ "\n"
-#~ "Подробности: {}"
-
-#~ msgid "Test:"
-#~ msgstr "Тест:"
-
-#~ msgid "Yes"
-#~ msgstr "Да"
-
-#~ msgid "No"
-#~ msgstr "Нет"
-
-#~ msgid "SECTION"
-#~ msgstr "СЕКЦИЯ"
-
-#~ msgid "KEY"
-#~ msgstr "КЛЮЧ"
-
-#~ msgid "VALUE"
-#~ msgstr "ЗНАЧЕНИЕ"
-
-#~ msgid "An unknown color \"{}\"!"
-#~ msgstr "Неизвестный цвет \"{}\"!"
-
-#~ msgid "Failed to enable key combination \"{}\"!"
-#~ msgstr "Не удалось задействовать сочетание клавиш \"{}\"!"
-
-#~ msgid "Wrong input data: \"{}\""
-#~ msgstr "Недопустимые входные данные: \"{}\"!"
-
-#~ msgid "Enter a string to search:"
-#~ msgstr "Строка для поиска:"
-
-#~ msgid "Case-sensitive search"
-#~ msgstr "Поиск с учетом регистра"
-
-#~ msgid "Loop"
-#~ msgstr "Зациклить"
-
-#~ msgid "No more matches, continuing from the bottom!"
-#~ msgstr "Совпадений больше нет, поиск продолжен с конца!"
-
-#~ msgid "No more matches, continuing from the top!"
-#~ msgstr "Совпадений больше нет, поиск продолжен с начала!"
-
-#~ msgid "Failed to find reference \"{}\" with index {}!"
-#~ msgstr "Не удалось найти ссылку \"{}\" с индексом {}!"
-
-#~ msgid "Pattern: \"{}\"; index: {}"
-#~ msgstr "Образец: \"{}\"; индекс: {}"
-
-#~ msgid "No reference has been found!"
-#~ msgstr "Ссылка не найдена!"
-
-#~ msgid "The start of the text has been reached!"
-#~ msgstr "Достигнуто начало текста!"
-
-#~ msgid "Distance: {} symbols"
-#~ msgstr "Расстояние: {} символов"
-
-#~ msgid "The end of the text has been reached!"
-#~ msgstr "Достигнут конец текста!"
-
-#~ msgid "Scrollable widget"
-#~ msgstr "Прокручиваемый виджет"
-
-#~ msgid "Label {}"
-#~ msgstr "Надпись {}"
-
-#~ msgid "Image"
-#~ msgstr "Изображение"
-
-#~ msgid "Hello!"
-#~ msgstr "Здравствуйте!"
-
-#~ msgid "Spellchecker"
-#~ msgstr "Проверка правописания"
-
-#~ msgid "Variant #{}"
-#~ msgstr "Вариант №{}"
-
-#~ msgid "Description: no settings"
-#~ msgstr "Описание: нет настроек"
-
-#~ msgid "Description: headers"
-#~ msgstr "Описание: заголовки"
-
-#~ msgid "Description: transposition"
-#~ msgstr "Описание: транспозиция"
-
-#~ msgid "Description: transposition and headers"
-#~ msgstr "Описание: транспозиция и заголовки"
-
-#~ msgid "Run \"{}\". Press any key to continue"
-#~ msgstr "Запуск \"{}\". Нажмите любую клавишу для продолжения"
-
-#~ msgid "Output: \"{}\""
-#~ msgstr "Вывод: \"{}\""
-
-#~ msgid "Copy something to clipboard"
-#~ msgstr "Скопируйте что-нибудь в буфер обмена"
-
-#~ msgid "Clipboard contents: \"{}\""
-#~ msgstr "Содержание буфера обмена: \"{}\""
-
-#~ msgid "The following will be copied: \"{}\""
-#~ msgstr "Будет скопировано следующее: \"{}\""
-
-#~ msgid "Your input: \"{}\""
-#~ msgstr "Вы ввели: \"{}\""
-
-#~ msgid "New settings"
-#~ msgstr "Новые настройки"
-
-#~ msgid "Your final selection: \"{}\""
-#~ msgstr "Ваш конечный выбор: \"{}\""
-
-#~ msgid "The event has been triggered!"
-#~ msgstr "Событие вызвано!"
-
-#~ msgid "Button"
-#~ msgstr "Кнопка"
-
-#~ msgid "Trigger an event"
-#~ msgstr "Вызвать событие"
-
-#~ msgid "Screen resolution: {}x{}"
-#~ msgstr "Разрешение экрана: {}x{}"
-
-#~ msgid "Random coordinates: x: {}; y: {}"
-#~ msgstr "Случайные координаты: x: {}; y: {}"
-
-#~ msgid "Window handle (Windows-only): {}"
-#~ msgstr "Дескриптор окна (только Windows): {}"
-
-#~ msgid "You answered Yes"
-#~ msgstr "Вы ответили Да"
-
-#~ msgid "You answered No"
-#~ msgstr "Вы ответили Нет"
-
-#~ msgid "Font size: {}x{}"
-#~ msgstr "Размер шрифта: {}x{}"
-
-#~ msgid "Test #{}"
-#~ msgstr "Тест №{}"
-
-#~ msgid "Path: \"{}\"; free space: {}"
-#~ msgstr "Путь: \"{}\"; свободное место: {}"
-
-#~ msgid "Object: \"{}\"; size: {}"
-#~ msgstr "Объект: \"{}\"; размер: {}"
-
-#~ msgid "Press Return to place widgets randomly"
-#~ msgstr "Нажмите Ввод, чтобы расположить виджеты случайным образом"
-
-#~ msgid ""
-#~ "Anchor: {}\n"
-#~ "Press Return to adjust Widget 2"
-#~ msgstr ""
-#~ "Привязка: {}\n"
-#~ "Нажмите Ввод для подгонки Виджета 2"
-
-#~ msgid "Anchor: {}"
-#~ msgstr "Привязка: {}"
-
-#~ msgid "Text:"
-#~ msgstr "Текст:"
-
-#~ msgid "Limit:"
-#~ msgstr "Предел:"
-
-#~ msgid "Copy music"
-#~ msgstr "Копировать музыку"
 
 #~ msgid "Start"
 #~ msgstr "Начать"
@@ -1640,51 +1206,45 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 #~ msgid "Delete"
 #~ msgstr "Удалить"
 
-#~ msgid "Decypher"
-#~ msgstr "Расшифровать"
-
-#~ msgid "Decypher text (Caesar algorithm)"
-#~ msgstr "Расшифровать текст (алгоритм Цезаря)"
-
-#~ msgid "Cypher"
-#~ msgstr "Зашифровать"
-
-#~ msgid "Cypher text (Caesar algorithm)"
-#~ msgstr "Зашифровать текст (алгоритм Цезаря)"
+#~ msgid "Delete tracks"
+#~ msgstr "Удалить дорожки"
 
 #~ msgid "Decode"
 #~ msgstr "Декодировать"
 
+#~ msgid "Save"
+#~ msgstr "Сохранить"
+
 #~ msgid "Country (2 letters):"
 #~ msgstr "Страна (2 символа):"
+
+#, fuzzy
+#~| msgid "Average bitrate:"
+#~ msgid "Mean bitrate:"
+#~ msgstr "Средний битрейт:"
 
 #~ msgid "Album ID"
 #~ msgstr "ИД альбома"
 
-#~ msgid "Prepare files"
-#~ msgstr "Подготовить файлы"
-
-#~ msgid "Move sub-folders to a root folder, split large lossless files, etc."
-#~ msgstr ""
-#~ "Переместить вложенные каталоги в корень, разбить большие файлы и т.д."
-
-#~ msgid "Collect tags & Obfuscate"
-#~ msgstr "Извлечь тэги и обфусцировать"
-
-#~ msgid "Delete low-rated music"
-#~ msgstr "Удалить музыку с низкими оценками"
-
-#~ msgid "Quit"
-#~ msgstr "Выйти"
-
 #~ msgid "Clear rating"
 #~ msgstr "Очистить оценку"
+
+#, fuzzy
+#~| msgid "Zero rating for all tracks"
+#~ msgid "Clear rating of all tracks"
+#~ msgstr "Обнулить оценку для всех дорожек"
 
 #~ msgid "Album ID:"
 #~ msgstr "ИД альбома:"
 
 #~ msgid "Tracks:"
 #~ msgstr "Дорожки:"
+
+#~ msgid "Integers"
+#~ msgstr "Целые числа"
+
+#~ msgid "[Autosave] Album ID to load at startup"
+#~ msgstr "[Автосохранение] Загружать ИД альбома при запуске"
 
 #~ msgid "ARTIST"
 #~ msgstr "ИСПОЛНИТЕЛЬ"
@@ -1733,583 +1293,3 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 
 #~ msgid "Track #{}"
 #~ msgstr "Дорожка №{}"
-
-#~ msgid "Create"
-#~ msgstr "Создать"
-
-#~ msgid "Create a new record"
-#~ msgstr "Создать новую запись"
-
-#~ msgid "You need to install \"{}\"!"
-#~ msgstr "Необходимо установить \"{}\"!"
-
-#~ msgid "Failed to change window properties!"
-#~ msgstr "Не удалось изменить свойства окна!"
-
-#~ msgid "Failed to get the window handle!"
-#~ msgstr "Не удалось получить дескриптор окна!"
-
-#~ msgid "Set time parameters are incorrect or not supported."
-#~ msgstr "Заданные параметры времени неверны или не поддерживаются."
-
-#~ msgid "Track #%d"
-#~ msgstr "Дорожка №%d"
-
-#~ msgid "Failed to move \"{}\" to \"{}\"!"
-#~ msgstr "Не удалось переместить \"{}\" в \"{}\"!"
-
-#~ msgid "Analyze the text"
-#~ msgstr "Анализ текста"
-
-#~ msgid "Failed to find words of paragraph #{}!"
-#~ msgstr "Не удалось найти слова абзаца №{}!"
-
-#~ msgid "No references have been found!"
-#~ msgstr "Ориентиры не найдены!"
-
-#~ msgid "No references to the right!"
-#~ msgstr "Справа ориентиров нет!"
-
-#~ msgid "No references to the left!"
-#~ msgstr "Слева ориентиров нет!"
-
-#~ msgid "Find:"
-#~ msgstr "Найти:"
-
-#~ msgid "Only one match has been found!"
-#~ msgstr "Найдено 1 совпадение!"
-
-#~ msgid "{} tags to assign"
-#~ msgstr "Создание {} тэгов"
-
-#~ msgid "Spelling seems to be correct."
-#~ msgstr "Ошибок правописания не обнаружено."
-
-#~ msgid "Failed to restore geometry!"
-#~ msgstr "Не удалось восстановить геометрию!"
-
-#~ msgid "The following sections and/or keys are missing:"
-#~ msgstr "ОШИБКА"
-
-#~ msgid "New value of the key \"{}\" has been loaded."
-#~ msgstr "Загружено новое значение ключа \"{}\"."
-
-#~ msgid "Keys loaded in total: {}, whereas {} are modified."
-#~ msgstr "Всего загружено ключей: {}, из них измененных: {}"
-
-#~ msgid ""
-#~ "Failed to read the configuration file \"{}\". This file must share the "
-#~ "same directory with the program and have UTF-8 encoding (no BOM) and UNIX "
-#~ "line break type."
-#~ msgstr ""
-#~ "Не удается прочитать конфигурационный файл \"{}\". Этот файл должен "
-#~ "находиться в одном каталоге с программой и иметь кодировку UTF-8 (без "
-#~ "BOM), тип разрыва строки - UNIX."
-
-#~ msgid "Cannot print the message!"
-#~ msgstr "Не удаётся показать сообщение!"
-
-#~ msgid "Download progress"
-#~ msgstr "Ход загрузок"
-
-#~ msgid "File: \"{}\"; {}/{} MB; Rate: {} kbps; ETA: {}s"
-#~ msgstr "Файл: \"{}\"; {}/{} Мб; Скорость: {} Кб/с; Осталось: {}с"
-
-#~ msgid "Failed to select a file!"
-#~ msgstr "Не удалось выбрать файл!"
-
-#~ msgid "Copy progress"
-#~ msgstr "Ход копирования"
-
-#~ msgid "Collect tags"
-#~ msgstr "Извлечь тэги"
-
-#~ msgid "Obfuscate"
-#~ msgstr "Обфусцировать"
-
-#~ msgid "Custom arguments: \"%s\""
-#~ msgstr "Особые параметры: \"%s\""
-
-#~ msgid "Failed to run \"%s\"!"
-#~ msgstr "Не удалось запустить \"%s\"!"
-
-#~ msgid "Write file \"%s\""
-#~ msgstr "Запись файла \"%s\""
-
-#~ msgid "Unable to write file \"%s\"!"
-#~ msgstr "Не удается записать файл \"%s\"!"
-
-#~ msgid "Entries deleted: %d (%d-%d)"
-#~ msgstr "Удалено вхождений: %d (%d-%d)"
-
-#~ msgid "File \"%s\" is not sortable!"
-#~ msgstr "Файл \"%s\" не подлежит сортировке!"
-
-#~ msgid "Dictionary \"%s\": Incorrect line #%d: \"%s\"!"
-#~ msgstr "Словарь \"%s\": Неправильная строка №%d: \"%s\"!"
-
-#~ msgid "File \"%s\" has not been found!"
-#~ msgstr "Файл \"%s\" не найден!"
-
-#~ msgid "Load file \"%s\""
-#~ msgstr "Загрузка файла \"%s\""
-
-#~ msgid "Unable to read file \"%s\"!"
-#~ msgstr "Не удается прочитать файл \"%s\"!"
-
-#~ msgid "Float is required at input, but found \"%s\"! Return 0.0"
-#~ msgstr ""
-#~ "На входе должно быть число с плавающей запятой, но получено \"%s\"! "
-#~ "Возвращаю 0.0"
-
-#~ msgid "Convert \"%s\" to an integer"
-#~ msgstr "Конвертация \"%s\" в целое число"
-
-#~ msgid "Integer is required at input, but found \"%s\"! Return 0"
-#~ msgstr "На входе должно быть целое число, но получено \"%s\"! Возвращаю 0"
-
-#~ msgid ""
-#~ "Different number of opening and closing brackets: \"%s\": %d; \"%s\": %d!"
-#~ msgstr ""
-#~ "Разное число открывающих и закрывающих скобок: \"%s\": %d; \"%s\": %d!"
-
-#~ msgid "Empty strings are not supported!"
-#~ msgstr "Поддерживаются только непустые строки!"
-
-#~ msgid "Failed to convert \"%s\" to an integer!"
-#~ msgstr "Не удалось конвертировать \"%s\" в целое число!"
-
-#~ msgid "Failed to convert \"%s\" to a floating-point number!"
-#~ msgstr "Не удалось конвертировать \"%s\" в число с плавающей точкой!"
-
-#~ msgid ""
-#~ "Set time parameters are incorrect or not supported.\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Заданные параметры времени неверны или не поддерживаются.\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Note: it will be Monday!"
-#~ msgstr "Обратите внимание: указанная дата - понедельник!"
-
-#~ msgid "The object \"%s\" is not a file!"
-#~ msgstr "Объект \"%s\" не является файлом!"
-
-#~ msgid ""
-#~ "Operation has failed!\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Операция завершилась с ошибкой!\n"
-#~ "Подробности: %s"
-
-#~ msgid "Copy \"%s\" to \"%s\""
-#~ msgstr "Копирование \"%s\" в \"%s\""
-
-#~ msgid "Failed to copy file \"%s\" to \"%s\"!"
-#~ msgstr "Не удалось скопировать файл \"%s\" в \"%s\"!"
-
-#~ msgid "Move \"%s\" to \"%s\""
-#~ msgstr "Перемещение \"%s\" в \"%s\""
-
-#~ msgid "Failed to move \"%s\" to \"%s\"!"
-#~ msgstr "Не удалось переместить \"%s\" в \"%s\"!"
-
-#~ msgid "Failed to get the date of the file \"%s\"!"
-#~ msgstr "Не удалось определить дату файла \"%s\"!"
-
-#~ msgid "Unable to copy the file \"%s\" to iself!"
-#~ msgstr "Нельзя скопировать файл \"%s\" сам в себя!"
-
-#~ msgid "Delete \"%s\""
-#~ msgstr "Удаление \"%s\""
-
-#~ msgid "Failed to delete file \"%s\"!"
-#~ msgstr "Не удается удалить файл \"%s\"!"
-
-#~ msgid ""
-#~ "Moving is not necessary, because the source and destination are identical "
-#~ "(%s)."
-#~ msgstr ""
-#~ "Перемещение не требуется, поскольку на входе и выходе указан один и тот "
-#~ "же объект (%s)."
-
-#~ msgid "Change the time of the file \"%s\" to %s"
-#~ msgstr "Изменение времени файла \"%s\" на %s"
-
-#~ msgid "Failed to change the time of the file \"%s\" to \"%s\"!"
-#~ msgstr "Не удалось изменить время файла \"%s\" на \"%s\"!"
-
-#~ msgid "Directory \"%s\" already exists."
-#~ msgstr "Каталог \"%s\" уже существует."
-
-#~ msgid "The path \"%s\" is invalid!"
-#~ msgstr "Путь \"%s\" неверен!"
-
-#~ msgid "Create directory \"%s\""
-#~ msgstr "Создание каталога \"%s\""
-
-#~ msgid "Failed to create directory \"%s\"!"
-#~ msgstr "Не удается создать каталог \"%s\"!"
-
-#~ msgid ""
-#~ "Unable to read file \"%s\"!\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Не удается прочитать файл \"%s\"!\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Wrong input data: \"%s\""
-#~ msgstr "Недопустимые входные данные: \"%s\""
-
-#~ msgid "Failed to delete directory \"%s\"! Delete it manually."
-#~ msgstr "Не удается удалить каталог \"%s\"! Удалите его вручную."
-
-#~ msgid "Unable to copy \"%s\" to iself!"
-#~ msgstr "Нельзя скопировать \"%s\" сам в себя!"
-
-#~ msgid "Failed to copy \"%s\" to \"%s\"!"
-#~ msgstr "Не удалось скопировать \"%s\" в \"%s\"!"
-
-#~ msgid "New value of the key \"%s\" has been loaded."
-#~ msgstr "Загружено новое значение ключа \"%s\"."
-
-#~ msgid "Keys loaded in total: %d, whereas %d are modified."
-#~ msgstr "Всего загружено ключей: %d, из них измененных: %d"
-
-#~ msgid "Missing sections: %d"
-#~ msgstr "Отсутствующих разделов: %d"
-
-#~ msgid "Missing keys: %d"
-#~ msgstr "Отсутствующих ключей: %d"
-
-#~ msgid ""
-#~ "Failed to read the configuration file \"%s\". This file must share the "
-#~ "same directory with the program and have UTF-8 encoding (no BOM) and UNIX "
-#~ "line break type."
-#~ msgstr ""
-#~ "Не удается прочитать конфигурационный файл \"%s\". Этот файл должен "
-#~ "находиться в одном каталоге с программой и иметь кодировку utf-8 (без "
-#~ "BOM), тип разрыва строки - UNIX."
-
-#~ msgid ""
-#~ "Failed to open URL \"%s\" in a default browser!\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Не удалось открыть адрес \"%s\" в браузере по умолчанию!\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Delete the symbolic link \"%s\""
-#~ msgstr "Удаление ярлыка \"%s\""
-
-#~ msgid "Failed to remove shortcut \"%s\". Remove it manually and press OK."
-#~ msgstr "Не удается удалить ярлык \"%s\". Удалите его вручную и нажмите OK."
-
-#~ msgid "Create a symbolic link \"%s\""
-#~ msgstr "Создание ярлыка \"%s\""
-
-#~ msgid "Failed to create shortcut \"%s\". Create it manually and press OK."
-#~ msgstr "Не удается создать ярлык \"%s\". Создайте его вручную и нажмите OK."
-
-#~ msgid "Nothing to do."
-#~ msgstr "Действие не требуется."
-
-#~ msgid "Failed to find words of paragraph #%d!"
-#~ msgstr "Не удалось найти слова абзаца #%d!"
-
-#~ msgid "The operation has taken %f s."
-#~ msgstr "Операция завершена за %f с."
-
-#~ msgid "Set the max number of rows to %d"
-#~ msgstr "Задать максимальное число столбцов: %d"
-
-#~ msgid "[OK]: \"%s\""
-#~ msgstr "[Успешно]: \"%s\""
-
-#~ msgid "[FAILED]: \"%s\". Details: %s"
-#~ msgstr "[ОШИБКА]: \"%s\". Подробности: %s"
-
-#~ msgid "Unable to decode \"%s\"!"
-#~ msgstr "Не удается изменить кодировку \"%s\"!"
-
-#~ msgid "ATTENTION: Do yo really want to rewrite file \"%s\"?"
-#~ msgstr "ВНИМАНИЕ: Перезаписать файл \"%s\"?"
-
-#~ msgid "Failed to enable key combination \"%s\"!"
-#~ msgstr "Не удалось задействовать сочетание клавиш \"%s\"!"
-
-#~ msgid "An unknown color \"%s\"!"
-#~ msgstr "Неизвестный цвет \"%s\"!"
-
-#~ msgid "Failed to insert the text!"
-#~ msgstr "Не удалось вставить текст!"
-
-#~ msgid "A logic error: unknown object type: \"%s\"!"
-#~ msgstr "Логическая ошибка: неизвестный тип объекта: \"%s\"!"
-
-#~ msgid "The parent has already been destroyed."
-#~ msgstr "Родительский виджет уже был разрушен."
-
-#~ msgid "Failed to remove the tag %s in the widget %s in positions %s-%s!"
-#~ msgstr "Не удалось удалить тэг %s в виджете %s для позиций %s-%s!"
-
-#~ msgid "DEBUG-ERROR"
-#~ msgstr "ОШИБКА ПРИ ОТЛАДКЕ"
-
-#~ msgid "Element \"%s\" has not been found in fragment \"%s\"!"
-#~ msgstr "Элемент \"%s\" не был найден во фрагменте \"%s\"!"
-
-#~ msgid "Failed to add tag \"%s\" for positions %s-%s!"
-#~ msgstr "Не удалось добавить тэг \"%s\" для позиций %s-%s!"
-
-#~ msgid ""
-#~ "Failed to configure tag \"%s\" to have the background of color \"%s\"!"
-#~ msgstr "Не удалось назначить тэгу \"%s\" фон \"%s\"!"
-
-#~ msgid ""
-#~ "Failed to configure tag \"%s\" to have the foreground of color \"%s\"!"
-#~ msgstr "Не удалось назначить тэгу \"%s\" цвет \"%s\"!"
-
-#~ msgid "Failed to configure tag \"%s\" to have the font \"%s\"!"
-#~ msgstr "Не удалось назначить тэгу \"%s\" шрифт \"%s\"!"
-
-#~ msgid "Failed to insert mark \"%s\" in position \"%s\"!"
-#~ msgstr "Не удается вставить метку \"%s\" для позиции \"%s\"!"
-
-#~ msgid "Failed to remove mark \"%s\"!"
-#~ msgstr "Не удалось удалить метку \"%s\"!"
-
-#~ msgid "Failed to shift screen to label \"%s\"!"
-#~ msgstr "Не удалось сдвинуть экран до метки \"%s\"!"
-
-#~ msgid "Got position: \"%s\""
-#~ msgstr "Получена позиция: \"%s\""
-
-#~ msgid "Cannot return a cursor position!"
-#~ msgstr "Не удалось вернуть позицию курсора!"
-
-#~ msgid "%d tags to assign"
-#~ msgstr "Создание %d тэгов"
-
-#~ msgid "Set the geometry to \"%dx%d+%d+%d\""
-#~ msgstr "Изменение геометрии виджета на \"%dx%d+%d+%d\""
-
-#~ msgid "Remove item #%d"
-#~ msgstr "Удаление элемента №%d"
-
-#~ msgid "No item #%d!"
-#~ msgstr "Элемент №%d не существует!"
-
-#~ msgid "Item \"%s\" is not in list!"
-#~ msgstr "Элемент \"%s\" не в списке!"
-
-#~ msgid "Failed to return selection in the Tkinter widget!"
-#~ msgstr "Не удается вернуть диапазон выделения в виджете Tkinter!"
-
-#~ msgid "Save geometry: %s"
-#~ msgstr "Сохранение геометрии: %s"
-
-#~ msgid "Restore geometry: %s"
-#~ msgstr "Восстановление геометрии: %s"
-
-#~ msgid "Wrong font: \"%s\"!"
-#~ msgstr "Неправильный шрифт: \"%s\"!"
-
-#~ msgid "Message"
-#~ msgstr "Сообщение"
-
-#~ msgid "CRITICAL"
-#~ msgstr "КРИТИЧЕСКАЯ ОШИБКА"
-
-#~ msgid "Picture \"%s\" was not found!"
-#~ msgstr "Изображение \"%s\" не найдено!"
-
-#~ msgid "A clipboard error has occurred!"
-#~ msgstr "Ошибка буфера обмена!"
-
-#~ msgid "An unknown error has occurred."
-#~ msgstr "Произошла неизвестная ошибка."
-
-#~ msgid "Failed to paste the clipboard contents!"
-#~ msgstr "Ошибка вставки из буфера обмена."
-
-#~ msgid "Add %s"
-#~ msgstr "Добавить %s"
-
-#~ msgid "Close %d objs"
-#~ msgstr "Закрыть %d объектов"
-
-#~ msgid "Widget \"%s\" does not have a \"close\" action!"
-#~ msgstr "У виджета \"%s\" нет действия \"close\"!"
-
-#~ msgid "File: \"%s\"; %d/%d MB; Rate: %s kbps; ETA: %ss"
-#~ msgstr "Файл: \"%s\"; %d/%d Мб; Скорость: %s Кб/с; Осталось: %sс"
-
-#~ msgid "Widget 1 geometry: %dx%d+%d+%d"
-#~ msgstr "Геометрия виджета 1: %dx%d+%d+%d"
-
-#~ msgid "Widget 2 geometry: %dx%d+%d+%d"
-#~ msgstr "Геометрия виджета 2: %dx%d+%d+%d"
-
-#~ msgid "Selected albums: %d"
-#~ msgstr "Выбрано альбомов: %d"
-
-#~ msgid "Total size: %s"
-#~ msgstr "Общий размер: %s"
-
-#~ msgid "Copy light music"
-#~ msgstr "Копировать легкую музыку"
-
-#~ msgid "Copy heavy music"
-#~ msgstr "Копировать тяжелую музыку"
-
-#~ msgid ""
-#~ "Random unrated music will now be copied to \"%s\".\n"
-#~ "\n"
-#~ "Continue?"
-#~ msgstr ""
-#~ "Сейчас случайная музыка без рейтинга будет скопирована в \"%s\".\n"
-#~ "\n"
-#~ "Продолжить?"
-
-#~ msgid "Source (read-only):"
-#~ msgstr "Источник (только чтение):"
-
-#~ msgid "Target (writable):"
-#~ msgstr "Цель (запись):"
-
-#~ msgid "All, external"
-#~ msgstr "Всё (внешний носитель)"
-
-#~ msgid "All, local"
-#~ msgstr "Всё (этот носитель)"
-
-#~ msgid "Best, external"
-#~ msgstr "Лучшее (внешний носитель)"
-
-#~ msgid "Best, local"
-#~ msgstr "Лучшее (этот носитель)"
-
-#~ msgid "***** Start of log. *****"
-#~ msgstr "***** Начало записи лога. *****"
-
-#~ msgid "Album %d: %d new tracks."
-#~ msgstr "Альбом %d: %d новых дорожек."
-
-#~ msgid "Album %s is already in DB!"
-#~ msgstr "Альбом %s уже занесен в БД!"
-
-#~ msgid ""
-#~ "An unknown mode \"%s\"!n\n"
-#~ "The following modes are supported: \"%s\"."
-#~ msgstr ""
-#~ "Неизвестный режим \"%s\"!\n"
-#~ "\n"
-#~ "Поддерживаются следующие режимы: \"%s\"."
-
-#~ msgid "Process \"%s\""
-#~ msgstr "Обработка \"%s\""
-
-#~ msgid "Clear tags, name folders by ALBUMID, etc."
-#~ msgstr "Очистить тэги, переименовать каталоги по ALBUMID и т.д."
-
-#~ msgid ""
-#~ "Third party module has failed!\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Ошибка модуля третьей стороны!\n"
-#~ "\n"
-#~ "Детали: %s"
-
-#~ msgid "Albums that are not in DB cannot be obfuscated."
-#~ msgstr "Альбомы, не внесенные в БД, не могут быть обфусцированы."
-
-#~ msgid "Search in albums:"
-#~ msgstr "Поиск по альбомам:"
-
-#~ msgid "Artist"
-#~ msgstr "Исполнитель"
-
-#~ msgid "Album"
-#~ msgstr "Альбом"
-
-#~ msgid "Genre"
-#~ msgstr "Жанр"
-
-#~ msgid "Year"
-#~ msgstr "Год"
-
-#~ msgid "Track #"
-#~ msgstr "Дорожка №"
-
-#~ msgid "Title"
-#~ msgstr "Название"
-
-#~ msgid "Lyrics"
-#~ msgstr "Слова"
-
-#~ msgid "Length"
-#~ msgstr "Продолжительность"
-
-#~ msgid "A syntax error in the regular expression (id: %s)!"
-#~ msgstr "Синтаксическая ошибка в регулярном выражении (запись: %s)!"
-
-#~ msgid ""
-#~ "Regular expression %s has failed: we were expecting\n"
-#~ "\"%s\",\n"
-#~ "but received\n"
-#~ "\"%s\"."
-#~ msgstr ""
-#~ "Неудачное вычисление регулярного выражения %s: ожидалось\n"
-#~ "\"%s\",\n"
-#~ "получили\n"
-#~ "\"%s\"."
-
-#~ msgid "Text with instructions:"
-#~ msgstr "Текст с инструкциями:"
-
-#~ msgid "Parent is not supported, using the default one."
-#~ msgstr ""
-#~ "Родительский виджет не поддерживается, будет использован виджет по "
-#~ "умолчанию."
-
-#~ msgid "Delete all text"
-#~ msgstr "Удалить весь текст"
-
-#~ msgid "Manage subscriptions"
-#~ msgstr "Управление подписками"
-
-#~ msgid "Add"
-#~ msgstr "Добавить"
-
-#~ msgid "Remove"
-#~ msgstr "Удалить"
-
-#~ msgid "Enter a channel URL, one URL per a line:"
-#~ msgstr "Введите адрес канала, по одному URL на строку:"
-
-#~ msgid "Patterns: %s"
-#~ msgstr "Примеры: %s"
-
-#~ msgid "Manage blacklist"
-#~ msgstr "Управление черным списком"
-
-#~ msgid "Perform actions"
-#~ msgstr "Выполнение операций"
-
-#~ msgid "Mark \"%s\" has been inserted in position \"%s\"."
-#~ msgstr "Метка \"%s\" вставлена в позиции \"%s\"."
-
-#~ msgid "Mark \"%s\" has been removed."
-#~ msgstr "Метка \"%s\" была удалена."
-
-#~ msgid ""
-#~ "Nothing is selected in window %d, therefore, it is not possible to return "
-#~ "coordinates!"
-#~ msgstr "В окне %d нет выделения, поэтому координаты вернуть нельзя!"
