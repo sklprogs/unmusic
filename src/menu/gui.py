@@ -60,12 +60,16 @@ class Menu:
     def set_title(self, title='unmusic'):
         self.window.setWindowTitle(title)
     
+    def configure(self):
+        self.btn_edt.set_default()
+    
     def set_gui(self):
         self.set_layout()
         self.set_buttons()
         self.add_buttons()
         self.set_icon()
         self.set_title()
+        self.configure()
     
     def show(self):
         self.app.show()
