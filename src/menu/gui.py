@@ -62,6 +62,12 @@ class Menu:
     
     def configure(self):
         self.btn_edt.set_default()
+        self.btn_edt.change_font_size(2)
+        self.btn_prp.change_font_size(2)
+        self.btn_col.change_font_size(2)
+        self.btn_cop.change_font_size(2)
+        self.btn_del.change_font_size(2)
+        self.btn_qit.change_font_size(2)
     
     def set_gui(self):
         self.set_layout()
