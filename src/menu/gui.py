@@ -15,7 +15,7 @@ class Menu:
         self.set_gui()
     
     def minimize(self):
-        self.window.showMinimized()
+        self.app.showMinimized()
     
     def centralize(self):
         ''' Do this only after showing the widget; otherwise, it will have
@@ -55,10 +55,10 @@ class Menu:
     
     def set_icon(self):
         # Does not accept None
-        self.window.setWindowIcon(sh.gi.objs.get_icon())
+        self.app.setWindowIcon(sh.gi.objs.get_icon())
     
     def set_title(self, title='unmusic'):
-        self.window.setWindowTitle(title)
+        self.app.setWindowTitle(title)
     
     def configure(self):
         self.btn_edt.set_default()

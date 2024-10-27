@@ -34,6 +34,7 @@ class Menu:
     
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q',), self.quit)
+        self.gui.bind(('Esc',), self.gui.minimize)
         self.gui.btn_edt.set_action(self.show_editor)
         self.gui.btn_qit.set_action(self.quit)
     
