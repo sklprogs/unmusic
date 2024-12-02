@@ -1,13 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import PyQt6
-import PyQt6.QtWidgets
-import PyQt6.QtGui
-import PyQt6.QtCore
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout
+from PyQt6.QtWidgets import QGridLayout, QLineEdit
+from PyQt6.QtGui import QShortcut, QKeySequence, QFont, QPalette, QColor, QPixmap
+from PyQt6.QtCore import pyqtSignal, Qt, QSize
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.graphics.root.controller import ROOT
+from skl_shared_qt.graphics.icon.controller import ICON
+from skl_shared_qt.graphics.button.controller import Button
+from skl_shared_qt.graphics.entry.controller import Entry
+from skl_shared_qt.graphics.label.controller import Label
+from skl_shared_qt.graphics.option_menu.controller import OptionMenu
+from skl_shared_qt.graphics.check_box.controller import CheckBox
+from skl_shared_qt.paths import PDIR
 
 
 RATINGS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -21,15 +28,14 @@ GENRES = ('?', 'Alternative Rock', 'Ambient', 'Black Metal', 'Blues'
          ,'Melodic Death Metal', 'Metal', 'Pop', 'Power Metal', 'Rap'
          ,'Relaxation', 'Rock', 'Slamming Brutal Death Metal', 'Soundtrack'
          ,'Technical Brutal Death Metal', 'Technical Death Metal'
-         ,'Thrash Metal', 'Vocal'
-         )
+         ,'Thrash Metal', 'Vocal')
 
 
-sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
+ICON.set(PDIR.add('..', 'resources', 'unmusic.png'))
 
 
-class SearchField(PyQt6.QtWidgets.QLineEdit):
-    sig_focus_out = PyQt6.QtCore.pyqtSignal()
+class SearchField(QLineEdit):
+    sig_focus_out = pyqtSignal()
     
     def focusOutEvent(self, event):
         super().focusOutEvent(event)
@@ -44,30 +50,23 @@ class Top:
         self.set_gui()
     
     def set_values(self):
-        self.prev_inactive = sh.objs.get_pdir().add ('..', 'resources'
-                                                    ,'buttons'
-                                                    ,'go_back_off.png'
-                                                    )
-        self.prev_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                            ,'go_back.png'
-                                            )
-        self.next_inactive = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                              ,'go_next_off.png'
-                                              )
-        self.next_active = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                            ,'go_next.png'
-                                            )
+        self.prev_inactive = PDR.add('..', 'resources', 'buttons'
+                                    ,'go_back_off.png')
+        self.prev_active = PDIR('..', 'resources', 'buttons', 'go_back.png')
+        self.next_inactive = PDIR('..', 'resources', 'buttons'
+                                 ,'go_next_off.png')
+        self.next_active = PDIR('..', 'resources', 'buttons', 'go_next.png')
         self.font = None
-        self.mono = PyQt6.QtGui.QFont('Mono')
+        self.mono = QFont('Mono')
         self.mono.setItalic(True)
-        self.gray_palette = PyQt6.QtGui.QPalette()
-        self.gray_palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('gray'))
-        self.black_palette = PyQt6.QtGui.QPalette()
-        self.black_palette.setColor(PyQt6.QtGui.QPalette.ColorRole.Text, PyQt6.QtGui.QColor('black'))
+        self.gray_palette = QPalette()
+        self.gray_palette.setColor(QPalette.ColorRole.Text, QColor('gray'))
+        self.black_palette = QPalette()
+        self.black_palette.setColor(QPalette.ColorRole.Text, QColor('black'))
     
     def set_layout(self):
-        self.pnl_top = PyQt6.QtWidgets.QWidget()
-        self.lay_top = PyQt6.QtWidgets.QHBoxLayout()
+        self.pnl_top = QWidget()
+        self.lay_top = QHBoxLayout()
         self.lay_top.setContentsMargins(0, 0, 0, 0)
         self.pnl_top.setLayout(self.lay_top)
     
@@ -135,29 +134,25 @@ class Top:
         self.decorate_sr2()
     
     def set_widgets(self):
-        self.btn_spr = sh.Button (hint = _('Search older records')
-                                 ,inactive = self.prev_inactive
-                                 ,active = self.prev_active
-                                 )
-        self.ent_src = sh.Entry()
-        self.btn_snr = sh.Button (hint = _('Search newer records')
-                                 ,inactive = self.next_inactive
-                                 ,active = self.next_active
-                                 )
-        self.ent_ids = sh.Entry()
-        self.btn_prv = sh.Button (hint = _('Go to the preceding record')
-                                 ,inactive = self.prev_inactive
-                                 ,active = self.prev_active
-                                 )
+        self.btn_spr = Button(hint = _('Search older records')
+                             ,inactive = self.prev_inactive
+                             ,active = self.prev_active)
+        self.ent_src = Entry()
+        self.btn_snr = Button(hint = _('Search newer records')
+                             ,inactive = self.next_inactive
+                             ,active = self.next_active)
+        self.ent_ids = Entry()
+        self.btn_prv = Button(hint = _('Go to the preceding record')
+                             ,inactive = self.prev_inactive
+                             ,active = self.prev_active)
         # Show the current record #/total records ratio
-        self.lbl_mtr = sh.Label('0 / 0')
-        self.btn_nxt = sh.Button (hint = _('Go to the following record')
-                                 ,inactive = self.next_inactive
-                                 ,active = self.next_active
-                                 )
-        self.ent_sr2 = sh.Entry()
-        self.opt_rtg = sh.OptionMenu(RATINGS)
-        self.opt_ply = sh.OptionMenu(PLAY)
+        self.lbl_mtr = Label('0 / 0')
+        self.btn_nxt = Button(hint = _('Go to the following record')
+                             ,inactive = self.next_inactive
+                             ,active = self.next_active)
+        self.ent_sr2 = Entry()
+        self.opt_rtg = OptionMenu(RATINGS)
+        self.opt_ply = OptionMenu(PLAY)
     
     def add_widgets(self):
         self.lay_top.addWidget(self.btn_spr.widget)
@@ -209,17 +204,17 @@ class Center:
         self.add_collections()
     
     def set_collections(self):
-        self.pnl_col = PyQt6.QtWidgets.QWidget()
-        self.lay_col = PyQt6.QtWidgets.QHBoxLayout()
-        self.cbx_loc = sh.CheckBox()
-        self.cbx_ext = sh.CheckBox()
-        self.cbx_mob = sh.CheckBox()
+        self.pnl_col = QWidget()
+        self.lay_col = QHBoxLayout()
+        self.cbx_loc = CheckBox()
+        self.cbx_ext = CheckBox()
+        self.cbx_mob = CheckBox()
         self.cbx_loc.widget.setEnabled(False)
         self.cbx_ext.widget.setEnabled(False)
         self.cbx_mob.widget.setEnabled(False)
-        self.lbl_loc = sh.Label(_('local collection'))
-        self.lbl_ext = sh.Label(_('external collection'))
-        self.lbl_mob = sh.Label(_('mobile collection'))
+        self.lbl_loc = Label(_('local collection'))
+        self.lbl_ext = Label(_('external collection'))
+        self.lbl_mob = Label(_('mobile collection'))
         self.lay_col.setContentsMargins(0, 0, 0, 0)
         self.pnl_col.setLayout(self.lay_col)
     
@@ -232,7 +227,7 @@ class Center:
         self.lay_col.addWidget(self.lbl_mob.widget)
     
     def add_options(self):
-        self.lay_grd.addWidget(self.opt_gnr.widget, 7, 1, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.lay_grd.addWidget(self.opt_gnr.widget, 7, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
     
     def add_labels(self):
         self.lay_grd.addWidget(self.lbl_art.widget, 0, 0, 1, 1)
@@ -244,7 +239,7 @@ class Center:
         self.lay_grd.addWidget(self.lbl_len.widget, 6, 0, 1, 1)
         self.lay_grd.addWidget(self.lbl_gnr.widget, 7, 0, 1, 1)
         self.lay_grd.addWidget(self.pnl_col, 8, 1, 1, 1)
-        self.lay_img.addWidget(self.lbl_img.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_img.addWidget(self.lbl_img.widget, Qt.AlignmentFlag.AlignRight)
     
     def add_entries(self):
         self.lay_grd.addWidget(self.ent_art.widget, 0, 1, 1, 1)
@@ -256,12 +251,12 @@ class Center:
         self.lay_grd.addWidget(self.ent_len.widget, 6, 1, 1, 1)
 
     def set_layout(self):
-        self.pnl_ctr = PyQt6.QtWidgets.QWidget()
-        self.lay_ctr = PyQt6.QtWidgets.QHBoxLayout()
-        self.pnl_grd = PyQt6.QtWidgets.QWidget()
-        self.pnl_img = PyQt6.QtWidgets.QWidget()
-        self.lay_grd = PyQt6.QtWidgets.QGridLayout()
-        self.lay_img = PyQt6.QtWidgets.QHBoxLayout()
+        self.pnl_ctr = QWidget()
+        self.lay_ctr = QHBoxLayout()
+        self.pnl_grd = QWidget()
+        self.pnl_img = QWidget()
+        self.lay_grd = QGridLayout()
+        self.lay_img = QHBoxLayout()
         self.lay_ctr.addWidget(self.pnl_grd)
         self.lay_ctr.addWidget(self.pnl_img)
         self.lay_ctr.setContentsMargins(0, 0, 0, 0)
@@ -271,27 +266,27 @@ class Center:
         self.pnl_img.setLayout(self.lay_img)
     
     def set_labels(self):
-        self.lbl_art = sh.Label(_('Artist:'))
-        self.lbl_alb = sh.Label(_('Album:'))
-        self.lbl_yer = sh.Label(_('Year:'))
-        self.lbl_cnt = sh.Label(_('Country:'))
-        self.lbl_com = sh.Label(_('Comment:'))
-        self.lbl_bit = sh.Label(_('Average bitrate:'))
-        self.lbl_len = sh.Label(_('Total length:'))
-        self.lbl_gnr = sh.Label(_('Genre:'))
-        self.lbl_img = sh.Label()
+        self.lbl_art = Label(_('Artist:'))
+        self.lbl_alb = Label(_('Album:'))
+        self.lbl_yer = Label(_('Year:'))
+        self.lbl_cnt = Label(_('Country:'))
+        self.lbl_com = Label(_('Comment:'))
+        self.lbl_bit = Label(_('Average bitrate:'))
+        self.lbl_len = Label(_('Total length:'))
+        self.lbl_gnr = Label(_('Genre:'))
+        self.lbl_img = Label()
     
     def set_entries(self):
-        self.ent_art = sh.Entry()
-        self.ent_alb = sh.Entry()
-        self.ent_yer = sh.Entry()
-        self.ent_cnt = sh.Entry()
-        self.ent_com = sh.Entry()
-        self.ent_bit = sh.Entry()
-        self.ent_len = sh.Entry()
+        self.ent_art = Entry()
+        self.ent_alb = Entry()
+        self.ent_yer = Entry()
+        self.ent_cnt = Entry()
+        self.ent_com = Entry()
+        self.ent_bit = Entry()
+        self.ent_len = Entry()
     
     def set_options(self):
-        self.opt_gnr = sh.OptionMenu(GENRES)
+        self.opt_gnr = OptionMenu(GENRES)
     
     def set_widgets(self):
         self.set_labels()
@@ -300,8 +295,8 @@ class Center:
         self.set_collections()
     
     def set_image(self, path):
-        image = PyQt6.QtGui.QPixmap(path)
-        image = image.scaled(PyQt6.QtCore.QSize(150, 150))
+        image = QPixmap(path)
+        image = image.scaled(QSize(150, 150))
         self.lbl_img.widget.setPixmap(image)
         return image
     
@@ -313,7 +308,7 @@ class Center:
 
 
 
-class Bottom(PyQt6.QtWidgets.QMainWindow):
+class Bottom(QMainWindow):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -321,25 +316,17 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
         self.set_gui()
     
     def set_values(self):
-        self.icn_rld = sh.objs.get_pdir().add ('..', 'resources', 'buttons'
-                                              ,'reload.png'
-                                              )
-        self.icn_del = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'delete_record.png'
-                                        )
-        self.icn_trs = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'delete_tracks.png'
-                                        )
-        self.icn_dec = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'decode.png'
-                                        )
-        self.icn_trk = sh.objs.pdir.add ('..', 'resources', 'buttons'
-                                        ,'tracks.png'
-                                        )
+        self.icn_rld = PDIR.add('..', 'resources', 'buttons', 'reload.png')
+        self.icn_del = PDIR.add('..', 'resources', 'buttons'
+                               ,'delete_record.png')
+        self.icn_trs = PDIR.add('..', 'resources', 'buttons'
+                               ,'delete_tracks.png')
+        self.icn_dec = PDIR.add('..', 'resources', 'buttons', 'decode.png')
+        self.icn_trk = PDIR.add('..', 'resources', 'buttons', 'tracks.png')
 
     def set_layout(self):
-        self.pnl_btm = PyQt6.QtWidgets.QWidget()
-        self.lay_btm = PyQt6.QtWidgets.QHBoxLayout()
+        self.pnl_btm = QWidget()
+        self.lay_btm = QHBoxLayout()
         self.lay_btm.setContentsMargins(0, 0, 0, 0)
         self.pnl_btm.setLayout(self.lay_btm)
     
@@ -350,42 +337,37 @@ class Bottom(PyQt6.QtWidgets.QMainWindow):
         self.setCentralWidget(self.pnl_btm)
     
     def set_widgets(self):
-        self.btn_rld = sh.Button (hint = _('Reload the present record')
-                                 ,inactive = self.icn_rld
-                                 ,active = self.icn_rld
-                                 )
-        self.btn_del = sh.Button (hint = _('Delete the present record')
-                                 ,inactive = self.icn_del
-                                 ,active = self.icn_del
-                                 )
-        self.btn_trs = sh.Button (hint = _('Delete tracks with rating < 8')
-                                 ,inactive = self.icn_trs
-                                 ,active = self.icn_trs
-                                 )
-        self.lbl_inf = sh.Label(_('Current messages are shown here.'))
-        self.btn_dec = sh.Button (hint = _('Decode back to cp1251')
-                                 ,inactive = self.icn_dec
-                                 ,active = self.icn_dec
-                                 )
-        self.btn_trk = sh.Button (hint = _('Edit tracks')
-                                 ,inactive = self.icn_trk
-                                 ,active = self.icn_trk
-                                 )
+        self.btn_rld = Button(hint = _('Reload the present record')
+                             ,inactive = self.icn_rld
+                             ,active = self.icn_rld)
+        self.btn_del = Button(hint = _('Delete the present record')
+                             ,inactive = self.icn_del
+                             ,active = self.icn_del)
+        self.btn_trs = Button(hint = _('Delete tracks with rating < 8')
+                             ,inactive = self.icn_trs
+                             ,active = self.icn_trs)
+        self.lbl_inf = Label(_('Current messages are shown here.'))
+        self.btn_dec = Button(hint = _('Decode back to cp1251')
+                             ,inactive = self.icn_dec
+                             ,active = self.icn_dec)
+        self.btn_trk = Button(hint = _('Edit tracks')
+                             ,inactive = self.icn_trk
+                             ,active = self.icn_trk)
         self.pnl_btm.setLayout(self.lay_btm)
     
     def add_widgets(self):
-        self.lay_btm.addWidget(self.btn_rld.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_del.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.btn_trs.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignLeft)
-        self.lay_btm.addWidget(self.lbl_inf.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_btm.addWidget(self.btn_dec.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
-        self.lay_btm.addWidget(self.btn_trk.widget, PyQt6.QtCore.Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_rld.widget, Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_del.widget, Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.btn_trs.widget, Qt.AlignmentFlag.AlignLeft)
+        self.lay_btm.addWidget(self.lbl_inf.widget, Qt.AlignmentFlag.AlignCenter)
+        self.lay_btm.addWidget(self.btn_dec.widget, Qt.AlignmentFlag.AlignRight)
+        self.lay_btm.addWidget(self.btn_trk.widget, Qt.AlignmentFlag.AlignRight)
 
 
 
-class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
+class AlbumEditor(QMainWindow):
 
-    sig_close = PyQt6.QtCore.pyqtSignal()
+    sig_close = pyqtSignal()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -399,8 +381,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         return (self.center.ent_alb.get(), self.center.ent_art.get()
                ,self.center.ent_yer.get(), self.center.opt_gnr.get()
                ,self.center.ent_cnt.get(), self.center.ent_com.get()
-               ,float(self.top.opt_rtg.get())
-               )
+               ,float(self.top.opt_rtg.get()))
     
     def clear_entries(self):
         self.center.ent_art.clear()
@@ -417,15 +398,15 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
         ''' Do this only after showing the widget; otherwise, it will have
             bogus dimensions of 640×480.
         '''
-        self.move(sh.objs.get_root().primaryScreen().geometry().center() - self.rect().center())
+        self.move(ROOT.get_root().primaryScreen().geometry().center() - self.rect().center())
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
-            PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self).activated.connect(action)
+            QShortcut(QKeySequence(hotkey), self).activated.connect(action)
     
     def set_layout(self):
-        self.pnl_edt = PyQt6.QtWidgets.QWidget()
-        self.lay_edt = PyQt6.QtWidgets.QVBoxLayout()
+        self.pnl_edt = QWidget()
+        self.lay_edt = QVBoxLayout()
         self.lay_edt.setContentsMargins(13, 7, 13, 7)
         self.lay_edt.addWidget(self.top.pnl_top)
         self.lay_edt.addWidget(self.center.pnl_ctr)
@@ -434,7 +415,7 @@ class AlbumEditor(PyQt6.QtWidgets.QMainWindow):
     
     def set_icon(self):
         # Does not accept None
-        self.setWindowIcon(sh.gi.objs.get_icon())
+        self.setWindowIcon(ICON.get())
     
     def set_title(self):
         self.setWindowTitle(_('Album Editor'))

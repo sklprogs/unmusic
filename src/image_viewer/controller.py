@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import rep, Message
 
 from config import CONFIG
 import logic as lg
@@ -24,7 +24,7 @@ class ImageViewer:
         f = '[unmusic] image_viewer.controller.ImageViewer.set_image'
         path = IMAGE.run()
         if not path:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         try:
             self.image = self.gui.set_image(path)
@@ -33,7 +33,7 @@ class ImageViewer:
                 ripped image.
             '''
             mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
     
     def show(self):
         self.gui.show()

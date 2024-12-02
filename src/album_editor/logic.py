@@ -6,10 +6,15 @@ import re
 import phrydy
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.logic import Input, Text
+from skl_shared_qt.paths import Path, File, Directory as shDirectory
+from skl_shared_qt.list import List
+from skl_shared_qt.launch import Launch
+from skl_shared_qt.text_file import Write
 
 from config import PATHS
-import logic as lg
+from logic import DB
 
 
 class Commands:
@@ -32,7 +37,7 @@ class Commands:
         return album
     
     def sanitize(self, field):
-        field = sh.lg.Text(field).delete_duplicate_spaces()
+        field = Text(field).delete_duplicate_spaces()
         field = field.strip()
         field = self.decode(field)
         if not field:
@@ -46,7 +51,7 @@ class Track:
     def __init__(self, file):
         self.set_values()
         self.file = file
-        self.Success = sh.lg.File(self.file).Success
+        self.Success = File(self.file).Success
         self.load()
         self.set_info()
         self.decode()
@@ -54,10 +59,10 @@ class Track:
     def purge(self):
         f = '[unmusic] album_editor.logic.Track.purge'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.audio:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         try:
             self.audio.delete()
@@ -65,7 +70,7 @@ class Track:
         except Exception as e:
             self.Success = False
             mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
     
     def save(self):
         ''' This is only needed if the file was changed by means of 'phrydy',
@@ -73,23 +78,23 @@ class Track:
         '''
         f = '[unmusic] album_editor.logic.Track.save'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.audio:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         try:
             self.audio.save()
         except Exception as e:
             self.Success = False
             mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
     
     def decode(self):
         # Fix Cyrillic tags
         f = '[unmusic] album_editor.logic.Track.decode'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # Other fields should be decoded before writing to DB
         self.title = com.decode(self.title)
@@ -98,15 +103,14 @@ class Track:
     def get_track_meta(self):
         f = '[unmusic] album_editor.logic.Track.get_track_meta'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         search = [self.title,self.lyrics]
         search = ' '.join(search)
-        search = sh.lg.Text(search).delete_duplicate_spaces()
+        search = Text(search).delete_duplicate_spaces()
         search = search.strip().lower()
         return (self.title, self.no, self.lyrics, search, self.bitrate
-               ,self.length
-               )
+               ,self.length)
     
     def set_values(self):
         self.Success = True
@@ -125,7 +129,7 @@ class Track:
     def show_summary(self):
         f = '[unmusic] album_editor.logic.Track.show_summary'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         mes = _('Artist: {}').format(self.artist)
         mes += '\n'
@@ -149,14 +153,14 @@ class Track:
                                                ,_('sec')
                                                )
         mes +=  '\n'
-        sh.objs.get_mes(f, mes).show_info()
+        Message(f, mes, True).show_info()
     
     def extract_title(self):
         f = '[unmusic] album_editor.logic.Track.extract_title'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        title = sh.lg.Path(self.file).get_filename()
+        title = Path(self.file).get_filename()
         if not title:
             return
         result = re.sub('^\d+[\.]{0,1}[\s]{0,1}','',title)
@@ -182,15 +186,13 @@ class Track:
         if self.audio.album:
             self.album = str(self.audio.album)
         else:
-            dirname = sh.lg.Path(self.file).get_dirname()
-            dirname = sh.lg.Path(dirname).get_basename()
+            dirname = Path(self.file).get_dirname()
+            dirname = Path(dirname).get_basename()
             self.album = '[[' + dirname + ']]'
         if self.audio.genre:
             self.genre = str(self.audio.genre)
         if self.audio.year:
-            self.year = sh.lg.Input (title = f
-                                    ,value = self.audio.year
-                                    ).get_integer()
+            self.year = Input(title=f, value=self.audio.year).get_integer()
         if self.audio.title:
             self.title = str(self.audio.title)
         else:
@@ -211,21 +213,21 @@ class Track:
     def set_info(self):
         f = '[unmusic] album_editor.logic.Track.set_info'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.audio:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         try:
             self._set_info()
         except Exception as e:
             mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
     
     def load(self):
         f = '[unmusic] album_editor.logic.Track.load'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if self.audio:
             return self.audio
@@ -233,7 +235,7 @@ class Track:
             self.audio = phrydy.MediaFile(self.file)
         except Exception as e:
             mes = _('Third-party module has failed!\n\nDetails: {}').format(e)
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
         return self.audio
 
 
@@ -254,7 +256,7 @@ class Directory:
     def move_tracks(self):
         f = '[unmusic] album_editor.logic.Directory.move_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         success = []
         ''' The current algorithm of tracks renumbering guarantees that
@@ -266,21 +268,21 @@ class Directory:
         for i in range(len(self.audio)):
             file = self.audio[i]
             no = self._set_no(i, max_len)
-            basename = no + sh.lg.Path(file).get_ext().lower()
+            basename = no + Path(file).get_ext().lower()
             dest = os.path.join(self.target, basename)
-            success.append(sh.lg.File(file=file, dest=dest).move())
+            success.append(File(file, dest).move())
         self.Success = not (False in success or None in success)
     
     def purge(self):
         f = '[unmusic] album_editor.logic.Directory.purge'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         mes = _('Purge tracks')
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         for track in self.tracks:
             track.purge()
             track.save()
@@ -291,25 +293,25 @@ class Directory:
     def create_target(self):
         f = '[unmusic] album_editor.logic.Directory.create_target'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not DB.albumid:
             self.Success = False
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self.target = PATHS.get_processed_album()
-        self.Success = sh.lg.Path(self.target).create()
+        self.Success = Path(self.target).create()
     
     def reset(self, path):
         self.set_values()
         self.path = path
-        self.idir = sh.lg.Directory(self.path)
+        self.idir = shDirectory(self.path)
         self.Success = self.idir.Success
         
     def get_rating(self):
         f = '[unmusic] album_editor.logic.Directory.get_rating'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         match = re.search(r'\(rating (\d+)\)', self.path)
         if match:
@@ -339,17 +341,17 @@ class Directory:
     def add_album_meta(self):
         f = '[unmusic] album_editor.logic.Directory.add_album_meta'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         ''' If a track could not be processed, empty tags will be returned,
             which, when written to DB, can cause confusion. Here we check that
             the track was processed successfully.
         '''
         if not self.tracks[0].audio:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         album = self.tracks[0].album
         artist = self.tracks[0].artist
@@ -380,7 +382,7 @@ class Directory:
                 that the track was processed successfully.
             '''
             if not track.audio or not data:
-                sh.com.rep_empty(f)
+                rep.empty(f)
                 return
             DB.albumid = albumid
             DB.add_track ([albumid, data[0], data[1], data[2], '', data[3]
@@ -391,10 +393,10 @@ class Directory:
     def save_meta(self):
         f = '[unmusic] album_editor.logic.Directory.save_meta'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         ''' It seems better to create new ALBUMID without checking if it
             already exists. Reasons:
@@ -409,13 +411,13 @@ class Directory:
                to establish if DB already has a corresponding ALBUMID.
         '''
         self.add_album_meta()
-        albumid = lg.DB.get_max_id()
+        albumid = DB.get_max_id()
         if not albumid:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self._add_tracks_meta(albumid)
         mes = _('Album {}: {} tracks.').format(albumid, len(self.tracks))
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
     
     def set_values(self):
         self.Success = True
@@ -434,16 +436,16 @@ class Directory:
     def create_list(self):
         f = '[unmusic] album_editor.logic.Directory.create_list'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if self.files:
             return self.files
         if not self.idir:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return self.files
         self.files = self.idir.get_files()
         for file in self.files:
-            if sh.lg.Path(file).get_ext().lower() in self.types:
+            if Path(file).get_ext().lower() in self.types:
                 self.audio.append(file)
         return self.files
     
@@ -453,7 +455,7 @@ class Directory:
         '''
         f = '[unmusic] album_editor.logic.Directory.renumber_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         nos = [i + 1 for i in range(len(self.tracks))]
         count = 0
@@ -464,18 +466,18 @@ class Directory:
         if count:
             mes = _('{}/{} tracks have been renumbered.')
             mes = mes.format(count, len(self.tracks))
-            sh.objs.get_mes(f, mes, True).show_warning()
+            Message(f, mes).show_warning()
     
     def get_tracks(self):
         f = '[unmusic] album_editor.logic.Directory.get_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if self.tracks:
             return self.tracks
         if not self.audio:
             mes = _('Folder "{}" has no audio files.').format(self.path)
-            sh.objs.get_mes(f, mes, True).show_info()
+            Message(f, mes).show_info()
             return self.tracks
         for file in self.audio:
             self.tracks.append(Track(file=file))
@@ -487,17 +489,17 @@ class Play:
     
     def __init__(self):
         self.set_values()
-        self.Success = lg.DB.Success
+        self.Success = DB.Success
     
     def call_player(self):
         f = '[unmusic] album_editor.logic.Play.call_player'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.get_playlist():
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
-        sh.lg.Launch(self.playlist).launch_default()
+        Launch(self.playlist).launch_default()
     
     def set_values(self):
         self.Success = True
@@ -511,11 +513,11 @@ class Play:
     def get_album(self):
         f = '[unmusic] album_editor.logic.Play.get_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return self.album
         if not self.album:
-            local_album = PATHS.get_local_album(lg.DB.albumid)
-            exter_album = PATHS.get_external_album(lg.DB.albumid)
+            local_album = PATHS.get_local_album(DB.albumid)
+            exter_album = PATHS.get_external_album(DB.albumid)
             if os.path.exists(local_album):
                 self.album = local_album
             elif os.path.exists(exter_album):
@@ -525,7 +527,7 @@ class Play:
     def get_audio(self):
         f = '[unmusic] album_editor.logic.Play.get_audio'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return self.audio
         if not self.audio:
             idir = Directory(self.get_album())
@@ -538,12 +540,12 @@ class Play:
     def get_available(self):
         f = '[unmusic] album_editor.logic.Play.get_available'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         self.get_audio()
         if not (self.audio and self.nos and self.titles and self.len_):
             self.Success = False
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         result = []
         errors = []
@@ -568,20 +570,20 @@ class Play:
             errors = [str(error) for error in errors]
             mes = _('Tracks {} have not been found in "{}"!')
             mes = mes.format(errors, self.get_album())
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
         if len(self.nos) == len(self.titles) == len(self.len_):
             pass
         else:
             self.Success = False
             sub = f'{len(self.nos)} = {len(self.titles)} = {len(self.len_)}'
             mes = _('Condition "{}" is not observed!').format(sub)
-            sh.objs.get_mes(f, mes).show_error()
+            Message(f, mes, True).show_error()
         return result
     
     def get_playlist(self):
         f = '[unmusic] album_editor.logic.Play.get_playlist'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return self.playlist
         if not self.playlist:
             self.playlist = PATHS.get_playlist()
@@ -590,13 +592,13 @@ class Play:
     def gen_list(self):
         f = '[unmusic] album_editor.logic.Play.gen_list'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.nos:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         out = []
-        result = lg.DB.get_album()
+        result = DB.get_album()
         ''' Adding #EXTINF will allow to use tags in those players that support
             it (e.g., clementine, deadbeef). This entry should have the
             following format: '#EXTINF:191,Artist Name - Track Title' (multiple
@@ -627,23 +629,21 @@ class Play:
                 out.append(files[i])
                 out.append('\n')
         else:
-            sh.com.rep_empty(f)
+            rep.empty(f)
         text = ''.join(out)
         if not text:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
-        sh.lg.WriteTextFile (file = self.get_playlist()
-                            ,Rewrite = True
-                            ).write(text)
+        Write(self.get_playlist(), True).write(text)
     
     def play_all_tracks(self):
         f = '[unmusic] album_editor.logic.Play.play_all_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        tracks = lg.DB.get_tracks()
+        tracks = DB.get_tracks()
         if not tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self.titles = [track[0] for track in tracks]
         self.len_ = [track[5] for track in tracks]
@@ -655,11 +655,11 @@ class Play:
     def play_good_tracks(self, rating=8):
         f = '[unmusic] album_editor.logic.Play.play_good_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        tracks = lg.DB.get_good_tracks(rating)
+        tracks = DB.get_good_tracks(rating)
         if not tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self.titles = [track[0] for track in tracks]
         self.len_ = [track[5] for track in tracks]
@@ -683,7 +683,7 @@ class MessagePool:
     def add(self, message):
         f = '[unmusic] album_editor.logic.MessagePool.add'
         if not message:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self.free()
         self.pool.append(message)
@@ -692,7 +692,7 @@ class MessagePool:
         f = '[unmusic] album_editor.logic.MessagePool.delete_first'
         if not self.pool:
             mes = _('The pool is empty!')
-            sh.objs.get_mes(f, mes, True).show_warning()
+            Message(f, mes).show_warning()
             return
         del self.pool[0]
 
@@ -700,7 +700,7 @@ class MessagePool:
         f = '[unmusic] album_editor.logic.MessagePool.delete_last'
         if not self.pool:
             mes = _('The pool is empty!')
-            sh.objs.get_mes(f, mes, True).show_warning()
+            Message(f, mes).show_warning()
             return
         del self.pool[-1]
 
@@ -708,7 +708,7 @@ class MessagePool:
         self.pool = []
 
     def get(self):
-        return sh.List(lst1=self.pool).space_items()
+        return List(self.pool).space_items()
 
 
 
@@ -724,19 +724,19 @@ class Collection:
     
     def get_local_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.local, str(lg.DB.albumid))
+            return os.path.join(self.local, str(DB.albumid))
         else:
             return os.path.join(self.local, str(albumid))
     
     def get_ext_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.external, str(lg.DB.albumid))
+            return os.path.join(self.external, str(DB.albumid))
         else:
             return os.path.join(self.external, str(albumid))
     
     def get_mob_album(self, albumid=None):
         if albumid is None:
-            return os.path.join(self.mobile, str(lg.DB.albumid))
+            return os.path.join(self.mobile, str(DB.albumid))
         else:
             return os.path.join(self.mobile, str(albumid))
     
@@ -768,69 +768,69 @@ class AlbumEditor:
     def set_prev_unrated(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.set_prev_unrated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        albumids = lg.DB.get_prev_unrated(lg.DB.albumid)
+        albumids = DB.get_prev_unrated(DB.albumid)
         self._set_unrated(albumids)
     
     def set_next_unrated(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.set_next_unrated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        albumids = lg.DB.get_next_unrated(lg.DB.albumid)
+        albumids = DB.get_next_unrated(DB.albumid)
         self._set_unrated(albumids)
     
     def _set_unrated(self, albumids):
         f = '[unmusic] album_editor.logic.AlbumEditor._set_unrated'
         if not albumids:
             mes = _('No more matches!')
-            sh.objs.get_mes(f, mes).show_info()
+            Message(f, mes, True).show_info()
             return
         albumid = self._has_any_album(albumids)
         if albumid is None:
             mes = _('No more matches!')
-            sh.objs.get_mes(f, mes).show_info()
+            Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.check_no()
     
     def set_prev_rated(self, rating=0):
         # This code is orphaned, but may be useful in the future
         f = '[unmusic] album_editor.logic.AlbumEditor.set_prev_rated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        albumid = lg.DB.get_prev_rated(rating, lg.DB.albumid)
+        albumid = DB.get_prev_rated(rating, DB.albumid)
         if not albumid:
             mes = _('No more matches!')
-            sh.objs.get_mes(f, mes).show_info()
+            Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.check_no()
     
     def set_next_rated(self, rating=0):
         # This code is orphaned, but may be useful in the future
         f = '[unmusic] album_editor.logic.AlbumEditor.set_next_rated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        albumid = lg.DB.get_next_rated(rating, lg.DB.albumid)
+        albumid = DB.get_next_rated(rating, DB.albumid)
         if not albumid:
             mes = _('No more matches!')
-            sh.objs.get_mes(f, mes).show_info()
+            Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.check_no()
     
     def get_mean_bitrate(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_mean_bitrate'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
-        mean = lg.DB.get_bitrate()
+        mean = DB.get_bitrate()
         if not mean:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         mean = [rating for rating in mean if rating]
         if not mean:
@@ -841,11 +841,11 @@ class AlbumEditor:
     def get_mean_rating(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_mean_rating'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return 0.0
-        mean = lg.DB.get_rates()
+        mean = DB.get_rates()
         if not mean:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return 0.0
         ''' We should not count tracks with an undefined (0) rating, otherwise,
             if there is a mix of tracks with zero and non-zero rating,
@@ -864,50 +864,50 @@ class AlbumEditor:
     def check_no(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.check_no'
         if self.Success:
-            lg.DB.albumid = sh.lg.Input(f, lg.DB.albumid).get_integer()
+            DB.albumid = Input(f, DB.albumid).get_integer()
         else:
-            sh.com.cancel(f)
-        return lg.DB.albumid
+            rep.cancel(f)
+        return DB.albumid
     
     def get_min(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_min'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return 0
-        return sh.lg.Input(f, lg.DB.get_min_id()).get_integer()
+        return Input(f, DB.get_min_id()).get_integer()
     
     def get_max(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.get_max'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return 0
-        _max = lg.DB.get_max_id()
+        _max = DB.get_max_id()
         if not isinstance(_max, int):
             mes = _('The database is empty. You need to fill it first.')
-            sh.objs.get_mes(f, mes).show_warning()
+            Message(f, mes, True).show_warning()
             return 0
         return _max
     
     def inc(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.inc'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if self.check_no() == self.get_max():
-            lg.DB.albumid = self.get_min()
+            DB.albumid = self.get_min()
         else:
-            lg.DB.albumid = lg.DB.get_next_id()
+            DB.albumid = DB.get_next_id()
             self.check_no()
     
     def dec(self):
         f = '[unmusic] album_editor.logic.AlbumEditor.dec'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if self.check_no() == self.get_min():
-            lg.DB.albumid = self.get_max()
+            DB.albumid = self.get_max()
         else:
-            lg.DB.albumid = lg.DB.get_prev_id()
+            DB.albumid = DB.get_prev_id()
             self.check_no()
 
     def _compare_albums(self, old, new):
@@ -919,7 +919,7 @@ class AlbumEditor:
         new[5] = str(new[5]).replace('"', '""')
         search = [new[0], new[1], str(new[2]), new[3], new[4], new[5]]
         search = ' '.join(search)
-        search = sh.lg.Text(search).delete_duplicate_spaces()
+        search = Text(search).delete_duplicate_spaces()
         search = search.strip().lower()
         
         add = []
@@ -943,7 +943,7 @@ class AlbumEditor:
         if add:
             add.append('SEARCH="%s"' % search)
             add = 'begin;update ALBUMS set ' + ','.join(add)
-            add += ' where ALBUMID=%d;commit;' % lg.DB.albumid
+            add += ' where ALBUMID=%d;commit;' % DB.albumid
             return add
 
 

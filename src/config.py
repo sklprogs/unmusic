@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
-import skl_shared_qt.config as qc
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.config import Config as shConfig, Update
+from skl_shared_qt.paths import PDIR, Home
 
 PRODUCT_LOW = 'unmusic'
 
@@ -14,14 +15,14 @@ class Paths:
         self.Success = True
     
     def check(self):
-        self.ihome = sh.Home(PRODUCT_LOW)
+        self.ihome = Home(PRODUCT_LOW)
         self.Success = self.ihome.create_conf()
     
     def get_default_config(self):
-        return sh.objs.get_pdir().add('..', 'resources', 'config', 'default.json')
+        return PDIR.add('..', 'resources', 'config', 'default.json')
     
     def get_schema(self):
-        return sh.objs.get_pdir().add('..', 'resources', 'config', 'schema.json')
+        return PDIR.add('..', 'resources', 'config', 'schema.json')
     
     def get_local_config(self):
         return self.ihome.add_config(PRODUCT_LOW + '.json')
@@ -61,7 +62,7 @@ class Paths:
 
 
 
-class Config(qc.Config):
+class Config(shConfig):
     
     def __init__(self, default, schema, local):
         super().__init__(default, schema, local)
@@ -73,15 +74,15 @@ class Config(qc.Config):
     def update(self):
         f = '[unmusic] config.Config.update'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         self._copy()
         if self.ilocal.Success:
             mes = _('Update default configuration')
-            self.new = qc.Update(self.idefault.get(), self.ilocal.get()).run()
+            self.new = Update(self.idefault.get(), self.ilocal.get()).run()
         else:
             mes = _('Use default configuration')
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
     
     def quit(self):
         self.save()

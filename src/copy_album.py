@@ -5,7 +5,11 @@ import os
 import time
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.logic import com, Input, Text
+from skl_shared_qt.basic_text import Shorten
+from skl_shared_qt.paths import Path, Directory
+from skl_shared_qt.graphics.debug.controller import DEBUG
 
 import config as cf
 import logic as lg
@@ -23,20 +27,16 @@ class Copy:
     def wait_carrier(self, carrier):
         f = '[unmusic] album_editor.controller.Copy.wait_carrier'
         if not self.Success:
-            sh.com.cancel()
+            rep.cancel()
             return
         if not carrier:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         carrier = os.path.realpath(carrier)
-        carrier_sh = sh.lg.Text(carrier).shorten (max_len = 25
-                                                 ,encloser = '"'
-                                                 ,FromEnd = True
-                                                 )
+        carrier_sh = Shorten(text=carrier, limit=25, encloser='"'
+                            ,CutStart=True)
         mes = _('Waiting for {}').format(carrier_sh)
-        objs.get_waitbox().reset (func = f
-                                 ,message = mes
-                                 )
+        objs.get_waitbox().reset(func=f, message=mes)
         objs.waitbox.show()
         while not os.path.isdir(carrier):
             time.sleep(1)
@@ -45,34 +45,24 @@ class Copy:
     def get_settings(self):
         f = '[unmusic] album_editor.controller.Copy.get_settings'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         self.genre = self.gui.opt_gnr.choice
         if self.gui.opt_yer.choice == _('Not set'):
             pass
         elif self.gui.opt_yer.choice == '=':
-            self.year = sh.lg.Input (title = f
-                                    ,value = self.gui.ent_yer.get()
-                                    ).get_integer()
+            self.year = Input(title=f, value=self.gui.ent_yer.get()).get_integer()
         elif self.gui.opt_yer.choice == '>=':
-            self.syear = sh.lg.Input (title = f
-                                      ,value = self.gui.ent_yer.get()
-                                      ).get_integer()
+            self.syear = Input(title=f, value=self.gui.ent_yer.get()).get_integer()
         elif self.gui.opt_yer.choice == '<=':
-            self.eyear = sh.lg.Input (title = f
-                                      ,value = self.gui.ent_yer.get()
-                                      ).get_integer()
+            self.eyear = Input(title=f, value=self.gui.ent_yer.get()).get_integer()
         else:
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
-            mes = mes.format (self.gui.opt_yer.choice
-                             ,'; '.join(gi.ITEMS_YEAR)
-                             )
-            sh.objs.get_mes(f, mes).show_error()
+            mes = mes.format(self.gui.opt_yer.choice, '; '.join(gi.ITEMS_YEAR))
+            Message(f, mes, True).show_error()
         self.source = cf.objs.get_paths().ihome.add_share(self.gui.opt_src.choice)
         self.target = lg.objs.default.ihome.add_share(self.gui.opt_trg.choice)
-        self.limit = sh.lg.Input (title = f
-                                 ,value = self.gui.ent_lim.get()
-                                 ).get_integer()
+        self.limit = Input(title=f, value=self.gui.ent_lim.get()).get_integer()
     
     def show(self):
         self.gui.show()
@@ -102,16 +92,14 @@ class Copy:
     def confirm(self):
         f = '[unmusic] album_editor.controller.Copy.copy'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         total = sum(self.sizes)
-        free = sh.lg.Path(self.target).get_free_space()
+        free = Path(self.target).get_free_space()
         cond = total and free and total + self.minfr < free
         if cond:
-            free = sh.lg.com.get_human_size (bsize = free
-                                            ,LargeOnly = True
-                                            )
-            total = sh.lg.com.get_human_size(total,LargeOnly=1)
+            free = com.get_human_size(bsize=free, LargeOnly=True)
+            total = com.get_human_size(total, LargeOnly=1)
             message = _('Selected albums: {}').format(len(self.ids))
             message += '\n'
             message += _('Total size: {}').format(total)
@@ -119,52 +107,42 @@ class Copy:
             message += _('Free space: {}').format(free)
             message += '\n\n'
             message += _('Continue?')
-            return sh.objs.get_mes(f,message).show_question()
+            return Message(f, message, True).show_question()
         elif not total:
             # Do not fail here since we may change settings after
-            sh.com.rep_lazy(f)
+            rep.lazy(f)
         else:
-            free = sh.lg.com.get_human_size (bsize = free
-                                            ,LargeOnly = True
-                                            )
+            free = com.get_human_size(bsize=free, LargeOnly=True)
             bsize = total + self.minfr
-            required = sh.lg.com.get_human_size (bsize = bsize
-                                                ,LargeOnly = True
-                                                )
+            required = com.get_human_size(bsize=bsize, LargeOnly=True)
             message = _('Not enough free space on "{}"!')
             message = message.format(self.target)
             message += '\n'
             message += _('Free space: {}').format(free)
             message += '\n'
             message += _('Required: {}').format(required)
-            sh.objs.get_mes(f,message).show_warning()
+            Message(f, message, True).show_warning()
     
     def copy(self):
         f = '[unmusic] album_editor.controller.Copy.copy'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.confirm():
             mes = _('Operation has been canceled by the user.')
-            sh.objs.get_mes(f, mes, True).show_info()
+            Message(f, mes).show_info()
             return
         gi.objs.progress.show()
         for i in range(len(self.ids)):
             myid = str(self.ids[i])
             source = os.path.join(self.source,myid)
             target = os.path.join(self.target,myid)
-            source_sh = sh.lg.Text(source).shorten (max_len = 30
-                                                   ,FromEnd = True
-                                                   )
-            target_sh = sh.lg.Text(target).shorten (max_len = 30
-                                                   ,FromEnd = True
-                                                   )
+            source_sh = Shorten(text=source, limit=30, CutStart=True)
+            target_sh = Shorten(text=target, limit=30, CutStart=True)
             message = f'({i + 1}/{len(self.ids)}) {source_sh} -> {target_sh}'
             gi.objs.progress.set_text(message)
             gi.objs.progress.update(i, len(self.ids))
-            idir = sh.lg.Directory (path = source
-                                   ,dest = target
-                                   )
+            idir = Directory(source, target)
             idir.copy()
             if not idir.Success:
                 self.Success = False
@@ -174,45 +152,45 @@ class Copy:
     def get_sizes(self):
         f = '[unmusic] album_editor.controller.Copy.get_sizes'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         self.sizes = []
         if not self.ids:
-            sh.com.rep_lazy(f)
+            rep.lazy(f)
             return
         gi.objs.get_progress().set_text(_('Calculate required space'))
         gi.objs.progress.show()
         for i in range(len(self.ids)):
             gi.objs.progress.update(i, len(self.ids))
             mydir = os.path.join(self.source, str(self.ids[i]))
-            idir = sh.lg.Directory(mydir)
+            idir = Directory(mydir)
             self.Success = idir.Success
             if self.Success:
                 self.sizes.append(idir.get_size())
             else:
-                sh.com.cancel(f)
+                rep.cancel(f)
                 break
         gi.objs.progress.close()
     
     def select_albums(self):
         f = '[unmusic] album_editor.controller.Copy.select_albums'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.ids:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         text = lg.objs.get_db().get_brief(self.ids)
         if not text:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         lst = text.splitlines()
-        ibox = sh.MultCBoxesC (text = text
-                              ,MarkAll = True
-                              ,width = 1024
-                              ,height = 768
-                              ,icon = gi.ICON
-                              )
+        #TODO: Implement
+        ibox = sh.MultCBoxesC(text = text
+                             ,MarkAll = True
+                             ,width = 1024
+                             ,height = 768
+                             ,icon = gi.ICON)
         ibox.show()
         # Always a list
         selected = ibox.get_selected()
@@ -223,21 +201,21 @@ class Copy:
             except ValueError:
                 self.Success = False
                 mes = _('Wrong input data!')
-                sh.objs.get_mes(f, mes).show_error()
+                Message(f, mes, True).show_error()
         ids = []
         for pos in poses:
             try:
                 ids.append(self.ids[pos])
             except IndexError:
                 mes = _('Wrong input data!')
-                sh.objs.get_mes(f, mes).show_error()
+                Message(f, mes, True).show_error()
         # Allow an empty list here to cancel copying if no albums are selected
         self.ids = ids
     
     def fetch(self):
         f = '[unmusic] album_editor.controller.Copy.fetch'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             if self.genre == _('Light'):
@@ -251,22 +229,22 @@ class Copy:
             if result:
                 self.ids = [item[0] for item in result]
             else:
-                sh.com.rep_empty(f)
+                rep.empty(f)
                 self.Success = False
         except Exception as e:
             self.Success = False
             mes = _('Operation has failed!\n\nDetails: {}')
             mes = mes.format(e)
-            sh.objs.get_mes(f, mes).show_error()
+            Message(f, mes, True).show_error()
     
     def set_query(self):
         f = '[unmusic] album_editor.controller.Copy.set_query'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         ids = lg.objs.get_db().get_rated()
         if not ids:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         self.ids = ids
         # We assume that 'self.ids' are already distinct
@@ -283,7 +261,7 @@ class Copy:
             genres = (_('All'), _('Any'), _('Light'), _('Heavy'))
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
             mes = mes.format(self.genre, '; '.join(genres))
-            sh.objs.get_mes(f, mes).show_error()
+            Message(f, mes, True).show_error()
         ''' If an exact year is set then only this year should be used;
             otherwise, a starting-ending years range should be used.
         '''
@@ -301,19 +279,21 @@ class Copy:
     def debug(self):
         f = '[unmusic] album_editor.controller.Copy.debug'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.ids:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         '''
         mes = '; '.join([str(albumid) for albumid in self.ids])
-        sh.objs.get_mes(f, mes, True).show_debug()
+        Message(f, mes).show_debug()
         '''
         ids = lg.objs.get_db().get_brief(self.ids)
         ids = ids.splitlines()
         ids.sort()
-        sh.fast_txt('\n'.join(ids))
+        DEBUG.reset('\n'.join(ids))
+        DEBUG.show()
+        
     
     def start(self):
         # Do not reset GUI here

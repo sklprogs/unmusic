@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import sqlite3
 import sys
+import sqlite3
 
-import skl_shared_qt.shared as sh
 from skl_shared_qt.localize import _
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.table import Table
 
 
 class DB:
@@ -21,7 +22,7 @@ class DB:
     def get_albums(self, limit=0):
         f = '[unmusic] db.DB.get_albums'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID, ALBUM, ARTIST, YEAR from ALBUMS \
                  order by ALBUMID'
@@ -44,7 +45,7 @@ class DB:
         '''
         f = '[unmusic] db.DB.get_rates'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select RATING from TRACKS where ALBUMID = ? order by NO'
         try:
@@ -58,7 +59,7 @@ class DB:
     def get_prev_unrated(self, albumid=None):
         f = '[unmusic] db.DB.get_prev_unrated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if albumid is None:
             albumid = self.albumid
@@ -75,7 +76,7 @@ class DB:
     def get_next_unrated(self, albumid=None):
         f = '[unmusic] db.DB.get_next_unrated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if albumid is None:
             albumid = self.albumid
@@ -93,7 +94,7 @@ class DB:
         # This code is orphaned, but may be useful in the future
         f = '[unmusic] db.DB.get_prev_rated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if albumid is None:
             albumid = self.albumid
@@ -111,7 +112,7 @@ class DB:
         # This code is orphaned, but may be useful in the future
         f = '[unmusic] db.DB.get_next_rated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if albumid is None:
             albumid = self.albumid
@@ -128,10 +129,10 @@ class DB:
     def get_brief(self, ids):
         f = '[unmusic] db.DB.get_brief'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not ids:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         ''' Sometimes ARTIST + YEAR + ALBUM combinations are identical, e.g.,
             there are several CDs for the same album or there are identical
@@ -160,7 +161,7 @@ class DB:
     def get_unknown_genre(self, limit=0):
         f = '[unmusic] db.DB.get_unknown_genre'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query1 = 'select ALBUMID from ALBUMS where GENRE = ? limit ? \
                   order by ALBUMID'
@@ -179,7 +180,7 @@ class DB:
     def get_rated(self, rating=0, limit=0):
         f = '[unmusic] db.DB.get_unrated'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select distinct ALBUMID from TRACKS where RATING = ?'
         if limit:
@@ -198,7 +199,7 @@ class DB:
     def get_good_tracks(self, rating=8):
         f = '[unmusic] db.DB.get_good_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select TITLE, NO, LYRICS, COMMENT, BITRATE, LENGTH, RATING \
                  from TRACKS where ALBUMID = ? and RATING >= ? order by NO'
@@ -215,7 +216,7 @@ class DB:
         '''
         f = '[unmusic] db.DB.has_id'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS where ALBUMID = ?'
         try:
@@ -227,15 +228,15 @@ class DB:
     def update_track(self, no, data):
         f = '[unmusic] db.DB.update_track'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not no or not data:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         if len(data) != 4:
             sub = f'{len(data)} = 4'
             mes = _('Condition "{}" is not observed!').format(sub)
-            sh.objs.get_mes(f, mes).show_error()
+            Message(f, mes, True).show_error()
             return
         query = 'update TRACKS set TITLE = ?, LYRICS = ?, COMMENT = ?, \
                  RATING = ? where ALBUMID = ? and NO = ?'
@@ -256,7 +257,7 @@ class DB:
         '''
         f = '[unmusic] db.DB.check_nos'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select NO from TRACKS where ALBUMID = ? order by NO'
         try:
@@ -272,7 +273,7 @@ class DB:
     def get_length(self):
         f = '[unmusic] db.DB.get_length'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select LENGTH from TRACKS where ALBUMID = ? order by NO'
         try:
@@ -286,7 +287,7 @@ class DB:
     def get_bitrate(self):
         f = '[unmusic] db.DB.get_bitrate'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select BITRATE from TRACKS where ALBUMID = ? order by NO'
         try:
@@ -300,7 +301,7 @@ class DB:
     def delete(self):
         f = '[unmusic] db.DB.delete'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query1 = 'delete from ALBUMS where ALBUMID = ?'
         query2 = 'delete from TRACKS where ALBUMID = ?'
@@ -313,7 +314,7 @@ class DB:
     def get_rating(self):
         f = '[unmusic] db.DB.get_rating'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return 0
         query = 'select RATING from ALBUMS where ALBUMID = ?'
         try:
@@ -328,7 +329,7 @@ class DB:
     def set_rating(self, value):
         f = '[unmusic] db.DB.set_rating'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'update TRACKS set RATING = ? where ALBUMID = ?'
         try:
@@ -339,7 +340,7 @@ class DB:
     def set_album_rating(self, value):
         f = '[unmusic] db.DB.set_album_rating'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'update ALBUMS set RATING = ? where ALBUMID = ?'
         try:
@@ -350,24 +351,24 @@ class DB:
     def updateDB(self, query):
         f = '[unmusic] db.DB.updateDB'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not query:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         try:
             self.dbc.executescript(query)
         except Exception as e:
             mes = _('Unable to execute:\n"{}"\n\nDetails: {}')
             mes = mes.format(str(query).replace(';', ';\n'), e)
-            sh.objs.get_mes(f, mes).show_error()
+            Message(f, mes, True).show_error()
             return
         return True
     
     def get_tracks(self):
         f = '[unmusic] db.DB.get_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select TITLE, NO, LYRICS, COMMENT, BITRATE, LENGTH, RATING \
                  from TRACKS where ALBUMID = ? order by NO'
@@ -380,10 +381,10 @@ class DB:
     def search_tracks(self, pattern, limit=50):
         f = '[unmusic] db.DB.search_track'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not pattern:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         query = 'select ALBUMID, TITLE, NO, LYRICS, COMMENT, BITRATE, LENGTH \
                 ,RATING from TRACKS where SEARCH like ? order by ALBUMID, NO \
@@ -398,10 +399,10 @@ class DB:
     def get_next_album(self, search):
         f = '[unmusic] db.DB.get_next_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not search:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         query = 'select ALBUMID from ALBUMS where ALBUMID > ? and SEARCH \
                  like ? order by ALBUMID'
@@ -417,10 +418,10 @@ class DB:
     def get_prev_album(self, search):
         f = '[unmusic] db.DB.get_prev_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not search:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         query = 'select ALBUMID from ALBUMS where ALBUMID < ? and SEARCH \
                  like ? order by ALBUMID desc'
@@ -436,7 +437,7 @@ class DB:
     def get_prev_id(self):
         f = '[unmusic] db.DB.get_prev_id'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS where ALBUMID < ? order by ALBUMID\
                  desc'
@@ -451,7 +452,7 @@ class DB:
     def get_next_id(self):
         f = '[unmusic] db.DB.get_next_id'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS where ALBUMID > ? order by ALBUMID'
         try:
@@ -465,7 +466,7 @@ class DB:
     def get_album(self):
         f = '[unmusic] db.DB.get_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT, RATING \
                  from ALBUMS where ALBUMID = ?'
@@ -478,7 +479,7 @@ class DB:
     def get_min_id(self):
         f = '[unmusic] db.DB.get_min_id'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS order by ALBUMID'
         try:
@@ -493,7 +494,7 @@ class DB:
     def get_max_id(self):
         f = '[unmusic] db.DB.get_max_id'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS order by ALBUMID desc'
         try:
@@ -511,7 +512,7 @@ class DB:
         '''
         f = '[unmusic] db.DB.has_track'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select TITLE from TRACKS where ALBUMID = ? and NO = ? \
                  and BITRATE = ?'
@@ -526,7 +527,7 @@ class DB:
     def has_album(self, artist, year, album):
         f = '[unmusic] db.DB.has_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         query = 'select ALBUMID from ALBUMS where ARTIST = ? and YEAR = ? \
                  and ALBUM = ?'
@@ -541,27 +542,24 @@ class DB:
     def print(self, Selected=False, Shorten=False, MaxRow=20, MaxRows=20, table='TRACKS'):
         f = '[unmusic] db.DB.print'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # 'self.dbc.description' is 'None' without performing 'select' first
         if not Selected:
             self.dbc.execute('select * from %s' % table)
         headers = [cn[0] for cn in self.dbc.description]
         rows = self.dbc.fetchall()
-        sh.lg.Table (headers = headers
-                    ,rows = rows
-                    ,Shorten = Shorten
-                    ,MaxRow = MaxRow
-                    ,MaxRows = MaxRows
-                    ).print()
+        mes = Table(headers=headers, rows=rows, ShowGap=Shorten, maxrow=MaxRow
+                   ,maxrows=MaxRows).run()
+        print(mes)
     
     def add_track(self, data):
         f = '[unmusic] db.DB.add_track'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not data:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         query = 'insert into TRACKS values (?, ?, ?, ?, ?, ?, ?, ?, ?)'
         try:
@@ -572,10 +570,10 @@ class DB:
     def add_album(self, data):
         f = '[unmusic] db.DB.add_album'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not data:
-            sh.com.empty(f)
+            rep.empty(f)
             return
         query = 'insert into ALBUMS values (NULL, ?, ?, ?, ?, ?, ?, ?, ?)'
         try:
@@ -586,7 +584,7 @@ class DB:
     def create_tracks(self):
         f = '[unmusic] db.DB.create_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # 9 columns by now
         query = 'create table if not exists TRACKS (\
@@ -608,7 +606,7 @@ class DB:
     def create_albums(self):
         f = '[unmusic] db.DB.create_albums'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # 9 columns by now
         query = 'create table if not exists ALBUMS (\
@@ -630,10 +628,10 @@ class DB:
     def save(self):
         f = '[unmusic] db.DB.save'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         mes = _('Save "{}"').format(self.path)
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         try:
             self.db.commit()
         except Exception as e:
@@ -643,7 +641,7 @@ class DB:
         self.Success = False
         mes = _('Database "{}" has failed!\n\nDetails: {}')
         mes = mes.format(self.path, error)
-        sh.objs.get_mes(func, mes).show_warning()
+        Message(func, mes, True).show_warning()
         ''' We need to quit as soon as possible; otherwise, folders will be
             obfuscated, but the info about them will not be stored in the DB!
         '''
@@ -652,7 +650,7 @@ class DB:
     def close(self):
         f = '[unmusic] db.DB.close'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.dbc.close()
@@ -662,7 +660,7 @@ class DB:
     def connect(self):
         f = '[unmusic] db.DB.connect'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.db = sqlite3.connect(self.path)
