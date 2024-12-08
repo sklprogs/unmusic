@@ -2,15 +2,17 @@
 # -*- coding: UTF-8 -*-
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.graphics.root.controller import ROOT
 
-import unmusic as un
+ROOT.get_root()
 
 
 class Commands:
     
     def run_tracks(self):
-        itracks = un.Tracks()
+        from tracks.controller import Tracks
+        itracks = Tracks()
         for i in range(40):
             itracks.add()
         return itracks
@@ -20,7 +22,6 @@ com = Commands()
 
 
 if __name__ == '__main__':
-    sh.com.start()
     '''
     import gui.tests
     import gui.tracks
@@ -31,5 +32,5 @@ if __name__ == '__main__':
     '''
     window = com.run_tracks()
     window.show()
-    sh.com.end()
+    ROOT.end()
 
