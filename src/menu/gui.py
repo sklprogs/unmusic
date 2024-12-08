@@ -1,12 +1,17 @@
-import PyQt6
-import PyQt6.QtWidgets
-import PyQt6.QtGui
-import PyQt6.QtCore
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
+from PyQt6.QtGui import QShortcut, QKeySequence
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.graphics.root.controller import ROOT
+from skl_shared_qt.graphics.icon.controller import ICON
+from skl_shared_qt.graphics.button.controller import Button
+from skl_shared_qt.paths import PDIR
 
-sh.gi.ICON = sh.objs.get_pdir().add('..', 'resources', 'unmusic.png')
+ICON.set(PDIR.add('..', 'resources', 'unmusic.png'))
 
 
 class Menu:
@@ -21,21 +26,20 @@ class Menu:
         ''' Do this only after showing the widget; otherwise, it will have
             bogus dimensions of 640×480.
         '''
-        self.app.move(sh.objs.get_root().primaryScreen().geometry().center() - self.app.rect().center())
+        self.app.move(ROOT.get_root().primaryScreen().geometry().center() - self.app.rect().center())
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
-            PyQt6.QtGui.QShortcut(PyQt6.QtGui.QKeySequence(hotkey), self.window).activated.connect(action)
+            QShortcut(QKeySequence(hotkey), self.window).activated.connect(action)
     
     def set_buttons(self):
-        self.btn_edt = sh.Button (_('Album Editor'))
-        self.btn_prp = sh.Button (text = _('Prepare files')
-                                 ,hint = _('Move sub-folders to a root folder, split large lossless files, etc.')
-                                 )
-        self.btn_col = sh.Button(_('Collect tags & Obfuscate'))
-        self.btn_cop = sh.Button(_('Copy music'))
-        self.btn_del = sh.Button(_('Delete low-rated music'))
-        self.btn_qit = sh.Button(_('Quit'))
+        self.btn_edt = Button(_('Album Editor'))
+        self.btn_prp = Button(text = _('Prepare files')
+                             ,hint = _('Move sub-folders to a root folder, split large lossless files, etc.'))
+        self.btn_col = Button(_('Collect tags & Obfuscate'))
+        self.btn_cop = Button(_('Copy music'))
+        self.btn_del = Button(_('Delete low-rated music'))
+        self.btn_qit = Button(_('Quit'))
     
     def add_buttons(self):
         self.layout.addWidget(self.btn_edt.widget)
@@ -46,16 +50,16 @@ class Menu:
         self.layout.addWidget(self.btn_qit.widget)
     
     def set_layout(self):
-        self.app = PyQt6.QtWidgets.QMainWindow()
-        self.window = PyQt6.QtWidgets.QWidget()
-        self.layout = PyQt6.QtWidgets.QVBoxLayout()
+        self.app = QMainWindow()
+        self.window = QWidget()
+        self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.window.setLayout(self.layout)
         self.app.setCentralWidget(self.window)
     
     def set_icon(self):
         # Does not accept None
-        self.app.setWindowIcon(sh.gi.objs.get_icon())
+        self.app.setWindowIcon(ICON.get())
     
     def set_title(self, title='unmusic'):
         self.app.setWindowTitle(title)
