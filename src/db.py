@@ -146,13 +146,9 @@ class DB:
             self.dbc.execute(query,ids)
             result = self.dbc.fetchall()
             if result:
-                lst = [str(item[0]) + ': ' + ' - '.join ([item[1]
-                                                         ,str(item[2])
-                                                         ,item[3]
-                                                         ]
-                                                        )\
-                       for item in result
-                      ]
+                lst = [str(item[0]) + ': ' + ' - '.join([item[1], str(item[2])
+                                                        ,item[3]]) \
+                       for item in result]
                 return '\n'.join(lst)
                 
         except Exception as e:

@@ -5,15 +5,14 @@ from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep, Message
 
 from config import CONFIG
-import logic as lg
-from . import gui
-from .logic import IMAGE
+from image_viewer.gui import ImageViewer as guiImageViewer
+from image_viewer.logic import IMAGE
 
 
 class ImageViewer:
     
     def __init__(self):
-        self.gui = gui.ImageViewer()
+        self.gui = guiImageViewer()
         self.set_bindings()
     
     def set_bindings(self):

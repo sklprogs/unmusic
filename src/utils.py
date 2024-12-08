@@ -3,9 +3,16 @@
 
 import os
 import sqlite3
+
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
-#import skl_shared_qt.image.controller as im
+from skl_shared_qt.message.controller import rep, Message
+from skl_shared_qt.basic_text import Shorten
+from skl_shared_qt.graphics.root.controller import ROOT
+from skl_shared_qt.paths import Path, Home, Directory
+from skl_shared_qt.logic import com
+
+ROOT.get_root()
+
 import config as cf
 import logic as lg
 import gui as gi
@@ -22,32 +29,29 @@ class DeleteBad:
     def delete(self):
         f = '[unmusic] utils.DeleteBad.delete'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         gi.objs.get_progress().set_text(_('Delete folders'))
         gi.objs.progress.show()
         count = 0
         for i in range(len(self.del_dirs)):
-            shown_path = sh.Text(self.del_dirs[i]).shorten (max_len = 40
-                                                           ,FromEnd = True
-                                                           ,ShowGap = True
-                                                           )
+            shown_path = Shorten(self.del_dirs[i, 40, True, True)
             mes = _('Delete "{}"').format(shown_path)
             gi.objs.progress.set_text(mes)
             gi.objs.progress.update(i,len(self.del_dirs))
             # Avoid GUI freezing
-            sh.objs.get_root().update()
-            if sh.Directory(self.del_dirs[i]).delete():
+            ROOT.get_root().update()
+            if Directory(self.del_dirs[i]).delete():
                 count += 1
         gi.objs.progress.close()
         mes = _('{}/{} folders have been deleted.')
         mes = mes.format(count, len(self.del_dirs))
-        sh.objs.get_mes(f, mes).show_info()
+        Message(f, mes, True).show_info()
     
     def get_sizes(self):
         f = '[unmusic] utils.DeleteBad.get_sizes'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         local = cf.objs.get_paths().get_local_collection()
         local = os.path.realpath(local)
@@ -62,25 +66,25 @@ class DeleteBad:
         gi.objs.get_progress().set_text(_('Calculate space to be freed'))
         gi.objs.progress.show()
         for i in range(len(self.ids)):
-            gi.objs.progress.update(i,len(self.ids))
-            path = os.path.join(local,self.ids[i])
+            gi.objs.progress.update(i, len(self.ids))
+            path = os.path.join(local, self.ids[i])
             if os.path.exists(path):
-                local_size += sh.Directory(path).get_size()
+                local_size += Directory(path).get_size()
                 self.del_dirs.append(path)
-            path = os.path.join(external,self.ids[i])
+            path = os.path.join(external, self.ids[i])
             if os.path.exists(path):
-                external_size += sh.Directory(path).get_size()
+                external_size += Directory(path).get_size()
                 self.del_dirs.append(path)
             path = os.path.join(mobile,self.ids[i])
             if os.path.exists(path):
-                mobile_size += sh.Directory(path).get_size()
+                mobile_size += Directory(path).get_size()
                 self.del_dirs.append(path)
         gi.objs.progress.close()
         total_size = local_size + external_size + mobile_size
-        total_size = sh.com.get_human_size(total_size, True)
-        local_size = sh.com.get_human_size(local_size, True)
-        external_size = sh.com.get_human_size(external_size, True)
-        mobile_size = sh.com.get_human_size(mobile_size, True)
+        total_size = com.get_human_size(total_size, True)
+        local_size = com.get_human_size(local_size, True)
+        external_size = com.get_human_size(external_size, True)
+        mobile_size = com.get_human_size(mobile_size, True)
         mes = []
         sub = _('Space to be freed:')
         mes.append(sub)
@@ -95,10 +99,10 @@ class DeleteBad:
         mes.append('')
         sub = _('Do you really want to continue?')
         mes.append(sub)
-        self.Success = sh.objs.get_mes(f,'\n'.join(mes)).show_question()
+        self.Success = Message(f, '\n'.join(mes), True).show_question()
         if not self.Success:
             mes = _('Operation has been canceled by the user.')
-            sh.objs.get_mes(f, mes, True).show_info()
+            Message(f, mes).show_info()
     
     def run(self):
         self.get_sizes()
@@ -109,8 +113,8 @@ class DeleteBad:
 class Image:
     
     def __init__(self):
-        self.dir = sh.Home('unmusic').add_share(_('Images'))
-        self.Success = sh.Path(self.dir).create()
+        self.dir = Home('unmusic').add_share(_('Images'))
+        self.Success = Path(self.dir).create()
         self.path = ''
         self.albumid = 0
         self.bytes = None
@@ -121,19 +125,19 @@ class Image:
     def save(self):
         f = '[unmusic] utils.Image.save'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.path:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         if os.path.exists(self.path):
             mes = _('File "{}" already exists.')
             mes = mes.format(self.path)
-            sh.objs.get_mes(f, mes, True).show_debug()
+            Message(f, mes).show_debug()
             self.Present = True
         elif self.bytes:
             mes = _('Save "{}"').format(self.path)
-            sh.objs.get_mes(f, mes, True).show_info()
+            Message(f, mes).show_info()
             iimage = im.Image()
             iimage.bytes_ = self.bytes
             iimage.get_loader()
@@ -143,17 +147,17 @@ class Image:
         else:
             mes = _('Album {} has no cover!')
             mes = mes.format(self.albumid)
-            sh.objs.get_mes(f, mes, True).show_debug()
+            Message(f, mes).show_debug()
             self.Skipped = True
     
     def set_path(self):
         f = '[unmusic] utils.Image.set_path'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         name = str(self.albumid)
         if not name:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         name += '.jpg'
         self.path = os.path.join(self.dir, name)
@@ -185,7 +189,7 @@ class Commands:
         idb.connect()
         data = idb.fetch_images()
         if not data:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             idb.close()
             return
         errors = 0
@@ -206,7 +210,7 @@ class Commands:
                 errors += 1
         mes = _('Files in total: {}, processed: {}, already existing: {}, skipped: {}, errors: {}')
         mes = mes.format(len(data), processed, present, skipped, errors)
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         idb.close()
     
     def alter(self):
@@ -239,10 +243,10 @@ class DB:
     def fetch_images(self):
         f = '[unmusic] utils.DB.fetch_images'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         mes = _('Fetch data')
-        sh.objs.get_mes(f, mes, True).show_debug()
+        Message(f, mes).show_debug()
         query = 'select ALBUMID,IMAGE from ALBUMS order by ALBUMID'
         try:
             self.dbc.execute(query)
@@ -273,7 +277,7 @@ class DB:
     def savew(self):
         f = '[unmusic] utils.DB.savew'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.dbw.commit()
@@ -283,7 +287,7 @@ class DB:
     def connect(self):
         f = '[unmusic] utils.DB.connect'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.db = sqlite3.connect(self.path)
@@ -294,7 +298,7 @@ class DB:
     def connectw(self):
         f = '[unmusic] utils.DB.connectw'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.dbw = sqlite3.connect(self.clone)
@@ -305,10 +309,10 @@ class DB:
     def fetch_albums(self):
         f = '[unmusic] utils.DB.fetch_albums'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         mes = _('Fetch data from {}').format('ALBUMS')
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         # 8 columns to fetch
         query = 'select ALBUMID, ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT \
                 ,SEARCH from ALBUMS'
@@ -321,10 +325,10 @@ class DB:
     def fetch_tracks(self):
         f = '[unmusic] utils.DB.fetch_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         mes = _('Fetch data from {}').format('TRACKS')
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         # 9 columns to fetch
         query = 'select ALBUMID, TITLE, NO, LYRICS, COMMENT, SEARCH, BITRATE \
                 ,LENGTH, RATING from TRACKS'
@@ -337,7 +341,7 @@ class DB:
     def create_albums(self):
         f = '[unmusic] utils.DB.create_albums'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # 9 columns by now
         query = 'create table ALBUMS (\
@@ -362,7 +366,7 @@ class DB:
     def create_tracks(self):
         f = '[unmusic] utils.DB.create_tracks'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         # 9 columns by now
         query = 'create table if not exists TRACKS (\
@@ -395,15 +399,15 @@ class DB:
                 rating = self._get_mean(ratings)
             else:
                 rating = 0
-                sh.com.rep_empty(f)
+                rep.empty(f)
                 mes = _('Tracks of album #{} have no rating!')
                 mes = mes.format(lg.objs.db.albumid)
-                sh.objs.get_mes(f, mes, True).show_warning()
+                Message(f, mes).show_warning()
                 self.Success = False
                 return
             if i % 100 == 0:
                 mes = _('Album ID: {}. Rating: {}').format(row[0], rating)
-                sh.objs.get_mes(f, mes, True).show_debug()
+                Message(f, mes).show_debug()
             row += (rating,)
             self._fill_row(f, query, row)
     
@@ -424,20 +428,20 @@ class DB:
     def fill(self):
         f = '[unmusic] utils.DB.fill'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         if not self.albums or not self.tracks:
-            sh.com.rep_empty(f)
+            rep.empty(f)
             return
         mes = _('Copy "{}" to "{}"').format(self.path, self.clone)
-        sh.objs.get_mes(f, mes, True).show_info()
+        Message(f, mes).show_info()
         self._fill_albums()
         self._fill_tracks()
                           
     def close(self):
         f = '[unmusic] utils.DB.close'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.dbc.close()
@@ -447,7 +451,7 @@ class DB:
     def closew(self):
         f = '[unmusic] utils.DB.closew'
         if not self.Success:
-            sh.com.cancel(f)
+            rep.cancel(f)
             return
         try:
             self.dbcw.close()
@@ -460,9 +464,8 @@ com = Commands()
 
 if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
-    sh.com.start()
     #com.alter()
     #DeleteBad().run()
     mes = _('Goodbye!')
-    sh.objs.get_mes(f, mes, True).show_debug()
-    sh.com.end()
+    Message(f, mes).show_debug()
+    ROOT.end()
