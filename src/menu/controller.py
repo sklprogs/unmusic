@@ -14,7 +14,7 @@ ROOT.get_root()
 
 from config import CONFIG
 from album_editor.controller import ALBUM_EDITOR
-from . import gui
+from menu.gui import Menu as guiMenu
 
 
 class Menu:
@@ -30,7 +30,7 @@ class Menu:
         self.close()
     
     def set_gui(self):
-        self.gui = gui.Menu()
+        self.gui = guiMenu()
         self.set_bindings()
     
     def set_bindings(self):
