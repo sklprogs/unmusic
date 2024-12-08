@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import PyQt6
-import PyQt6.QtWidgets
-import PyQt6.QtGui
+from PyQt6.QtCore import Qt
 
 from skl_shared_qt.localize import _
-import skl_shared_qt.shared as sh
+from skl_shared_qt.message.controller import Message, rep
+from skl_shared_qt.graphics.entry.controller import Entry
+from skl_shared_qt.graphics.label.controller import Label
 
-import tracks.gui
+from tracks.gui import Tracks as guiTracks, Track as guiTrack
 
 
-class Tracks(tracks.gui.Tracks):
+class Tracks(guiTracks):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +22,7 @@ class Tracks(tracks.gui.Tracks):
 
 
 
-class Track(tracks.gui.Track):
+class Track(guiTrack):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,8 +30,7 @@ class Track(tracks.gui.Track):
     
     def dump(self):
         return (self.ent_alb.get(), self.ent_tit.get(), self.ent_lyr.get()
-               ,self.ent_com.get(), int(self.opt_rtg.get())
-               )
+               ,self.ent_com.get(), int(self.opt_rtg.get()))
     
     def configure(self):
         self.ent_alb.disable()
@@ -56,33 +55,33 @@ class Track(tracks.gui.Track):
         self.opt_rtg.set(0)
     
     def set_entries(self):
-        self.ent_alb = sh.Entry()
-        self.ent_tno = sh.Entry()
-        self.ent_tit = sh.Entry()
-        self.ent_lyr = sh.Entry()
-        self.ent_com = sh.Entry()
-        self.ent_bit = sh.Entry()
-        self.ent_len = sh.Entry()
+        self.ent_alb = Entry()
+        self.ent_tno = Entry()
+        self.ent_tit = Entry()
+        self.ent_lyr = Entry()
+        self.ent_com = Entry()
+        self.ent_bit = Entry()
+        self.ent_len = Entry()
     
     def set_labels(self):
-        self.lbl_alb = sh.Label(_('Album #:'))
-        self.lbl_tno = sh.Label(_('Track #:'))
-        self.lbl_tit = sh.Label(_('Title:'))
-        self.lbl_lyr = sh.Label(_('Lyrics:'))
-        self.lbl_com = sh.Label(_('Comment:'))
-        self.lbl_bit = sh.Label(_('Bitrate:'))
-        self.lbl_len = sh.Label(_('Length:'))
-        self.lbl_rtg = sh.Label(_('Rating:'))
+        self.lbl_alb = Label(_('Album #:'))
+        self.lbl_tno = Label(_('Track #:'))
+        self.lbl_tit = Label(_('Title:'))
+        self.lbl_lyr = Label(_('Lyrics:'))
+        self.lbl_com = Label(_('Comment:'))
+        self.lbl_bit = Label(_('Bitrate:'))
+        self.lbl_len = Label(_('Length:'))
+        self.lbl_rtg = Label(_('Rating:'))
     
     def add_labels(self):
-        self.lay_trk.addWidget(self.lbl_alb.widget, 0, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_tno.widget, 1, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_tit.widget, 2, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_lyr.widget, 3, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_com.widget, 4, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_bit.widget, 5, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_len.widget, 6, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lay_trk.addWidget(self.lbl_rtg.widget, 7, 0, 1, 1, PyQt6.QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_alb.widget, 0, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_tno.widget, 1, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_tit.widget, 2, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_lyr.widget, 3, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_com.widget, 4, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_bit.widget, 5, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_len.widget, 6, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.lay_trk.addWidget(self.lbl_rtg.widget, 7, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
     
     def add_entries(self):
         self.lay_trk.addWidget(self.ent_alb.widget, 0, 1, 1, 1)
