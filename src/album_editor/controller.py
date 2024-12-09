@@ -12,8 +12,8 @@ import logic as lg
 from image_viewer.controller import IMAGE_VIEWER, IMAGE
 from tracks.controller import TRACKS
 from search_tracks.controller import SEARCH_TRACKS
-from . import logic
-from . import gui
+from album_editor import logic
+from album_editor import gui
 
 
 class AlbumEditor:
@@ -276,18 +276,18 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        artist = self.gui.ent_art.get()
-        album = self.gui.ent_alb.get()
-        comment = self.gui.ent_com.get()
+        artist = self.gui.center.ent_art.get()
+        album = self.gui.center.ent_alb.get()
+        comment = self.gui.center.ent_com.get()
         artist = lg.com.decode_back(artist)
         album = lg.com.decode_back(album)
         comment = lg.com.decode_back(comment)
-        self.gui.ent_art.clear_text()
-        self.gui.ent_art.insert(artist)
-        self.gui.ent_alb.clear_text()
-        self.gui.ent_alb.insert(album)
-        self.gui.ent_com.clear_text()
-        self.gui.ent_com.insert(comment)
+        self.gui.center.ent_art.clear_text()
+        self.gui.center.ent_art.insert(artist)
+        self.gui.center.ent_alb.clear_text()
+        self.gui.center.ent_alb.insert(album)
+        self.gui.center.ent_com.clear_text()
+        self.gui.center.ent_com.insert(comment)
         
     def zoom_image(self, event=None):
         f = '[unmusic] album_editor.controller.AlbumEditor.zoom_image'

@@ -13,7 +13,7 @@ from skl_shared_qt.graphics.button.controller import Button
 from skl_shared_qt.graphics.entry.controller import Entry
 from skl_shared_qt.graphics.label.controller import Label
 from skl_shared_qt.graphics.option_menu.controller import OptionMenu
-from skl_shared_qt.graphics.check_box.controller import CheckBox
+from skl_shared_qt.graphics.checkbox.controller import CheckBox
 from skl_shared_qt.paths import PDIR
 
 
@@ -50,12 +50,12 @@ class Top:
         self.set_gui()
     
     def set_values(self):
-        self.prev_inactive = PDR.add('..', 'resources', 'buttons'
-                                    ,'go_back_off.png')
-        self.prev_active = PDIR('..', 'resources', 'buttons', 'go_back.png')
-        self.next_inactive = PDIR('..', 'resources', 'buttons'
-                                 ,'go_next_off.png')
-        self.next_active = PDIR('..', 'resources', 'buttons', 'go_next.png')
+        self.prev_inactive = PDIR.add('..', 'resources', 'buttons'
+                                     ,'go_back_off.png')
+        self.prev_active = PDIR.add('..', 'resources', 'buttons', 'go_back.png')
+        self.next_inactive = PDIR.add('..', 'resources', 'buttons'
+                                     ,'go_next_off.png')
+        self.next_active = PDIR.add('..', 'resources', 'buttons', 'go_next.png')
         self.font = None
         self.mono = QFont('Mono')
         self.mono.setItalic(True)

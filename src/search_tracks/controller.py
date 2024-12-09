@@ -4,7 +4,8 @@
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import Message, rep
 
-from logic import com, DB
+from skl_shared_qt.logic import com
+from logic import DB
 from search_tracks.gui import Tracks as guiTracks, Track as guiTrack
 import tracks.controller
 
