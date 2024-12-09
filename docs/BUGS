@@ -1,3 +1,7 @@
+- Modify fields, search a keyword, go to previous record with this keyword -
+  modifications are not stored.
+- Search tracks: Ctrl+Home and Ctrl+End do not work if the layout is not
+  clicked.
 - logic.Track.set_info: 'str' object is not callable
 - DB.has_album does not always work as expected.
 - Track comment seems not to be added to SEARCH (track search does not work)
