@@ -5,10 +5,10 @@ import html
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.logic import com, Input
+from skl_shared_qt.logic import com as shcom, Input
 
 from config import PATHS, CONFIG
-import logic as lg
+from logic import com, DB, GENRES
 from image_viewer.controller import IMAGE_VIEWER, IMAGE
 from tracks.controller import TRACKS
 from search_tracks.controller import SEARCH_TRACKS
@@ -54,7 +54,7 @@ class AlbumEditor:
     def quit(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.quit'
         self.save()
-        lg.com.export_config()
+        com.export_config()
         CONFIG.quit()
         ''' For this code to be executed last, it's not enough to put it in 
             '__main__' right before 'Root.end'.
@@ -70,7 +70,7 @@ class AlbumEditor:
         self.gui.minimize()
     
     def reset(self):
-        self.Success = self.logic.Success = lg.DB.Success
+        self.Success = self.logic.Success = DB.Success
         self.fill()
     
     def update_album_search(self):
@@ -83,10 +83,10 @@ class AlbumEditor:
         self.gui.top.btn_snr.inactivate()
         if not pattern:
             return
-        albumid = lg.DB.get_next_album(pattern)
+        albumid = DB.get_next_album(pattern)
         if albumid:
             self.gui.top.btn_snr.activate()
-        albumid = lg.DB.get_prev_album(pattern)
+        albumid = DB.get_prev_album(pattern)
         if albumid:
             self.gui.top.btn_spr.activate()
     
@@ -97,11 +97,11 @@ class AlbumEditor:
             return
         max_ = self.logic.get_max()
         self.gui.top.lbl_mtr.set_text(f'{self.logic.check_no()} / {max_}')
-        if lg.DB.albumid < max_:
+        if DB.albumid < max_:
             self.gui.top.btn_nxt.activate()
         else:
             self.gui.top.btn_nxt.inactivate()
-        if lg.DB.albumid == self.logic.get_min():
+        if DB.albumid == self.logic.get_min():
             self.gui.top.btn_prv.inactivate()
         else:
             self.gui.top.btn_prv.activate()
@@ -122,7 +122,7 @@ class AlbumEditor:
             rep.cancel(f)
             return
         self.logic.check_no()
-        data = lg.DB.get_album()
+        data = DB.get_album()
         if not data:
             rep.empty(f)
             return
@@ -131,7 +131,7 @@ class AlbumEditor:
             mes = _('Wrong input data: "{}"!').format(data)
             Message(f, mes, True).show_error()
             return
-        mes = _('Load #{}.').format(lg.DB.albumid)
+        mes = _('Load #{}.').format(DB.albumid)
         self.update_info(mes)
         self.gui.clear_entries()
         self.gui.center.ent_alb.insert(data[0])
@@ -204,7 +204,7 @@ class AlbumEditor:
         if not genre:
             # Do not localize (being stored in DB)
             genre = '?'
-        items = list(lg.GENRES)
+        items = list(GENRES)
         if not genre in items:
             items.append(genre)
         self.gui.center.opt_gnr.reset(items, genre)
@@ -218,11 +218,11 @@ class AlbumEditor:
             will be overwritten!
         '''
         self.save()
-        albumid = lg.DB.get_max_id()
+        albumid = DB.get_max_id()
         if not albumid:
             rep.empty(f)
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.fill()
     
     def go_start(self):
@@ -234,11 +234,11 @@ class AlbumEditor:
             will be overwritten!
         '''
         self.save()
-        albumid = lg.DB.get_min_id()
+        albumid = DB.get_min_id()
         if not albumid:
             rep.empty(f)
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.fill()
     
     def search_id(self):
@@ -263,12 +263,12 @@ class AlbumEditor:
             mes = _('Wrong input data: "{}"!').format(albumid)
             Message(f, mes, True).show_warning()
             return
-        data = lg.DB.has_id(albumid)
+        data = DB.has_id(albumid)
         if not data:
             mes = _('No matches!')
             Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.fill()
     
     def decode(self):
@@ -279,9 +279,9 @@ class AlbumEditor:
         artist = self.gui.center.ent_art.get()
         album = self.gui.center.ent_alb.get()
         comment = self.gui.center.ent_com.get()
-        artist = lg.com.decode_back(artist)
-        album = lg.com.decode_back(album)
-        comment = lg.com.decode_back(comment)
+        artist = com.decode_back(artist)
+        album = com.decode_back(album)
+        comment = com.decode_back(comment)
         self.gui.center.ent_art.clear_text()
         self.gui.center.ent_art.insert(artist)
         self.gui.center.ent_alb.clear_text()
@@ -347,10 +347,10 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        total = lg.DB.get_length()
+        total = DB.get_length()
         if total:
             mes = _('{} ({} tracks)')
-            mes = mes.format(com.get_human_time(sum(total)), len(total))
+            mes = mes.format(shcom.get_human_time(sum(total)), len(total))
         else:
             mes = '?'
         self.gui.center.ent_len.enable()
@@ -378,7 +378,7 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        rating = lg.DB.get_rating()
+        rating = DB.get_rating()
         if rating is None:
             rep.empty(f)
             return
@@ -403,7 +403,7 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        old = lg.DB.get_rating()
+        old = DB.get_rating()
         new = self.logic.get_mean_rating()
         if old is None or new is None:
             rep.empty(f)
@@ -411,7 +411,7 @@ class AlbumEditor:
         if old == new:
             rep.lazy(f)
             return
-        lg.DB.set_album_rating(new)
+        DB.set_album_rating(new)
         self.set_ui_rating()
     
     def set_rating(self):
@@ -437,7 +437,7 @@ class AlbumEditor:
             rep.lazy(f)
             return
         if rating == int(rating) or Message(f, mes, True).show_question():
-            lg.DB.set_rating(ui_value)
+            DB.set_rating(ui_value)
         else:
             self.set_ui_rating()
     
@@ -446,7 +446,7 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        old = lg.DB.get_album()
+        old = DB.get_album()
         if not old:
             rep.empty(f)
             return
@@ -490,7 +490,7 @@ class AlbumEditor:
         mes = _('Some fields have been updated.')
         Message(f, mes).show_info()
         query = self.logic._compare_albums(old, new)
-        lg.DB.updateDB(query)
+        DB.updateDB(query)
         return query
     
     def search_track(self):
@@ -510,12 +510,12 @@ class AlbumEditor:
             rep.cancel(f)
             return
         self.save()
-        old = lg.DB.albumid
+        old = DB.albumid
         # Not 1, because we use '<' and '>' in search
-        lg.DB.albumid = 0
+        DB.albumid = 0
         self.search_next_album(Save=False)
-        if lg.DB.albumid == 0:
-            lg.DB.albumid = old
+        if DB.albumid == 0:
+            DB.albumid = old
     
     def search_next_album(self, Save=True):
         f = '[unmusic] album_editor.controller.AlbumEditor.search_next_album'
@@ -535,14 +535,14 @@ class AlbumEditor:
             self.gui.top.btn_snx.inactivate()
             rep.lazy(f)
             return
-        old = lg.DB.albumid
-        albumid = lg.DB.get_next_album(pattern)
+        old = DB.albumid
+        albumid = DB.get_next_album(pattern)
         if not albumid:
-            lg.DB.albumid = old
+            DB.albumid = old
             mes = _('No matches!')
             Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.fill()
     
     def search_prev_album(self):
@@ -560,14 +560,14 @@ class AlbumEditor:
             self.gui.top.btn_snx.inactivate()
             rep.lazy(f)
             return
-        old = lg.DB.albumid
-        albumid = lg.DB.get_prev_album(pattern)
+        old = DB.albumid
+        albumid = DB.get_prev_album(pattern)
         if not albumid:
-            lg.DB.albumid = old
+            DB.albumid = old
             mes = _('No matches!')
             Message(f, mes, True).show_info()
             return
-        lg.DB.albumid = albumid
+        DB.albumid = albumid
         self.fill()
     
     def go_prev(self):
@@ -601,13 +601,13 @@ class AlbumEditor:
             rep.cancel(f)
             return
         mes = _('Are you sure you want to permanently delete record #{}?')
-        mes = mes.format(lg.DB.albumid)
+        mes = mes.format(DB.albumid)
         if not Message(f, mes, True).show_question():
             return
-        mes = _('Delete #{}.').format(lg.DB.albumid)
+        mes = _('Delete #{}.').format(DB.albumid)
         self.update_info(mes)
-        lg.DB.delete()
-        lg.DB.albumid = self.logic.get_max()
+        DB.delete()
+        DB.albumid = self.logic.get_max()
         self.fill()
     
     def save(self):
@@ -620,7 +620,7 @@ class AlbumEditor:
             return
         if self.dump():
             self.update_info(_('Save DB.'))
-            lg.DB.save()
+            DB.save()
         if TRACKS.Active:
             TRACKS.save()
         if SEARCH_TRACKS.Active:
