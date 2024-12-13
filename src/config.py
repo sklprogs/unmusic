@@ -95,8 +95,8 @@ class Config(shConfig):
 
 PATHS = Paths()
 PATHS.run()
-default = PATHS.get_default_config()
-schema = PATHS.get_schema()
-local = PATHS.get_local_config()
-CONFIG = Config(default, schema, local)
+DEFAULT = PATHS.get_default_config()
+SCHEMA = PATHS.get_schema()
+LOCAL = PATHS.get_local_config()
+CONFIG = Config(DEFAULT, SCHEMA, LOCAL)
 CONFIG.run()
