@@ -6,7 +6,9 @@ import skl_shared_qt.message.controller as ms
 from skl_shared_qt.paths import Path, Home
 from skl_shared_qt.logic import com, Text
 from skl_shared_qt.time import Timer
-import logic as lg
+
+from logic import DB, Walker
+from album_editor.logic import Directory
 
 
 def run():
@@ -16,12 +18,12 @@ def run():
     if not Path(folder).create():
         ms.rep.cancel(f)
         return
-    iwalk = lg.Walker(folder)
+    iwalk = Walker(folder)
     dirs = iwalk.get_dirs()
     if not dirs:
         ms.rep.empty(f)
         iwalk.delete_empty()
-        lg.objs.get_db().close()
+        DB.close()
         mes = _('Goodbye!')
         ms.Message(f, mes).show_debug()
         return
@@ -29,7 +31,7 @@ def run():
     timer = Timer(f)
     timer.start()
     for folder in dirs:
-        if not lg.objs.get_db().Success:
+        if not DB.Success:
             ms.rep.cancel(f)
             continue
         count += 1
@@ -40,17 +42,17 @@ def run():
         basename = Text(basename).delete_unsupported()
         mes = _('Process "{}" ({}/{})').format(basename, count, len(dirs))
         ms.Message(f, mes).show_info()
-        lg.Directory(folder).run()
+        Directory(folder).run()
         ''' In case something went wrong, we should lose only 1 album record,
             not the entire sequence.
         '''
-        lg.objs.get_db().save()
+        DB.save()
     delta = timer.end()
     mes = _('Operation has taken {}')
     mes = mes.format(com.get_human_time(delta))
     ms.Message(f, mes).show_info()
     iwalk.delete_empty()
-    lg.objs.get_db().close()
+    DB.close()
     mes = _('Goodbye!')
     ms.Message(f, mes).show_debug()
 
