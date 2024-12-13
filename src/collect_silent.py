@@ -24,8 +24,7 @@ def run():
         ms.rep.empty(f)
         iwalk.delete_empty()
         DB.close()
-        mes = _('Goodbye!')
-        ms.Message(f, mes).show_debug()
+        ms.Message(f, _('Goodbye!')).show_debug()
         return
     count = 0
     timer = Timer(f)
@@ -48,13 +47,11 @@ def run():
         '''
         DB.save()
     delta = timer.end()
-    mes = _('Operation has taken {}')
-    mes = mes.format(com.get_human_time(delta))
+    mes = _('Operation has taken {}').format(com.get_human_time(delta))
     ms.Message(f, mes).show_info()
     iwalk.delete_empty()
     DB.close()
-    mes = _('Goodbye!')
-    ms.Message(f, mes).show_debug()
+    ms.Message(f, _('Goodbye!')).show_debug()
 
 
 if __name__ == '__main__':
