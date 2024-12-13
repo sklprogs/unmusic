@@ -11,8 +11,8 @@ from skl_shared_qt.basic_text import Shorten
 from skl_shared_qt.paths import Path, Directory
 from skl_shared_qt.graphics.debug.controller import DEBUG
 
-import config as cf
-import logic as lg
+from config import PATHS
+from logic import DB, DEFAULT, LIGHT, HEAVY
 import gui.albums as ga
 import gui.tracks as gt
 
@@ -60,8 +60,8 @@ class Copy:
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
             mes = mes.format(self.gui.opt_yer.choice, '; '.join(gi.ITEMS_YEAR))
             Message(f, mes, True).show_error()
-        self.source = cf.objs.get_paths().ihome.add_share(self.gui.opt_src.choice)
-        self.target = lg.objs.default.ihome.add_share(self.gui.opt_trg.choice)
+        self.source = PATHS.ihome.add_share(self.gui.opt_src.choice)
+        self.target = DEFAULT.ihome.add_share(self.gui.opt_trg.choice)
         self.limit = Input(title=f, value=self.gui.ent_lim.get()).get_integer()
     
     def show(self):
@@ -87,7 +87,7 @@ class Copy:
         self.eyear = 0
         # At least 30 MiB should remain free on the target device
         self.minfr = 31457280
-        self.Success = lg.objs.get_db().Success
+        self.Success = DB.Success
     
     def confirm(self):
         f = '[unmusic] album_editor.controller.Copy.copy'
@@ -180,7 +180,7 @@ class Copy:
         if not self.ids:
             rep.empty(f)
             return
-        text = lg.objs.get_db().get_brief(self.ids)
+        text = DB.get_brief(self.ids)
         if not text:
             rep.empty(f)
             return
@@ -219,13 +219,13 @@ class Copy:
             return
         try:
             if self.genre == _('Light'):
-                lst = list(self.ids) + list(lg.LIGHT)
+                lst = list(self.ids) + list(LIGHT)
             elif self.genre == _('Heavy'):
-                lst = list(self.ids) + list(lg.HEAVY)
+                lst = list(self.ids) + list(HEAVY)
             else:
                 lst = list(self.ids)
-            lg.objs.get_db().dbc.execute(self.query,lst)
-            result = lg.objs.db.dbc.fetchall()
+            DB.dbc.execute(self.query,lst)
+            result = DB.dbc.fetchall()
             if result:
                 self.ids = [item[0] for item in result]
             else:
@@ -242,7 +242,7 @@ class Copy:
         if not self.Success:
             rep.cancel(f)
             return
-        ids = lg.objs.get_db().get_rated()
+        ids = DB.get_rated()
         if not ids:
             rep.empty(f)
             return
@@ -253,9 +253,9 @@ class Copy:
         if self.genre in (_('All'),_('Any')):
             pass
         elif self.genre == _('Light'):
-            self.query += ' and GENRE in (%s)' % ','.join('?' * len(lg.LIGHT))
+            self.query += ' and GENRE in (%s)' % ','.join('?' * len(LIGHT))
         elif self.genre == _('Heavy'):
-            self.query += ' and GENRE in (%s)' % ','.join('?' * len(lg.HEAVY))
+            self.query += ' and GENRE in (%s)' % ','.join('?' * len(HEAVY))
         else:
             self.Success = False
             genres = (_('All'), _('Any'), _('Light'), _('Heavy'))
@@ -288,7 +288,7 @@ class Copy:
         mes = '; '.join([str(albumid) for albumid in self.ids])
         Message(f, mes).show_debug()
         '''
-        ids = lg.objs.get_db().get_brief(self.ids)
+        ids = DB.get_brief(self.ids)
         ids = ids.splitlines()
         ids.sort()
         DEBUG.reset('\n'.join(ids))
