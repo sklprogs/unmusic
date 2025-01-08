@@ -1,3 +1,4 @@
+- Deleting albums and quitting removes them from GUI but not from DB
 - Modify fields, search a keyword, go to previous record with this keyword -
   modifications are not stored.
 - Search tracks: Ctrl+Home and Ctrl+End do not work if the layout is not

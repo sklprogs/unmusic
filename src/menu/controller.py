@@ -15,6 +15,7 @@ ROOT.get_root()
 from config import CONFIG
 from album_editor.controller import ALBUM_EDITOR
 from menu.gui import Menu as guiMenu
+from collect import Collect
 
 
 class Menu:
@@ -33,11 +34,17 @@ class Menu:
         self.gui = guiMenu()
         self.set_bindings()
     
+    def collect(self):
+        Collect().run()
+        ALBUM_EDITOR.reset()
+        ALBUM_EDITOR.show()
+    
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q',), self.quit)
         self.gui.bind(('Esc',), self.gui.minimize)
         self.gui.btn_edt.set_action(self.show_editor)
         self.gui.btn_qit.set_action(self.quit)
+        self.gui.btn_col.set_action(self.collect)
     
     def show(self):
         self.gui.show()

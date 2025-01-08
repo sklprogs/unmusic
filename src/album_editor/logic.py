@@ -299,7 +299,7 @@ class Directory:
             self.Success = False
             rep.empty(f)
             return
-        self.target = PATHS.get_processed_album()
+        self.target = PATHS.get_processed_album(DB.albumid)
         self.Success = Path(self.target).create()
     
     def reset(self, path):
@@ -335,7 +335,8 @@ class Directory:
             self.create_target()
             self.purge()
             self.move_tracks()
-            self.save_image()
+            #TODO: Implement
+            #self.save_image()
         return self.Success
     
     def add_album_meta(self):
