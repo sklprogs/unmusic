@@ -73,6 +73,7 @@ class Collect:
             return
         timer = Timer(f)
         timer.start()
+        self.bar.set_max(len(self.folders))
         self.bar.show()
         for folder in self.folders:
             if not self.store_album(folder):
