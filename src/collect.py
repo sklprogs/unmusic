@@ -19,6 +19,7 @@ class Collect:
         self.Success = DB.Success
         self.folders = []
         self.bar = ProgressBar()
+        self.bar.set_title(_('Processing albums'))
     
     def create_unprocessed(self):
         f = '[MClient] collect.Collect.create_unprocessed'
