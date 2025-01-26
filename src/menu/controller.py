@@ -16,6 +16,7 @@ from config import CONFIG
 from album_editor.controller import ALBUM_EDITOR
 from menu.gui import Menu as guiMenu
 from collect import Collect
+from copy_albums.controller import COPY_ALBUMS
 
 
 class Menu:
@@ -39,12 +40,16 @@ class Menu:
         ALBUM_EDITOR.reset()
         ALBUM_EDITOR.show()
     
+    def copy_albums(self):
+        COPY_ALBUMS.show()
+    
     def set_bindings(self):
         self.gui.bind(('Ctrl+Q',), self.quit)
         self.gui.bind(('Esc',), self.gui.minimize)
         self.gui.btn_edt.set_action(self.show_editor)
         self.gui.btn_qit.set_action(self.quit)
         self.gui.btn_col.set_action(self.collect)
+        self.gui.btn_cop.set_action(self.copy_albums)
     
     def show(self):
         self.gui.show()
