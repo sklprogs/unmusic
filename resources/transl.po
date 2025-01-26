@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-11 17:56+0300\n"
-"PO-Revision-Date: 2025-01-11 17:58+0300\n"
+"POT-Creation-Date: 2025-01-27 02:21+0300\n"
+"PO-Revision-Date: 2025-01-27 02:28+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -219,7 +219,7 @@ msgstr ""
 "Детали: {}"
 
 #: skl_shared_qt/src/graphics/font/logic.py:62 skl_shared_qt/src/list.py:30
-#: skl_shared_qt/src/logic.py:504 skl_shared_qt/src/logic.py:621
+#: skl_shared_qt/src/logic.py:504 skl_shared_qt/src/logic.py:622
 #: skl_shared_qt/src/message/controller.py:31 skl_shared_qt/src/paths.py:27
 #: skl_shared_qt/src/paths.py:414 unmusic/src/album_editor/controller.py:131
 #: unmusic/src/album_editor/controller.py:258
@@ -333,32 +333,32 @@ msgstr "МиБ"
 msgid "KiB"
 msgstr "КиБ"
 
-#: skl_shared_qt/src/logic.py:615 skl_shared_qt/src/logic.py:653
+#: skl_shared_qt/src/logic.py:616 skl_shared_qt/src/logic.py:654
 #: unmusic/src/album_editor/logic.py:153
 msgid "sec"
 msgstr "сек"
 
-#: skl_shared_qt/src/logic.py:641
+#: skl_shared_qt/src/logic.py:642
 msgid "yrs"
 msgstr "лет"
 
-#: skl_shared_qt/src/logic.py:643
+#: skl_shared_qt/src/logic.py:644
 msgid "mths"
 msgstr "мес"
 
-#: skl_shared_qt/src/logic.py:645
+#: skl_shared_qt/src/logic.py:646
 msgid "wks"
 msgstr "нед"
 
-#: skl_shared_qt/src/logic.py:647
+#: skl_shared_qt/src/logic.py:648
 msgid "days"
 msgstr "дн"
 
-#: skl_shared_qt/src/logic.py:649
+#: skl_shared_qt/src/logic.py:650
 msgid "hrs"
 msgstr "ч"
 
-#: skl_shared_qt/src/logic.py:651 unmusic/src/album_editor/logic.py:152
+#: skl_shared_qt/src/logic.py:652 unmusic/src/album_editor/logic.py:152
 msgid "min"
 msgstr "мин"
 
@@ -1195,18 +1195,92 @@ msgid "Calculate required space"
 msgstr "Подсчет требуемого места"
 
 #: unmusic/src/copy_album.py:221 unmusic/src/copy_album.py:255
-#: unmusic/src/copy_album.py:261
+#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:82
 msgid "Light"
 msgstr "Легкие"
 
 #: unmusic/src/copy_album.py:223 unmusic/src/copy_album.py:257
-#: unmusic/src/copy_album.py:261
+#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:82
+#: unmusic/src/copy_albums/gui.py:83
 msgid "Heavy"
 msgstr "Тяжелые"
 
 #: unmusic/src/copy_album.py:253 unmusic/src/copy_album.py:261
+#: unmusic/src/copy_albums/gui.py:82
 msgid "Any"
-msgstr "Любой"
+msgstr "Любые"
+
+#: unmusic/src/copy_albums/controller.py:17
+msgid "Copy albums"
+msgstr "Копирование альбомов"
+
+#: unmusic/src/copy_albums/gui.py:79 unmusic/src/copy_albums/gui.py:81
+msgid "Mobile collection"
+msgstr "Переносная коллекция"
+
+#: unmusic/src/copy_albums/gui.py:79
+msgid "Local collection"
+msgstr "Локальная коллекция"
+
+#: unmusic/src/copy_albums/gui.py:79 unmusic/src/copy_albums/gui.py:80
+msgid "External collection"
+msgstr "Внешняя коллекция"
+
+#: unmusic/src/copy_albums/gui.py:84
+msgid "Random"
+msgstr "Случайно"
+
+#: unmusic/src/copy_albums/gui.py:84
+msgid "From Start"
+msgstr "С начала"
+
+#: unmusic/src/copy_albums/gui.py:84
+msgid "From End"
+msgstr "С конца"
+
+#: unmusic/src/copy_albums/gui.py:87
+msgid "Source:"
+msgstr "Источник:"
+
+#: unmusic/src/copy_albums/gui.py:88
+msgid "Target:"
+msgstr "Цель:"
+
+#: unmusic/src/copy_albums/gui.py:89
+msgid "Genres:"
+msgstr "Жанры:"
+
+#: unmusic/src/copy_albums/gui.py:90
+msgid "Fetch:"
+msgstr "Получение данных:"
+
+#: unmusic/src/copy_albums/gui.py:91
+msgid "Limit:"
+msgstr "Предел:"
+
+#: unmusic/src/copy_albums/gui.py:130
+msgid "Close"
+msgstr "Закрыть"
+
+#: unmusic/src/copy_albums/gui.py:130
+msgid "Close this window"
+msgstr "Закрыть это окно"
+
+#: unmusic/src/copy_albums/gui.py:131
+msgid "Fetch"
+msgstr "Получить данные"
+
+#: unmusic/src/copy_albums/gui.py:131
+msgid "Fill the list"
+msgstr "Заполнить список"
+
+#: unmusic/src/copy_albums/gui.py:132
+msgid "Copy"
+msgstr "Копировать"
+
+#: unmusic/src/copy_albums/gui.py:132
+msgid "Start copying albums"
+msgstr "Начать копирование альбомов"
 
 #: unmusic/src/db.py:358
 msgid ""
@@ -1262,7 +1336,7 @@ msgstr "Обработка ИД альбома: {}"
 msgid "Current album: #{}"
 msgstr "Текущий альбом: №{}"
 
-#: unmusic/src/menu/controller.py:62 unmusic/src/unmusic.py:24
+#: unmusic/src/menu/controller.py:67 unmusic/src/unmusic.py:24
 msgid "Invalid configuration!"
 msgstr "Некорректная конфигурация!"
 
@@ -1419,17 +1493,8 @@ msgstr "У дорожек альбома №{} нет рейтинга!"
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
 
-#~ msgid "Limit:"
-#~ msgstr "Предел:"
-
-#~ msgid "Close"
-#~ msgstr "Закрыть"
-
 #~ msgid "Reset"
 #~ msgstr "Сброс"
-
-#~ msgid "Genres:"
-#~ msgstr "Жанры:"
 
 #~ msgid "Read:"
 #~ msgstr "Чтение:"
@@ -1503,9 +1568,6 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 
 #~ msgid "SONG TITLE"
 #~ msgstr "НАЗВАНИЕ ПЕСНИ"
-
-#~ msgid "Kept albums:"
-#~ msgstr "Оставшиеся альбомы:"
 
 #~ msgid "Mediocre albums in total: {}, exclude: {}, purge: {}"
 #~ msgstr "Всего средних альбомов: {}, исключено: {}, для удаления: {}"
