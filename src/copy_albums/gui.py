@@ -22,6 +22,14 @@ class CopyAlbums:
     def __init__(self):
         self.set_gui()
     
+    def go_start(self):
+        slider = self.center.scroll_area.verticalScrollBar()
+        slider.setValue(slider.minimum())
+    
+    def go_end(self):
+        slider = self.center.scroll_area.verticalScrollBar()
+        slider.setValue(slider.maximum())
+    
     def set_layout(self):
         self.pane = QWidget()
         self.layout = QVBoxLayout()

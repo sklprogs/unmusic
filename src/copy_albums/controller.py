@@ -25,6 +25,8 @@ class CopyAlbums:
     
     def set_bindings(self):
         self.gui.bind(('Esc', 'Ctrl+Q'), self.close)
+        self.gui.bind(('Ctrl+Home', 'Home'), self.gui.go_start)
+        self.gui.bind(('Ctrl+End', 'End'), self.gui.go_end)
         self.gui.bottom.btn_cls.set_action(self.close)
 
 
