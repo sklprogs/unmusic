@@ -158,12 +158,13 @@ class Center:
     
     def set_gui(self):
         self.set_layout()
-        self.set_scroll()
         self.set_widgets()
+        self.add_widgets()
         self.configure()
         self.centralize()
     
     def configure(self):
+        self.scroll_area.setWidgetResizable(True)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.lay_scr.setContentsMargins(10, 10, 10, 10)
     
@@ -171,14 +172,13 @@ class Center:
         self.parent.move(ROOT.get_root().primaryScreen().geometry().center() - self.parent.rect().center())
     
     def set_widgets(self):
+        self.scroll_area = QScrollArea(self.pane)
+        self.pnl_scr = QWidget(self.scroll_area)
+        self.lay_scr = QVBoxLayout(self.pnl_scr)
         for i in range(100):
             cbx = CheckBox(str(i+1))
             self.lay_scr.addWidget(cbx.widget)
     
-    def set_scroll(self):
-        self.scroll_area = QScrollArea(self.pane)
-        self.scroll_area.setWidgetResizable(True)
+    def add_widgets(self):
         self.layout.addWidget(self.scroll_area)
-        self.pnl_scr = QWidget(self.scroll_area)
-        self.lay_scr = QVBoxLayout(self.pnl_scr)
         self.scroll_area.setWidget(self.pnl_scr)
