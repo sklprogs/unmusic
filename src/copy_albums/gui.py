@@ -174,10 +174,12 @@ class Center:
     def set_widgets(self):
         self.scroll_area = QScrollArea(self.pane)
         self.pnl_scr = QWidget(self.scroll_area)
-        self.lay_scr = QVBoxLayout(self.pnl_scr)
+        self.lay_scr = QGridLayout(self.pnl_scr)
         for i in range(100):
             cbx = CheckBox(str(i+1))
-            self.lay_scr.addWidget(cbx.widget)
+            lbl = Label(str(i)*100)
+            self.lay_scr.addWidget(cbx.widget, i, 0, 1, 1)
+            self.lay_scr.addWidget(lbl.widget, i, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
     
     def add_widgets(self):
         self.layout.addWidget(self.scroll_area)
