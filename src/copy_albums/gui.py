@@ -167,6 +167,7 @@ class Center:
         self.scroll_area.setWidgetResizable(True)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.lay_scr.setContentsMargins(10, 10, 10, 10)
+        self.pnl_scr.setFocus()
     
     def centralize(self):
         self.parent.move(ROOT.get_root().primaryScreen().geometry().center() - self.parent.rect().center())
