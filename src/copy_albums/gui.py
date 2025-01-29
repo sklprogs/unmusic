@@ -33,22 +33,25 @@ class CopyAlbums:
         slider = self.center.scroll_area.verticalScrollBar()
         slider.setValue(slider.maximum())
     
-    def set_layout(self):
-        self.pane = QWidget()
-        self.layout = QVBoxLayout()
-        self.pane.setLayout(self.layout)
-    
     def add_widgets(self):
         self.layout.addWidget(self.top.pane)
         self.layout.addWidget(self.center.pane)
         self.layout.addWidget(self.bottom.pane)
     
-    def set_gui(self):
-        self.set_layout()
+    def set_widgets(self):
+        self.pane = QWidget()
+        self.layout = QVBoxLayout()
         self.top = Top(self.pane)
         self.center = Center(self.pane)
         self.bottom = Bottom(self.pane)
+    
+    def set_layout(self):
+        self.pane.setLayout(self.layout)
+    
+    def set_gui(self):
+        self.set_widgets()
         self.add_widgets()
+        self.set_layout()
         self.configure()
     
     def configure(self):
@@ -115,7 +118,7 @@ class Top:
     
     def configure(self):
         self.layout.setContentsMargins(10, 10, 10, 0)
-        #self.ent_lmt.set_max_width(10)
+        self.ent_lmt.set_max_width(30)
 
 
 
