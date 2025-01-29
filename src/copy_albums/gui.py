@@ -54,6 +54,9 @@ class CopyAlbums:
         self.set_layout()
         self.configure()
     
+    def centralize(self):
+        self.pane.move(ROOT.get_root().primaryScreen().geometry().center() - self.pane.rect().center())
+    
     def configure(self):
         self.layout.setContentsMargins(0, 0, 0, 0)
     
@@ -66,6 +69,7 @@ class CopyAlbums:
     
     def show(self):
         self.pane.show()
+        self.centralize()
     
     def close(self):
         self.pane.close()
@@ -174,16 +178,12 @@ class Center:
         self.set_widgets()
         self.add_widgets()
         self.configure()
-        self.centralize()
     
     def configure(self):
         self.scroll_area.setWidgetResizable(True)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.lay_scr.setContentsMargins(10, 10, 10, 10)
         self.pnl_scr.setFocus()
-    
-    def centralize(self):
-        self.parent.move(ROOT.get_root().primaryScreen().geometry().center() - self.parent.rect().center())
     
     def set_widgets(self):
         self.scroll_area = QScrollArea(self.pane)
