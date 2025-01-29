@@ -59,6 +59,7 @@ class CopyAlbums:
     
     def configure(self):
         self.layout.setContentsMargins(0, 0, 0, 0)
+        self.pane.setMinimumSize(620, 620)
     
     def bind(self, hotkeys, action):
         for hotkey in hotkeys:
