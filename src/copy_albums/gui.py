@@ -14,13 +14,16 @@ from skl_shared_qt.graphics.button.controller import Button
 from skl_shared_qt.graphics.entry.controller import Entry
 from skl_shared_qt.graphics.label.controller import Label
 
-LIMIT = 30
-
 
 class CopyAlbums:
     
     def __init__(self):
         self.set_gui()
+    
+    def add_row(self, rowno, string):
+        cbx = CheckBox(string)
+        self.center.lay_scr.addWidget(cbx.widget, rowno, 0, 1, 1)
+        return cbx
     
     def go_start(self):
         slider = self.center.scroll_area.verticalScrollBar()
@@ -113,7 +116,6 @@ class Top:
     def configure(self):
         self.layout.setContentsMargins(10, 10, 10, 0)
         #self.ent_lmt.set_max_width(10)
-        self.ent_lmt.set_text(LIMIT)
 
 
 
@@ -184,11 +186,6 @@ class Center:
         self.scroll_area = QScrollArea(self.pane)
         self.pnl_scr = QWidget(self.scroll_area)
         self.lay_scr = QGridLayout(self.pnl_scr)
-        for i in range(100):
-            cbx = CheckBox(str(i+1))
-            lbl = Label(str(i)*100)
-            self.lay_scr.addWidget(cbx.widget, i, 0, 1, 1)
-            self.lay_scr.addWidget(lbl.widget, i, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
     
     def add_widgets(self):
         self.layout.addWidget(self.scroll_area)
