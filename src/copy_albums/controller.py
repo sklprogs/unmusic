@@ -9,6 +9,9 @@ from logic import DB
 from copy_albums.gui import CopyAlbums as guiCopyAlbums
 
 
+ALBUMS = {}
+
+
 class CopyAlbums:
     
     def __init__(self):
@@ -17,15 +20,17 @@ class CopyAlbums:
     
     def set_values(self):
         self.rowno = 0
-        self.albums = []
         self.limit = 30
     
-    def add_row(self, album):
+    def set_info(self):
+        self.gui.set_info()
+    
+    def add_row(self, info):
         f = '[unmusic] copy_albums.controller.CopyAlbums.add_row'
         if not album:
             rep.empty(f)
             return
-        self.gui.add_row(self.rowno, album)
+        self.gui.add_row(self.rowno, info)
         self.rowno += 1
     
     def set_gui(self):
@@ -53,21 +58,22 @@ class CopyAlbums:
     
     def fetch(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
-        #ALBUMID, ALBUM, ARTIST, YEAR
         data = DB.get_albums(self.limit)
         if not data:
             rep.empty(f)
             return
         for row in data:
-            #info = [row[2], row[3], row[1]]
-            info = [row[0], row[2], row[3], row[1]]
+            id_, album, artist, year = row[0], row[1], row[2], row[3]
+            if id_ in ALBUMS:
+                continue
+            info = [id_, artist, year, album]
             info = [str(item).strip() for item in info]
             info = [item for item in info if not item in ('None', '', '0', '?')]
             info = ' - '.join(info)
             if not info:
                 info = '?'
-            self.albums.append(info)
-        self.albums = [album for album in self.albums if album]
+            # Use ID, titles are not necessarily unique
+            ALBUMS[id_] = {'title': info, 'size': 0}
     
     def fill(self):
         for album in self.albums:

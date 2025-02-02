@@ -20,6 +20,9 @@ class CopyAlbums:
     def __init__(self):
         self.set_gui()
     
+    def set_info(self, text):
+        self.bottom.label.set_text(text)
+    
     def add_row(self, rowno, string):
         cbx = CheckBox(string)
         self.center.lay_scr.addWidget(cbx.widget, rowno, 0, 1, 1)
