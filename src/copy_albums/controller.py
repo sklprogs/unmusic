@@ -3,7 +3,10 @@
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep
+from skl_shared_qt.logic import com
+from skl_shared_qt.paths import Directory, Path
 
+from config import PATHS
 from logic import DB
 from copy_albums.gui import CopyAlbums as guiCopyAlbums
 
@@ -99,16 +102,64 @@ class CopyAlbums:
     def close(self):
         self.gui.close()
     
+    def get_source_id(self, id_):
+        source = self.gui.top.opt_src.get()
+        source = source.lower()
+        if source == _('local collection'):
+            return PATHS.get_local_album(id_)
+        elif source == _('external collection'):
+            return PATHS.get_external_album(id_)
+        elif source == _('mobile collection'):
+            return PATHS.get_mobile_album(id_)
+    
+    def get_target(self):
+        target = self.gui.top.opt_dst.get()
+        target = target.lower()
+        if target == _('local collection'):
+            return PATHS.get_local_collection()
+        elif target == _('external collection'):
+            return PATHS.get_external_collection()
+        elif target == _('mobile collection'):
+            return PATHS.get_mobile_collection()
+    
+    def get_free_space(self):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.get_free_space'
+        target = self.get_target()
+        if not target:
+            rep.empty(f)
+            return 0
+        return Path(target).get_free_space()
+    
+    def set_size(self, id_):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.set_size'
+        if ALBUMS[id_]['size']:
+            return
+        source = self.get_source_id(id_)
+        if not source:
+            rep.empty(f)
+            return
+        ALBUMS[id_]['size'] = Directory(source).get_size()
+    
     def calculate(self):
         self.set_selection()
-        selected = []
+        count = 0
+        total = 0
         for id_ in ALBUMS:
             if not ALBUMS[id_]['Selected'] or not ALBUMS[id_]['LastFetch']:
                 continue
-            selected.append(id_)
-        selected = [str(item) for item in selected]
-        selected = ', '.join(selected)
-        self.set_info(selected)
+            count += 1
+            self.set_size(id_)
+            total += ALBUMS[id_]['size']
+        free = self.get_free_space()
+        totalh = com.get_human_size(total, True)
+        freeh = com.get_human_size(free, True)
+        mes = _('Albums to copy: {}. Total size: {}. Free space: {} ({}).')
+        if free > total:
+            cond = _('sufficient')
+        else:
+            cond = _('NOT sufficient')
+        mes = mes.format(count, totalh, freeh, cond)
+        self.set_info(mes)
     
     def _get_id(self, title):
         for id_ in ALBUMS:
