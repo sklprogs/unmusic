@@ -36,6 +36,9 @@ class Paths:
     def get_local_album(self, albumid):
         return self.ihome.add_share(_('local collection'), str(albumid))
     
+    def get_mobile_album(self, albumid):
+        return self.ihome.add_share(_('mobile collection'), str(albumid))
+    
     def get_external_album(self, albumid):
         return self.ihome.add_share(_('external collection'), str(albumid))
     
