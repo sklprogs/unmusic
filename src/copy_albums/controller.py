@@ -18,6 +18,7 @@ class CopyAlbums:
         self.set_gui()
     
     def set_values(self):
+        self.cbx = []
         self.rowno = 0
         self.limit = 30
     
@@ -26,10 +27,10 @@ class CopyAlbums:
     
     def add_row(self, text):
         f = '[unmusic] copy_albums.controller.CopyAlbums.add_row'
-        if not album:
+        if not text:
             rep.empty(f)
             return
-        self.gui.add_row(self.rowno, text)
+        self.cbx.append(self.gui.add_row(self.rowno, text))
         self.rowno += 1
     
     def set_gui(self):
@@ -49,11 +50,19 @@ class CopyAlbums:
     def reset(self):
         self.set_values()
         self.set_limit()
+        self.reset_last_fetch()
     
     def refresh(self):
         self.reset()
         self.fetch()
         self.fill()
+    
+    def _is_title_taken(self, title):
+        return str(self._get_id(title)).isdigit()
+    
+    def reset_last_fetch(self):
+        for id_ in ALBUMS:
+            ALBUMS[id_]['LastFetch'] = False
     
     def fetch(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
@@ -64,6 +73,7 @@ class CopyAlbums:
         for row in data:
             id_, album, artist, year = row[0], row[1], row[2], row[3]
             if id_ in ALBUMS:
+                ALBUMS[id_]['LastFetch'] = True
                 continue
             info = [id_, artist, year, album]
             info = [str(item).strip() for item in info]
@@ -71,12 +81,14 @@ class CopyAlbums:
             info = ' - '.join(info)
             if not info:
                 info = '?'
-            # Use ID, titles are not necessarily unique
-            ALBUMS[id_] = {'title': info, 'size': 0}
+            if self._is_title_taken(info):
+                info += '_'
+            ALBUMS[id_] = {'title': info, 'size': 0, 'Selected': False, 'LastFetch': True}
     
     def fill(self):
-        for album in self.albums:
-            self.add_row(album)
+        for id_ in ALBUMS:
+            if ALBUMS[id_]['LastFetch']:
+                self.add_row(ALBUMS[id_]['title'])
     
     def set_title(self, title=_('Copy albums')):
         self.gui.set_title(title)
@@ -88,7 +100,26 @@ class CopyAlbums:
         self.gui.close()
     
     def calculate(self):
-        self.set_info(_('Not implemented yet!'))
+        self.set_selection()
+        selected = []
+        for id_ in ALBUMS:
+            if not ALBUMS[id_]['Selected'] or not ALBUMS[id_]['LastFetch']:
+                continue
+            selected.append(id_)
+        selected = [str(item) for item in selected]
+        selected = ', '.join(selected)
+        self.set_info(selected)
+    
+    def _get_id(self, title):
+        for id_ in ALBUMS:
+            if ALBUMS[id_]['title'] == title:
+                return id_
+    
+    def set_selection(self):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.set_selection'
+        for cbx in self.cbx:
+            id_ = self._get_id(cbx.text)
+            ALBUMS[id_]['Selected'] = cbx.get()
     
     def set_bindings(self):
         self.gui.bind(('Esc', 'Ctrl+Q'), self.close)
