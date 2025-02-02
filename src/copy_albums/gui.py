@@ -145,14 +145,16 @@ class Bottom:
         self.configure()
     
     def set_widgets(self):
+        self.label = Label(_('Free space has not been calculated yet.'))
         self.btn_cls = Button(text=_('Close'), hint=_('Close this window'))
         self.btn_ftc = Button(text=_('Fetch'), hint=_('Fill the list'))
         self.btn_nxt = Button(text=_('Copy'), hint=_('Start copying albums'))
     
     def add_widgets(self):
-        self.layout.addWidget(self.btn_cls.widget, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.layout.addWidget(self.btn_ftc.widget, 0, 1, 1, 1, Qt.AlignmentFlag.AlignCenter)
-        self.layout.addWidget(self.btn_nxt.widget, 0, 2, 1, 1, Qt.AlignmentFlag.AlignRight)
+        self.layout.addWidget(self.label.widget, 0, 0, 1, 3, Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.btn_cls.widget, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.layout.addWidget(self.btn_ftc.widget, 1, 1, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.btn_nxt.widget, 1, 2, 1, 1, Qt.AlignmentFlag.AlignRight)
     
     def configure(self):
         self.layout.setContentsMargins(10, 0, 10, 10)
