@@ -3,7 +3,6 @@
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep
-from skl_shared_qt.graphics.root.controller import ROOT
 
 from logic import DB
 from copy_albums.gui import CopyAlbums as guiCopyAlbums
@@ -22,15 +21,15 @@ class CopyAlbums:
         self.rowno = 0
         self.limit = 30
     
-    def set_info(self):
-        self.gui.set_info()
+    def set_info(self, text):
+        self.gui.set_info(text)
     
-    def add_row(self, info):
+    def add_row(self, text):
         f = '[unmusic] copy_albums.controller.CopyAlbums.add_row'
         if not album:
             rep.empty(f)
             return
-        self.gui.add_row(self.rowno, info)
+        self.gui.add_row(self.rowno, text)
         self.rowno += 1
     
     def set_gui(self):
@@ -88,12 +87,16 @@ class CopyAlbums:
     def close(self):
         self.gui.close()
     
+    def calculate(self):
+        self.set_info(_('Not implemented yet!'))
+    
     def set_bindings(self):
         self.gui.bind(('Esc', 'Ctrl+Q'), self.close)
         self.gui.bind(('Ctrl+Home', 'Home'), self.gui.go_start)
         self.gui.bind(('Ctrl+End', 'End'), self.gui.go_end)
         self.gui.bottom.btn_cls.set_action(self.close)
         self.gui.bottom.btn_ftc.set_action(self.refresh)
+        self.gui.bottom.btn_clc.set_action(self.calculate)
 
 
 COPY_ALBUMS = CopyAlbums()
