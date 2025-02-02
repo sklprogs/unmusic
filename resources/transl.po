@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 02:21+0300\n"
-"PO-Revision-Date: 2025-01-27 02:28+0300\n"
+"POT-Creation-Date: 2025-02-03 01:02+0300\n"
+"PO-Revision-Date: 2025-02-03 01:02+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -136,11 +136,11 @@ msgstr "Конфигурационный файл \"{}\": неверный ти�
 msgid "Wrong version {}, expected {}!"
 msgstr "Неверная версия {}, ожидалось {}!"
 
-#: skl_shared_qt/src/config.py:317 unmusic/src/config.py:81
+#: skl_shared_qt/src/config.py:317 unmusic/src/config.py:84
 msgid "Update default configuration"
 msgstr "Обновление конфигурации по умолчанию"
 
-#: skl_shared_qt/src/config.py:320 unmusic/src/config.py:84
+#: skl_shared_qt/src/config.py:320 unmusic/src/config.py:87
 msgid "Use default configuration"
 msgstr "Используется конфигурация по умолчанию"
 
@@ -984,17 +984,20 @@ msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
 #: unmusic/src/album_editor/gui.py:215 unmusic/src/config.py:34
-#: unmusic/src/config.py:37 unmusic/src/logic.py:90
+#: unmusic/src/config.py:37 unmusic/src/copy_albums/controller.py:108
+#: unmusic/src/copy_albums/controller.py:118 unmusic/src/logic.py:90
 msgid "local collection"
 msgstr "локальная коллекция"
 
-#: unmusic/src/album_editor/gui.py:216 unmusic/src/config.py:40
-#: unmusic/src/config.py:46 unmusic/src/logic.py:94
+#: unmusic/src/album_editor/gui.py:216 unmusic/src/config.py:43
+#: unmusic/src/config.py:49 unmusic/src/copy_albums/controller.py:110
+#: unmusic/src/copy_albums/controller.py:120 unmusic/src/logic.py:94
 msgid "external collection"
 msgstr "внешняя коллекция"
 
-#: unmusic/src/album_editor/gui.py:217 unmusic/src/config.py:49
-#: unmusic/src/logic.py:98
+#: unmusic/src/album_editor/gui.py:217 unmusic/src/config.py:40
+#: unmusic/src/config.py:52 unmusic/src/copy_albums/controller.py:112
+#: unmusic/src/copy_albums/controller.py:122 unmusic/src/logic.py:98
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
@@ -1146,15 +1149,15 @@ msgstr "Операция завершена за {}"
 msgid "Process \"{}\" ({}/{})"
 msgstr "Обработка \"{}\" ({}/{})"
 
-#: unmusic/src/config.py:43
+#: unmusic/src/config.py:46
 msgid "processed"
 msgstr "обработано"
 
-#: unmusic/src/config.py:52 unmusic/src/config.py:55 unmusic/src/utils.py:116
+#: unmusic/src/config.py:55 unmusic/src/config.py:58 unmusic/src/utils.py:116
 msgid "Images"
 msgstr "Изображения"
 
-#: unmusic/src/config.py:58
+#: unmusic/src/config.py:61
 msgid "playlist"
 msgstr "список воспроизведения"
 
@@ -1195,90 +1198,114 @@ msgid "Calculate required space"
 msgstr "Подсчет требуемого места"
 
 #: unmusic/src/copy_album.py:221 unmusic/src/copy_album.py:255
-#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:82
+#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:104
 msgid "Light"
 msgstr "Легкие"
 
 #: unmusic/src/copy_album.py:223 unmusic/src/copy_album.py:257
-#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:82
-#: unmusic/src/copy_albums/gui.py:83
+#: unmusic/src/copy_album.py:261 unmusic/src/copy_albums/gui.py:104
+#: unmusic/src/copy_albums/gui.py:105
 msgid "Heavy"
 msgstr "Тяжелые"
 
 #: unmusic/src/copy_album.py:253 unmusic/src/copy_album.py:261
-#: unmusic/src/copy_albums/gui.py:82
+#: unmusic/src/copy_albums/gui.py:104
 msgid "Any"
 msgstr "Любые"
 
-#: unmusic/src/copy_albums/controller.py:17
+#: unmusic/src/copy_albums/controller.py:96
 msgid "Copy albums"
 msgstr "Копирование альбомов"
 
-#: unmusic/src/copy_albums/gui.py:79 unmusic/src/copy_albums/gui.py:81
+#: unmusic/src/copy_albums/controller.py:156
+msgid "Albums: {}. Total size: {}. Free space: {} ({})."
+msgstr "Альбомов: {}. Общий размер: {}. Свободное место: {} ({})."
+
+#: unmusic/src/copy_albums/controller.py:158
+msgid "sufficient"
+msgstr "достаточно"
+
+#: unmusic/src/copy_albums/controller.py:160
+msgid "NOT sufficient"
+msgstr "НЕДОСТАТОЧНО"
+
+#: unmusic/src/copy_albums/gui.py:101 unmusic/src/copy_albums/gui.py:103
 msgid "Mobile collection"
 msgstr "Переносная коллекция"
 
-#: unmusic/src/copy_albums/gui.py:79
+#: unmusic/src/copy_albums/gui.py:101
 msgid "Local collection"
 msgstr "Локальная коллекция"
 
-#: unmusic/src/copy_albums/gui.py:79 unmusic/src/copy_albums/gui.py:80
+#: unmusic/src/copy_albums/gui.py:101 unmusic/src/copy_albums/gui.py:102
 msgid "External collection"
 msgstr "Внешняя коллекция"
 
-#: unmusic/src/copy_albums/gui.py:84
+#: unmusic/src/copy_albums/gui.py:106
 msgid "Random"
 msgstr "Случайно"
 
-#: unmusic/src/copy_albums/gui.py:84
+#: unmusic/src/copy_albums/gui.py:106
 msgid "From Start"
 msgstr "С начала"
 
-#: unmusic/src/copy_albums/gui.py:84
+#: unmusic/src/copy_albums/gui.py:106
 msgid "From End"
 msgstr "С конца"
 
-#: unmusic/src/copy_albums/gui.py:87
+#: unmusic/src/copy_albums/gui.py:109
 msgid "Source:"
 msgstr "Источник:"
 
-#: unmusic/src/copy_albums/gui.py:88
+#: unmusic/src/copy_albums/gui.py:110
 msgid "Target:"
 msgstr "Цель:"
 
-#: unmusic/src/copy_albums/gui.py:89
+#: unmusic/src/copy_albums/gui.py:111
 msgid "Genres:"
 msgstr "Жанры:"
 
-#: unmusic/src/copy_albums/gui.py:90
+#: unmusic/src/copy_albums/gui.py:112
 msgid "Fetch:"
 msgstr "Получение данных:"
 
-#: unmusic/src/copy_albums/gui.py:91
+#: unmusic/src/copy_albums/gui.py:113
 msgid "Limit:"
 msgstr "Предел:"
 
-#: unmusic/src/copy_albums/gui.py:130
+#: unmusic/src/copy_albums/gui.py:151
+msgid "Free space has not been calculated yet."
+msgstr "Свободное пространство еще не рассчитывалось."
+
+#: unmusic/src/copy_albums/gui.py:152
 msgid "Close"
 msgstr "Закрыть"
 
-#: unmusic/src/copy_albums/gui.py:130
+#: unmusic/src/copy_albums/gui.py:152
 msgid "Close this window"
 msgstr "Закрыть это окно"
 
-#: unmusic/src/copy_albums/gui.py:131
+#: unmusic/src/copy_albums/gui.py:153
 msgid "Fetch"
 msgstr "Получить данные"
 
-#: unmusic/src/copy_albums/gui.py:131
+#: unmusic/src/copy_albums/gui.py:153
 msgid "Fill the list"
 msgstr "Заполнить список"
 
-#: unmusic/src/copy_albums/gui.py:132
+#: unmusic/src/copy_albums/gui.py:154
+msgid "Calculate"
+msgstr "Подсчитать"
+
+#: unmusic/src/copy_albums/gui.py:154
+msgid "Calculate free and required space"
+msgstr "Подсчитать свободное и требуемое пространство"
+
+#: unmusic/src/copy_albums/gui.py:155
 msgid "Copy"
 msgstr "Копировать"
 
-#: unmusic/src/copy_albums/gui.py:132
+#: unmusic/src/copy_albums/gui.py:155
 msgid "Start copying albums"
 msgstr "Начать копирование альбомов"
 

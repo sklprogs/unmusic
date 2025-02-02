@@ -153,7 +153,7 @@ class CopyAlbums:
         free = self.get_free_space()
         totalh = com.get_human_size(total, True)
         freeh = com.get_human_size(free, True)
-        mes = _('Albums to copy: {}. Total size: {}. Free space: {} ({}).')
+        mes = _('Albums: {}. Total size: {}. Free space: {} ({}).')
         if free > total:
             cond = _('sufficient')
         else:
