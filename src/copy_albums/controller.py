@@ -25,6 +25,17 @@ class CopyAlbums:
         self.rowno = 0
         self.limit = 30
     
+    def go_start(self):
+        self.gui.go_start()
+    
+    def go_end(self):
+        self.gui.go_end()
+    
+    def clear(self):
+        for cbx in self.cbx:
+            self.gui.remove(cbx)
+        self.cbx = []
+    
     def set_info(self, text):
         self.gui.set_info(text)
     
@@ -56,9 +67,11 @@ class CopyAlbums:
         self.reset_last_fetch()
     
     def refresh(self):
+        self.clear()
         self.reset()
         self.fetch()
         self.fill()
+        self.go_start()
     
     def _is_title_taken(self, title):
         return str(self._get_id(title)).isdigit()
@@ -174,8 +187,8 @@ class CopyAlbums:
     
     def set_bindings(self):
         self.gui.bind(('Esc', 'Ctrl+Q'), self.close)
-        self.gui.bind(('Ctrl+Home', 'Home'), self.gui.go_start)
-        self.gui.bind(('Ctrl+End', 'End'), self.gui.go_end)
+        self.gui.bind(('Ctrl+Home', 'Home'), self.go_start)
+        self.gui.bind(('Ctrl+End', 'End'), self.go_end)
         self.gui.bottom.btn_cls.set_action(self.close)
         self.gui.bottom.btn_ftc.set_action(self.refresh)
         self.gui.bottom.btn_clc.set_action(self.calculate)

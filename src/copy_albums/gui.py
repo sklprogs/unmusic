@@ -20,6 +20,9 @@ class CopyAlbums:
     def __init__(self):
         self.set_gui()
     
+    def remove(self, cbx):
+        self.center.lay_scr.removeWidget(cbx.widget)
+    
     def set_info(self, text):
         self.bottom.label.set_text(text)
     
