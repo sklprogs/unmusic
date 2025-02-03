@@ -192,6 +192,7 @@ class CopyAlbums:
         self.gui.bottom.btn_cls.set_action(self.close)
         self.gui.bottom.btn_ftc.set_action(self.refresh)
         self.gui.bottom.btn_clc.set_action(self.calculate)
+        self.gui.top.ent_lmt.set_action(self.refresh)
 
 
 COPY_ALBUMS = CopyAlbums()
