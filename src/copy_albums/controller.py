@@ -82,20 +82,7 @@ class CopyAlbums:
         for id_ in ALBUMS:
             ALBUMS[id_]['LastFetch'] = False
     
-    def fetch(self):
-        f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
-        data = DB.get_albums(1000)
-        if not data:
-            rep.empty(f)
-            return
-        source = self.get_source()
-        if not source:
-            rep.empty(f)
-            return
-        if not Directory(source).Success:
-            mes = _('Wrong input data!')
-            Message(f, mes).show_warning()
-            return
+    def _assign(self, source, data):
         count = 0
         for row in data:
             if count > self.limit:
@@ -117,6 +104,30 @@ class CopyAlbums:
             if self._is_title_taken(info):
                 info += '_'
             ALBUMS[id_] = {'title': info, 'size': 0, 'Selected': False, 'LastFetch': True}
+    
+    def is_random(self):
+        if self.gui.top.opt_ftc.get() == _('Random'):
+            return True
+    
+    def is_from_end(self):
+        if self.gui.top.opt_ftc.get() == _('From End'):
+            return True
+    
+    def fetch(self):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
+        data = DB.get_albums(1000, self.is_from_end(), self.is_random())
+        if not data:
+            rep.empty(f)
+            return
+        source = self.get_source()
+        if not source:
+            rep.empty(f)
+            return
+        if not Directory(source).Success:
+            mes = _('Wrong input data!')
+            Message(f, mes).show_warning()
+            return
+        self._assign(source, data)
     
     def fill(self):
         for id_ in ALBUMS:

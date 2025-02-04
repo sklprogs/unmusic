@@ -19,17 +19,22 @@ class DB:
         self.create_albums()
         self.create_tracks()
     
-    def get_albums(self, limit=0):
+    def get_albums(self, limit=0, FromEnd=False, Random=False):
         f = '[unmusic] db.DB.get_albums'
         if not self.Success:
             rep.cancel(f)
             return
-        query = 'select ALBUMID, ALBUM, ARTIST, YEAR from ALBUMS \
-                 order by ALBUMID'
+        query = 'select ALBUMID, ALBUM, ARTIST, YEAR from ALBUMS'
+        if Random:
+            query += ' order by RANDOM()'
+        else:
+            query += ' order by ALBUMID'
+        if FromEnd:
+            query += ' desc'
         if limit:
             query += ' limit ?'
         try:
-            # limit=0 provides an empty ouput
+            # limit=0 provides an empty output
             if limit:
                 self.dbc.execute(query, (limit,))
             else:
