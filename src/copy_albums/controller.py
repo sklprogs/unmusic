@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import os
+
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep
 from skl_shared_qt.logic import com
@@ -102,8 +104,21 @@ class CopyAlbums:
             ALBUMS[id_] = {'title': info, 'size': 0, 'Selected': False, 'LastFetch': True}
     
     def fill(self):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.fill'
+        source = self.get_source()
+        if not source:
+            rep.empty(f)
+            return
+        if not Directory(source).Success:
+            mes = _('Wrong input data!')
+            Message(f, mes).show_warning()
+            return
         for id_ in ALBUMS:
-            if ALBUMS[id_]['LastFetch']:
+            if not ALBUMS[id_]['LastFetch']:
+                continue
+            folder = os.path.join(source, str(id_))
+            print(f, f'"{folder}"')
+            if os.path.isdir(folder):
                 self.add_row(ALBUMS[id_]['title'])
     
     def set_title(self, title=_('Copy albums')):
@@ -124,6 +139,16 @@ class CopyAlbums:
             return PATHS.get_external_album(id_)
         elif source == _('mobile collection'):
             return PATHS.get_mobile_album(id_)
+    
+    def get_source(self):
+        source = self.gui.top.opt_src.get()
+        source = source.lower()
+        if source == _('local collection'):
+            return PATHS.get_local_collection()
+        elif source == _('external collection'):
+            return PATHS.get_external_collection()
+        elif source == _('mobile collection'):
+            return PATHS.get_mobile_collection()
     
     def get_target(self):
         target = self.gui.top.opt_dst.get()
