@@ -61,7 +61,7 @@ class CopyAlbums:
         if not limit.isdigit():
             rep.wrong_input(f, limit)
             return
-        self.limit = limit
+        self.limit = int(limit)
     
     def reset(self):
         self.set_values()
@@ -84,12 +84,27 @@ class CopyAlbums:
     
     def fetch(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
-        data = DB.get_albums(self.limit)
+        data = DB.get_albums(1000)
         if not data:
             rep.empty(f)
             return
+        source = self.get_source()
+        if not source:
+            rep.empty(f)
+            return
+        if not Directory(source).Success:
+            mes = _('Wrong input data!')
+            Message(f, mes).show_warning()
+            return
+        count = 0
         for row in data:
+            if count > self.limit:
+                break
             id_, album, artist, year = row[0], row[1], row[2], row[3]
+            folder = os.path.join(source, str(id_))
+            if not os.path.isdir(folder):
+                continue
+            count += 1
             if id_ in ALBUMS:
                 ALBUMS[id_]['LastFetch'] = True
                 continue
@@ -104,21 +119,8 @@ class CopyAlbums:
             ALBUMS[id_] = {'title': info, 'size': 0, 'Selected': False, 'LastFetch': True}
     
     def fill(self):
-        f = '[unmusic] copy_albums.controller.CopyAlbums.fill'
-        source = self.get_source()
-        if not source:
-            rep.empty(f)
-            return
-        if not Directory(source).Success:
-            mes = _('Wrong input data!')
-            Message(f, mes).show_warning()
-            return
         for id_ in ALBUMS:
-            if not ALBUMS[id_]['LastFetch']:
-                continue
-            folder = os.path.join(source, str(id_))
-            print(f, f'"{folder}"')
-            if os.path.isdir(folder):
+            if ALBUMS[id_]['LastFetch']:
                 self.add_row(ALBUMS[id_]['title'])
     
     def set_title(self, title=_('Copy albums')):
