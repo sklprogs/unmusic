@@ -12,7 +12,18 @@ from config import PATHS
 from logic import DB
 from copy_albums.gui import CopyAlbums as guiCopyAlbums
 
-
+''' Can have genres not comprised by GENRES (since GENRES is used to fill GUI
+    and has a limit).
+'''
+LIGHT = ('Alternative Rock', 'Ambient', 'Blues', 'Chanson', 'Classical'
+        ,'Electronic', 'Ethnic', 'Game', 'Pop', 'Rap', 'Relaxation', 'Rock'
+        ,'Soundtrack', 'Vocal', 'Folk')
+HEAVY = ('Black Metal', 'Brutal Death Metal', 'Death Metal'
+        ,'Death Metal/Grindcore', 'Death/Black Metal', 'Death/Thrash Metal'
+        ,'Deathcore', 'Goregrind', 'Grindcore', 'Heavy Metal'
+        ,'Industrial Metal', 'Melodic Death Metal', 'Metal', 'Power Metal'
+        ,'Slamming Brutal Death Metal', 'Technical Brutal Death Metal'
+        ,'Technical Death Metal', 'Thrash Metal')
 ALBUMS = {}
 
 
@@ -113,9 +124,17 @@ class CopyAlbums:
         if self.gui.top.opt_ftc.get() == _('From End'):
             return True
     
+    def get_genres(self):
+        choice = self.gui.top.opt_gnr.get()
+        if choice == _('Heavy'):
+            return HEAVY
+        elif choice == _('Light'):
+            return LIGHT
+        return []
+    
     def fetch(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.fetch'
-        data = DB.get_albums(1000, self.is_from_end(), self.is_random())
+        data = DB.get_albums(1000, self.get_genres(), self.is_from_end(), self.is_random())
         if not data:
             rep.empty(f)
             return
