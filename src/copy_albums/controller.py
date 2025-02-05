@@ -4,7 +4,7 @@
 import os
 
 from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import rep
+from skl_shared_qt.message.controller import rep, Message
 from skl_shared_qt.logic import com
 from skl_shared_qt.paths import Directory, Path
 
