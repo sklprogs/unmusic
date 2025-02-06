@@ -39,6 +39,13 @@ class CopyAlbums:
         self.rowno = 0
         self.limit = 30
     
+    def get_selected(self):
+        count = 0
+        for id_ in ALBUMS:
+            if ALBUMS[id_]['LastFetch'] and ALBUMS[id_]['Selected']:
+                count += 1
+        return count
+    
     def copy(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.copy'
         source = self.get_source()
@@ -51,13 +58,12 @@ class CopyAlbums:
             Message(f, mes).show_warning()
             return
         PROGRESS.set_title(_('Copying albums'))
-        PROGRESS.set_max(len(ALBUMS))
+        PROGRESS.set_max(self.get_selected())
         PROGRESS.show()
         for id_ in ALBUMS:
-            PROGRESS.update()
             if not ALBUMS[id_]['LastFetch'] or not ALBUMS[id_]['Selected']:
-                PROGRESS.inc()
                 continue
+            PROGRESS.update()
             folder1 = self.get_source_id(id_)
             folder2 = self.get_target_id(id_)
             mes = _('Copy {}').format(ALBUMS[id_]['title'])
