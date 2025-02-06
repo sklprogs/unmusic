@@ -7,6 +7,7 @@ from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep, Message
 from skl_shared_qt.logic import com
 from skl_shared_qt.paths import Directory, Path
+from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
 
 from config import PATHS
 from logic import DB
@@ -37,6 +38,34 @@ class CopyAlbums:
         self.cbx = []
         self.rowno = 0
         self.limit = 30
+    
+    def copy(self):
+        f = '[unmusic] copy_albums.controller.CopyAlbums.copy'
+        source = self.get_source()
+        target = self.get_target()
+        if not source or not target:
+            rep.empty(f)
+            return
+        if not Directory(source).Success or not Directory(target).Success:
+            mes = _('Wrong input data!')
+            Message(f, mes).show_warning()
+            return
+        PROGRESS.set_title(_('Copying albums'))
+        PROGRESS.set_max(len(ALBUMS))
+        PROGRESS.show()
+        for id_ in ALBUMS:
+            PROGRESS.update()
+            if not ALBUMS[id_]['LastFetch'] or not ALBUMS[id_]['Selected']:
+                PROGRESS.inc()
+                continue
+            folder1 = self.get_source_id(id_)
+            folder2 = self.get_target_id(id_)
+            mes = _('Copy {}').format(ALBUMS[id_]['title'])
+            PROGRESS.set_info(mes)
+            if not Directory(folder1, folder2).copy():
+                break
+            PROGRESS.inc()
+        PROGRESS.close()
     
     def go_start(self):
         self.gui.go_start()
@@ -172,6 +201,16 @@ class CopyAlbums:
         elif source == _('mobile collection'):
             return PATHS.get_mobile_album(id_)
     
+    def get_target_id(self, id_):
+        target = self.gui.top.opt_dst.get()
+        target = target.lower()
+        if target == _('local collection'):
+            return PATHS.get_local_album(id_)
+        elif target == _('external collection'):
+            return PATHS.get_external_album(id_)
+        elif target == _('mobile collection'):
+            return PATHS.get_mobile_album(id_)
+    
     def get_source(self):
         source = self.gui.top.opt_src.get()
         source = source.lower()
@@ -249,6 +288,7 @@ class CopyAlbums:
         self.gui.bottom.btn_cls.set_action(self.close)
         self.gui.bottom.btn_ftc.set_action(self.refresh)
         self.gui.bottom.btn_clc.set_action(self.calculate)
+        self.gui.bottom.btn_nxt.set_action(self.copy)
         self.gui.top.ent_lmt.set_action(self.refresh)
 
 
