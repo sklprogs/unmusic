@@ -48,6 +48,9 @@ class CopyAlbums:
     
     def copy(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.copy'
+        if not self.calculate():
+            rep.cancel(f)
+            return
         source = self.get_source()
         target = self.get_target()
         if not source or not target:
@@ -57,7 +60,7 @@ class CopyAlbums:
             mes = _('Wrong input data!')
             Message(f, mes).show_warning()
             return
-        PROGRESS.set_title(_('Copying albums'))
+        PROGRESS.set_value(0)
         PROGRESS.set_max(self.get_selected())
         PROGRESS.show()
         for id_ in ALBUMS:
@@ -100,6 +103,7 @@ class CopyAlbums:
         self.set_bindings()
         self.set_title()
         self.gui.top.ent_lmt.set_text(self.limit)
+        PROGRESS.set_title(_('Copying albums'))
     
     def set_limit(self):
         f = '[unmusic] copy_albums.controller.CopyAlbums.set_limit'
@@ -273,8 +277,10 @@ class CopyAlbums:
             cond = _('sufficient')
         else:
             cond = _('NOT sufficient')
+            return
         mes = mes.format(count, totalh, freeh, cond)
         self.set_info(mes)
+        return True
     
     def _get_id(self, title):
         for id_ in ALBUMS:
