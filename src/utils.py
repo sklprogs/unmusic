@@ -13,9 +13,48 @@ from skl_shared_qt.logic import com
 
 ROOT.get_root()
 
-import config as cf
-import logic as lg
-import gui as gi
+#import config as cf
+#import logic as lg
+#import gui as gi
+
+from config import PATHS
+
+
+class Shrink:
+    
+    def __init__(self):
+        self.Success = True
+        self.path_external = PATHS.get_external_collection()
+        self.path_local = PATHS.get_local_collection()
+        self.albums_external = []
+        self.albums_local = []
+    
+    def set_albums(self):
+        f = '[unmusic] utils.Shrink.set_albums'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        self.albums_external = Directory(self.path_external).get_rel_dirs()
+        self.albums_local = Directory(self.path_local).get_rel_dirs()
+        if not self.albums_external or not self.albums_local:
+            self.Success = False
+            rep.empty_output(f)
+    
+    def compare(self):
+        f = '[unmusic] utils.Shrink.compare'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        duplicate = [str(album) for album in self.albums_local \
+                    if album in self.albums_external]
+        mes = _('{} duplicate albums:').format(len(duplicate))
+        mes += '\n' + ', '.join(duplicate)
+        Message(f, mes, True).show_info()
+    
+    def run(self):
+        self.set_albums()
+        self.compare()
+
 
 
 class DeleteBad:
@@ -35,7 +74,7 @@ class DeleteBad:
         gi.objs.progress.show()
         count = 0
         for i in range(len(self.del_dirs)):
-            shown_path = Shorten(self.del_dirs[i, 40, True, True)
+            shown_path = Shorten(self.del_dirs[i], 40, True, True)
             mes = _('Delete "{}"').format(shown_path)
             gi.objs.progress.set_text(mes)
             gi.objs.progress.update(i,len(self.del_dirs))
@@ -466,6 +505,7 @@ if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     #com.alter()
     #DeleteBad().run()
+    Shrink().run()
     mes = _('Goodbye!')
     Message(f, mes).show_debug()
     ROOT.end()
