@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 01:28+0300\n"
-"PO-Revision-Date: 2025-05-18 01:30+0300\n"
+"POT-Creation-Date: 2025-05-18 01:44+0300\n"
+"PO-Revision-Date: 2025-05-18 01:44+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -536,7 +536,7 @@ msgid "The object \"{}\" is not a file!"
 msgstr "Объект \"{}\" не является файлом!"
 
 #: skl_shared_qt/src/paths.py:275 skl_shared_qt/src/paths.py:649
-#: unmusic/src/utils.py:516
+#: unmusic/src/utils.py:520
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
@@ -567,13 +567,13 @@ msgid "Unable to copy the file \"{}\" to itself!"
 msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
 #: skl_shared_qt/src/paths.py:326 skl_shared_qt/src/paths.py:371
-#: skl_shared_qt/src/text_file.py:189 unmusic/src/utils.py:79
-#: unmusic/src/utils.py:184
+#: skl_shared_qt/src/text_file.py:189 unmusic/src/utils.py:83
+#: unmusic/src/utils.py:188
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
 #: skl_shared_qt/src/paths.py:335 skl_shared_qt/src/paths.py:545
-#: unmusic/src/utils.py:119
+#: unmusic/src/utils.py:123
 msgid "Delete \"{}\""
 msgstr "Удаление \"{}\""
 
@@ -892,7 +892,7 @@ msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
 #: unmusic/src/album_editor/controller.py:62 unmusic/src/collect_silent.py:27
-#: unmusic/src/collect_silent.py:54 unmusic/src/utils.py:550
+#: unmusic/src/collect_silent.py:54 unmusic/src/utils.py:554
 msgid "Goodbye!"
 msgstr "До свидания!"
 
@@ -1159,7 +1159,7 @@ msgstr "Обработка \"{}\" ({}/{})"
 msgid "processed"
 msgstr "обработано"
 
-#: unmusic/src/config.py:55 unmusic/src/config.py:58 unmusic/src/utils.py:196
+#: unmusic/src/config.py:55 unmusic/src/config.py:58 unmusic/src/utils.py:200
 msgid "Images"
 msgstr "Изображения"
 
@@ -1292,11 +1292,11 @@ msgstr ""
 "\n"
 "Подробности: {}"
 
-#: unmusic/src/db.py:638 unmusic/src/utils.py:219
+#: unmusic/src/db.py:638 unmusic/src/utils.py:223
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: unmusic/src/db.py:647 unmusic/src/utils.py:347 unmusic/src/utils.py:353
+#: unmusic/src/db.py:647 unmusic/src/utils.py:351 unmusic/src/utils.py:357
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -1439,61 +1439,63 @@ msgstr "Чтение локальной коллекции"
 msgid "Delete {}"
 msgstr "Удаление {}"
 
-#: unmusic/src/utils.py:76
-#| msgid "Do you really want to continue?"
+#: unmusic/src/utils.py:77
+msgid "There are no duplicates!"
+msgstr "Дубликатов нет!"
+
+#: unmusic/src/utils.py:80
 msgid "Do you really want to delete {} albums?"
 msgstr "Вы действительно хотите удалить {} альбомов?"
 
-#: unmusic/src/utils.py:92
-#| msgid "{} blocks have been deleted"
+#: unmusic/src/utils.py:96
 msgid "{} albums have been deleted!"
 msgstr "{} альбомов удалено!"
 
-#: unmusic/src/utils.py:114
+#: unmusic/src/utils.py:118
 msgid "Delete folders"
 msgstr "Удаление каталогов"
 
-#: unmusic/src/utils.py:127
+#: unmusic/src/utils.py:131
 msgid "{}/{} folders have been deleted."
 msgstr "{}/{} каталогов удалено."
 
-#: unmusic/src/utils.py:146
+#: unmusic/src/utils.py:150
 msgid "Calculate space to be freed"
 msgstr "Подсчет высвобождаемого пространства"
 
-#: unmusic/src/utils.py:169
+#: unmusic/src/utils.py:173
 msgid "Space to be freed:"
 msgstr "Высвобождаемое пространство:"
 
-#: unmusic/src/utils.py:171
+#: unmusic/src/utils.py:175
 msgid "in total: {}"
 msgstr "всего: {}"
 
-#: unmusic/src/utils.py:173
+#: unmusic/src/utils.py:177
 msgid "external collection: {}"
 msgstr "внешняя коллекция: {}"
 
-#: unmusic/src/utils.py:175
+#: unmusic/src/utils.py:179
 msgid "local collection: {}"
 msgstr "локальная коллекция: {}"
 
-#: unmusic/src/utils.py:177
+#: unmusic/src/utils.py:181
 msgid "mobile collection: {}"
 msgstr "переносная коллекция: {}"
 
-#: unmusic/src/utils.py:180
+#: unmusic/src/utils.py:184
 msgid "Do you really want to continue?"
 msgstr "Действительно хотите продолжить?"
 
-#: unmusic/src/utils.py:214
+#: unmusic/src/utils.py:218
 msgid "File \"{}\" already exists."
 msgstr "Файл \"{}\" уже существует."
 
-#: unmusic/src/utils.py:228
+#: unmusic/src/utils.py:232
 msgid "Album {} has no cover!"
 msgstr "У альбома {} нет обложки!"
 
-#: unmusic/src/utils.py:291
+#: unmusic/src/utils.py:295
 msgid ""
 "Files in total: {}, processed: {}, already existing: {}, skipped: {}, "
 "errors: {}"
@@ -1501,19 +1503,19 @@ msgstr ""
 "Всего файлов: {}, обработано: {}, уже существуют: {}, пропущено: {}, ошибок: "
 "{}"
 
-#: unmusic/src/utils.py:328
+#: unmusic/src/utils.py:332
 msgid "Fetch data"
 msgstr "Получение данных"
 
-#: unmusic/src/utils.py:394 unmusic/src/utils.py:410
+#: unmusic/src/utils.py:398 unmusic/src/utils.py:414
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
 
-#: unmusic/src/utils.py:483
+#: unmusic/src/utils.py:487
 msgid "Tracks of album #{} have no rating!"
 msgstr "У дорожек альбома №{} нет рейтинга!"
 
-#: unmusic/src/utils.py:489
+#: unmusic/src/utils.py:493
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
 
