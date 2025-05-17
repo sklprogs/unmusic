@@ -10,6 +10,7 @@ from skl_shared_qt.basic_text import Shorten
 from skl_shared_qt.graphics.root.controller import ROOT
 from skl_shared_qt.paths import Path, Home, Directory
 from skl_shared_qt.logic import com
+from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
 
 ROOT.get_root()
 
@@ -21,7 +22,9 @@ from config import PATHS
 
 
 class Shrink:
-    
+    ''' Shrink local collection by deleting those albums whose *names*
+        (contents identity is not checked) are present in external collection.
+    '''
     def __init__(self):
         self.Success = True
         self.path_external = PATHS.get_external_collection()
@@ -34,26 +37,64 @@ class Shrink:
         if not self.Success:
             rep.cancel(f)
             return
+        PROGRESS.set_value(0)
+        PROGRESS.set_max(2)
+        PROGRESS.show()
+        PROGRESS.update()
+        PROGRESS.set_info(_('Read external collection'))
         self.albums_external = Directory(self.path_external).get_rel_dirs()
+        PROGRESS.inc()
+        PROGRESS.update()
+        PROGRESS.set_info(_('Read local collection'))
         self.albums_local = Directory(self.path_local).get_rel_dirs()
+        PROGRESS.inc()
+        PROGRESS.close()
         if not self.albums_external or not self.albums_local:
             self.Success = False
             rep.empty_output(f)
     
-    def compare(self):
-        f = '[unmusic] utils.Shrink.compare'
+    def _delete(self, albumid):
+        f = '[unmusic] utils.Shrink._delete'
+        if not albumid:
+            rep.empty(f)
+            return
+        path = PATHS.get_local_album(albumid)
+        if not path:
+            rep.empty(f)
+            return
+        mes = _('Delete {}').format(path)
+        PROGRESS.set_info(mes)
+        return Directory(path).delete()
+    
+    def delete(self):
+        f = '[unmusic] utils.Shrink.delete'
         if not self.Success:
             rep.cancel(f)
             return
-        duplicate = [str(album) for album in self.albums_local \
+        duplicate = [album for album in self.albums_local \
                     if album in self.albums_external]
-        mes = _('{} duplicate albums:').format(len(duplicate))
-        mes += '\n' + ', '.join(duplicate)
+        mes = _('Do you really want to delete {} albums?').format(len(duplicate))
+        answer = Message(f, mes, True).show_question()
+        if not answer:
+            mes = _('Operation has been canceled by the user.')
+            Message(f, mes, True).show_info()
+            return
+        deleted = 0
+        PROGRESS.set_value(0)
+        PROGRESS.set_max(len(duplicate))
+        PROGRESS.show()
+        for album in duplicate:
+            PROGRESS.update()
+            if self._delete(album):
+                deleted += 1
+            PROGRESS.inc()
+        PROGRESS.close()
+        mes = _('{} albums have been deleted!').format(deleted)
         Message(f, mes, True).show_info()
     
     def run(self):
         self.set_albums()
-        self.compare()
+        self.delete()
 
 
 
