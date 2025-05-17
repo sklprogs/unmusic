@@ -73,6 +73,10 @@ class Shrink:
             return
         duplicate = [album for album in self.albums_local \
                     if album in self.albums_external]
+        if not duplicate:
+            mes = _('There are no duplicates!')
+            Message(f, mes, True).show_info()
+            return
         mes = _('Do you really want to delete {} albums?').format(len(duplicate))
         answer = Message(f, mes, True).show_question()
         if not answer:
