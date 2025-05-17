@@ -62,7 +62,7 @@ class Shrink:
         if not path:
             rep.empty(f)
             return
-        mes = _('Delete {}').format(path)
+        mes = _('Delete {}').format(albumid)
         PROGRESS.set_info(mes)
         return Directory(path).delete()
     
