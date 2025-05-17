@@ -39,6 +39,7 @@ class Menu:
         self.btn_col = Button(_('Collect tags & Obfuscate'))
         self.btn_cop = Button(_('Copy music'))
         self.btn_del = Button(_('Delete low-rated music'))
+        self.btn_dup = Button(_('Delete duplicates in local collection'))
         self.btn_qit = Button(_('Quit'))
     
     def add_buttons(self):
@@ -47,6 +48,7 @@ class Menu:
         self.layout.addWidget(self.btn_col.widget)
         self.layout.addWidget(self.btn_cop.widget)
         self.layout.addWidget(self.btn_del.widget)
+        self.layout.addWidget(self.btn_dup.widget)
         self.layout.addWidget(self.btn_qit.widget)
     
     def set_layout(self):
@@ -71,6 +73,7 @@ class Menu:
         self.btn_col.change_font_size(2)
         self.btn_cop.change_font_size(2)
         self.btn_del.change_font_size(2)
+        self.btn_dup.change_font_size(2)
         self.btn_qit.change_font_size(2)
     
     def set_gui(self):

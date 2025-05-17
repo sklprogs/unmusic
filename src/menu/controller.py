@@ -17,12 +17,16 @@ from album_editor.controller import ALBUM_EDITOR
 from menu.gui import Menu as guiMenu
 from collect import Collect
 from copy_albums.controller import COPY_ALBUMS
+import utils
 
 
 class Menu:
     
     def __init__(self):
         self.set_gui()
+    
+    def delete_duplicates(self):
+        utils.Shrink().run()
     
     def show_editor(self):
         ALBUM_EDITOR.reset()
@@ -50,6 +54,7 @@ class Menu:
         self.gui.btn_qit.set_action(self.quit)
         self.gui.btn_col.set_action(self.collect)
         self.gui.btn_cop.set_action(self.copy_albums)
+        self.gui.btn_dup.set_action(self.delete_duplicates)
     
     def show(self):
         self.gui.show()
