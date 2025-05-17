@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 01:44+0300\n"
-"PO-Revision-Date: 2025-05-18 01:44+0300\n"
+"POT-Creation-Date: 2025-05-18 01:56+0300\n"
+"PO-Revision-Date: 2025-05-18 01:56+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -1334,7 +1334,7 @@ msgstr "Обработка ИД альбома: {}"
 msgid "Current album: #{}"
 msgstr "Текущий альбом: №{}"
 
-#: unmusic/src/menu/controller.py:67 unmusic/src/unmusic.py:34
+#: unmusic/src/menu/controller.py:72 unmusic/src/unmusic.py:34
 msgid "Invalid configuration!"
 msgstr "Некорректная конфигурация!"
 
@@ -1359,6 +1359,10 @@ msgid "Delete low-rated music"
 msgstr "Удалить музыку с низкими оценками"
 
 #: unmusic/src/menu/gui.py:42
+msgid "Delete duplicates from local collection"
+msgstr "Удалить дубликаты из локальной коллекции"
+
+#: unmusic/src/menu/gui.py:43
 msgid "Quit"
 msgstr "Выйти"
 

@@ -39,7 +39,7 @@ class Menu:
         self.btn_col = Button(_('Collect tags & Obfuscate'))
         self.btn_cop = Button(_('Copy music'))
         self.btn_del = Button(_('Delete low-rated music'))
-        self.btn_dup = Button(_('Delete duplicates in local collection'))
+        self.btn_dup = Button(_('Delete duplicates from local collection'))
         self.btn_qit = Button(_('Quit'))
     
     def add_buttons(self):
