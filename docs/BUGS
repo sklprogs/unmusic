@@ -6,3 +6,4 @@
 - logic.Track.set_info: 'str' object is not callable
 - DB.has_album does not always work as expected.
 - Track comment seems not to be added to SEARCH (track search does not work)
+- Search for artist, go to 4283, move EP to bottom, search again -> not saved
