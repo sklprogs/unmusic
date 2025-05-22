@@ -476,7 +476,7 @@ class Directory:
             Message(f, mes).show_info()
             return self.tracks
         for file in self.audio:
-            self.tracks.append(Track(file=file))
+            self.tracks.append(Track(file))
         return self.tracks
 
 
