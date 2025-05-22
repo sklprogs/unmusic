@@ -149,9 +149,8 @@ class Track:
             seconds = self.length - minutes * 60
         else:
             minutes = seconds = 0
-        mes += _('Length: {} {} {} {}').format (minutes, _('min'), seconds
-                                               ,_('sec')
-                                               )
+        mes += _('Length: {} {} {} {}').format(minutes, _('min'), seconds
+                                              ,_('sec'))
         mes +=  '\n'
         Message(f, mes, True).show_info()
     
@@ -172,8 +171,7 @@ class Track:
     def _set_info(self):
         f = '[unmusic] album_editor.logic.Track._set_info'
         artist = [self.audio.artist, self.audio.albumartist
-                 ,self.audio.composer
-                 ]
+                 ,self.audio.composer]
         artist = [item for item in artist if item]
         if artist:
             self.artist = artist[0]
@@ -386,10 +384,8 @@ class Directory:
                 rep.empty(f)
                 return
             DB.albumid = albumid
-            DB.add_track ([albumid, data[0], data[1], data[2], '', data[3]
-                          ,data[4], data[5], self.rating
-                          ]
-                         )
+            DB.add_track([albumid, data[0], data[1], data[2], '', data[3]
+                        ,data[4], data[5], self.rating])
     
     def save_meta(self):
         f = '[unmusic] album_editor.logic.Directory.save_meta'
@@ -425,8 +421,7 @@ class Directory:
         self.idir = None
         # Derived from 'phrydy.mediafile.TYPES'
         self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
-                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf'
-                     )
+                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf')
         self.path = ''
         self.target = ''
         self.rating = 0
