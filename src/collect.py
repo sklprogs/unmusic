@@ -22,7 +22,7 @@ class Collect:
         self.bar.set_title(_('Processing albums'))
     
     def create_unprocessed(self):
-        f = '[MClient] collect.Collect.create_unprocessed'
+        f = '[unmusic] collect.Collect.create_unprocessed'
         if not self.Success:
             rep.cancel(f)
             return
@@ -32,7 +32,7 @@ class Collect:
             return
     
     def set_folders(self):
-        f = '[MClient] collect.Collect.set_folders'
+        f = '[unmusic] collect.Collect.set_folders'
         if not self.Success:
             rep.cancel(f)
             return
@@ -50,7 +50,7 @@ class Collect:
             return
     
     def store_album(self, folder):
-        f = '[MClient] collect.Collect.fill_db'
+        f = '[unmusic] collect.Collect.fill_db'
         if not self.Success or not DB.Success:
             self.Success = False
             rep.cancel(f)
@@ -68,7 +68,7 @@ class Collect:
         return DB.Success
     
     def loop(self):
-        f = '[MClient] collect.Collect.loop'
+        f = '[unmusic] collect.Collect.loop'
         if not self.Success:
             rep.cancel(f)
             return
