@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from PyQt6.QtGui import QImage
-from PyQt5.QtCore import QByteArray
+from PyQt6.QtCore import QByteArray
 
 
 class Image:
