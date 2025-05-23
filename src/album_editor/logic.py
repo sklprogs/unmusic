@@ -15,6 +15,7 @@ from skl_shared_qt.text_file import Write
 
 from config import PATHS
 from logic import DB
+from image_writer.controller import Image as WImage
 
 
 class Commands:
@@ -238,6 +239,42 @@ class Track:
 
 
 
+class SaveImage:
+    
+    def __init__(self, data):
+        self.Success = DB.Success
+        self.filew = ''
+        self.data = data
+    
+    def set_filew(self):
+        f = '[unmusic] album_editor.logic.SaveImage.set_filew'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        if not DB.albumid:
+            self.Success = False
+            rep.empty(f)
+            return
+        self.filew = PATHS.get_cover(DB.albumid)
+    
+    def save(self):
+        f = '[unmusic] album_editor.logic.SaveImage.save'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        if not self.data:
+            rep.lazy(f)
+            return
+        iimage = WImage()
+        iimage.load(self.data)
+        iimage.save(self.filew)
+    
+    def run(self):
+        self.set_filew()
+        self.save()
+
+
+
 class Directory:
     
     def __init__(self, path):
@@ -333,9 +370,18 @@ class Directory:
             self.create_target()
             self.purge()
             self.move_tracks()
-            #TODO: Implement
-            #self.save_image()
+            self.save_image()
         return self.Success
+    
+    def save_image(self):
+        f = '[unmusic] album_editor.logic.Directory.save_image'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        if not self.tracks:
+            rep.empty(f)
+            return
+        SaveImage(self.tracks[0].image).run()
     
     def add_album_meta(self):
         f = '[unmusic] album_editor.logic.Directory.add_album_meta'

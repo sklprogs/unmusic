@@ -3,8 +3,7 @@
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep, Message
-
-from image_viewer.gui import Image as guiImage
+from image_writer.gui import Image as guiImage
 
 
 class Image:
@@ -12,9 +11,6 @@ class Image:
     def __init__(self):
         self.Success = True
         self.gui = guiImage()
-    
-    def reset(self):
-        self.Success = True
     
     def load(self, data):
         f = '[unmusic] image_writer.controller.Image.load'
@@ -40,22 +36,10 @@ class Image:
             self.Success = False
             rep.empty(f)
             return
+        mes = _('Export image as {}').format(filew)
+        Message(f, mes).show_info()
         try:
             self.Success = self.gui.save(filew)
         except Exception as e:
             self.Success = False
             rep.third_party(f, e)
-
-
-
-class Export:
-    
-    def __init__(self):
-        self.Success = True
-        self.filew = ''
-    
-    def set_file(self):
-        pass
-
-
-IMAGE = Image()

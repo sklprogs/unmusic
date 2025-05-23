@@ -14,4 +14,4 @@ class Image:
         return self.image.loadFromData(QByteArray(data))
     
     def save(self, filew):
-        return self.image.save(filew)
+        return self.image.save(filew, 'JPG')
