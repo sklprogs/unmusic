@@ -76,10 +76,10 @@ cp "$HOME/bin/$product/build/$os/$productlow.desktop" "$tmpdir/app"
 cp "$resdir/$productlow.png" "$tmpdir/app"
 cd "$tmpdir"
 ./appimagetool-$arch.AppImage app
-read -p "Update the AppImage? (Y/n) " choice
-if [ "$choice" = "n" ] || [ "$choice" = "N" ]; then
-    exit;
-fi
+#read -p "Update the AppImage? (Y/n) " choice
+#if [ "$choice" = "n" ] || [ "$choice" = "N" ]; then
+#    exit;
+#fi
 mv -fv "$tmpdir/$product-$arch.AppImage" "$HOME/binaries/$product/$productlow-$oslow-$arch-glibc$glibc.AppImage"
 rm -rf "$tmpdir"
 deactivate
