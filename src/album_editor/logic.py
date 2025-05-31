@@ -52,6 +52,7 @@ class DeleteTracks:
         if not self.carriers:
             self.Success = False
             mes = _('Carriers are not mounted or album #{} has already been deleted!')
+            mes = mes.format(DB.albumid)
             Message(f, mes, True).show_info()
     
     def set_nos(self):
@@ -114,6 +115,8 @@ class DeleteTracks:
         for file in self.files:
             if not File(file).delete():
                 break
+        for carrier in self.carriers:
+            shDirectory(carrier).delete_empty()
     
     def set_size(self):
         f = '[unmusic] album_editor.logic.DeleteTracks.set_size'
