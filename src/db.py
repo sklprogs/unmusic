@@ -219,7 +219,7 @@ class DB:
         if not self.Success:
             rep.cancel(f)
             return
-        query = 'select NO from TRACKS where ALBUMID = ? and RATING < ? order by NO'
+        query = 'select NO from TRACKS where ALBUMID = ? and RATING > 0 and RATING < ? order by NO'
         try:
             self.dbc.execute(query, (self.albumid, rating,))
             result = self.dbc.fetchall()
