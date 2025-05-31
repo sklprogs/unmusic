@@ -51,7 +51,7 @@ class DeleteTracks:
             self.carriers.append(mobile)
         if not self.carriers:
             self.Success = False
-            mes = _('Album #{} has already been deleted or carriers are not mounted.')
+            mes = _('Carriers are not mounted or album #{} has already been deleted!')
             Message(f, mes, True).show_info()
     
     def set_nos(self):
@@ -62,7 +62,7 @@ class DeleteTracks:
         self.nos = DB.get_bad_tracks(self.rating)
         if not self.nos:
             self.Success = False
-            mes = _('There are no tracks with rating less than {}!')
+            mes = _('There are no tracks with rating < {}!')
             mes = mes.format(self.rating)
             Message(f, mes, True).show_info()
             return
