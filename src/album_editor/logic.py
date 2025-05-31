@@ -105,7 +105,7 @@ class DeleteTracks:
             rep.cancel(f)
             return
         size = shcom.get_human_size(self.size, True)
-        mes = _('Delete {} tracks ({} in total) with rating < {} from {} carriers?')
+        mes = _('Delete {} tracks ({}) with rating < {} from {} carriers?')
         mes = mes.format(len(self.files), size, self.rating, len(self.carriers))
         return Message(f, mes, True).show_question()
     

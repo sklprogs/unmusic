@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-31 12:51+0300\n"
-"PO-Revision-Date: 2025-05-31 12:53+0300\n"
+"POT-Creation-Date: 2025-05-31 12:56+0300\n"
+"PO-Revision-Date: 2025-05-31 12:56+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -1077,8 +1077,8 @@ msgid "{} is skipped!"
 msgstr "{} пропущен!"
 
 #: unmusic/src/album_editor/logic.py:108
-msgid "Delete {} tracks ({} in total) with rating < {} from {} carriers?"
-msgstr "Удалить {} дорожек (всего {}) с рейтингом < {} на {} носителях?"
+msgid "Delete {} tracks ({}) with rating < {} from {} carriers?"
+msgstr "Удалить {} дорожек ({}) с рейтингом < {} на {} носителях?"
 
 #: unmusic/src/album_editor/logic.py:243
 msgid "Artist: {}"
