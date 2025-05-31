@@ -214,6 +214,20 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
+    def get_bad_tracks(self, rating=8):
+        f = '[unmusic] db.DB.get_bad_tracks'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        query = 'select NO from TRACKS where ALBUMID = ? and RATING < ? order by NO'
+        try:
+            self.dbc.execute(query, (self.albumid, rating,))
+            result = self.dbc.fetchall()
+            if result:
+                return [item[0] for item in result]
+        except Exception as e:
+            self.fail(f, e)
+    
     def has_id(self, albumid):
         ''' A major difference from 'get_album': we do not need
             to assign 'self.albumid' to establish whether the input is
@@ -246,10 +260,8 @@ class DB:
         query = 'update TRACKS set TITLE = ?, LYRICS = ?, COMMENT = ?, \
                  RATING = ? where ALBUMID = ? and NO = ?'
         try:
-            self.dbc.execute (query, (data[0], data[1], data[2], data[3]
-                                     ,self.albumid, no
-                                     )
-                             )
+            self.dbc.execute(query, (data[0], data[1], data[2], data[3]
+                            ,self.albumid, no))
         except Exception as e:
             self.fail(f, e)
     

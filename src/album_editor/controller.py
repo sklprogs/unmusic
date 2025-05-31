@@ -157,7 +157,7 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        print(f)
+        logic.DeleteTracks().run()
     
     def go_prev_unrated(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.go_prev_unrated'

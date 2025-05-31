@@ -7,7 +7,7 @@ import phrydy
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.logic import Input, Text
+from skl_shared_qt.logic import Input, Text, com as shcom
 from skl_shared_qt.paths import Path, File, Directory as shDirectory
 from skl_shared_qt.list import List
 from skl_shared_qt.launch import Launch
@@ -16,6 +16,114 @@ from skl_shared_qt.text_file import Write
 from config import PATHS
 from logic import DB
 from image_writer.controller import Image as WImage
+
+
+class DeleteTracks:
+    
+    def __init__(self):
+        self.set_values()
+        self.Success = DB.Success
+    
+    def set_values(self):
+        self.Success = True
+        # Derived from 'phrydy.mediafile.TYPES'
+        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
+                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf')
+        self.nos = []
+        self.carriers = []
+        self.files = []
+        self.rating = 8
+        self.size = 0
+    
+    def set_carriers(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.set_carriers'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        local = PATHS.get_local_album(DB.albumid)
+        external = PATHS.get_external_album(DB.albumid)
+        mobile = PATHS.get_mobile_album(DB.albumid)
+        if os.path.exists(local):
+            self.carriers.append(local)
+        if os.path.exists(external):
+            self.carriers.append(external)
+        if os.path.exists(mobile):
+            self.carriers.append(mobile)
+        if not self.carriers:
+            self.Success = False
+            mes = _('Album #{} has already been deleted or carriers are not mounted.')
+            Message(f, mes, True).show_info()
+    
+    def set_nos(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.set_nos'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        self.nos = DB.get_bad_tracks(self.rating)
+        if not self.nos:
+            self.Success = False
+            mes = _('There are no tracks with rating less than {}!')
+            mes = mes.format(self.rating)
+            Message(f, mes, True).show_info()
+            return
+    
+    def _has_no(self, file):
+        ipath = Path(file)
+        if not ipath.get_ext_low() in self.types:
+            mes = _('{} is skipped!').format(file)
+            Message(f, mes).show_warning()
+            return
+        basename = ipath.get_filename()
+        no = basename.lstrip('0')
+        try:
+            no = int(no)
+        except ValueError:
+            return
+        return no in self.nos
+    
+    def set_files(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.set_files'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        ''' Some tracks may have already been deleted on some carriers, so
+            we do not rely on the same nos.
+        '''
+        for carrier in self.carriers:
+            idir = shDirectory(carrier)
+            self.Success = idir.Success
+            if not self.Success:
+                rep.cancel(f)
+                break
+            for file in idir.get_files():
+                if self._has_no(file):
+                    self.files.append(file)
+    
+    def confirm(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.confirm'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        size = shcom.get_human_size(self.size, True)
+        mes = _('Delete {} tracks ({} in total) with rating < {} from {} carriers?')
+        mes = mes.format(len(self.files), size, self.rating, len(self.carriers))
+        return Message(f, mes, True).show_question()
+    
+    def set_size(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.set_size'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        for file in self.files:
+            self.size += File(file).get_size(False)
+    
+    def run(self):
+        self.set_nos()
+        self.set_carriers()
+        self.set_files()
+        self.set_size()
+        self.confirm()
+
 
 
 class Commands:
