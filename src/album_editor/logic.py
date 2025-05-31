@@ -99,15 +99,21 @@ class DeleteTracks:
                 if self._has_no(file):
                     self.files.append(file)
     
-    def confirm(self):
-        f = '[unmusic] album_editor.logic.DeleteTracks.confirm'
+    def delete(self):
+        f = '[unmusic] album_editor.logic.DeleteTracks.delete'
         if not self.Success:
             rep.cancel(f)
             return
         size = shcom.get_human_size(self.size, True)
         mes = _('Delete {} tracks ({}) with rating < {} from {} carriers?')
         mes = mes.format(len(self.files), size, self.rating, len(self.carriers))
-        return Message(f, mes, True).show_question()
+        if not Message(f, mes, True).show_question():
+            mes = _('Operation has been canceled by the user.')
+            Message(f, mes).show_info()
+            return
+        for file in self.files:
+            if not File(file).delete():
+                break
     
     def set_size(self):
         f = '[unmusic] album_editor.logic.DeleteTracks.set_size'
@@ -122,7 +128,7 @@ class DeleteTracks:
         self.set_carriers()
         self.set_files()
         self.set_size()
-        self.confirm()
+        self.delete()
 
 
 
