@@ -8,6 +8,7 @@ from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep, Message
 from skl_shared_qt.graphics.root.controller import ROOT
 from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
+from skl_shared_qt.graphics.debug.controller import DEBUG
 from skl_shared_qt.paths import File, Directory
 from skl_shared_qt.logic import com as shcom
 
@@ -23,7 +24,7 @@ class DeleteBad:
     def __init__(self):
         self.Success = True
         self.rating = 7
-        self.limit = 100
+        self.limit = 1000
         self.size = 0
         self.folders = []
         self.files = []
@@ -50,9 +51,21 @@ class DeleteBad:
         if not self.Success:
             rep.cancel(f)
             return
+        desc = []
         for id_ in self.albums:
-            if len(self.albums[id_]) > 1:
-                print(f'ID: {id_}, track nos: {self.albums[id_]}')
+            mes = _('Process album #{}').format(id_)
+            Message(f, mes).show_debug()
+            DB.albumid = id_
+            data = DB.get_album()
+            if not data:
+                rep.empty(f)
+                break
+            album, artist, year = data[0], data[1], data[2]
+            row = _('{}: {} - {} - {} ({} tracks)')
+            row = row.format(id_, artist, year, album, len(self.albums[id_]))
+            desc.append(row)
+        DEBUG.reset(f, '\n'.join(desc))
+        DEBUG.show()
     
     def loop(self):
         f = '[unmusic] utils.DeleteBad.loop'
@@ -103,6 +116,7 @@ class DeleteBad:
     def run(self):
         self.set_albums()
         self.loop()
+        self.debug()
         self.delete()
 
 
