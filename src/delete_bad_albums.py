@@ -5,6 +5,7 @@ from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import Message, rep
 from skl_shared_qt.graphics.root.controller import ROOT
 from skl_shared_qt.logic import com as shcom
+from skl_shared_qt.paths import File, Directory as shDirectory
 from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
 ROOT.get_root()
 
@@ -17,7 +18,10 @@ class DeleteBadAlbums:
     def __init__(self):
         self.Success = True
         self.rating = 7
-        self.limit = 1000
+        self.limit = 100
+        self.size = 0
+        self.folders = []
+        self.files = []
         self.albums = {}
     
     def set_albums(self):
@@ -50,9 +54,6 @@ class DeleteBadAlbums:
         if not self.Success:
             rep.cancel(f)
             return
-        size = 0
-        folders = []
-        files = []
         PROGRESS.set_value(0)
         PROGRESS.set_max(len(self.albums))
         PROGRESS.show()
@@ -66,30 +67,34 @@ class DeleteBadAlbums:
             idelete.set_carriers()
             idelete.set_files()
             idelete.set_size()
-            folders += idelete.carriers
-            files += idelete.files
-            size += idelete.size
+            self.folders += idelete.carriers
+            self.files += idelete.files
+            self.size += idelete.size
             PROGRESS.inc()
         PROGRESS.close()
-        size = shcom.get_human_size(size, True)
+    
+    def delete(self):
+        f = '[unmusic] utils.delete_bad_albums.DeleteBadAlbums.delete'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        size = shcom.get_human_size(self.size, True)
         mes = _('Delete {} tracks ({}) with rating < {} from {} albums ({} folders on all carriers)?')
-        mes = mes.format(len(files), size, self.rating, len(self.albums), len(folders))
+        mes = mes.format(len(self.files), size, self.rating, len(self.albums), len(self.folders))
         if not Message(f, mes, True).show_question():
             mes = _('Operation has been canceled by the user.')
             Message(f, mes).show_info()
             return
-        '''
-        for file in files:
+        for file in self.files:
             if not File(file).delete():
                 break
-        for folder in folders:
+        for folder in self.folders:
             shDirectory(folder).delete_empty()
-        '''
     
     def run(self):
         self.set_albums()
         self.loop()
-        print('Done')
+        self.delete()
 
 
 if __name__ == '__main__':
