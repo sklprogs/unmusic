@@ -60,8 +60,7 @@ class Menu:
         self.app.setCentralWidget(self.window)
     
     def set_icon(self):
-        # Does not accept None
-        self.app.setWindowIcon(ICON.get())
+        ROOT.set_icon()
     
     def set_title(self, title='unmusic'):
         self.app.setWindowTitle(title)
