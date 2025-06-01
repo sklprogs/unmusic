@@ -106,6 +106,9 @@ class DeleteTracks:
         if not self.Success:
             rep.cancel(f)
             return
+        if not self.files:
+            rep.lazy(f)
+            return
         size = shcom.get_human_size(self.size, True)
         mes = _('Delete {} tracks ({}) with rating < {} from {} carriers?')
         mes = mes.format(len(self.files), size, self.rating, len(self.carriers))
