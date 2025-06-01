@@ -24,7 +24,7 @@ class DeleteBad:
     def __init__(self):
         self.Success = True
         self.rating = 7
-        self.limit = 1000
+        self.limit = 0
         self.size = 0
         self.folders = []
         self.files = []
