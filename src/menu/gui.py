@@ -44,7 +44,7 @@ class Menu:
     
     def add_buttons(self):
         self.layout.addWidget(self.btn_edt.widget)
-        self.layout.addWidget(self.btn_prp.widget)
+        #self.layout.addWidget(self.btn_prp.widget)
         self.layout.addWidget(self.btn_col.widget)
         self.layout.addWidget(self.btn_cop.widget)
         self.layout.addWidget(self.btn_del.widget)

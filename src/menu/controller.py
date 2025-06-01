@@ -28,6 +28,9 @@ class Menu:
     def delete_duplicates(self):
         utils.Shrink().run()
     
+    def delete_bad(self):
+        utils.DeleteBad().run()
+    
     def show_editor(self):
         ALBUM_EDITOR.reset()
         ALBUM_EDITOR.show()
@@ -55,6 +58,7 @@ class Menu:
         self.gui.btn_col.set_action(self.collect)
         self.gui.btn_cop.set_action(self.copy_albums)
         self.gui.btn_dup.set_action(self.delete_duplicates)
+        self.gui.btn_del.set_action(self.delete_bad)
     
     def show(self):
         self.gui.show()
