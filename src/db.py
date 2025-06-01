@@ -228,6 +228,24 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
+    def get_bad_albums(self, rating=7, limit=0):
+        f = '[unmusic] db.DB.get_bad_albums'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        query = 'select ALBUMID,NO from TRACKS where RATING > 0 and RATING < ? order by ALBUMID,NO'
+        # limit=0 provides an empty output
+        if limit:
+            query += ' limit ?'
+        try:
+            if limit:
+                self.dbc.execute(query, (rating, limit,))
+            else:
+                self.dbc.execute(query, (rating,))
+            return self.dbc.fetchall()
+        except Exception as e:
+            self.fail(f, e)
+    
     def has_id(self, albumid):
         ''' A major difference from 'get_album': we do not need
             to assign 'self.albumid' to establish whether the input is
