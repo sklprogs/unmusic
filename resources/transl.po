@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-01 17:26+0300\n"
-"PO-Revision-Date: 2025-06-01 17:28+0300\n"
+"PO-Revision-Date: 2025-06-01 17:32+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -1448,7 +1448,7 @@ msgstr "Запуск с параметрами: {}"
 
 #: unmusic/src/utils.py:67
 msgid "Calculate the size of album #{}"
-msgstr "Расчет места, занимаемого альбомом №{}"
+msgstr "Расчет размера альбома №{}"
 
 #: unmusic/src/utils.py:87
 #| msgid "Delete {} tracks ({}) with rating < {} from {} carriers?"
