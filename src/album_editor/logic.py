@@ -69,6 +69,7 @@ class DeleteTracks:
             return
     
     def _has_no(self, file):
+        f = '[unmusic] album_editor.logic.DeleteTracks._has_no'
         ipath = Path(file)
         if not ipath.get_ext_low() in self.types:
             mes = _('{} is skipped!').format(file)
