@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-01 18:26+0300\n"
-"PO-Revision-Date: 2025-06-01 18:26+0300\n"
+"POT-Creation-Date: 2025-06-02 02:52+0300\n"
+"PO-Revision-Date: 2025-06-02 02:53+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -388,7 +388,7 @@ msgstr "Логическая ошибка!"
 msgid "Nothing to do!"
 msgstr "Действие не требуется."
 
-#: skl_shared_qt/src/message/controller.py:27 unmusic/src/logic.py:99
+#: skl_shared_qt/src/message/controller.py:27
 msgid "Operation has been canceled."
 msgstr "Операция отменена."
 
@@ -410,7 +410,7 @@ msgstr "Пустые входные данные не допускаются!"
 msgid "Not implemented yet!"
 msgstr "Еще не реализовано!"
 
-#: skl_shared_qt/src/message/controller.py:43 unmusic/src/logic.py:62
+#: skl_shared_qt/src/message/controller.py:43
 msgid "Empty output is not allowed!"
 msgstr "Пустые выходные данные не допускаются!"
 
@@ -536,7 +536,7 @@ msgid "The object \"{}\" is not a file!"
 msgstr "Объект \"{}\" не является файлом!"
 
 #: skl_shared_qt/src/paths.py:275 skl_shared_qt/src/paths.py:647
-#: unmusic/src/utils.py:428
+#: unmusic/src/utils.py:445
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
@@ -568,7 +568,7 @@ msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
 #: skl_shared_qt/src/paths.py:326 skl_shared_qt/src/paths.py:371
 #: skl_shared_qt/src/text_file.py:189 unmusic/src/album_editor/logic.py:116
-#: unmusic/src/utils.py:107 unmusic/src/utils.py:183
+#: unmusic/src/utils.py:108 unmusic/src/utils.py:200
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -886,8 +886,7 @@ msgstr "Поиск по альбомам"
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: unmusic/src/album_editor/controller.py:62 unmusic/src/collect_silent.py:27
-#: unmusic/src/collect_silent.py:54 unmusic/src/utils.py:465
+#: unmusic/src/album_editor/controller.py:62 unmusic/src/utils.py:482
 msgid "Goodbye!"
 msgstr "До свидания!"
 
@@ -982,7 +981,7 @@ msgstr "Перейти к следующей записи"
 #: unmusic/src/config.py:37 unmusic/src/copy_albums/controller.py:207
 #: unmusic/src/copy_albums/controller.py:217
 #: unmusic/src/copy_albums/controller.py:227
-#: unmusic/src/copy_albums/controller.py:237 unmusic/src/logic.py:77
+#: unmusic/src/copy_albums/controller.py:237
 msgid "local collection"
 msgstr "локальная коллекция"
 
@@ -990,7 +989,7 @@ msgstr "локальная коллекция"
 #: unmusic/src/config.py:49 unmusic/src/copy_albums/controller.py:209
 #: unmusic/src/copy_albums/controller.py:219
 #: unmusic/src/copy_albums/controller.py:229
-#: unmusic/src/copy_albums/controller.py:239 unmusic/src/logic.py:81
+#: unmusic/src/copy_albums/controller.py:239
 msgid "external collection"
 msgstr "внешняя коллекция"
 
@@ -998,7 +997,7 @@ msgstr "внешняя коллекция"
 #: unmusic/src/config.py:52 unmusic/src/copy_albums/controller.py:211
 #: unmusic/src/copy_albums/controller.py:221
 #: unmusic/src/copy_albums/controller.py:231
-#: unmusic/src/copy_albums/controller.py:241 unmusic/src/logic.py:85
+#: unmusic/src/copy_albums/controller.py:241
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
@@ -1128,7 +1127,7 @@ msgid "Tracks {} have not been found in \"{}\"!"
 msgstr "Дорожки {} не были найдены в \"{}\"!"
 
 #: unmusic/src/album_editor/logic.py:742 unmusic/src/db.py:275
-#: unmusic/src/logic.py:267 unmusic/src/search_tracks/controller.py:34
+#: unmusic/src/logic.py:107 unmusic/src/search_tracks/controller.py:34
 #: unmusic/src/tracks/controller.py:61
 msgid "Condition \"{}\" is not observed!"
 msgstr "Условие \"{}\" не выполнено!"
@@ -1146,7 +1145,7 @@ msgstr "Совпадений больше нет!"
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
-#: unmusic/src/collect.py:18 unmusic/src/collect_silent.py:17
+#: unmusic/src/collect.py:18
 msgid "not processed"
 msgstr "не обработано"
 
@@ -1158,13 +1157,9 @@ msgstr "Обработка альбомов"
 msgid "Process \"{}\""
 msgstr "Обработка \"{}\""
 
-#: unmusic/src/collect.py:83 unmusic/src/collect_silent.py:50
+#: unmusic/src/collect.py:83
 msgid "Operation has taken {}"
 msgstr "Операция завершена за {}"
-
-#: unmusic/src/collect_silent.py:42
-msgid "Process \"{}\" ({}/{})"
-msgstr "Обработка \"{}\" ({}/{})"
 
 #: unmusic/src/config.py:46
 msgid "processed"
@@ -1307,7 +1302,7 @@ msgstr ""
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: unmusic/src/db.py:677 unmusic/src/utils.py:262 unmusic/src/utils.py:267
+#: unmusic/src/db.py:677 unmusic/src/utils.py:279 unmusic/src/utils.py:284
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -1325,27 +1320,7 @@ msgstr "Просмотрщик изображений"
 msgid "Export image as {}"
 msgstr "Экспорт изображения в {}"
 
-#: unmusic/src/logic.py:52
-msgid "Local collection: {}"
-msgstr "Локальная коллекция: {}"
-
-#: unmusic/src/logic.py:54
-msgid "External collection: {}"
-msgstr "Внешняя коллекция: {}"
-
-#: unmusic/src/logic.py:56
-msgid "Mobile collection: {}"
-msgstr "Переносная коллекция: {}"
-
-#: unmusic/src/logic.py:116
-msgid "N/A"
-msgstr "Н/Д"
-
-#: unmusic/src/logic.py:172
-msgid "Process album ID: {}"
-msgstr "Обработка ИД альбома: {}"
-
-#: unmusic/src/logic.py:271
+#: unmusic/src/logic.py:111
 msgid "Current album: #{}"
 msgstr "Текущий альбом: №{}"
 
@@ -1446,21 +1421,19 @@ msgstr "Дорожки"
 msgid "Start with arguments: {}"
 msgstr "Запуск с параметрами: {}"
 
-#: unmusic/src/utils.py:56
-#| msgid "Process album ID: {}"
+#: unmusic/src/utils.py:57
 msgid "Process album #{}"
 msgstr "Обработка альбома №{}"
 
-#: unmusic/src/utils.py:64
-#| msgid "{} ({} tracks)"
+#: unmusic/src/utils.py:65
 msgid "{}: {} - {} - {} ({} tracks)"
 msgstr "{}: {} - {} - {} ({} дорожек)"
 
-#: unmusic/src/utils.py:80
+#: unmusic/src/utils.py:81
 msgid "Calculate the size of album #{}"
 msgstr "Расчет размера альбома №{}"
 
-#: unmusic/src/utils.py:103
+#: unmusic/src/utils.py:104
 msgid ""
 "Delete {} tracks ({}) with rating < {} from {} albums ({} folders on all "
 "carriers)?"
@@ -1468,55 +1441,74 @@ msgstr ""
 "Удалить {} дорожек ({}) с рейтингом < {} из {} альбомов ({} каталогов на "
 "всех носителях)?"
 
-#: unmusic/src/utils.py:144
-msgid "Read external collection"
-msgstr "Чтение внешней коллекции"
-
-#: unmusic/src/utils.py:148
-msgid "Read local collection"
-msgstr "Чтение локальной коллекции"
-
-#: unmusic/src/utils.py:165
+#: unmusic/src/utils.py:116 unmusic/src/utils.py:182
 msgid "Delete {}"
 msgstr "Удаление {}"
 
-#: unmusic/src/utils.py:177
+#: unmusic/src/utils.py:126
+msgid "Delete empty folders"
+msgstr "Удаление пустых каталогов"
+
+#: unmusic/src/utils.py:161
+msgid "Read external collection"
+msgstr "Чтение внешней коллекции"
+
+#: unmusic/src/utils.py:165
+msgid "Read local collection"
+msgstr "Чтение локальной коллекции"
+
+#: unmusic/src/utils.py:194
 msgid "There are no duplicates!"
 msgstr "Дубликатов нет!"
 
-#: unmusic/src/utils.py:180
+#: unmusic/src/utils.py:197
 msgid "Do you really want to delete {} albums?"
 msgstr "Вы действительно хотите удалить {} альбомов?"
 
-#: unmusic/src/utils.py:196
+#: unmusic/src/utils.py:213
 msgid "{} albums have been deleted!"
 msgstr "{} альбомов удалено!"
 
-#: unmusic/src/utils.py:243
+#: unmusic/src/utils.py:260
 msgid "Fetch data"
 msgstr "Получение данных"
 
-#: unmusic/src/utils.py:307 unmusic/src/utils.py:323
+#: unmusic/src/utils.py:324 unmusic/src/utils.py:340
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
 
-#: unmusic/src/utils.py:396
+#: unmusic/src/utils.py:413
 msgid "Tracks of album #{} have no rating!"
 msgstr "У дорожек альбома №{} нет рейтинга!"
 
-#: unmusic/src/utils.py:401
+#: unmusic/src/utils.py:418
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
 
-#: unmusic/src/utils.py:463
+#: unmusic/src/utils.py:480
 msgid "Operation has been completed."
 msgstr "Операция завершена."
 
+#~ msgid "Process \"{}\" ({}/{})"
+#~ msgstr "Обработка \"{}\" ({}/{})"
+
+#~ msgid "Local collection: {}"
+#~ msgstr "Локальная коллекция: {}"
+
+#~ msgid "External collection: {}"
+#~ msgstr "Внешняя коллекция: {}"
+
+#~ msgid "Mobile collection: {}"
+#~ msgstr "Переносная коллекция: {}"
+
+#~ msgid "N/A"
+#~ msgstr "Н/Д"
+
+#~ msgid "Process album ID: {}"
+#~ msgstr "Обработка ИД альбома: {}"
+
 #~ msgid "Unable to delete {}, because it has nested objects!"
 #~ msgstr "Невозможно удалить {}, поскольку присутствуют вложенные объекты!"
-
-#~ msgid "Delete folders"
-#~ msgstr "Удаление каталогов"
 
 #~ msgid "{}/{} folders have been deleted."
 #~ msgstr "{}/{} каталогов удалено."
