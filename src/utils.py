@@ -18,7 +18,7 @@ from logic import DB
 from album_editor.logic import DeleteTracks
 
 
-class DeleteBadAlbums:
+class DeleteBad:
     
     def __init__(self):
         self.Success = True
@@ -30,7 +30,7 @@ class DeleteBadAlbums:
         self.albums = {}
     
     def set_albums(self):
-        f = '[unmusic] utils.DeleteBadAlbums.set_albums'
+        f = '[unmusic] utils.DeleteBad.set_albums'
         if not self.Success:
             rep.cancel(f)
             return
@@ -46,7 +46,7 @@ class DeleteBadAlbums:
                 self.albums[id_] = [nos]
     
     def debug(self):
-        f = '[unmusic] utils.DeleteBadAlbums.debug'
+        f = '[unmusic] utils.DeleteBad.debug'
         if not self.Success:
             rep.cancel(f)
             return
@@ -55,7 +55,7 @@ class DeleteBadAlbums:
                 print(f'ID: {id_}, track nos: {self.albums[id_]}')
     
     def loop(self):
-        f = '[unmusic] utils.DeleteBadAlbums.loop'
+        f = '[unmusic] utils.DeleteBad.loop'
         if not self.Success:
             rep.cancel(f)
             return
@@ -79,9 +79,12 @@ class DeleteBadAlbums:
         PROGRESS.close()
     
     def delete(self):
-        f = '[unmusic] utils.DeleteBadAlbums.delete'
+        f = '[unmusic] utils.DeleteBad.delete'
         if not self.Success:
             rep.cancel(f)
+            return
+        if not self.files:
+            rep.lazy(f)
             return
         size = shcom.get_human_size(self.size, True)
         mes = _('Delete {} tracks ({}) with rating < {} from {} albums ({} folders on all carriers)?')
@@ -441,7 +444,7 @@ if __name__ == '__main__':
     f = '[unmusic] utils.__main__'
     #com.alter()
     #Shrink().run()
-    DeleteBadAlbums().run()
+    DeleteBad().run()
     #TODO: Delete when closing the graphics is fixed
     mes = _('Operation has been completed.')
     Message(f, mes, True).show_info()
