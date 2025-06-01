@@ -6,6 +6,7 @@ import sqlite3
 
 from skl_shared_qt.localize import _
 from skl_shared_qt.message.controller import rep, Message
+from skl_shared_qt.basic_text import Shorten
 from skl_shared_qt.graphics.root.controller import ROOT
 from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
 from skl_shared_qt.graphics.debug.controller import DEBUG
@@ -107,16 +108,32 @@ class DeleteBad:
             mes = _('Operation has been canceled by the user.')
             Message(f, mes).show_info()
             return
+        PROGRESS.set_value(0)
+        PROGRESS.set_max(len(self.files))
+        PROGRESS.show()
         for file in self.files:
+            PROGRESS.update()
+            mes = _('Delete {}').format(file)
+            mes = Shorten(mes, 33, True).run()
+            PROGRESS.set_info(mes)
             if not File(file).delete():
                 break
+            PROGRESS.inc()
+        PROGRESS.close()
+        PROGRESS.set_value(0)
+        PROGRESS.set_max(1)
+        PROGRESS.show()
+        mes = _('Delete empty folders')
+        PROGRESS.set_info(mes)
         for folder in self.folders:
             Directory(folder).delete_empty()
+        PROGRESS.inc()
+        PROGRESS.close()
     
     def run(self):
         self.set_albums()
         self.loop()
-        self.debug()
+        #self.debug()
         self.delete()
 
 
