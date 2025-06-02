@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 02:52+0300\n"
-"PO-Revision-Date: 2025-06-02 02:53+0300\n"
+"POT-Creation-Date: 2025-06-02 03:17+0300\n"
+"PO-Revision-Date: 2025-06-02 03:18+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -394,7 +394,7 @@ msgstr "Операция отменена."
 
 #: skl_shared_qt/src/message/controller.py:33
 #: unmusic/src/copy_albums/controller.py:60
-#: unmusic/src/copy_albums/controller.py:185
+#: unmusic/src/copy_albums/controller.py:186
 #: unmusic/src/search_tracks/controller.py:41
 #: unmusic/src/tracks/controller.py:68
 msgid "Wrong input data!"
@@ -536,7 +536,7 @@ msgid "The object \"{}\" is not a file!"
 msgstr "Объект \"{}\" не является файлом!"
 
 #: skl_shared_qt/src/paths.py:275 skl_shared_qt/src/paths.py:647
-#: unmusic/src/utils.py:445
+#: unmusic/src/utils.py:440
 msgid "Copy \"{}\" to \"{}\""
 msgstr "Копирование \"{}\" в \"{}\""
 
@@ -568,7 +568,7 @@ msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
 #: skl_shared_qt/src/paths.py:326 skl_shared_qt/src/paths.py:371
 #: skl_shared_qt/src/text_file.py:189 unmusic/src/album_editor/logic.py:116
-#: unmusic/src/utils.py:108 unmusic/src/utils.py:200
+#: unmusic/src/utils.py:108 unmusic/src/utils.py:194
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
 
@@ -778,7 +778,7 @@ msgstr "Пожалуйста, ответьте тут Нет."
 msgid "Please answer Yes here."
 msgstr "Пожалуйста, ответьте тут Да."
 
-#: skl_shared_qt/src/test.py:1049 unmusic/src/copy_albums/controller.py:72
+#: skl_shared_qt/src/test.py:1049 unmusic/src/copy_albums/controller.py:73
 msgid "Copy {}"
 msgstr "Копирование {}"
 
@@ -886,7 +886,7 @@ msgstr "Поиск по альбомам"
 msgid "Search in tracks"
 msgstr "Поиск по дорожкам"
 
-#: unmusic/src/album_editor/controller.py:62 unmusic/src/utils.py:482
+#: unmusic/src/album_editor/controller.py:62 unmusic/src/utils.py:477
 msgid "Goodbye!"
 msgstr "До свидания!"
 
@@ -978,26 +978,26 @@ msgid "Go to the following record"
 msgstr "Перейти к следующей записи"
 
 #: unmusic/src/album_editor/gui.py:215 unmusic/src/config.py:34
-#: unmusic/src/config.py:37 unmusic/src/copy_albums/controller.py:207
-#: unmusic/src/copy_albums/controller.py:217
-#: unmusic/src/copy_albums/controller.py:227
-#: unmusic/src/copy_albums/controller.py:237
+#: unmusic/src/config.py:37 unmusic/src/copy_albums/controller.py:208
+#: unmusic/src/copy_albums/controller.py:218
+#: unmusic/src/copy_albums/controller.py:228
+#: unmusic/src/copy_albums/controller.py:238
 msgid "local collection"
 msgstr "локальная коллекция"
 
 #: unmusic/src/album_editor/gui.py:216 unmusic/src/config.py:43
-#: unmusic/src/config.py:49 unmusic/src/copy_albums/controller.py:209
-#: unmusic/src/copy_albums/controller.py:219
-#: unmusic/src/copy_albums/controller.py:229
-#: unmusic/src/copy_albums/controller.py:239
+#: unmusic/src/config.py:49 unmusic/src/copy_albums/controller.py:210
+#: unmusic/src/copy_albums/controller.py:220
+#: unmusic/src/copy_albums/controller.py:230
+#: unmusic/src/copy_albums/controller.py:240
 msgid "external collection"
 msgstr "внешняя коллекция"
 
 #: unmusic/src/album_editor/gui.py:217 unmusic/src/config.py:40
-#: unmusic/src/config.py:52 unmusic/src/copy_albums/controller.py:211
-#: unmusic/src/copy_albums/controller.py:221
-#: unmusic/src/copy_albums/controller.py:231
-#: unmusic/src/copy_albums/controller.py:241
+#: unmusic/src/config.py:52 unmusic/src/copy_albums/controller.py:212
+#: unmusic/src/copy_albums/controller.py:222
+#: unmusic/src/copy_albums/controller.py:232
+#: unmusic/src/copy_albums/controller.py:242
 msgid "mobile collection"
 msgstr "переносная коллекция"
 
@@ -1173,40 +1173,41 @@ msgstr "Изображения"
 msgid "playlist"
 msgstr "список воспроизведения"
 
-#: unmusic/src/copy_albums/controller.py:106
+#: unmusic/src/copy_albums/controller.py:63
+#: unmusic/src/copy_albums/controller.py:196
+msgid "Copy albums"
+msgstr "Копирование альбомов"
+
+#: unmusic/src/copy_albums/controller.py:107
 msgid "Copying albums"
 msgstr "Копирование альбомов"
 
-#: unmusic/src/copy_albums/controller.py:159 unmusic/src/copy_albums/gui.py:109
+#: unmusic/src/copy_albums/controller.py:160 unmusic/src/copy_albums/gui.py:109
 msgid "Random"
 msgstr "Случайно"
 
-#: unmusic/src/copy_albums/controller.py:163 unmusic/src/copy_albums/gui.py:109
+#: unmusic/src/copy_albums/controller.py:164 unmusic/src/copy_albums/gui.py:109
 msgid "From End"
 msgstr "С конца"
 
-#: unmusic/src/copy_albums/controller.py:168 unmusic/src/copy_albums/gui.py:107
+#: unmusic/src/copy_albums/controller.py:169 unmusic/src/copy_albums/gui.py:107
 #: unmusic/src/copy_albums/gui.py:108
 msgid "Heavy"
 msgstr "Тяжелые"
 
-#: unmusic/src/copy_albums/controller.py:170 unmusic/src/copy_albums/gui.py:107
+#: unmusic/src/copy_albums/controller.py:171 unmusic/src/copy_albums/gui.py:107
 msgid "Light"
 msgstr "Легкие"
 
-#: unmusic/src/copy_albums/controller.py:195
-msgid "Copy albums"
-msgstr "Копирование альбомов"
-
-#: unmusic/src/copy_albums/controller.py:275
+#: unmusic/src/copy_albums/controller.py:276
 msgid "Albums: {}. Total size: {}. Free space: {} ({})."
 msgstr "Альбомов: {}. Общий размер: {}. Свободное место: {} ({})."
 
-#: unmusic/src/copy_albums/controller.py:277
+#: unmusic/src/copy_albums/controller.py:278
 msgid "sufficient"
 msgstr "достаточно"
 
-#: unmusic/src/copy_albums/controller.py:279
+#: unmusic/src/copy_albums/controller.py:280
 msgid "NOT sufficient"
 msgstr "НЕДОСТАТОЧНО"
 
@@ -1302,7 +1303,7 @@ msgstr ""
 msgid "Save \"{}\""
 msgstr "Сохранение \"{}\""
 
-#: unmusic/src/db.py:677 unmusic/src/utils.py:279 unmusic/src/utils.py:284
+#: unmusic/src/db.py:677 unmusic/src/utils.py:274 unmusic/src/utils.py:279
 msgid ""
 "Database \"{}\" has failed!\n"
 "\n"
@@ -1441,53 +1442,60 @@ msgstr ""
 "Удалить {} дорожек ({}) с рейтингом < {} из {} альбомов ({} каталогов на "
 "всех носителях)?"
 
-#: unmusic/src/utils.py:116 unmusic/src/utils.py:182
+#: unmusic/src/utils.py:111
+msgid "Delete tracks"
+msgstr "Удалить дорожки"
+
+#: unmusic/src/utils.py:117 unmusic/src/utils.py:176
 msgid "Delete {}"
 msgstr "Удаление {}"
 
-#: unmusic/src/utils.py:126
-msgid "Delete empty folders"
-msgstr "Удаление пустых каталогов"
-
-#: unmusic/src/utils.py:161
+#: unmusic/src/utils.py:155
 msgid "Read external collection"
 msgstr "Чтение внешней коллекции"
 
-#: unmusic/src/utils.py:165
+#: unmusic/src/utils.py:159
 msgid "Read local collection"
 msgstr "Чтение локальной коллекции"
 
-#: unmusic/src/utils.py:194
+#: unmusic/src/utils.py:188
 msgid "There are no duplicates!"
 msgstr "Дубликатов нет!"
 
-#: unmusic/src/utils.py:197
+#: unmusic/src/utils.py:191
 msgid "Do you really want to delete {} albums?"
 msgstr "Вы действительно хотите удалить {} альбомов?"
 
-#: unmusic/src/utils.py:213
+#: unmusic/src/utils.py:198
+msgid "Delete albums"
+msgstr "Удаление альбомов"
+
+#: unmusic/src/utils.py:208
 msgid "{} albums have been deleted!"
 msgstr "{} альбомов удалено!"
 
-#: unmusic/src/utils.py:260
+#: unmusic/src/utils.py:255
 msgid "Fetch data"
 msgstr "Получение данных"
 
-#: unmusic/src/utils.py:324 unmusic/src/utils.py:340
+#: unmusic/src/utils.py:319 unmusic/src/utils.py:335
 msgid "Fetch data from {}"
 msgstr "Получение данных из {}"
 
-#: unmusic/src/utils.py:413
+#: unmusic/src/utils.py:408
 msgid "Tracks of album #{} have no rating!"
 msgstr "У дорожек альбома №{} нет рейтинга!"
 
-#: unmusic/src/utils.py:418
+#: unmusic/src/utils.py:413
 msgid "Album ID: {}. Rating: {}"
 msgstr "ИД альбома: {}. Рейтинг: {}"
 
-#: unmusic/src/utils.py:480
+#: unmusic/src/utils.py:475
 msgid "Operation has been completed."
 msgstr "Операция завершена."
+
+#~ msgid "Delete empty folders"
+#~ msgstr "Удаление пустых каталогов"
 
 #~ msgid "Process \"{}\" ({}/{})"
 #~ msgstr "Обработка \"{}\" ({}/{})"
@@ -1553,9 +1561,6 @@ msgstr "Операция завершена."
 #~ msgid "Not set"
 #~ msgstr "Не задан"
 
-#~ msgid "Selected albums: {}"
-#~ msgstr "Выбрано альбомов: {}"
-
 #~ msgid "Total size: {}"
 #~ msgstr "Общий размер: {}"
 
@@ -1594,9 +1599,6 @@ msgstr "Операция завершена."
 
 #~ msgid "Delete"
 #~ msgstr "Удалить"
-
-#~ msgid "Delete tracks"
-#~ msgstr "Удалить дорожки"
 
 #~ msgid "Decode"
 #~ msgstr "Декодировать"
