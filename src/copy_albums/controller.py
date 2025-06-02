@@ -60,6 +60,7 @@ class CopyAlbums:
             mes = _('Wrong input data!')
             Message(f, mes).show_warning()
             return
+        PROGRESS.set_title(_('Copy albums'))
         PROGRESS.set_value(0)
         PROGRESS.set_max(self.get_selected())
         PROGRESS.show()

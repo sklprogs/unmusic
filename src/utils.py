@@ -108,6 +108,7 @@ class DeleteBad:
             mes = _('Operation has been canceled by the user.')
             Message(f, mes).show_info()
             return
+        PROGRESS.set_title(_('Delete tracks'))
         PROGRESS.set_value(0)
         PROGRESS.set_max(len(self.files))
         PROGRESS.show()
@@ -120,15 +121,8 @@ class DeleteBad:
                 break
             PROGRESS.inc()
         PROGRESS.close()
-        PROGRESS.set_value(0)
-        PROGRESS.set_max(1)
-        PROGRESS.show()
-        mes = _('Delete empty folders')
-        PROGRESS.set_info(mes)
         for folder in self.folders:
             Directory(folder).delete_empty()
-        PROGRESS.inc()
-        PROGRESS.close()
     
     def run(self):
         self.set_albums()
@@ -201,6 +195,7 @@ class Shrink:
             Message(f, mes, True).show_info()
             return
         deleted = 0
+        PROGRESS.set_title(_('Delete albums'))
         PROGRESS.set_value(0)
         PROGRESS.set_max(len(duplicate))
         PROGRESS.show()
