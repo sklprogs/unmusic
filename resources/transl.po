@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unmusic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 03:17+0300\n"
-"PO-Revision-Date: 2025-06-02 03:18+0300\n"
+"POT-Creation-Date: 2025-06-04 03:28+0300\n"
+"PO-Revision-Date: 2025-06-04 03:28+0300\n"
 "Last-Translator: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language-Team: Peter Sklyar <skl.progs@gmail.com>\n"
 "Language: ru_RU\n"
@@ -206,8 +206,8 @@ msgstr "Сохранить файл как:"
 #: skl_shared_qt/src/message/controller.py:56
 #: skl_shared_qt/src/pretty_html.py:22 skl_shared_qt/src/temp_file.py:18
 #: unmusic/src/album_editor/controller.py:319
-#: unmusic/src/album_editor/logic.py:194 unmusic/src/album_editor/logic.py:212
-#: unmusic/src/album_editor/logic.py:344 unmusic/src/album_editor/logic.py:357
+#: unmusic/src/album_editor/logic.py:195 unmusic/src/album_editor/logic.py:213
+#: unmusic/src/album_editor/logic.py:345 unmusic/src/album_editor/logic.py:358
 #: unmusic/src/image_viewer/controller.py:34
 msgid ""
 "Third-party module has failed!\n"
@@ -333,7 +333,7 @@ msgid "KiB"
 msgstr "КиБ"
 
 #: skl_shared_qt/src/logic.py:616 skl_shared_qt/src/logic.py:654
-#: unmusic/src/album_editor/logic.py:275
+#: unmusic/src/album_editor/logic.py:276
 msgid "sec"
 msgstr "сек"
 
@@ -357,7 +357,7 @@ msgstr "дн"
 msgid "hrs"
 msgstr "ч"
 
-#: skl_shared_qt/src/logic.py:652 unmusic/src/album_editor/logic.py:274
+#: skl_shared_qt/src/logic.py:652 unmusic/src/album_editor/logic.py:275
 msgid "min"
 msgstr "мин"
 
@@ -567,7 +567,7 @@ msgid "Unable to copy the file \"{}\" to itself!"
 msgstr "Нельзя скопировать файл \"{}\" сам в себя!"
 
 #: skl_shared_qt/src/paths.py:326 skl_shared_qt/src/paths.py:371
-#: skl_shared_qt/src/text_file.py:189 unmusic/src/album_editor/logic.py:116
+#: skl_shared_qt/src/text_file.py:189 unmusic/src/album_editor/logic.py:117
 #: unmusic/src/utils.py:108 unmusic/src/utils.py:194
 msgid "Operation has been canceled by the user."
 msgstr "Операция отменена пользователем."
@@ -1058,90 +1058,84 @@ msgstr "Править дорожки"
 msgid "Album Editor"
 msgstr "Редактор альбомов"
 
-#: unmusic/src/album_editor/logic.py:54
+#: unmusic/src/album_editor/logic.py:55
 msgid "Carriers are not mounted or album #{} has already been deleted!"
 msgstr "Носители не подключены или альбом №{} уже был удален!"
 
-#: unmusic/src/album_editor/logic.py:66
+#: unmusic/src/album_editor/logic.py:67
 msgid "There are no tracks with rating < {}!"
 msgstr "Нет дорожек с рейтингом < {}!"
 
-#: unmusic/src/album_editor/logic.py:75
+#: unmusic/src/album_editor/logic.py:76 unmusic/src/album_editor/logic.py:664
 msgid "{} is skipped!"
 msgstr "{} пропущен!"
 
-#: unmusic/src/album_editor/logic.py:113
+#: unmusic/src/album_editor/logic.py:114
 msgid "Delete {} tracks ({}) with rating < {} from {} carriers?"
 msgstr "Удалить {} дорожек ({}) с рейтингом < {} на {} носителях?"
 
-#: unmusic/src/album_editor/logic.py:256
+#: unmusic/src/album_editor/logic.py:257
 msgid "Artist: {}"
 msgstr "Исполнитель: {}"
 
-#: unmusic/src/album_editor/logic.py:258
+#: unmusic/src/album_editor/logic.py:259
 msgid "Album: {}"
 msgstr "Альбом: {}"
 
-#: unmusic/src/album_editor/logic.py:260
+#: unmusic/src/album_editor/logic.py:261
 msgid "Genre: {}"
 msgstr "Жанр: {}"
 
-#: unmusic/src/album_editor/logic.py:262
+#: unmusic/src/album_editor/logic.py:263
 msgid "Year: {}"
 msgstr "Год: {}"
 
-#: unmusic/src/album_editor/logic.py:264
+#: unmusic/src/album_editor/logic.py:265
 msgid "Track #: {}"
 msgstr "Номер дорожки: {}"
 
-#: unmusic/src/album_editor/logic.py:266
+#: unmusic/src/album_editor/logic.py:267
 msgid "Title: {}"
 msgstr "Заголовок: {}"
 
-#: unmusic/src/album_editor/logic.py:268
+#: unmusic/src/album_editor/logic.py:269
 msgid "Lyrics: {}"
 msgstr "Слова: {}"
 
-#: unmusic/src/album_editor/logic.py:274
+#: unmusic/src/album_editor/logic.py:275
 msgid "Length: {} {} {} {}"
 msgstr "Длина: {} {} {} {}"
 
-#: unmusic/src/album_editor/logic.py:440
+#: unmusic/src/album_editor/logic.py:441
 msgid "Purge tracks"
 msgstr "Очистка дорожек"
 
-#: unmusic/src/album_editor/logic.py:583
+#: unmusic/src/album_editor/logic.py:584
 msgid "Album {}: {} tracks."
 msgstr "Альбом {}: {} дорожек."
 
-#: unmusic/src/album_editor/logic.py:630
+#: unmusic/src/album_editor/logic.py:628
 msgid "{}/{} tracks have been renumbered."
 msgstr "{}/{} дорожек перенумеровано."
 
-#: unmusic/src/album_editor/logic.py:642
+#: unmusic/src/album_editor/logic.py:640
 msgid "Folder \"{}\" has no audio files."
 msgstr "Каталог \"{}\" не содержит аудиофайлов."
 
-#: unmusic/src/album_editor/logic.py:734
-msgid "Tracks {} have not been found in \"{}\"!"
-msgstr "Дорожки {} не были найдены в \"{}\"!"
+#: unmusic/src/album_editor/logic.py:696
+msgid "No files to play!"
+msgstr "Нет файлов для воспроизведения!"
 
-#: unmusic/src/album_editor/logic.py:742 unmusic/src/db.py:275
-#: unmusic/src/logic.py:107 unmusic/src/search_tracks/controller.py:34
-#: unmusic/src/tracks/controller.py:61
-msgid "Condition \"{}\" is not observed!"
-msgstr "Условие \"{}\" не выполнено!"
-
-#: unmusic/src/album_editor/logic.py:857 unmusic/src/album_editor/logic.py:865
+#: unmusic/src/album_editor/logic.py:811 unmusic/src/album_editor/logic.py:819
 msgid "The pool is empty!"
 msgstr "Пул пуст!"
 
-#: unmusic/src/album_editor/logic.py:950 unmusic/src/album_editor/logic.py:955
-#: unmusic/src/album_editor/logic.py:969 unmusic/src/album_editor/logic.py:983
+#: unmusic/src/album_editor/logic.py:904 unmusic/src/album_editor/logic.py:909
+#: unmusic/src/album_editor/logic.py:923 unmusic/src/album_editor/logic.py:937
 msgid "No more matches!"
 msgstr "Совпадений больше нет!"
 
-#: unmusic/src/album_editor/logic.py:1049
+#: unmusic/src/album_editor/logic.py:1003
 msgid "The database is empty. You need to fill it first."
 msgstr "База данных пуста. Необходимо сначала внести в нее данные."
 
@@ -1286,6 +1280,12 @@ msgstr "Копировать"
 #: unmusic/src/copy_albums/gui.py:158
 msgid "Start copying albums"
 msgstr "Начать копирование альбомов"
+
+#: unmusic/src/db.py:275 unmusic/src/logic.py:107
+#: unmusic/src/search_tracks/controller.py:34
+#: unmusic/src/tracks/controller.py:61
+msgid "Condition \"{}\" is not observed!"
+msgstr "Условие \"{}\" не выполнено!"
 
 #: unmusic/src/db.py:397
 msgid ""
@@ -1493,6 +1493,9 @@ msgstr "ИД альбома: {}. Рейтинг: {}"
 #: unmusic/src/utils.py:475
 msgid "Operation has been completed."
 msgstr "Операция завершена."
+
+#~ msgid "Tracks {} have not been found in \"{}\"!"
+#~ msgstr "Дорожки {} не были найдены в \"{}\"!"
 
 #~ msgid "Delete empty folders"
 #~ msgstr "Удаление пустых каталогов"
