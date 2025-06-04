@@ -774,8 +774,8 @@ class Play:
         if out == '#EXTM3U\n':
             self.Success = False
             rep.empty_output(f)
-        # Rewrite playlist even if there are no files (not to play old playlist)
-        self.Success = Write(self.playlist, True).write(text)
+            return
+        self.Success = Write(self.playlist, True).write(out)
     
     def run(self):
         self.set_album()
