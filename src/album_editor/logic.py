@@ -398,7 +398,7 @@ class SaveImage:
 
 
 class Directory:
-    
+    # Only for unprocessed albums
     def __init__(self, path):
         self.set_values()
         if path:
