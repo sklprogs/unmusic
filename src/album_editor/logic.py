@@ -17,6 +17,10 @@ from config import PATHS
 from logic import DB
 from image_writer.controller import Image as WImage
 
+# Derived from 'phrydy.mediafile.TYPES'
+TYPES = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape', '.wv'
+        ,'.mpc', '.asf', '.aiff', '.dsf')
+
 
 class DeleteTracks:
     
@@ -26,9 +30,6 @@ class DeleteTracks:
     
     def set_values(self):
         self.Success = True
-        # Derived from 'phrydy.mediafile.TYPES'
-        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
-                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf')
         self.nos = []
         self.carriers = []
         self.files = []
@@ -71,7 +72,7 @@ class DeleteTracks:
     def _has_no(self, file):
         f = '[unmusic] album_editor.logic.DeleteTracks._has_no'
         ipath = Path(file)
-        if not ipath.get_ext_low() in self.types:
+        if not ipath.get_ext_low() in TYPES:
             mes = _('{} is skipped!').format(file)
             Message(f, mes).show_warning()
             return
@@ -586,9 +587,6 @@ class Directory:
     def set_values(self):
         self.Success = True
         self.idir = None
-        # Derived from 'phrydy.mediafile.TYPES'
-        self.types = ('.mp3', '.aac', '.alac', '.ogg', '.opus', '.flac', '.ape'
-                     ,'.wv', '.mpc', '.asf', '.aiff', '.dsf')
         self.path = ''
         self.target = ''
         self.rating = 0
@@ -608,7 +606,7 @@ class Directory:
             return self.files
         self.files = self.idir.get_files()
         for file in self.files:
-            if Path(file).get_ext().lower() in self.types:
+            if Path(file).get_ext().lower() in TYPES:
                 self.audio.append(file)
         return self.files
     
@@ -650,184 +648,140 @@ class Directory:
 
 class Play:
     
-    def __init__(self):
-        self.set_values()
+    def __init__(self, rating=-1):
+        self.carrier = ''
+        self.album = ''
+        self.artist = ''
+        self.playlist = PATHS.get_playlist()
         self.Success = DB.Success
+        self.rating = rating
+        self.nos = {}
+    
+    def _set_file(self, file):
+        f = '[unmusic] album_editor.logic.Play._set_file'
+        ipath = Path(file)
+        if not ipath.get_ext_low() in TYPES:
+            mes = _('{} is skipped!').format(file)
+            Message(f, mes).show_warning()
+            return
+        basename = ipath.get_filename()
+        no = basename.lstrip('0')
+        try:
+            no = int(no)
+        except ValueError:
+            rep.wrong_input(f, basename)
+            return
+        if no in self.nos:
+            self.nos[no]['file'] = file
+    
+    def set_files(self):
+        f = '[unmusic] album_editor.logic.Play.set_files'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        ''' Some tracks may have already been deleted on some carriers, so
+            we do not rely on the same nos.
+        '''
+        idir = shDirectory(self.carrier)
+        self.Success = idir.Success
+        if not self.Success:
+            rep.cancel(f)
+            return
+        for file in idir.get_files():
+            self._set_file(file)
     
     def call_player(self):
         f = '[unmusic] album_editor.logic.Play.call_player'
         if not self.Success:
-            rep.cancel(f)
-            return
-        if not self.get_playlist():
-            rep.empty(f)
+            mes = _('No files to play!')
+            Message(f, mes, True).show_info()
             return
         Launch(self.playlist).launch_default()
     
-    def set_values(self):
-        self.Success = True
-        self.album = ''
-        self.playlist = ''
-        self.audio = []
-        self.nos = []
-        self.titles = []
-        self.len_ = []
-    
-    def get_album(self):
-        f = '[unmusic] album_editor.logic.Play.get_album'
-        if not self.Success:
-            rep.cancel(f)
-            return self.album
-        if not self.album:
-            local_album = PATHS.get_local_album(DB.albumid)
-            exter_album = PATHS.get_external_album(DB.albumid)
-            if os.path.exists(local_album):
-                self.album = local_album
-            elif os.path.exists(exter_album):
-                self.album = exter_album
-        return self.album
-    
-    def get_audio(self):
-        f = '[unmusic] album_editor.logic.Play.get_audio'
-        if not self.Success:
-            rep.cancel(f)
-            return self.audio
-        if not self.audio:
-            idir = Directory(self.get_album())
-            idir.create_list()
-            self.Success = idir.Success
-            if idir.audio:
-                self.audio = idir.audio
-        return self.audio
-    
-    def get_available(self):
-        f = '[unmusic] album_editor.logic.Play.get_available'
+    def set_carrier(self):
+        f = '[unmusic] album_editor.logic.Play.set_carrier'
         if not self.Success:
             rep.cancel(f)
             return
-        self.get_audio()
-        if not (self.audio and self.nos and self.titles and self.len_):
+        local = PATHS.get_local_album(DB.albumid)
+        exter = PATHS.get_external_album(DB.albumid)
+        if os.path.exists(local):
+            self.carrier = local
+        elif os.path.exists(exter):
+            self.carrier = exter_album
+        if not self.carrier:
+            self.Success = False
+            rep.empty_output(f)
+    
+    def set_album(self):
+        f = '[unmusic] album_editor.logic.Play.set_album'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        result = DB.get_album()
+        if not result:
+            rep.empty(f)
+            return
+        self.album, self.artist = result[0], result[1]
+    
+    def set_nos(self):
+        f = '[unmusic] album_editor.logic.Play.set_nos'
+        if not self.Success:
+            rep.cancel(f)
+            return
+        if self.rating == -1:
+            tracks = DB.get_tracks()
+        else:
+            tracks = DB.get_good_tracks(self.rating)
+        if not tracks:
             self.Success = False
             rep.empty(f)
             return
-        result = []
-        errors = []
-        for no in self.nos:
-            try:
-                result.append(self.audio[no])
-            except IndexError:
-                errors.append(no)
-        ''' This may happen when some tracks have been deleted from
-            a collection after filling DB or when there is a mismatch of
-            ALBUMID stored in DB and the folder named after ALBUMID in the
-            collection. In any case, this should not normally happen.
-        '''
-        if errors:
-            for no in errors:
-                try:
-                    del self.titles[no]
-                    del self.nos[no]
-                    del self.len_[no]
-                except IndexError:
-                    pass
-            errors = [str(error) for error in errors]
-            mes = _('Tracks {} have not been found in "{}"!')
-            mes = mes.format(errors, self.get_album())
-            Message(f, mes, True).show_warning()
-        if len(self.nos) == len(self.titles) == len(self.len_):
-            pass
-        else:
-            self.Success = False
-            sub = f'{len(self.nos)} = {len(self.titles)} = {len(self.len_)}'
-            mes = _('Condition "{}" is not observed!').format(sub)
-            Message(f, mes, True).show_error()
-        return result
-    
-    def get_playlist(self):
-        f = '[unmusic] album_editor.logic.Play.get_playlist'
-        if not self.Success:
-            rep.cancel(f)
-            return self.playlist
-        if not self.playlist:
-            self.playlist = PATHS.get_playlist()
-        return self.playlist
+        for track in tracks:
+            self.nos[track[1]] = {'title': track[0], 'len': track[5], 'file': ''}
     
     def gen_list(self):
         f = '[unmusic] album_editor.logic.Play.gen_list'
         if not self.Success:
             rep.cancel(f)
             return
-        if not self.nos:
-            rep.empty(f)
-            return
-        out = []
-        result = DB.get_album()
         ''' Adding #EXTINF will allow to use tags in those players that support
             it (e.g., clementine, deadbeef). This entry should have the
             following format: '#EXTINF:191,Artist Name - Track Title' (multiple
             hyphens may not be supported).
         '''
-        if result:
+        out = ['#EXTM3U\n']
+        for no in self.nos:
+            if not self.nos[no]['file']:
+                continue
+            out.append('#EXTINF:')
+            out.append(str(int(self.nos[no]['len'])))
+            out.append(',')
             ''' The hyphen here is actually useless, but 'deadbeef' will not
                 separate an album and a title correctly otherwise.
             '''
-            header = f'{result[1]}: {result[0]} - '
-        else:
-            header = ''
-        files = self.get_available()
-        if files and self.nos:
-            out.append('#EXTM3U\n')
-            for i in range(len(files)):
-                out.append('#EXTINF:')
-                out.append(str(int(self.len_[i])))
-                out.append(',')
-                out.append(header)
-                out.append(str(self.nos[i] + 1))
-                out.append('. ')
-                ''' Replacing a hyphen will allow 'deadbeef' to correctly
-                    distinguish between an album and a title.
-                '''
-                out.append(self.titles[i].replace(' - ',': ').replace(' ~ ',': '))
-                out.append('\n')
-                out.append(files[i])
-                out.append('\n')
-        else:
-            rep.empty(f)
-        text = ''.join(out)
-        if not text:
-            rep.empty(f)
-            return
-        Write(self.get_playlist(), True).write(text)
+            out.append(f'{self.artist}: {self.album} - ')
+            out.append(str(no))
+            out.append('. ')
+            ''' Replacing a hyphen will allow 'deadbeef' to correctly
+                distinguish between an album and a title.
+            '''
+            out.append(self.nos[no]['title'].replace(' - ', ': ').replace(' ~ ', ': '))
+            out.append('\n')
+            out.append(self.nos[no]['file'])
+            out.append('\n')
+        out = ''.join(out)
+        if out == '#EXTM3U\n':
+            self.Success = False
+            rep.empty_output(f)
+        # Rewrite playlist even if there are no files (not to play old playlist)
+        self.Success = Write(self.playlist, True).write(text)
     
-    def play_all_tracks(self):
-        f = '[unmusic] album_editor.logic.Play.play_all_tracks'
-        if not self.Success:
-            rep.cancel(f)
-            return
-        tracks = DB.get_tracks()
-        if not tracks:
-            rep.empty(f)
-            return
-        self.titles = [track[0] for track in tracks]
-        self.len_ = [track[5] for track in tracks]
-        # '-1' since count starts with 1 in DB and we need 0
-        self.nos = [track[1] - 1 for track in tracks]
-        self.gen_list()
-        self.call_player()
-    
-    def play_good_tracks(self, rating=8):
-        f = '[unmusic] album_editor.logic.Play.play_good_tracks'
-        if not self.Success:
-            rep.cancel(f)
-            return
-        tracks = DB.get_good_tracks(rating)
-        if not tracks:
-            rep.empty(f)
-            return
-        self.titles = [track[0] for track in tracks]
-        self.len_ = [track[5] for track in tracks]
-        # '-1' since count starts with 1 in DB and we need 0
-        self.nos = [track[1] - 1 for track in tracks]
+    def run(self):
+        self.set_album()
+        self.set_carrier()
+        self.set_nos()
+        self.set_files()
         self.gen_list()
         self.call_player()
 

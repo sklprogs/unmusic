@@ -330,13 +330,13 @@ class AlbumEditor:
             rep.lazy(f)
         elif choice == _('All'):
             self.gui.top.opt_ply.set(default)
-            logic.Play().play_all_tracks()
+            logic.Play().run()
         elif choice == _('Good'):
             self.gui.top.opt_ply.set(default)
-            logic.Play().play_good_tracks()
+            logic.Play(8).run()
         elif choice == _('Best'):
             self.gui.top.opt_ply.set(default)
-            logic.Play().play_good_tracks(9)
+            logic.Play(9).run()
         else:
             mes = _('An unknown mode "{}"!\n\nThe following modes are supported: "{}".')
             mes = mes.format(choice, ';'.join(gi.PLAY))
