@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.graphics.root.controller import ROOT
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.graphics.root.controller import ROOT
 
 ''' If we use module-level variables instead of 'Objects', this must be done
     as soon as we can; otherwise, we can get the following error: 'QWidget:

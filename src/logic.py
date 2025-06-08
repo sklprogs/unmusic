@@ -7,12 +7,12 @@ import db
 
 from config import CONFIG, PATHS
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.paths import Directory
-from skl_shared_qt.logic import com
-from skl_shared_qt.table import Table
-from skl_shared_qt.graphics.debug.controller import DEBUG
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.paths import Directory
+from skl_shared.logic import com
+from skl_shared.table import Table
+from skl_shared.graphics.debug.controller import DEBUG
 
 VERSION = '1.1'
 #NOTE: Do not localize (being stored in DB)

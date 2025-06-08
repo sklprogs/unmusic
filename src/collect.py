@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.paths import Path, Home
-from skl_shared_qt.logic import com, Text
-from skl_shared_qt.time import Timer
-from skl_shared_qt.graphics.progress_bar.controller import ProgressBar
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.paths import Path, Home
+from skl_shared.logic import com, Text
+from skl_shared.time import Timer
+from skl_shared.graphics.progress_bar.controller import ProgressBar
 
 from logic import DB, Walker
 from album_editor.logic import Directory

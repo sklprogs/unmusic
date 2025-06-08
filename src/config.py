@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.config import Config as shConfig, Update
-from skl_shared_qt.paths import PDIR, Home
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.config import Config as shConfig, Update
+from skl_shared.paths import PDIR, Home
 
 PRODUCT_LOW = 'unmusic'
 

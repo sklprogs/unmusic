@@ -6,14 +6,14 @@ from PyQt6.QtWidgets import QSizePolicy, QVBoxLayout
 from PyQt6.QtGui import QShortcut, QKeySequence
 from PyQt6.QtCore import Qt, QObject, pyqtSignal
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.paths import PDIR
-from skl_shared_qt.graphics.root.controller import ROOT
-from skl_shared_qt.graphics.button.controller import Button
-from skl_shared_qt.graphics.label.controller import Label
-from skl_shared_qt.graphics.entry.controller import Entry
-from skl_shared_qt.graphics.option_menu.controller import OptionMenu
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.paths import PDIR
+from skl_shared.graphics.root.controller import ROOT
+from skl_shared.graphics.button.controller import Button
+from skl_shared.graphics.label.controller import Label
+from skl_shared.graphics.entry.controller import Entry
+from skl_shared.graphics.option_menu.controller import OptionMenu
 
 
 class Bottom:

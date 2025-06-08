@@ -3,11 +3,11 @@
 
 import os
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import rep, Message
-from skl_shared_qt.logic import com
-from skl_shared_qt.paths import Directory, Path
-from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
+from skl_shared.localize import _
+from skl_shared.message.controller import rep, Message
+from skl_shared.logic import com
+from skl_shared.paths import Directory, Path
+from skl_shared.graphics.progress_bar.controller import PROGRESS
 
 from config import PATHS
 from logic import DB

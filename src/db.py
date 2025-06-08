@@ -4,9 +4,9 @@
 import sys
 import sqlite3
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.table import Table
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.table import Table
 
 
 class DB:

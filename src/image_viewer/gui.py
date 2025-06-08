@@ -5,10 +5,10 @@ from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from PyQt6.QtGui import QShortcut, QKeySequence, QPixmap
 from PyQt6.QtCore import QSize
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import rep
-from skl_shared_qt.graphics.root.controller import ROOT
-from skl_shared_qt.graphics.label.controller import Label
+from skl_shared.localize import _
+from skl_shared.message.controller import rep
+from skl_shared.graphics.root.controller import ROOT
+from skl_shared.graphics.label.controller import Label
 
 
 class ImageViewer:

@@ -3,9 +3,9 @@
 
 import html
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.logic import com as shcom, Input
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.logic import com as shcom, Input
 
 from config import PATHS, CONFIG
 from logic import com, DB, GENRES

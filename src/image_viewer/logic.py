@@ -3,9 +3,9 @@
 
 import os
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import rep
-from skl_shared_qt.paths import PDIR, Path
+from skl_shared.localize import _
+from skl_shared.message.controller import rep
+from skl_shared.paths import PDIR, Path
 
 from config import PATHS
 from logic import DB

@@ -5,13 +5,13 @@ import os
 import re
 import phrydy
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import Message, rep
-from skl_shared_qt.logic import Input, Text, com as shcom
-from skl_shared_qt.paths import Path, File, Directory as shDirectory
-from skl_shared_qt.list import List
-from skl_shared_qt.launch import Launch
-from skl_shared_qt.text_file import Write
+from skl_shared.localize import _
+from skl_shared.message.controller import Message, rep
+from skl_shared.logic import Input, Text, com as shcom
+from skl_shared.paths import Path, File, Directory as shDirectory
+from skl_shared.list import List
+from skl_shared.launch import Launch
+from skl_shared.text_file import Write
 
 from config import PATHS
 from logic import DB

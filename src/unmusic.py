@@ -3,8 +3,8 @@
 
 import sys
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.graphics.root.controller import ROOT
+from skl_shared.localize import _
+from skl_shared.graphics.root.controller import ROOT
 
 ''' If we use module-level variables instead of 'Objects', this must be done
     as soon as we can; otherwise, we can get the following error: 'QWidget:
@@ -13,7 +13,7 @@ from skl_shared_qt.graphics.root.controller import ROOT
 '''
 ROOT.get_root()
 
-from skl_shared_qt.message.controller import Message
+from skl_shared.message.controller import Message
 
 
 f = '[unmusic] unmusic.__main__'

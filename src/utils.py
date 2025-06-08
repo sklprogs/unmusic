@@ -4,14 +4,14 @@
 import os
 import sqlite3
 
-from skl_shared_qt.localize import _
-from skl_shared_qt.message.controller import rep, Message
-from skl_shared_qt.basic_text import Shorten
-from skl_shared_qt.graphics.root.controller import ROOT
-from skl_shared_qt.graphics.progress_bar.controller import PROGRESS
-from skl_shared_qt.graphics.debug.controller import DEBUG
-from skl_shared_qt.paths import File, Directory
-from skl_shared_qt.logic import com as shcom
+from skl_shared.localize import _
+from skl_shared.message.controller import rep, Message
+from skl_shared.basic_text import Shorten
+from skl_shared.graphics.root.controller import ROOT
+from skl_shared.graphics.progress_bar.controller import PROGRESS
+from skl_shared.graphics.debug.controller import DEBUG
+from skl_shared.paths import File, Directory
+from skl_shared.logic import com as shcom
 
 ROOT.get_root()
 
