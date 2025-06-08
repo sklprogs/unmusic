@@ -55,9 +55,9 @@ class Collect:
             self.Success = False
             rep.cancel(f)
             return
-        basename = Path(folder).get_basename()
+        name = Path(folder).get_filename()
         self.bar.update()
-        mes = _('Process "{}"').format(basename)
+        mes = _('Process "{}"').format(name)
         self.bar.set_info(mes)
         Directory(folder).run()
         ''' In case something went wrong, we should lose only 1 album record,

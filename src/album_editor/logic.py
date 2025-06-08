@@ -76,7 +76,7 @@ class DeleteTracks:
             mes = _('{} is skipped!').format(file)
             Message(f, mes).show_warning()
             return
-        basename = ipath.get_filename()
+        basename = ipath.get_basename()
         no = basename.lstrip('0')
         try:
             no = int(no)
@@ -282,7 +282,7 @@ class Track:
         if not self.Success:
             rep.cancel(f)
             return
-        title = Path(self.file).get_filename()
+        title = Path(self.file).get_basename()
         if not title:
             return
         result = re.sub('^\d+[\.]{0,1}[\s]{0,1}','',title)
@@ -308,7 +308,7 @@ class Track:
             self.album = str(self.audio.album)
         else:
             dirname = Path(self.file).get_dirname()
-            dirname = Path(dirname).get_basename()
+            dirname = Path(dirname).get_filename()
             self.album = '[[' + dirname + ']]'
         if self.audio.genre:
             self.genre = str(self.audio.genre)
@@ -425,8 +425,8 @@ class Directory:
         for i in range(len(self.audio)):
             file = self.audio[i]
             no = self._set_no(i, max_len)
-            basename = no + Path(file).get_ext().lower()
-            dest = os.path.join(self.target, basename)
+            filename = no + Path(file).get_ext().lower()
+            dest = os.path.join(self.target, filename)
             success.append(File(file, dest).move())
         self.Success = not (False in success or None in success)
     
@@ -664,7 +664,7 @@ class Play:
             mes = _('{} is skipped!').format(file)
             Message(f, mes).show_warning()
             return
-        basename = ipath.get_filename()
+        basename = ipath.get_basename()
         no = basename.lstrip('0')
         try:
             no = int(no)
