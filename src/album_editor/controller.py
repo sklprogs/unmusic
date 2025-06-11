@@ -127,7 +127,7 @@ class AlbumEditor:
             rep.empty(f)
             return
         #NOTE: Change this value upon a change in the number of ALBUMS fields
-        if len(data) != 7:
+        if len(data) != 6:
             mes = _('Wrong input data: "{}"!').format(data)
             Message(f, mes, True).show_error()
             return
@@ -378,10 +378,11 @@ class AlbumEditor:
         if not self.Success:
             rep.cancel(f)
             return
-        rating = DB.get_rating()
-        if rating is None:
+        rates = DB.get_rates()
+        if not rates:
             rep.empty(f)
             return
+        rating = round(sum(rates) / len(rates), 2)
         if int(rating) == rating:
             ''' Make GUI look better (without ',0' at the end). SQLite
                 automatically converts 'int' to 'float'.
@@ -397,22 +398,6 @@ class AlbumEditor:
             ratings.append(rating)
             ratings.sort()
             self.gui.top.opt_rtg.reset(ratings, rating)
-    
-    def update_rating(self):
-        f = '[unmusic] album_editor.controller.AlbumEditor.update_rating'
-        if not self.Success:
-            rep.cancel(f)
-            return
-        old = DB.get_rating()
-        new = self.logic.get_mean_rating()
-        if old is None or new is None:
-            rep.empty(f)
-            return
-        if old == new:
-            rep.lazy(f)
-            return
-        DB.set_album_rating(new)
-        self.set_ui_rating()
     
     def set_rating(self):
         f = '[unmusic] album_editor.controller.AlbumEditor.set_rating'
@@ -708,7 +693,7 @@ class AlbumEditor:
         self.gui.top.ent_ids.widget.returnPressed.connect(self.search_id)
         self.gui.top.ent_src.widget.returnPressed.connect(self.search_album)
         self.gui.top.ent_sr2.widget.returnPressed.connect(self.search_track)
-        TRACKS.gui.signal.sig_rating.connect(self.update_rating)
+        TRACKS.gui.signal.sig_rating.connect(self.set_ui_rating)
         TRACKS.gui.signal.sig_info.connect(self.update_info)
         # Bind labels
         self.gui.center.lbl_img.set_action(self.zoom_image)

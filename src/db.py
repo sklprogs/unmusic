@@ -72,8 +72,8 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from ALBUMS where ALBUMID < ? and RATING = 0 \
-                 order by ALBUMID desc'
+        query = 'select distinct ALBUMID from TRACKS where ALBUMID < ? \
+                 and RATING = 0 order by ALBUMID desc'
         try:
             self.dbc.execute(query, (albumid,))
             result = self.dbc.fetchall()
@@ -89,8 +89,8 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from ALBUMS where ALBUMID > ? and RATING = 0 \
-                 order by ALBUMID'
+        query = 'select distinct ALBUMID from TRACKS where ALBUMID > ? \
+                 and RATING = 0 order by ALBUMID'
         try:
             self.dbc.execute(query, (albumid,))
             result = self.dbc.fetchall()
@@ -107,8 +107,8 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from ALBUMS where ALBUMID < ? and RATING = ? \
-                 order by ALBUMID desc'
+        query = 'select distinct ALBUMID from TRACKS where ALBUMID < ? \
+                 and RATING = ? order by ALBUMID desc'
         try:
             self.dbc.execute(query, (albumid, rating,))
             result = self.dbc.fetchone()
@@ -125,7 +125,7 @@ class DB:
             return
         if albumid is None:
             albumid = self.albumid
-        query = 'select ALBUMID from ALBUMS where ALBUMID > ? and RATING = ? \
+        query = 'select ALBUMID from TRACKS where ALBUMID > ? and RATING = ? \
                  order by ALBUMID'
         try:
             self.dbc.execute(query, (albumid, rating,))
@@ -219,7 +219,8 @@ class DB:
         if not self.Success:
             rep.cancel(f)
             return
-        query = 'select NO from TRACKS where ALBUMID = ? and RATING > 0 and RATING < ? order by NO'
+        query = 'select NO from TRACKS where ALBUMID = ? and RATING > 0 \
+                 and RATING < ? order by NO'
         try:
             self.dbc.execute(query, (self.albumid, rating,))
             result = self.dbc.fetchall()
@@ -233,7 +234,8 @@ class DB:
         if not self.Success:
             rep.cancel(f)
             return
-        query = 'select ALBUMID,NO from TRACKS where RATING > 0 and RATING < ? order by ALBUMID,NO'
+        query = 'select ALBUMID,NO from TRACKS where RATING > 0 and RATING < ?\
+                 order by ALBUMID,NO'
         # limit=0 provides an empty output
         if limit:
             query += ' limit ?'
@@ -346,38 +348,12 @@ class DB:
         except Exception as e:
             self.fail(f, e)
     
-    def get_rating(self):
-        f = '[unmusic] db.DB.get_rating'
-        if not self.Success:
-            rep.cancel(f)
-            return 0
-        query = 'select RATING from ALBUMS where ALBUMID = ?'
-        try:
-            self.dbc.execute(query, (self.albumid,))
-            result = self.dbc.fetchone()
-            if result:
-                return result[0]
-        except Exception as e:
-            self.fail(f, e)
-        return 0
-    
     def set_rating(self, value):
         f = '[unmusic] db.DB.set_rating'
         if not self.Success:
             rep.cancel(f)
             return
         query = 'update TRACKS set RATING = ? where ALBUMID = ?'
-        try:
-            self.dbc.execute(query, (value, self.albumid,))
-        except Exception as e:
-            self.fail(f, e)
-    
-    def set_album_rating(self, value):
-        f = '[unmusic] db.DB.set_album_rating'
-        if not self.Success:
-            rep.cancel(f)
-            return
-        query = 'update ALBUMS set RATING = ? where ALBUMID = ?'
         try:
             self.dbc.execute(query, (value, self.albumid,))
         except Exception as e:
@@ -503,7 +479,7 @@ class DB:
         if not self.Success:
             rep.cancel(f)
             return
-        query = 'select ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT, RATING \
+        query = 'select ALBUM, ARTIST, YEAR, GENRE, COUNTRY, COMMENT \
                  from ALBUMS where ALBUMID = ?'
         try:
             self.dbc.execute(query, (self.albumid,))
@@ -643,7 +619,7 @@ class DB:
         if not self.Success:
             rep.cancel(f)
             return
-        # 9 columns by now
+        # 8 columns by now
         query = 'create table if not exists ALBUMS (\
                  ALBUMID integer primary key autoincrement \
                 ,ALBUM   text    \
@@ -653,7 +629,6 @@ class DB:
                 ,COUNTRY text    \
                 ,COMMENT text    \
                 ,SEARCH  text    \
-                ,RATING  float   \
                                                    )'
         try:
             self.dbc.execute(query)

@@ -64,8 +64,7 @@ class DeleteTracks:
         self.nos = DB.get_bad_tracks(self.rating)
         if not self.nos:
             self.Success = False
-            mes = _('There are no tracks with rating < {}!')
-            mes = mes.format(self.rating)
+            mes = _('There are no tracks with rating < {}!').format(self.rating)
             Message(f, mes, True).show_info()
             return
     
@@ -1054,8 +1053,6 @@ class AlbumEditor:
                     base = 'COUNTRY="%s"'
                 elif i == 5:
                     base = 'COMMENT="%s"'
-                elif i == 6:
-                    base = 'RATING="%f"'
                 add.append(base % new[i])
         if add:
             add.append('SEARCH="%s"' % search)
