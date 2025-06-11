@@ -348,7 +348,7 @@ class Clone:
         if not self.Success:
             rep.cancel(f)
             return
-        # 9 columns by now
+        # 8 columns by now
         query = 'create table ALBUMS (\
                  ALBUMID integer primary key autoincrement \
                 ,ALBUM   text    \
@@ -358,7 +358,6 @@ class Clone:
                 ,COUNTRY text    \
                 ,COMMENT text    \
                 ,SEARCH  text    \
-                ,RATING  float   \
                                      )'
         self._create_table(f, query)
     
@@ -387,32 +386,12 @@ class Clone:
                                                    )'
         self._create_table(f, query)
     
-    def _get_mean(self, ratings):
-        if 0 in ratings:
-            return 0
-        else:
-            return round(sum(ratings) / len(ratings), 2)
-    
     def _fill_albums(self):
         f = '[unmusic] utils.Clone._fill_albums'
-        query = 'insert into ALBUMS values (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        query = 'insert into ALBUMS values (?, ?, ?, ?, ?, ?, ?, ?)'
         for i in range(len(self.albums)):
             row = self.albums[i]
             DB.albumid = row[0]
-            ratings = DB.get_rates()
-            if ratings:
-                rating = self._get_mean(ratings)
-            else:
-                rating = 0
-                rep.empty(f)
-                mes = _('Tracks of album #{} have no rating!').format(DB.albumid)
-                Message(f, mes).show_warning()
-                self.Success = False
-                return
-            if i % 100 == 0:
-                mes = _('Album ID: {}. Rating: {}').format(row[0], rating)
-                Message(f, mes).show_debug()
-            row += (rating,)
             self._fill_row(f, query, row)
     
     def _fill_tracks(self):
