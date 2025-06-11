@@ -708,7 +708,7 @@ class Play:
         if os.path.exists(local):
             self.carrier = local
         elif os.path.exists(exter):
-            self.carrier = exter_album
+            self.carrier = exter
         if not self.carrier:
             self.Success = False
             rep.empty_output(f)
