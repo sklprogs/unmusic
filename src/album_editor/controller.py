@@ -63,7 +63,7 @@ class AlbumEditor:
         Message(f, mes).show_debug()
     
     def update_info(self, text):
-        self.pool.add(message=text)
+        self.pool.add(text)
         self.gui.bottom.lbl_inf.set_text(self.pool.get())
     
     def minimize(self):
@@ -423,6 +423,13 @@ class AlbumEditor:
             return
         if rating == int(rating) or Message(f, mes, True).show_question():
             DB.set_rating(ui_value)
+            ''' To speed up, data on tracks is not saved unless they are shown,
+                so we need to save manually here. High-level 'save' commands
+                are not suitable here, since they check for modifications,
+                and TRACKS.tracks might even be unfilled for now.
+            '''
+            self.update_info(_('Save DB.'))
+            DB.save()
         else:
             self.set_ui_rating()
     
