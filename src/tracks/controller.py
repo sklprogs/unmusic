@@ -80,7 +80,7 @@ class Tracks:
                 continue
             mes = _('Edit track #{}.').format(i+1)
             self.gui.send_info(mes)
-            DB.update_track(no=i+1, data=new_record)
+            DB.update_track(i + 1, new_record)
             Dump = True
         return Dump
     
