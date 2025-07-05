@@ -1,3 +1,4 @@
+- Search for "abuse" (1558), edit, search next, go back to 1558 -> not saved
 - Deleting albums and quitting removes them from GUI but not from DB
 - Modify fields, search a keyword, go to previous record with this keyword -
   modifications are not stored.
