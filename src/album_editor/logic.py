@@ -537,7 +537,7 @@ class Directory:
         search = ' '.join(search)
         search = search.lower()
         
-        DB.add_album([album, artist, year, genre, '', '', search, 0])
+        DB.add_album([album, artist, year, genre, '', '', search])
     
     def _add_tracks_meta(self, albumid):
         f = '[unmusic] album_editor.logic.Directory._add_tracks_meta'

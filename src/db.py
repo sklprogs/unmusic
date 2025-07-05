@@ -586,7 +586,7 @@ class DB:
         if not data:
             rep.empty(f)
             return
-        query = 'insert into ALBUMS values (NULL, ?, ?, ?, ?, ?, ?, ?, ?)'
+        query = 'insert into ALBUMS values (NULL, ?, ?, ?, ?, ?, ?, ?)'
         try:
             self.dbc.execute(query, data)
         except Exception as e:
